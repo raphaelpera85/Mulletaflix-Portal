@@ -13,7 +13,7 @@
   },
   "tracks": [
     { "id": "server", "name": "Servidor Windows/Linux", "kind": "server", "status": "monitoring", "source": "GitHub Actions e releases" },
-    { "id": "android", "name": "Aplicativo Android (APK)", "kind": "apk", "status": "monitoring", "source": "GitHub Actions e releases" },
+    { "id": "android", "name": "Aplicativo Android (APK)", "kind": "apk", "status": "monitoring", "progressPercent": 100, "source": "GitHub Actions, testes instrumentados e releases" },
     { "id": "web", "name": "Frontend Web", "kind": "web", "status": "monitoring", "source": "GitHub Actions e roadmap" }
   ],
   "features": [
@@ -30,13 +30,45 @@
   ],
   "events": [
     {
+      "id": "portal-agent-route-2026-10-04",
+      "title": "Orientação obrigatória de registro, progresso e publicação do portal",
+      "agent": "Codex",
+      "front": "Portal / todos os agentes",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "AGENTS.md, .agents/rules e repositório Mulletaflix-Portal",
+      "scope": "Registrar início, atualizar status e porcentagem durante a tarefa, publicar no Git e validar o deploy Vercel",
+      "progressPercent": 100,
+      "status": "completed",
+      "startedAt": "2026-10-04T13:37:50-03:00",
+      "updatedAt": "2026-10-04T13:37:50-03:00",
+      "evidence": "AGENTS.md e .agents/rules atualizados com a rota obrigatória. JSON publicado no Git; portal sincronizado em raphaelpera85/Mulletaflix-Portal; deploy Vercel READY no commit 96ccfb5 e rotas públicas verificadas com HTTP 200."
+    },
+    {
       "title": "Suíte .NET Release — testes da solução",
       "agent": "Codex",
       "location": "MulletaFlix-master (local, instância de produção fechada)",
       "scope": "dotnet test MulletaFlix.sln --no-restore -c Release -m:1 --verbosity quiet",
+      "status": "failure",
+      "updatedAt": "2026-10-04T13:36:00-03:00",
+      "evidence": "Primeira execução interrompida manualmente após vários minutos sem saída por estar em console quiet; nenhum erro de teste foi reportado até a interrupção. A repetição integral será registrada separadamente."
+    },
+    {
+      "title": "Testes de integração do servidor",
+      "agent": "Codex",
+      "location": "MulletaFlix-master (local; harness de integração isolado)",
+      "scope": "dotnet test tests/Jellyfin.Server.Integration.Tests/Jellyfin.Server.Integration.Tests.csproj --no-restore -c Release -m:1 --blame-hang-timeout 2m --blame-hang-dump-type none --logger console;verbosity=normal",
+      "status": "completed",
+      "updatedAt": "2026-10-04T13:36:00-03:00",
+      "evidence": "Execução de Teste Bem-sucedida; 143 testes, 140 aprovados, 3 ignorados, 0 falhas; exit code 0; 5m46s."
+    },
+    {
+      "title": "Reexecução integral da suíte .NET Release",
+      "agent": "Codex",
+      "location": "MulletaFlix-master (local, instância de produção fechada)",
+      "scope": "dotnet test MulletaFlix.sln --no-restore -c Release -m:1 --verbosity quiet",
       "status": "in_progress",
-      "updatedAt": "2026-10-04T13:26:00-03:00",
-      "evidence": "Comando iniciado; projetos iniciais aprovados, suíte de integração ainda executando."
+      "updatedAt": "2026-10-04T13:36:00-03:00",
+      "evidence": "Execução integral iniciada após a assembly de integração passar isoladamente."
     },
     {
       "title": "Verificação de build TypeScript Web",
@@ -84,10 +116,11 @@
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix\\MulletaFlix-android",
       "location": "MulletaFlix-android (local; AVD aberto somente durante o teste)",
       "scope": "HomeAdaptiveUsageTest em MulletaflixTvApi34 via tools\\with-emulator.ps1 -gpu host; verificar uso da RTX 3050 dedicada e encerramento do AVD",
-      "status": "in_progress",
+      "status": "completed",
+      "progressPercent": 100,
       "startedAt": "2026-10-04T13:30:15-03:00",
-      "updatedAt": "2026-10-04T13:30:15-03:00",
-      "evidence": "Teste ainda não iniciado. O wrapper configura preferência de alto desempenho e exige confirmação do PID QEMU na NVIDIA antes de chamar Gradle."
+      "updatedAt": "2026-10-04T13:33:20-03:00",
+      "evidence": "BUILD SUCCESSFUL (1m16s; exit code 0). Relatório TEST-MulletaflixTvApi34(AVD) - 14.xml: 1 teste, 0 falhas, 0 erros, 0 ignorados. O wrapper confirmou: AVD MulletaflixTvApi34 QEMU PID 25572 está usando NVIDIA GPU antes de Gradle; GPU identificada como RTX 3050 Laptop 6 GB. AVD encerrou (adb devices sem emuladores); NVIDIA reportou 0 MiB usados após o teste. Nenhum arquivo de produção/release foi gerado."
     }
   ]
 }
