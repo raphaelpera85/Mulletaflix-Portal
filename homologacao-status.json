@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-04T13:26:00-03:00",
+  "source": {
+    "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
+    "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
+  },
+  "coverage": {
+    "completed": 272,
+    "pending": 66,
+    "total": 338,
+    "definition": "Itens marcados como concluídos ou pendentes no roadmap versionado."
+  },
+  "tracks": [
+    { "id": "server", "name": "Servidor Windows/Linux", "kind": "server", "status": "monitoring", "source": "GitHub Actions e releases" },
+    { "id": "android", "name": "Aplicativo Android (APK)", "kind": "apk", "status": "monitoring", "source": "GitHub Actions e releases" },
+    { "id": "web", "name": "Frontend Web", "kind": "web", "status": "monitoring", "source": "GitHub Actions e roadmap" }
+  ],
+  "features": [
+    { "id": "T0.1", "name": "Baseline de produção", "area": "Servidor", "status": "pending", "source": "roadmap" },
+    { "id": "T0.2", "name": "Mapa de fluxos e dependências", "area": "Servidor", "status": "completed", "source": "roadmap" },
+    { "id": "T1.1", "name": "Instrumentação OpenTelemetry", "area": "Servidor", "status": "completed", "source": "roadmap" },
+    { "id": "W1.1", "name": "Estados de página e recuperação", "area": "Web", "status": "pending", "source": "roadmap" },
+    { "id": "W4.1", "name": "Cobertura Playwright dos fluxos críticos", "area": "Web", "status": "pending", "source": "roadmap" },
+    { "id": "T9.1", "name": "Auditoria do provisionamento HTTPS/DuckDNS", "area": "Servidor", "status": "pending", "source": "roadmap" },
+    { "id": "T9.2", "name": "API administrativa e estado seguro", "area": "Servidor", "status": "pending", "source": "roadmap" },
+    { "id": "T9.3", "name": "Provisionamento cross-platform", "area": "Windows/Linux", "status": "pending", "source": "roadmap" },
+    { "id": "T9.4", "name": "Tela de gestão de domínio", "area": "Web", "status": "pending", "source": "roadmap" },
+    { "id": "T9.5", "name": "Validação e QA da tela", "area": "Web/QA", "status": "pending", "source": "roadmap" }
+  ],
+  "events": [
+    {
+      "title": "Suíte .NET Release — testes da solução",
+      "agent": "Codex",
+      "location": "MulletaFlix-master (local, instância de produção fechada)",
+      "scope": "dotnet test MulletaFlix.sln --no-restore -c Release -m:1 --verbosity quiet",
+      "status": "in_progress",
+      "updatedAt": "2026-10-04T13:26:00-03:00",
+      "evidence": "Comando iniciado; projetos iniciais aprovados, suíte de integração ainda executando."
+    },
+    {
+      "title": "Verificação de build TypeScript Web",
+      "agent": "Codex",
+      "location": "MulletaFlix-web-master (local)",
+      "scope": "npm run build:check",
+      "status": "completed",
+      "updatedAt": "2026-10-04T13:26:00-03:00",
+      "evidence": "npm run build:check terminou com exit code 0 (tsc --noEmit)."
+    },
+    {
+      "title": "Testes unitários Android",
+      "agent": "Codex",
+      "location": "MulletaFlix-android (local; somente teste, sem artefato de release)",
+      "scope": ".\\gradlew.bat testDebugUnitTest",
+      "status": "completed",
+      "updatedAt": "2026-10-04T13:26:00-03:00",
+      "evidence": "BUILD SUCCESSFUL; 456 actionable tasks, 456 up-to-date."
+    },
+    {
+      "title": "Format verification e diff check",
+      "agent": "Codex",
+      "location": "MulletaFlix-master (local)",
+      "scope": "dotnet format whitespace --verify-no-changes nos quatro controllers alterados; git diff --check",
+      "status": "completed",
+      "updatedAt": "2026-10-04T13:26:00-03:00",
+      "evidence": "Verificação terminou sem erros; diff check limpo. Busca contextual encontrou cinco ocorrências do padrão em outros controllers para revisão futura."
+    },
+    {
+      "id": "ios-gauntlet-2026-10-04",
+      "agent": "Codex",
+      "front": "iOS",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "scope": "Validação estrutural, testes declarados e análise de produção do aplicativo iOS",
+      "status": "completed",
+      "startedAt": "2026-10-04T00:00:00-03:00",
+      "updatedAt": "2026-10-04T00:00:00-03:00",
+      "evidence": "validate-structure.ps1 terminou com código 0: IOS_DIFF_CHECK=PASS, IOS_PLIST_XML=PASS, IOS_PRIVACY_XML=PASS, IOS_EXPORT_OPTIONS_XML=PASS, IOS_VERSION_ALIGNMENT=PASS (1.0.0), IOS_RELEASE_GUARDS=PASS, IOS_DECLARED_TESTS=135, IOS_RAW_UI_ERRORS=0 e IOS_ASYNC_NIL_COALESCING=PASS. Avaliador adversarial confirmou IOS_AUTOMATIC_INTRO_INVARIANTS=PASS e IOS_EVALUATOR_DIFF_CHECK=PASS. Swift nativo e xcodebuild foram identificados como indisponíveis no Windows."
+    },
+    {
+      "id": "android-nvidia-gpu-tv-2026-10-04",
+      "title": "Teste Android instrumentado com GPU NVIDIA",
+      "agent": "Codex",
+      "front": "APK / Android TV",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix\\MulletaFlix-android",
+      "location": "MulletaFlix-android (local; AVD aberto somente durante o teste)",
+      "scope": "HomeAdaptiveUsageTest em MulletaflixTvApi34 via tools\\with-emulator.ps1 -gpu host; verificar uso da RTX 3050 dedicada e encerramento do AVD",
+      "status": "in_progress",
+      "startedAt": "2026-10-04T13:30:15-03:00",
+      "updatedAt": "2026-10-04T13:30:15-03:00",
+      "evidence": "Teste ainda não iniciado. O wrapper configura preferência de alto desempenho e exige confirmação do PID QEMU na NVIDIA antes de chamar Gradle."
+    }
+  ]
+}
