@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T14:47:34-03:00",
+  "generatedAt": "2026-10-04T16:21:33-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12,8 +12,8 @@
     "definition": "Itens marcados como concluídos ou pendentes no roadmap versionado."
   },
   "tracks": [
-    { "id": "server", "name": "Servidor Windows/Linux", "kind": "server", "status": "in_progress", "progressPercent": null, "source": "GitHub Actions e testes de integração", "homologation": { "completed": null, "total": null, "percent": null, "unit": "escopo formal", "label": "Não consolidado: testes parciais em execução e bloqueios ainda sendo investigados." } },
-    { "id": "android", "name": "Aplicativo Android (APK)", "kind": "apk", "status": "in_progress", "progressPercent": null, "source": "GitHub Actions, testes instrumentados e releases", "homologation": { "completed": null, "total": null, "percent": null, "unit": "escopo formal", "label": "Não consolidado: novos testes em execução e bloqueios ainda pendentes." } },
+    { "id": "server", "name": "Servidor Windows/Linux", "kind": "server", "status": "in_progress", "progressPercent": null, "source": "GitHub Actions e testes de integração", "homologation": { "completed": null, "total": null, "percent": null, "unit": "escopo formal", "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação." }, "testAudit": { "passed": 1165, "total": 1215, "skipped": 50, "failed": 0, "percent": 95.9, "label": "TRX auditável: 1.165 aprovados, 50 ignorados, 0 falhas." } },
+    { "id": "android", "name": "Aplicativo Android (APK)", "kind": "apk", "status": "in_progress", "progressPercent": null, "source": "GitHub Actions, testes instrumentados e releases", "homologation": { "completed": null, "total": null, "percent": null, "unit": "escopo formal", "label": "Homologação formal não consolidada; novos testes e bloqueios continuam pendentes." }, "testAudit": { "passed": 1382, "total": 1382, "skipped": 0, "failed": 0, "percent": 100, "label": "JUnit auditável: 1.382 aprovados, 0 ignorados, 0 falhas." } },
     { "id": "web", "name": "Frontend Web", "kind": "web", "status": "monitoring", "source": "GitHub Actions e roadmap" }
   ],
   "features": [
@@ -29,6 +29,62 @@
     { "id": "T9.5", "name": "Validação e QA da tela", "area": "Web/QA", "status": "pending", "source": "roadmap" }
   ],
   "events": [
+    {
+      "id": "media-info-live-stream-session-ownership-2026-10-04",
+      "title": "Ownership de live streams em MediaInfo",
+      "agent": "Codex",
+      "front": "Servidor / API de playback",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix\\MulletaFlix-master",
+      "location": "Jellyfin.Api local; sem release",
+      "scope": "Validar ownership da sessão antes de fechar live stream ou retornar seus metadados; manter controles de administrador e API key",
+      "status": "in_progress",
+      "progressPercent": 90,
+      "startedAt": "2026-10-04T16:08:00-03:00",
+      "updatedAt": "2026-10-04T16:21:33-03:00",
+      "evidence": "Regressão red reproduzida: uma sessão sem dono com liveStreamId correspondente retornava NoContent. Correção exige sessão do usuário ou participação AdditionalUsers; admin e API key preservados. Testes focados 20/20, Jellyfin.Api.Tests 466/466; build Release Jellyfin.Api 0 avisos/erros; formato, diff e JSON verificados. Revisão adversarial final ainda em andamento. AudioHelper/VideosController e contrato público de GetUserImage ficaram registrados como pendências da auditoria T6.1."
+    },
+    {
+      "id": "test-report-denominator-2026-10-04",
+      "title": "Cálculo do denominador dos relatórios de testes",
+      "agent": "Codex",
+      "front": "Servidor / APK",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/TestResults e MulletaFlix-android/**/build/test-results",
+      "scope": "Contar casos reportados e separar auditoria de testes da homologação formal",
+      "progressPercent": 0,
+      "status": "in_progress",
+      "startedAt": "2026-10-04T14:20:00-03:00",
+      "updatedAt": "2026-10-04T14:20:00-03:00",
+      "evidence": "Inventário iniciado: Servidor 1.215 casos TRX; Android 1.382 casos JUnit. Os percentuais serão exibidos como auditoria dos relatórios, não como homologação final."
+    },
+    {
+      "id": "nebula-initial-completed-media-refresh-2026-10-04",
+      "title": "Refresh inicial de mídias concluídas no disco N:",
+      "agent": "Codex",
+      "front": "Servidor / Nebula",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix\\MulletaFlix-master",
+      "location": "MulletaFlix-master local; sem release",
+      "scope": "Executar a varredura das mídias concluídas nos últimos 15 minutos imediatamente ao iniciar o ciclo do Nebula e manter os refreshes periódicos subsequentes de 15 minutos",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-04T16:00:00-03:00",
+      "updatedAt": "2026-10-04T16:04:48-03:00",
+      "evidence": "O refresh agora roda imediatamente antes do primeiro tick e, depois, a cada 15 min. Teste test-first: o caso de inicialização falhou antes (API inexistente) e passou depois; `NebulaCompletedMediaRefreshTests` 5/5; suíte com filtro Nebula: 551 aprovados, 15 ignorados, 0 falhas; build Release `Jellyfin.Server.Implementations` 0 avisos/erros; `git diff --check` passou. Sem validação no N: de produção e sem release/pacote/commit/push."
+    },
+    {
+      "id": "android-configurable-seek-interval-2026-10-04",
+      "title": "Intervalo configurável de busca no player",
+      "agent": "Codex",
+      "front": "APK / player e configurações",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix\\MulletaFlix-android",
+      "location": "MulletaFlix-android local; sem release",
+      "scope": "Preferência local 5/10/15/30 s com padrão 10 s; DataStore, tela de configurações, botões e toque duplo; testes JVM e instrumentados em telefone, tablet e TV",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-04T14:59:49-03:00",
+      "updatedAt": "2026-10-04T15:34:00-03:00",
+      "evidence": "Concluído localmente e validado: preferência DataStore 5/10/15/30 s (padrão 10), UI de Ajustes, botões e toque duplo. `testDebugUnitTest`: 1.374/1.374; instrumentados: Data PHONE 9/9, Settings PHONE e TV 4/4 cada, Player PHONE/TABLET/TV 8/8 cada. `:feature:settings:lintDebug`, `:feature:player:lintDebug`, `:app:lintDebug`, `:app:assembleDebug` e `:app:compileDebugAndroidTestKotlin`: BUILD SUCCESSFUL. Todos os AVDs encerrados; QEMU validado na NVIDIA RTX 3050. Sem release e sem alterações intencionais no servidor. Cobertura formal do roadmap continua não consolidada."
+    },
     {
       "id": "portal-null-percent-display-2026-10-04",
       "title": "Correção de exibição de percentual não consolidado",
@@ -51,11 +107,11 @@
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix\\MulletaFlix-android",
       "location": "MulletaFlix-android local; wrapper inicia e fecha AVD",
       "scope": "BookReaderFontSizeControlsTest em MulletaflixApi35; PHONE; validar seleção da GPU dedicada NVIDIA e encerramento do emulador",
-      "status": "in_progress",
-      "progressPercent": 0,
+      "status": "completed",
+      "progressPercent": 100,
       "startedAt": "2026-10-04T14:47:34-03:00",
-      "updatedAt": "2026-10-04T14:47:34-03:00",
-      "evidence": "Execução planejada. Wrapper configura GpuPreference=2 para emulator.exe e QEMU, inicia AVD com -gpu host e exige confirmação do PID QEMU na NVIDIA por nvidia-smi antes de executar os testes."
+      "updatedAt": "2026-10-04T14:49:57-03:00",
+      "evidence": "BUILD SUCCESSFUL, exit code 0. BookReaderFontSizeControlsTest: 5/5 aprovados, 0 falhas/erros/skips. O inventário Windows mostrou Intel UHD integrada e NVIDIA RTX 3050; nvidia-smi reportou a RTX 3050 com 6144 MiB. O wrapper confirmou QEMU PID 15624 listado como processo gráfico NVIDIA antes do Gradle. Relatório instrumentado atualizado às 14:49:34. O wrapper encerrou o AVD iniciado por ele; adb devices ficou sem emuladores."
     },
     {
       "id": "portal-correct-platform-percentages-2026-10-04",
@@ -454,6 +510,20 @@
       "startedAt": "2026-10-04T14:32:00-03:00",
       "updatedAt": "2026-10-04T14:34:42-03:00",
       "evidence": "BUILD SUCCESSFUL, exit code 0 em :feature:item-detail:lintDebug, :app:lintDebug, :app:assembleDebug, :app:compileDebugAndroidTestKotlin e :feature:item-detail:testDebugUnitTest. Módulo executou 80 testes JVM; 80 passaram, 0 falhas/erros/skips. Saída foi apenas app-debug.apk local, sem build nem assinatura de produção. AVDs fechados."
+    },
+    {
+      "id": "server-feedback-user-scope-2026-10-04",
+      "title": "Identidade obrigatória em solicitações e reports",
+      "agent": "Codex",
+      "front": "Servidor / API de feedback",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix\\MulletaFlix-master",
+      "location": "Jellyfin.Api local; sem acesso à instalação de produção",
+      "scope": "Rejeitar MediaRequests GET/POST e PlaybackIssues POST quando principal autenticado não contém UserId; proteger contra API key sem usuário",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-04T15:40:00-03:00",
+      "updatedAt": "2026-10-04T15:54:29-03:00",
+      "evidence": "TDD: três testes API key sem UserId falharam antes e passaram depois. UserFeedback 15/15; Jellyfin.Api.Tests 458/458; build Release Jellyfin.Api 0 avisos/0 erros; git diff --check passou. T6.1 permanece parcial; sem release ou publicação enquanto roadmap estiver ativo."
     }
   ]
 }
