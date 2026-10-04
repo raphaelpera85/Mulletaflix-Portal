@@ -22,6 +22,8 @@
   const renderFeatures = data => {
     const features = Array.isArray(data.features) ? data.features : [];
     byId('feature-count').textContent = `${features.length} itens acompanhados`;
+    const tracks = (data.tracks || []).filter(track => track.homologation);
+    byId('track-summary-table').innerHTML = tracks.length ? tracks.map(track => { const h = track.homologation; const percent = Number.isFinite(Number(h.percent)) ? `${Number(h.percent)}%` : '—'; return `<tr><td><strong>${escapeHtml(track.name)}</strong></td><td>${Number(h.completed) || 0}</td><td>${Number(h.total) || 0}</td><td><span class="status-chip ${statusClass(track.status)}"><i></i>${escapeHtml(percent)}</span></td><td>${escapeHtml(h.label || 'Evidência não informada')}</td></tr>`; }).join('') : '<tr><td colspan="5" class="empty-cell">Nenhum resumo por plataforma foi publicado.</td></tr>';
     byId('feature-table').innerHTML = features.length ? features.map(feature => `<tr><td><strong>${escapeHtml(feature.id)}</strong></td><td>${escapeHtml(feature.name)}</td><td>${escapeHtml(feature.area)}</td><td><span class="status-chip ${statusClass(feature.status)}"><i></i>${escapeHtml(statusText[feature.status] || feature.status)}</span></td></tr>`).join('') : '<tr><td colspan="4" class="empty-cell">Nenhuma funcionalidade foi publicada no contrato de homologação.</td></tr>';
   };
   const renderTracks = (data, runs, releases) => {
@@ -41,7 +43,11 @@
       const detail = run ? `Último workflow: ${date(run.updated_at)}` : release ? `Release estável: ${escapeHtml(release.tag_name)}` : 'Aguardando evidência pública.';
       const progress = Number.isFinite(Number(track.progressPercent)) ? Math.max(0, Math.min(100, Number(track.progressPercent))) : null;
       const progressLine = progress === null ? 'Percentual: aguardando registro do agente' : `Percentual: ${progress}%`;
-      return `<article class="track-card"><div class="track-top"><span class="status-chip ${statusClass(state)}"><i></i>${escapeHtml(label)}</span><span class="track-kind">${escapeHtml(track.kind)}</span></div><h3>${escapeHtml(track.name)}</h3><p>${escapeHtml(detail)}</p><div class="track-progress"><strong>${progressLine}</strong></div><div class="track-source">Fonte: ${escapeHtml(track.source)}</div></article>`;
+      const homologation = track.homologation || {};
+      const homologationPercent = Number.isFinite(Number(homologation.percent)) ? Math.max(0, Math.min(100, Number(homologation.percent))) : null;
+      const homologationLabel = homologationPercent === null ? 'Homologação: aguardando dados' : `Homologação: ${homologationPercent}%`;
+      const homologationCount = homologation.total ? `${Number(homologation.completed) || 0}/${Number(homologation.total)}` : '—';
+      return `<article class="track-card"><div class="track-top"><span class="status-chip ${statusClass(state)}"><i></i>${escapeHtml(label)}</span><span class="track-kind">${escapeHtml(track.kind)}</span></div><h3>${escapeHtml(track.name)}</h3><p>${escapeHtml(detail)}</p><div class="track-progress"><strong>${homologationLabel}</strong><span> · ${homologationCount} ${escapeHtml(homologation.unit || 'verificações')}</span>${homologationPercent === null ? '' : `<div class="track-progress-bar"><i style="width:${homologationPercent}%"></i></div>`}</div><div class="track-evidence">${escapeHtml(homologation.label || 'Evidência ainda não registrada.')}</div><div class="track-source">Fonte: ${escapeHtml(track.source)}</div></article>`;
     }).join('');
     const lastRun = (runs || []).slice().sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))[0];
     byId('live-updated').textContent = `Última leitura pública: ${date(lastRun?.updated_at || new Date())}`;
