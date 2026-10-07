@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T22:06:33-03:00",
+  "generatedAt": "2026-10-07T02:25:24-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
   },
   "coverage": {
-    "completed": 293,
+    "completed": 297,
     "pending": 68,
-    "total": 361,
+    "total": 365,
     "definition": "Checklists de funcionalidades do roadmap (cada checkbox conta como um item); tarefas com evento ativo identificado aparecem como em execução.",
     "inProgress": 0
   },
@@ -2536,6 +2536,20 @@
       "id": "W3.3",
       "name": "Otimizar posters/backdrops",
       "area": "Web",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "W3.3.1",
+      "name": "`components/common/Image.tsx` usa `LazyLoadImage` (fora do viewport) e `BlurhashCanvas` como placeholder enquanto a imagem real carrega; prop `priority` permite marcar a imagem…",
+      "area": "Web",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "W3.3.2",
+      "name": "Pendente: medir ganho real (CLS/LCP) com e sem essas otimizações em dispositivo/rede de referência — ver W3.1",
+      "area": "Web",
       "status": "pending",
       "source": "roadmap"
     },
@@ -2667,6 +2681,20 @@
     },
     {
       "id": "T9.1.2",
+      "name": "Updater Windows — rejeitar credenciais em argumentos e ocultar detalhes do request",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T9.1.3",
+      "name": "Updater Windows — fixar caminho e revalidar ACL antes de ler segredo",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T9.1.4",
       "name": "Fluxo Windows — parcial; validação privilegiada pendente",
       "area": "Servidor",
       "status": "pending",
@@ -3828,6 +3856,34 @@
       "startedAt": "06/10/2026 23:51:00",
       "updatedAt": "07/10/2026 00:39:00",
       "evidence": "Migração e release concluídas com sucesso: (1) strm_downloader.py, feed_ftp.py e supabase_sync.py empacotados em Tools/NebulaPython/tools; (2) NebulaFtpManager gerencia main.py (aioftp na 2121, Pyrogram multi-bot uploads, stream HTTP na 2123) e strm_downloader.py (multipart 32 partes) com cache de reprodução local integrado (NEBULA_PLAYBACK_CACHE_ROOT e leases IPC); (3) Parse e sincronização de progresso e logs em tempo real para Web UI; (4) Fix de timeout do Supabase com paginação 100; (5) Testes da suíte Jellyfin.Server.Implementations.Tests aprovados com 1.371 testes verdes (exit code 0); (6) Build da Web aprovado com tsc --noEmit (exit code 0); (7) Pacote de atualização e instalador Windows v12.1.15 gerados e publicados no GitHub Releases com 2 assets verificados (mulletaflix-update-win-x64.zip 370.45MB e mulletaflix_12.1.15_windows-x64.exe 403.72MB); (8) Portal sincronizado para MulletaFlix-Portal (commit 952a62e), deploy Vercel READY e rotas públicas /, /docs, /downloads, /updates, /homologacao e /sitemap.xml validadas com HTTP 200."
+    },
+    {
+      "id": "server-supabase-batch-progress-2026-10-07",
+      "title": "Mensagens de progresso por lote no envio do backup para o Supabase",
+      "agent": "Antigravity",
+      "front": "server",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula",
+      "scope": "Adicionar emissão de log e notificação de progresso a cada lote enviado para o Supabase no serviço de sincronização nativo, além de logging em lotes de usuários e restauração",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-07T01:21:00-03:00",
+      "updatedAt": "2026-10-07T01:30:00-03:00",
+      "evidence": "Implementação concluída com sucesso: (1) Adicionada notificação a cada lote Chunk(100) enviado para nebula_files via _logger e progressAction com formato '[SUPABASE-SYNC] Lote X/Y enviado com sucesso (Z/Total arquivos)'; (2) Adicionadas mensagens de progresso para lotes de usuários FTP, bot tokens e usuários do MulletaFlix; (3) Adicionado log de progresso por lote na restauração; (4) Corrigida condição em EnsureDatabaseRestoredIfEmptyAsync para não disparar auto-restauração quando appUserBackupCount for 0; (5) Testes unitários do Supabase Sync validados: 32/32 aprovados em NebulaSupabaseSyncTests; suíte completa do Nebula validada com 580 aprovados, 0 falhas (exit code 0); (6) Backup em execução em tempo real concluído com sucesso às 01:23:47 com 43.704 arquivos, 7 usuários e 28 tokens em 637,9s."
+    },
+    {
+      "id": "t9-1-windows-updater-path-acl-guard-2026-10-07",
+      "title": "Revalidar caminho e ACL no updater DuckDNS Windows (T9.1)",
+      "agent": "Codex",
+      "front": "server",
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "tools/release/duckdns-update.ps1 e testes isolados; sem tocar DNS, credenciais de produção, tarefa agendada ou serviço",
+      "scope": "Exigir o caminho dedicado ProgramData\\MulletaFlix-DuckDNS\\duckdns.json e validar ACL/owner/reparse points antes da leitura do segredo; provar rejeição de caminhos e ACL adulterados sem requests externos.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-07T02:15:10-03:00",
+      "updatedAt": "2026-10-07T02:23:44-03:00",
+      "evidence": "Implementação local concluída: updater agora prende ConfigPath ao arquivo exato CommonApplicationData\\MulletaFlix-DuckDNS\\duckdns.json, verifica existência, percorre todos os componentes e rejeita reparse points, e valida owner confiável + DACL protegida com somente SYSTEM/Administrators e FullControl no diretório e arquivo antes de ler token. Erros de validação são genéricos; a leitura usa o caminho canônico validado. Testes PowerShell isolados exercitam caminho externo, reparse point simulado, owner não confiável, ACL herdada e principal adicional; teste de integração rejeita caminho fora da raiz antes de ler ou fazer request. Gauntlet final: node --test tools/release/tests/windows-duckdns-token-transport.test.mjs passou 16/16; powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tools/release/tests/configure-https-credential.tests.ps1 exit 0; git diff --check exit 0. Transporte permanece coberto por falha mockada/redirect e pelo Invoke-WebRequest real em loopback, sem acesso externo. Nenhuma credencial real, DNS, tarefa agendada, serviço, instalação elevada ou produção foi tocada. progressPercent null, pois não há métrica formal de homologação. Escopo parcial de T9.1; validação elevada, NSIS/VM, rollback e outras pendências Windows permanecem. Alteração de código ainda local, não publicada; nenhuma release criada devido ao gate ativo do roadmap."
     }
   ]
 }
