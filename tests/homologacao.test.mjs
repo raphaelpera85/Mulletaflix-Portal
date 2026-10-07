@@ -70,10 +70,10 @@ test('renders every roadmap item and matching coverage counters', async () => {
     const dashboard = createDashboard();
     await settleDashboard();
 
-    assert.equal(dashboard.getElement('coverage-total').textContent, 371);
-    assert.equal(dashboard.getElement('coverage-completed').textContent, 303);
+    assert.equal(dashboard.getElement('coverage-total').textContent, 372);
+    assert.equal(dashboard.getElement('coverage-completed').textContent, 304);
     assert.equal(dashboard.getElement('coverage-pending').textContent, 68);
-    assert.match(dashboard.getElement('feature-count').textContent, /^371 tarefas/);
+    assert.match(dashboard.getElement('feature-count').textContent, /^372 tarefas/);
     assert.equal((dashboard.getElement('feature-table').innerHTML.match(/<tr>/g) || []).length, 25);
     assert.equal(dashboard.getElement('feature-page-number').textContent, 'Página 1 de 15');
 });
