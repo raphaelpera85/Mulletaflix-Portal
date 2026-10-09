@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-08T22:07:41-03:00",
+  "generatedAt": "2026-10-08T22:13:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -4703,11 +4703,11 @@
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "TDD-PLAN.md, docs/TDD-PROJECT.md e inventários Android, iOS, servidor, Nebula Python, Web, portal e ferramentas",
       "scope": "Consolidar ciclo RED-GREEN-REFACTOR, quality gates, inventário real de suítes e backlog de lacunas por frente; sem alegar que todo o legado foi escrito por TDD ou homologado.",
-      "status": "completed",
+      "status": "blocked",
       "progressPercent": null,
       "startedAt": "2026-10-08T22:05:20-03:00",
-      "updatedAt": "2026-10-08T22:07:41-03:00",
-      "evidence": "Plano TDD integrado atualizado em `TDD-PLAN.md` e `docs/TDD-PROJECT.md`, com fluxo RED-GREEN-REFACTOR, gates e lacunas reais por frente. Inventário estático: Android 18 módulos/239 arquivos JVM/143 instrumentados; iOS 2 arquivos XCTest; .NET 17 projetos de teste; Nebula Python 37 arquivos; Web 74 unitários, 20 Playwright padrão, 3 e2e fora do padrão e 4 features Cucumber; portal 4 testes; suites release Bash/Node/Pester identificadas. Portal local: 4/4 testes e sitemap 7/7 canônicas. Android nesta rodada: 1.539 testes JVM aprovados e 3/3 instrumentados. Suítes .NET, Python, Web, iOS e release não executadas; legado não recebe selo TDD retroativo. progressPercent permanece null: a cobertura formal de todo o projeto não está consolidada."
+      "updatedAt": "2026-10-08T22:13:05-03:00",
+      "evidence": "Plano TDD integrado atualizado em `TDD-PLAN.md` e `docs/TDD-PROJECT.md`, com fluxo RED-GREEN-REFACTOR, gates e lacunas reais por frente. Inventário estático: Android 18 módulos/239 arquivos JVM/143 instrumentados; iOS 2 arquivos XCTest; .NET 17 projetos de teste; Nebula Python 37 arquivos; Web 74 unitários, 20 Playwright padrão, 3 e2e fora do padrão e 4 features Cucumber; portal 4 testes; suites release Bash/Node/Pester identificadas. Portal local: 4/4 testes e sitemap 7/7 canônicas. Android nesta rodada: 1.539 testes JVM aprovados e 3/3 instrumentados. Suítes .NET, Python, Web, iOS e release não executadas; legado não recebe selo TDD retroativo. Portal: commit `100d52e` foi enviado e `/`, `/docs`, `/downloads`, `/updates`, `/homologacao`, `/sitemap.xml` e `/homologacao-status.json` retornaram HTTP 200; o JSON publicado contém este evento. A API Vercel recusou inspeção de projeto/deployment (403 para o escopo `raphaelpera85s-projects`) e Vercel CLI não está instalado; não foi possível confirmar estado READY vinculado ao commit. Falha de autorização registrada; implantação formal permanece bloqueada. progressPercent permanece null: a cobertura formal de todo o projeto não está consolidada."
     },
     {
       "id": "android-lan-identity-route-guard-2026-10-08-2206",
