@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T11:07:24-03:00",
+  "generatedAt": "2026-10-13T11:12:33-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2952,8 +2952,8 @@
       "status": "completed",
       "progressPercent": null,
       "startedAt": "2026-10-13T10:54:00-03:00",
-      "updatedAt": "2026-10-13T11:01:35-03:00",
-      "evidence": "TDD RED: AppUpdateCheckEffectTest falhou pela asserção esperada; após desabilitar o efeito, callbacks subiram de 2 para 5. GREEN: o efeito observa enabled e cancela o loop; `AppUpdateCheckEffectTest` passou 2/2 no AVD PHONE/API 35. `AppUpdatePolicyTest` passou 5/5; `MainActivitySessionNavigationTest` passou 9/9 em execução anterior. Quality gate `testDebugUnitTest :app:lintDebug :app:assembleDebug :app:compileDebugAndroidTestKotlin --no-daemon --console=plain` passou; 1.735 testes JVM em 252 XML, zero falhas/erros/ignorados. AVD executada via wrapper com GPU NVIDIA e encerrada. Isto melhora hermeticidade de testes; não fecha área funcional nem altera homologação formal: 11/21 localmente evidenciadas, 1 em validação, 9 pendentes, formalSignoff pending. Sem release/APK de produção e sem alteração do servidor."
+      "updatedAt": "2026-10-13T11:11:48-03:00",
+      "evidence": "TDD RED: AppUpdateCheckEffectTest falhou pela asserção esperada; após desabilitar o efeito, callbacks subiram de 2 para 5. GREEN: o efeito observa enabled e cancela o loop; `AppUpdateCheckEffectTest` passou 2/2 no AVD PHONE/API 35; XML preservado em MulletaFlix-android/validation-evidence/2026-10-13/AppUpdateCheckEffectTest-PHONE-API35.xml. `AppUpdatePolicyTest` passou 5/5; `MainActivitySessionNavigationTest` passou 9/9 em execução anterior. Quality gate `testDebugUnitTest :app:lintDebug :app:assembleDebug :app:compileDebugAndroidTestKotlin --no-daemon --console=plain` passou; 1.735 testes JVM em 252 XML, zero falhas/erros/ignorados. AVD executada via wrapper com GPU NVIDIA e encerrada. Isto melhora hermeticidade de testes; não fecha área funcional nem altera homologação formal: 11/21 localmente evidenciadas, 1 em validação, 9 pendentes, formalSignoff pending. Limite: policy e lifecycle são testados em camadas, mas a Activity não intercepta sockets GitHub ponta a ponta. Sem release/APK de produção e sem alteração do servidor."
     },
     {
       "id": "android-session-navigation-stability-2026-10-13",
