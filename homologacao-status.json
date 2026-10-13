@@ -144,7 +144,7 @@
         "id": "APK-H10",
         "name": "SyncPlay e continuidade de sessão",
         "status": "completed",
-        "evidence": "Testes unitários/instrumentados e histórico de releases registram sincronização e ciclo de sessão; sincronização entre aparelhos de produção não foi verificada aqui."
+        "evidence": "Testes unitários/instrumentados e histórico de releases registram sincronização e ciclo de sessão. Integrações MockWebServer/peer TCP local verificam handshake, evento após falha HTTP 503, fechamento iniciado pelo servidor, resposta ao close frame, 1005 sentinela sem status respondido com 1000 válido, evento Disconnected, reconexão e cancelamento de retry confirmado ativo com stop; sincronização entre aparelhos/servidor de produção continua sem validação."
       },
       {
         "id": "APK-H11",
@@ -2981,7 +2981,7 @@
       "progressPercent": null,
       "startedAt": "2026-10-13T11:12:33-03:00",
       "updatedAt": "2026-10-13T11:28:12-03:00",
-      "evidence": "Teste JVM com MockWebServer validou handshake WebSocket e recebimento de SyncPlayCommand pelo fluxo público events (1/1). Quality gate Android concluído: 1.736 testes JVM em 264 relatórios, zero falhas/erros/ignorados; lint de :core:api e :app, assembleDebug e compilação AndroidTest de ambos passaram. Revisão independente corrigiu o nome do teste para refletir somente handshake/comando; onClosed/onFailure, Disconnected e cancelamento de reconexão depois de stop continuam pendentes. A matriz formal permanece 11/21 áreas concluídas, 1 em validação, 9 pendentes; formalSignoff pending. Resultado é evidência local, não aceite formal nem validação de dispositivo/servidor. Nenhuma release/APK de produção criada."
+      "evidence": "Registro histórico de 13/10/2026: teste JVM com MockWebServer validou handshake WebSocket e recebimento de SyncPlayCommand pelo fluxo público events (1/1). A cobertura subsequente de onClosing/onClosed, onFailure, Disconnected, retry e stop está registrada no evento android-syncplay-remote-close-2026-10-13."
     },
     {
       "id": "android-update-effect-test-isolation-2026-10-13",

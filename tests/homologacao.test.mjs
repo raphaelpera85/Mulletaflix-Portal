@@ -193,8 +193,9 @@ test('portal records SyncPlay event-flow integration without formal acceptance',
 
     assert.ok(event, 'portal should reflect the newly verified SyncPlay integration test');
     assert.match(event.evidence, /MockWebServer/);
-    assert.match(event.evidence, /1\.736 testes JVM em 264 relatórios/);
-    assert.match(event.evidence, /onClosed\/onFailure.*continuam pendentes/);
+    assert.match(event.evidence, /Registro histórico de 13\/10\/2026/);
+    assert.match(event.evidence, /cobertura subsequente de onClosing\/onClosed, onFailure, Disconnected, retry e stop/);
+    assert.ok(statusData.events.some(item => item.id === 'android-syncplay-remote-close-2026-10-13'));
     assert.equal(android.testAudit.passed, 1740);
     assert.equal(android.testAudit.total, 1740);
     assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
