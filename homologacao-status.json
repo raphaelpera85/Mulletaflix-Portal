@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T13:00:53-03:00",
+  "generatedAt": "2026-10-13T13:18:38-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2965,8 +2965,8 @@
       "scope": "Tentar executar a instrumentação de permissão Android 17/API 37 em AVD temporário; sem alterar o APK ou servidor.",
       "status": "blocked",
       "progressPercent": null,
-      "updatedAt": "2026-10-13T12:52:12-03:00",
-      "evidence": "AVD temporário MulletaflixLanPermApi37_20261013 usou imagem Google APIs 37.0 rev. 6. ADB e Package Manager responderam, mas sys.boot_completed permaneceu vazio e sys.system_server.start_count chegou a 18. A execução foi interrompida antes de Gradle/instrumentação; nenhum teste foi contado. NVIDIA RTX 3050 foi confirmada durante a tentativa; o wrapper encerrou o AVD e ADB terminou sem dispositivos. APK-H14 continua pendente e formalSignoff permanece pending. Próximo passo: diagnosticar ou substituir a imagem de teste antes de repetir a validação."
+      "updatedAt": "2026-10-13T13:18:38-03:00",
+      "evidence": "Tentativa adicional com AVD temporário Pixel 6, imagem Google APIs 37.0 rev. 6 e 4 GB de RAM: o boot iniciou, mas surfaceflinger abortou repetidamente com `!rcEnc->featureInfo()->hasReadColorBufferDma`. A tentativa de desabilitar Vulkan não resolveu; a instrumentação/Gradle não iniciaram e nenhum caso de permissão foi contado. NVIDIA RTX 3050 foi usada durante a execução; o wrapper foi interrompido, encerrou o AVD e ADB terminou sem dispositivos. Junto da tentativa anterior na mesma imagem (Package Manager disponível, boot incompleto), isso caracteriza bloqueio de ambiente, não falha do APK. APK-H14 continua pendente, formalSignoff permanece pending. Próximo passo: obter imagem/versão de Emulator compatível e repetir os testes de runtime ACCESS_LOCAL_NETWORK antes de mudar o aceite."
     },
     {
       "id": "android-book-reader-cold-start-harness-2026-10-13",
