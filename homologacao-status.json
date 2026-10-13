@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T10:08:55-03:00",
+  "generatedAt": "2026-10-13T10:29:32-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -59,11 +59,11 @@
         "label": "JUnit auditável local: 1.734 aprovados, 0 ignorados, 0 falhas/erros; agregação dos 252 relatórios Gradle em 13/10/2026."
       },
       "instrumentationAudit": {
-        "passed": 15,
-        "total": 15,
+        "passed": 24,
+        "total": 24,
         "skipped": 0,
         "failed": 0,
-        "label": "Media3/player 5/5; leitura HTTPS 1/1; DownloadManager HTTP LAN 1/1, HTTPS remoto 1/1; ExoPlayer legenda HTTPS 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; Coil imagem HTTPS decodificada 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; biblioteca offline/reconexão 1/1; contrato NetworkSecurityPolicy + guard cleartext 1/1; pausa/retomada individual Media3 1/1 em PHONE/API 35. AVD isolado; GPU NVIDIA verificada."
+        "label": "Media3/player 5/5; leitura HTTPS 1/1; DownloadManager HTTP LAN 1/1, HTTPS remoto 1/1; ExoPlayer legenda HTTPS 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; Coil imagem HTTPS decodificada 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; biblioteca offline/reconexão 1/1; contrato NetworkSecurityPolicy + guard cleartext 1/1; pausa/retomada individual Media3 1/1; MainActivitySessionNavigationTest 9/9 em PHONE/API 35. Execuções focais em AVD; GPU NVIDIA verificada."
       }
     },
     {
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "android-session-navigation-stability-2026-10-13",
+      "title": "Reteste de estabilidade da navegação cross-server no Android",
+      "agent": "Codex",
+      "front": "android",
+      "featureIds": [],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-android/app/src/androidTest — MainActivitySessionNavigationTest",
+      "scope": "Reexecutar a classe instrumentada completa após uma falha intermitente histórica; escopo somente APK.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-13T10:27:35-03:00",
+      "updatedAt": "2026-10-13T10:29:32-03:00",
+      "evidence": "MainActivitySessionNavigationTest passou 9/9 no AVD MulletaflixCodexPhoneApi35_20261012 (PHONE/API 35), XML TEST-MulletaflixCodexPhoneApi35_20261012(AVD) - 15.xml, 0 falhas/erros/ignorados; wrapper encerrou o emulador. Duas execuções completas anteriores também passaram 9/9, mas uma falha histórica 8/9 permanece sem causa confirmada. O reteste aumenta a evidência de estabilidade, não valida servidor ou aparelho reais e não muda a matriz formal: Android segue 11/21 áreas, 1 em validação, 9 pendentes e formalSignoff pending. Nenhuma release criada; servidor fora do escopo."
+    },
     {
       "id": "android-per-download-pause-resume-2026-10-13",
       "title": "Pausa e retomada individual de downloads no Android",
