@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T11:28:12-03:00",
+  "generatedAt": "2026-10-13T12:35:41-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -51,19 +51,19 @@
         "label": "11 de 21 áreas com evidência técnica local; 1 em validação e 9 pendentes. Aceite formal continua aberto."
       },
       "testAudit": {
-        "passed": 1736,
-        "total": 1736,
+        "passed": 1740,
+        "total": 1740,
         "skipped": 0,
         "failed": 0,
         "percent": 100,
-        "label": "JUnit auditável local: 1.736 aprovados, 0 ignorados, 0 falhas/erros; agregação dos 264 relatórios Gradle em 13/10/2026."
+        "label": "JUnit auditável local: 1.740 aprovados, 0 ignorados, 0 falhas/erros; agregação dos 252 relatórios Gradle em 13/10/2026."
       },
       "instrumentationAudit": {
-        "passed": 26,
-        "total": 26,
+        "passed": 30,
+        "total": 30,
         "skipped": 0,
         "failed": 0,
-        "label": "Media3/player 5/5; leitura HTTPS 1/1; DownloadManager HTTP LAN 1/1, HTTPS remoto 1/1; ExoPlayer legenda HTTPS 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; Coil imagem HTTPS decodificada 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; biblioteca offline/reconexão 1/1; contrato NetworkSecurityPolicy + guard cleartext 1/1; pausa/retomada individual Media3 1/1; MainActivitySessionNavigationTest 9/9; AppUpdateCheckEffectTest 2/2 em PHONE/API 35. Execuções focais em AVD; GPU NVIDIA verificada."
+        "label": "Media3/player 5/5; leitura HTTPS 1/1; DownloadManager HTTP LAN 1/1, HTTPS remoto 1/1; ExoPlayer legenda HTTPS 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; Coil imagem HTTPS decodificada 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; biblioteca offline/reconexão 1/1; contrato NetworkSecurityPolicy + guard cleartext 1/1; pausa/retomada individual Media3 1/1; MainActivitySessionNavigationTest 9/9; AppUpdateCheckEffectTest 2/2; cold start da Activity principal 4/4 fases em PHONE/API 35. Execuções focais em AVD; GPU NVIDIA verificada."
       }
     },
     {
@@ -210,7 +210,7 @@
         "id": "APK-H21",
         "name": "Leitura de EPUB/CBZ servidos pela instância real",
         "status": "pending",
-        "evidence": "A leitura local/parsers possui evidência de teste; falta validar livros reais via API autenticada, MIME/respostas do servidor e retomada nos dispositivos-alvo."
+        "evidence": "A leitura local/parsers possui evidência de teste; Activity principal restaurou sessão e abriu/renderizou livro sintético após morte real do processo (cold start PHONE/API 35); harness exige metadata + /BookReader/Epub e não depende do polling best-effort de /BookReader/Status. Falta validar livros reais via API autenticada, MIME/respostas do servidor, Back/D-pad e retomada nos dispositivos-alvo."
       }
     ]
   },
@@ -2940,6 +2940,34 @@
     }
   ],
   "events": [
+    {
+      "id": "android-book-reader-cold-start-harness-2026-10-13",
+      "title": "Corrigir falso negativo e validar cold start do leitor principal",
+      "agent": "Codex",
+      "front": "android",
+      "featureIds": [],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-android/tools/Test-AndroidBookMainProcessColdStart.ps1 e MainActivityBookColdStartTest",
+      "scope": "Remover do aceite do harness a rota best-effort de status e verificar leitura após morte real do processo principal com serviço sintético; somente APK/testes.",
+      "status": "completed",
+      "progressPercent": null,
+      "updatedAt": "2026-10-13T12:25:56-03:00",
+      "evidence": "TDD RED: Pester falhou 1/1 porque o host exigia /BookReader/Status. GREEN: lista obrigatória agora verifica metadata do item e /BookReader/Epub; a rota opcional foi removida. Execução com tools/with-emulator.ps1 no AVD temporário PHONE/API 35: captura de sessão 1/1, preparação 1/1, relançamento após force-stop e renderização do livro 1/1, restauração de sessão 1/1; PID 3555→3644. O host confirmou as rotas necessárias, GPU NVIDIA foi verificada, AVD foi encerrado e ADB ficou vazio. Pester 1/1, parser PowerShell e node --check passaram. Servidor e conteúdo sintéticos; APK-H21 permanece pendente para instância real, dispositivos físicos, Back/D-pad e arquivos reais. formalSignoff pending; sem release, APK de produção, portal publicado ou mudança do servidor."
+    },
+    {
+      "id": "android-syncplay-remote-close-2026-10-13",
+      "title": "Corrigir fechamento remoto e reconexão do SyncPlay realtime",
+      "agent": "Codex",
+      "front": "android",
+      "featureIds": [],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-android/core/api — SyncPlayRealtimeClient e testes MockWebServer",
+      "scope": "Responder ao close frame remoto, preservar evento de desconexão/reconexão e cancelar retry ao sair; somente APK, sem mudança do servidor.",
+      "status": "completed",
+      "progressPercent": null,
+      "updatedAt": "2026-10-13T12:02:49-03:00",
+      "evidence": "TDD RED reproduziu timeout no fechamento remoto; em frame TCP sem status, o peer não recebeu resposta. GREEN: onClosing responde somente para socket da geração/sala atual e converte sentinela 1005 em status válido 1000. MockWebServer validou falha HTTP 503 (Disconnected → Connected) e fechamento remoto (Connected → Disconnected → Connected); peer TCP confirmou quadro de resposta mascarado com 1000 usando um único fluxo de entrada. Com TestCoroutineScheduler, o teste captura o job de retry durante o backoff suspenso, chama stop e confirma cancelamento e ausência da segunda requisição após avançar o relógio virtual. Testes focais SyncPlayRealtimeClientTest passaram; gate Android BUILD SUCCESSFUL: 1.740 testes JVM em 252 relatórios, 0 falhas/erros/ignorados; lint :core:api/:app, assembleDebug e compilação AndroidTest :core:api/:app passaram. Matriz continua 11/21 áreas com evidência local, 1 em validação, 9 pendentes; formalSignoff pending. Loopback/MockWebServer não valida servidor de mídia ou aparelho real. Sem APK/release de produção."
+    },
     {
       "id": "android-syncplay-realtime-event-flow-2026-10-13",
       "title": "Cobrir eventos WebSocket do SyncPlay",
