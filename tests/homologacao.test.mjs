@@ -138,9 +138,9 @@ test('portal publishes current per-download pause and resume evidence without cl
     const downloads = statusData.androidHomologation.areas.find(area => area.id === 'APK-H07');
     const event = statusData.events.find(item => item.id === 'android-per-download-pause-resume-2026-10-13');
 
-    assert.equal(statusData.generatedAt, '2026-10-13T11:12:33-03:00');
-    assert.equal(android.testAudit.passed, 1735);
-    assert.equal(android.testAudit.total, 1735);
+    assert.equal(statusData.generatedAt, '2026-10-13T11:28:12-03:00');
+    assert.equal(android.testAudit.passed, 1736);
+    assert.equal(android.testAudit.total, 1736);
     assert.equal(android.instrumentationAudit.passed, 26);
     assert.match(downloads.evidence, /HTTP Range até COMPLETED/);
     assert.ok(event, 'portal should include the current Android development event');
@@ -171,16 +171,32 @@ test('portal records update-effect test isolation without changing formal homolo
     const android = statusData.tracks.find(track => track.id === 'android');
     const event = statusData.events.find(item => item.id === 'android-update-effect-test-isolation-2026-10-13');
 
-    assert.equal(statusData.generatedAt, '2026-10-13T11:12:33-03:00');
+    assert.equal(statusData.generatedAt, '2026-10-13T11:28:12-03:00');
     assert.match(event.evidence, /Activity não intercepta sockets GitHub ponta a ponta/);
     assert.match(event.evidence, /AppUpdateCheckEffectTest-PHONE-API35\.xml/);
-    assert.equal(android.testAudit.passed, 1735);
+    assert.equal(android.testAudit.passed, 1736);
     assert.equal(android.instrumentationAudit.passed, 26);
     assert.match(android.instrumentationAudit.label, /AppUpdateCheckEffectTest 2\/2/);
     assert.ok(event, 'portal should record the completed Android test isolation update');
     assert.match(event.evidence, /TDD RED/);
     assert.match(event.evidence, /AppUpdateCheckEffectTest` passou 2\/2/);
     assert.match(event.evidence, /Quality gate .* passou/);
+    assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'completed').length, 11);
+    assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'in_progress').length, 1);
+    assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'pending').length, 9);
+});
+
+test('portal records SyncPlay event-flow integration without formal acceptance', async () => {
+    const android = statusData.tracks.find(track => track.id === 'android');
+    const event = statusData.events.find(item => item.id === 'android-syncplay-realtime-event-flow-2026-10-13');
+
+    assert.ok(event, 'portal should reflect the newly verified SyncPlay integration test');
+    assert.match(event.evidence, /MockWebServer/);
+    assert.match(event.evidence, /1\.736 testes JVM em 264 relatórios/);
+    assert.match(event.evidence, /onClosed\/onFailure.*continuam pendentes/);
+    assert.equal(android.testAudit.passed, 1736);
+    assert.equal(android.testAudit.total, 1736);
     assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
     assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'completed').length, 11);
     assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'in_progress').length, 1);
