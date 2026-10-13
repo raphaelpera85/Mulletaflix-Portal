@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T12:35:41-03:00",
+  "generatedAt": "2026-10-13T13:00:53-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -59,11 +59,11 @@
         "label": "JUnit auditável local: 1.740 aprovados, 0 ignorados, 0 falhas/erros; agregação dos 252 relatórios Gradle em 13/10/2026."
       },
       "instrumentationAudit": {
-        "passed": 30,
-        "total": 30,
+        "passed": 36,
+        "total": 36,
         "skipped": 0,
         "failed": 0,
-        "label": "Media3/player 5/5; leitura HTTPS 1/1; DownloadManager HTTP LAN 1/1, HTTPS remoto 1/1; ExoPlayer legenda HTTPS 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; Coil imagem HTTPS decodificada 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; biblioteca offline/reconexão 1/1; contrato NetworkSecurityPolicy + guard cleartext 1/1; pausa/retomada individual Media3 1/1; MainActivitySessionNavigationTest 9/9; AppUpdateCheckEffectTest 2/2; cold start da Activity principal 4/4 fases em PHONE/API 35. Execuções focais em AVD; GPU NVIDIA verificada."
+        "label": "Media3/player 5/5; leitura HTTPS 1/1; DownloadManager HTTP LAN 1/1, HTTPS remoto 1/1; ExoPlayer legenda HTTPS 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; Coil imagem HTTPS decodificada 1/1 e redirect HTTPS→HTTP público bloqueado 1/1; biblioteca offline/reconexão 1/1; contrato NetworkSecurityPolicy + guard cleartext 1/1; pausa/retomada individual Media3 1/1; MainActivitySessionNavigationTest 9/9; AppUpdateCheckEffectTest 2/2; cold start da Activity principal 4/4 fases em PHONE/API 35; ConnectivityNetworkCallbackTest 3/3 PHONE/API 35 e 3/3 PHONE/API 24 (inclui ramificação legacy). Execuções focais em AVD; GPU NVIDIA verificada."
       }
     },
     {
@@ -79,8 +79,8 @@
     "sourceUrl": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-android/TODO-APP.md",
     "scopeNote": "A matriz formal tem 21 áreas: 11 com evidência técnica local, 1 em validação e 9 pendentes. Testes automatizados e checkboxes do TODO não equivalem a aceite funcional. Nenhuma release de produção é certificada por esta matriz; o backlog integral permanece em TODO-APP.md.",
     "taskChecklist": {
-      "checked": 227,
-      "unchecked": 48,
+      "checked": 228,
+      "unchecked": 47,
       "total": 275,
       "definition": "Contagem literal de checkboxes desde o início do TODO-APP.md até antes do cabeçalho 'Funcionalidades APK validadas localmente, ainda não publicadas'; exclui o histórico arquivado e não equivale a percentual de homologação."
     },
@@ -2940,6 +2940,34 @@
     }
   ],
   "events": [
+    {
+      "id": "android-connectivity-callback-api24-api35-2026-10-13",
+      "title": "Validar callbacks de conectividade em Android antigo e moderno",
+      "agent": "Codex",
+      "front": "android",
+      "featureIds": [],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-android/core/common/src/androidTest — ConnectivityNetworkCallbackTest",
+      "scope": "Caracterizar lookup legacy de capabilities/medição em API 24 e callbacks modernos em API 35; APK/testes apenas.",
+      "status": "completed",
+      "progressPercent": null,
+      "updatedAt": "2026-10-13T13:00:53-03:00",
+      "evidence": "ConnectivityNetworkCallbackTest passou 3/3 em PHONE/API 35 e 3/3 em PHONE/API 24. O teste novo usa Build.VERSION.SDK_INT; em API 24 observou schedule de lookup legacy após onAvailable e reconciliação de capabilities/estado tarifado; API 35 confirmou capabilities entregues. NVIDIA RTX 3050 verificada nos dois AVDs; wrapper encerrou ambos e ADB ficou sem dispositivos. Esta caracterização de callback com a rede ativa do AVD não valida roteador ou descoberta entre dispositivos físicos, múltiplas redes, cancelamento do Flow nem permissão ACCESS_LOCAL_NETWORK API 37. APK-H14 permanece pendente; matriz 11/21, 1 em validação, 9 pendentes e formalSignoff pending. Nenhuma release APK criada."
+    },
+    {
+      "id": "android-local-network-api37-emulator-boot-blocked-2026-10-13",
+      "title": "Tentativa de validar permissão de rede local na API 37 bloqueada pelo boot do AVD",
+      "agent": "Codex",
+      "front": "android",
+      "featureIds": [],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-android/feature/auth — ACCESS_LOCAL_NETWORK e LocalServerDiscoveryPermissionTest",
+      "scope": "Tentar executar a instrumentação de permissão Android 17/API 37 em AVD temporário; sem alterar o APK ou servidor.",
+      "status": "blocked",
+      "progressPercent": null,
+      "updatedAt": "2026-10-13T12:52:12-03:00",
+      "evidence": "AVD temporário MulletaflixLanPermApi37_20261013 usou imagem Google APIs 37.0 rev. 6. ADB e Package Manager responderam, mas sys.boot_completed permaneceu vazio e sys.system_server.start_count chegou a 18. A execução foi interrompida antes de Gradle/instrumentação; nenhum teste foi contado. NVIDIA RTX 3050 foi confirmada durante a tentativa; o wrapper encerrou o AVD e ADB terminou sem dispositivos. APK-H14 continua pendente e formalSignoff permanece pending. Próximo passo: diagnosticar ou substituir a imagem de teste antes de repetir a validação."
+    },
     {
       "id": "android-book-reader-cold-start-harness-2026-10-13",
       "title": "Corrigir falso negativo e validar cold start do leitor principal",

@@ -115,7 +115,7 @@ test('formal Android matrix separates local evidence from pending product accept
     assert.match(dashboard.getElement('android-homologation-table').innerHTML, /Descoberta e troca automática entre LAN e internet/);
     assert.match(dashboard.getElement('android-homologation-table').innerHTML, /receiver Chromecast\/Web real/);
     assert.match(dashboard.getElement('android-homologation-table').innerHTML, /Leitura de EPUB\/CBZ servidos pela instância real/);
-    assert.match(dashboard.getElement('android-task-checklist').textContent, /227\/275 marcados e 48 abertos/);
+    assert.match(dashboard.getElement('android-task-checklist').textContent, /228\/275 marcados e 47 abertos/);
 });
 
 test('portal renders every formal Android area and preserves its status evidence', async () => {
@@ -138,10 +138,10 @@ test('portal publishes current per-download pause and resume evidence without cl
     const downloads = statusData.androidHomologation.areas.find(area => area.id === 'APK-H07');
     const event = statusData.events.find(item => item.id === 'android-per-download-pause-resume-2026-10-13');
 
-    assert.equal(statusData.generatedAt, '2026-10-13T12:35:41-03:00');
+    assert.equal(statusData.generatedAt, '2026-10-13T13:00:53-03:00');
     assert.equal(android.testAudit.passed, 1740);
     assert.equal(android.testAudit.total, 1740);
-    assert.equal(android.instrumentationAudit.passed, 30);
+    assert.equal(android.instrumentationAudit.passed, 36);
     assert.match(downloads.evidence, /HTTP Range até COMPLETED/);
     assert.ok(event, 'portal should include the current Android development event');
     assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
@@ -171,11 +171,11 @@ test('portal records update-effect test isolation without changing formal homolo
     const android = statusData.tracks.find(track => track.id === 'android');
     const event = statusData.events.find(item => item.id === 'android-update-effect-test-isolation-2026-10-13');
 
-    assert.equal(statusData.generatedAt, '2026-10-13T12:35:41-03:00');
+    assert.equal(statusData.generatedAt, '2026-10-13T13:00:53-03:00');
     assert.match(event.evidence, /Activity não intercepta sockets GitHub ponta a ponta/);
     assert.match(event.evidence, /AppUpdateCheckEffectTest-PHONE-API35\.xml/);
     assert.equal(android.testAudit.passed, 1740);
-    assert.equal(android.instrumentationAudit.passed, 30);
+    assert.equal(android.instrumentationAudit.passed, 36);
     assert.match(android.instrumentationAudit.label, /AppUpdateCheckEffectTest 2\/2/);
     assert.ok(event, 'portal should record the completed Android test isolation update');
     assert.match(event.evidence, /TDD RED/);
@@ -215,9 +215,51 @@ test('portal includes reader cold-start evidence without closing APK-H21 or form
     assert.match(area.evidence, /\/BookReader\/Epub/);
     assert.equal(area.status, 'pending');
     assert.equal(android.testAudit.passed, 1740);
-    assert.equal(android.instrumentationAudit.passed, 30);
+    assert.equal(android.instrumentationAudit.passed, 36);
     assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
     assert.equal(statusData.androidHomologation.areas.filter(item => item.status === 'completed').length, 11);
     assert.equal(statusData.androidHomologation.areas.filter(item => item.status === 'in_progress').length, 1);
     assert.equal(statusData.androidHomologation.areas.filter(item => item.status === 'pending').length, 9);
+});
+
+test('portal records API 37 emulator boot blocker without counting tests or closing APK-H14', () => {
+    const android = statusData.tracks.find(track => track.id === 'android');
+    const area = statusData.androidHomologation.areas.find(item => item.id === 'APK-H14');
+    const event = statusData.events.find(item => item.id === 'android-local-network-api37-emulator-boot-blocked-2026-10-13');
+
+    assert.ok(event);
+    assert.equal(event.status, 'blocked');
+    assert.match(event.evidence, /sys\.system_server\.start_count.*18/);
+    assert.match(event.evidence, /nenhum teste foi contado/);
+    assert.equal(android.instrumentationAudit.passed, 36);
+    assert.equal(android.instrumentationAudit.failed, 0);
+    assert.equal(area.status, 'pending');
+    assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
+});
+
+test('portal records Android API 24 and 35 connectivity callback validation without closing APK-H14', () => {
+    const android = statusData.tracks.find(track => track.id === 'android');
+    const checklist = statusData.androidHomologation.taskChecklist;
+    const area = statusData.androidHomologation.areas.find(item => item.id === 'APK-H14');
+    const event = statusData.events.find(item => item.id === 'android-connectivity-callback-api24-api35-2026-10-13');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /passou 3\/3 em PHONE\/API 35 e 3\/3 em PHONE\/API 24/);
+    assert.equal(android.instrumentationAudit.passed, 36);
+    assert.equal(android.instrumentationAudit.total, 36);
+    assert.equal(checklist.checked, 228);
+    assert.equal(checklist.unchecked, 47);
+    assert.equal(area.status, 'pending');
+    assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
+});
+
+test('portal renders blocked validation events with a Portuguese warning state', async () => {
+    const dashboard = createDashboard();
+    await settleDashboard();
+
+    const events = dashboard.getElement('event-list').innerHTML;
+    assert.match(events, /Tentativa de validar permissão de rede local na API 37/);
+    assert.match(events, /Bloqueado/);
+    assert.match(events, /event-dot is-warn/);
 });
