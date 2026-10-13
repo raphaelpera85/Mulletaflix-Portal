@@ -138,10 +138,10 @@ test('portal publishes current per-download pause and resume evidence without cl
     const downloads = statusData.androidHomologation.areas.find(area => area.id === 'APK-H07');
     const event = statusData.events.find(item => item.id === 'android-per-download-pause-resume-2026-10-13');
 
-    assert.equal(statusData.generatedAt, '2026-10-13T10:29:32-03:00');
-    assert.equal(android.testAudit.passed, 1734);
-    assert.equal(android.testAudit.total, 1734);
-    assert.equal(android.instrumentationAudit.passed, 24);
+    assert.equal(statusData.generatedAt, '2026-10-13T11:07:24-03:00');
+    assert.equal(android.testAudit.passed, 1735);
+    assert.equal(android.testAudit.total, 1735);
+    assert.equal(android.instrumentationAudit.passed, 26);
     assert.match(downloads.evidence, /HTTP Range até COMPLETED/);
     assert.ok(event, 'portal should include the current Android development event');
     assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
@@ -158,8 +158,27 @@ test('portal records the complete session-navigation retest without changing for
 
     assert.ok(event, 'portal should record the latest complete session-navigation run');
     assert.match(event.evidence, /passou 9\/9/);
+    assert.match(event.evidence, /MainActivitySessionNavigationTest-PHONE-API35\.xml/);
     assert.match(event.evidence, /falha histórica 8\/9 permanece sem causa confirmada/);
     assert.match(android.instrumentationAudit.label, /MainActivitySessionNavigationTest 9\/9/);
+    assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'completed').length, 11);
+    assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'in_progress').length, 1);
+    assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'pending').length, 9);
+});
+
+test('portal records update-effect test isolation without changing formal homologation', async () => {
+    const android = statusData.tracks.find(track => track.id === 'android');
+    const event = statusData.events.find(item => item.id === 'android-update-effect-test-isolation-2026-10-13');
+
+    assert.equal(statusData.generatedAt, '2026-10-13T11:07:24-03:00');
+    assert.equal(android.testAudit.passed, 1735);
+    assert.equal(android.instrumentationAudit.passed, 26);
+    assert.match(android.instrumentationAudit.label, /AppUpdateCheckEffectTest 2\/2/);
+    assert.ok(event, 'portal should record the completed Android test isolation update');
+    assert.match(event.evidence, /TDD RED/);
+    assert.match(event.evidence, /AppUpdateCheckEffectTest` passou 2\/2/);
+    assert.match(event.evidence, /Quality gate .* passou/);
     assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
     assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'completed').length, 11);
     assert.equal(statusData.androidHomologation.areas.filter(area => area.status === 'in_progress').length, 1);
