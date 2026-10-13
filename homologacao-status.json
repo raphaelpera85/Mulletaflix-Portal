@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T13:18:38-03:00",
+  "generatedAt": "2026-10-13T13:44:20-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -51,12 +51,12 @@
         "label": "11 de 21 áreas com evidência técnica local; 1 em validação e 9 pendentes. Aceite formal continua aberto."
       },
       "testAudit": {
-        "passed": 1740,
-        "total": 1740,
+        "passed": 1741,
+        "total": 1741,
         "skipped": 0,
         "failed": 0,
         "percent": 100,
-        "label": "JUnit auditável local: 1.740 aprovados, 0 ignorados, 0 falhas/erros; agregação dos 252 relatórios Gradle em 13/10/2026."
+        "label": "JUnit auditável local: 1.741 aprovados, 0 ignorados, 0 falhas/erros; agregação dos 252 relatórios Gradle em 13/10/2026."
       },
       "instrumentationAudit": {
         "passed": 36,
@@ -108,7 +108,7 @@
         "id": "APK-H04",
         "name": "Bibliotecas, paginação, capas, filtros e ordenação",
         "status": "completed",
-        "evidence": "Testes locais de biblioteca, scroll/paginação, ordenação e perfis de tela registrados. Integração instrumentada adicional passou 1/1: tela real + ViewModel + repositório DataStore + NetworkMonitor, restauração offline após recriação de composição/ViewModel e atualização após reconexão; serviço simulado, não inclui morte real do processo. Aceite visual em aparelhos físicos continua separado."
+        "evidence": "Testes locais de biblioteca, scroll/paginação, ordenação e perfis de tela registrados. Integração instrumentada adicional passou 1/1: tela real + ViewModel + repositório DataStore + NetworkMonitor, restauração offline após recriação de composição/ViewModel e atualização após reconexão; serviço simulado, não inclui morte real do processo. Em 13/10/2026, HomeFeedCacheScopeTest passou 5/5 e confirmou que URLs fallback no escopo de cache offline da Home com HTTPS :443/HTTP :80 explícitas equivalem às portas padrão implícitas, enquanto a porta customizada 8443 continua isolada. Aceite visual em aparelhos físicos continua separado."
       },
       {
         "id": "APK-H05",
@@ -2940,6 +2940,20 @@
     }
   ],
   "events": [
+    {
+      "id": "android-home-cache-default-port-normalization-2026-10-13",
+      "title": "Normalizar portas padrão no escopo fallback do cache da Home",
+      "agent": "Codex",
+      "front": "android",
+      "featureIds": [],
+      "local": "MulletaFlix-android",
+      "location": "MulletaFlix-android/data — HomeFeedCacheRepositoryImpl e HomeFeedCacheScopeTest",
+      "scope": "Tratar URLs equivalentes com portas padrão como a mesma origem para o cache offline da Home quando serverId não está disponível; preservar portas não padrão e isolamento por usuário.",
+      "status": "completed",
+      "progressPercent": null,
+      "updatedAt": "2026-10-13T13:44:20-03:00",
+      "evidence": "TDD RED reproduziu a divergência: HomeFeedCacheScopeTest teve 4 aprovados e 1 falha esperada (ComparisonFailure) entre HTTPS sem porta e :443. GREEN passou 5/5: HTTPS :443 e HTTP :80 agora equivalem às portas padrão implícitas; HTTPS :8443 continua distinto. Quality gate Android BUILD SUCCESSFUL: 1.741 testes JVM em 252 relatórios, 0 falhas/erros/ignorados; :data:lintDebug, :app:lintDebug, :app:assembleDebug, :data:compileDebugAndroidTestKotlin e :app:compileDebugAndroidTestKotlin passaram. Isto não valida reconstrução do DataStore concreto nem estado corrompido; HTTPS/HTTP são comparados separadamente e o isolamento por servidor/usuário continua. Homologação formal permanece 11/21 áreas com evidência local, 1 em validação, 9 pendentes e formalSignoff pending. Nenhuma release APK ou mudança do servidor."
+    },
     {
       "id": "android-connectivity-callback-api24-api35-2026-10-13",
       "title": "Validar callbacks de conectividade em Android antigo e moderno",
