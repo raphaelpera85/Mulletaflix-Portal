@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-14T14:34:06-03:00",
+  "generatedAt": "2026-10-14T14:36:14-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -96,7 +96,7 @@
         "id": "APK-H02",
         "name": "Autenticação, sessão e troca de conta/servidor",
         "status": "in_progress",
-        "evidence": "Em 14/10/2026, 104 testes unitários do módulo auth passaram (0 falhas/erros/ignorados). O novo teste instrumentado de troca de servidor desde Perfil chegou à tela de login, mas falhou ao aguardar o retorno ao catálogo após autenticação (timeout de 20 s); XML preservado em MulletaFlix-android/validation-evidence/2026-10-14/profile-server-switch-login-red.xml. A causa/correção ainda não foi confirmada; reteste PHONE/API 35 e teste de Voltar pendentes. Aceite integrado com servidor real e aceite formal continuam pendentes."
+        "evidence": "Em 14/10/2026, 108 testes unitários do módulo auth passaram (0 falhas/erros/ignorados). O novo teste instrumentado de troca de servidor desde Perfil chegou à tela de login, mas falhou ao aguardar o retorno ao catálogo após autenticação (timeout de 20 s); XML preservado em MulletaFlix-android/validation-evidence/2026-10-14/profile-server-switch-login-red.xml. A causa/correção ainda não foi confirmada; reteste PHONE/API 35 e teste de Voltar pendentes. Aceite integrado com servidor real e aceite formal continuam pendentes."
       },
       {
         "id": "APK-H03",
@@ -2952,8 +2952,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-14T14:31:00-03:00",
-      "updatedAt": "2026-10-14T14:34:06-03:00",
-      "evidence": "TDD ainda em andamento. O teste instrumentado PHONE/API 35 chega ao login do novo servidor, envia a autenticação e falha ao aguardar o retorno ao catálogo por 20 s; XML preservado em MulletaFlix-android/validation-evidence/2026-10-14/profile-server-switch-login-red.xml. A falha inicial confirma que o cenário não está homologado; a causa exata ainda está sob investigação e nenhum reteste verde foi obtido. A suíte unitária isolada do módulo auth passou 104/104 (0 ignorados/falhas/erros); isso não substitui o teste instrumentado. APK-H02 reaberta para validação (10/21 concluídas, 2 em validação, 9 pendentes); aceite formal segue pendente. Sem versão, APK de produção, release ou alteração de servidor."
+      "updatedAt": "2026-10-14T14:36:14-03:00",
+      "evidence": "TDD ainda em andamento. O teste instrumentado PHONE/API 35 chega ao login do novo servidor, envia a autenticação e falha ao aguardar o retorno ao catálogo por 20 s; XML preservado em MulletaFlix-android/validation-evidence/2026-10-14/profile-server-switch-login-red.xml. A falha inicial confirma que o cenário não está homologado; a causa exata ainda está sob investigação e nenhum reteste verde foi obtido. A suíte unitária isolada do módulo auth passou 108/108 (0 ignorados/falhas/erros); isso não substitui o teste instrumentado. APK-H02 reaberta para validação (10/21 concluídas, 2 em validação, 9 pendentes); aceite formal segue pendente. Sem versão, APK de produção, release ou alteração de servidor."
     },
     {
       "id": "android-home-cache-datastore-persistence-2026-10-13",

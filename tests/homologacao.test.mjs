@@ -174,9 +174,9 @@ test('portal reports the latest server-switch login regression as in progress, n
     const area = statusData.androidHomologation.areas.find(item => item.id === 'APK-H02');
     const event = statusData.events.find(item => item.id === 'android-profile-server-switch-login-investigation-2026-10-14');
 
-    assert.equal(statusData.generatedAt, '2026-10-14T14:34:06-03:00');
+    assert.equal(statusData.generatedAt, '2026-10-14T14:36:14-03:00');
     assert.equal(area.status, 'in_progress');
-    assert.match(area.evidence, /104 testes unitários.*passaram/);
+    assert.match(area.evidence, /108 testes unitários.*passaram/);
     assert.match(area.evidence, /falhou ao aguardar o retorno ao catálogo/);
     assert.equal(android.homologation.completed, 10);
     assert.equal(android.homologation.total, 21);
