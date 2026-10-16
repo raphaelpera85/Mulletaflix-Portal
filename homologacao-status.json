@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T20:39:35-03:00",
+  "generatedAt": "2026-10-16T20:51:13-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
       },
       "testAudit": {
-        "passed": 1437,
-        "total": 1497,
-        "skipped": 60,
+        "passed": 4882,
+        "total": 4943,
+        "skipped": 61,
         "failed": 0,
-        "percent": 96,
-        "label": "Release estável 12.1.21. Revalidação local: Jellyfin.Server.Implementations.Tests 1.437 aprovados, 60 ignorados, 0 falhas; testes Nebula filtrados 643 aprovados, 21 ignorados; build Release Jellyfin.Server 0 erros e 7 avisos XML. CI GitHub mais recente (run 38981348548) não iniciou os 11 jobs por bloqueio de cobrança da conta (runner_id=0; sem etapas executadas). Homologação formal e smoke tests de produção permanecem pendentes."
+        "percent": 98.8,
+        "label": "Release estável 12.1.21. Suíte determinística da solução em Release (`dotnet test MulletaFlix.sln --configuration Release --no-build --no-restore --filter FullyQualifiedName!~Integration`): 4.882 aprovados, 61 ignorados, 0 falhas (4.943 total). Build Release da solução (`dotnet build MulletaFlix.sln --configuration Release --no-restore`): 0 avisos e 0 erros. A suíte exclui testes Integration/live externos e não substitui smoke test instalado/produção; homologação formal permanece pendente. CI remoto mais recente ainda bloqueado por cobrança GitHub (run 38981348548, nenhum job executado)."
       }
     },
     {
@@ -2954,6 +2954,23 @@
       "startedAt": "2026-10-16T20:25:20-03:00",
       "updatedAt": "2026-10-16T20:39:35-03:00",
       "evidence": "Testes locais passaram: filtro Nebula 643/664 aprovados (21 ignorados), suíte Implementations 1.437/1.497 aprovados (60 ignorados, zero falhas); build Release Jellyfin.Server com zero erros e sete avisos XML de documentação. GitHub Actions run 38981348548, head fda1d245, terminou failure em todos os 11 jobs antes de executar qualquer etapa: runner_id=0 e annotation oficial 'The job was not started because your account is locked due to a billing issue.' É bloqueio de cobrança da conta, não falha de código/teste. A release estável v12.1.21 já existe; sem alteração de servidor para nova release. Homologação formal, CI remoto e smoke test instalado/produção continuam pendentes."
+    },
+    {
+      "id": "server-full-solution-tests-release-build-2026-10-16-2051",
+      "title": "Suíte determinística integral e build Release do servidor",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [
+        "T0.3"
+      ],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix.sln — testes .NET e build Release",
+      "scope": "Revalidar a solução em Release, fechar build limpo e publicar evidência atualizada de homologação sem declarar cobertura de integrações externas ou aceite de produção.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T20:40:00-03:00",
+      "updatedAt": "2026-10-16T20:51:13-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-build --no-restore --filter FullyQualifiedName!~Integration --verbosity minimal`: 4.882 aprovados, 61 ignorados, 0 falhas (4.943 total). `dotnet build MulletaFlix.sln --configuration Release --no-restore --verbosity quiet`: sucesso, 0 avisos e 0 erros. Testes Integration/live externos não foram executados; nenhuma instância de produção ou mídia real foi usada. A release estável v12.1.21 permanece mais recente e o diff do subtree MulletaFlix-master desde essa tag é vazio; nenhuma nova release de servidor foi criada. CI remoto segue bloqueado pelo problema de cobrança documentado no evento anterior; homologação formal e smoke test de produção continuam pendentes."
     },
     {
       "id": "server-nebula-configured-monitor-paths-2026-10-16",

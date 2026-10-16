@@ -341,9 +341,9 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
-    assert.equal(audit.passed, 1437);
-    assert.equal(audit.total, 1497);
-    assert.equal(audit.skipped, 60);
+    assert.equal(audit.passed, 4882);
+    assert.equal(audit.total, 4943);
+    assert.equal(audit.skipped, 61);
     assert.equal(audit.failed, 0);
 
     const dashboard = createDashboard();
@@ -351,19 +351,26 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula restrito às pastas de biblioteca configuradas/);
 });
 
-test('server audit distinguishes passing local tests from GitHub billing-blocked CI', async () => {
+test('server audit publishes the complete local suite and preserves the remote CI blocker', async () => {
     const server = statusData.tracks.find(track => track.id === 'server');
     const event = statusData.events.find(item => item.id === 'server-ci-billing-block-2026-10-16-2039');
+    const suiteEvent = statusData.events.find(item => item.id === 'server-full-solution-tests-release-build-2026-10-16-2051');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /7 avisos XML/);
-    assert.match(server.testAudit.label, /bloqueio de cobrança/);
+    assert.match(server.testAudit.label, /4\.882 aprovados, 61 ignorados, 0 falhas/);
+    assert.match(server.testAudit.label, /0 avisos e 0 erros/);
+    assert.match(server.testAudit.label, /homologação formal permanece pendente/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
     assert.equal(event.status, 'blocked');
     assert.match(event.evidence, /runner_id=0/);
     assert.match(event.evidence, /locked due to a billing issue/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+    assert.ok(suiteEvent);
+    assert.equal(suiteEvent.status, 'completed');
+    assert.match(suiteEvent.evidence, /Integration\/live externos não foram executados/);
+    assert.match(suiteEvent.evidence, /nenhuma nova release de servidor foi criada/);
+    assert.ok(Date.parse(suiteEvent.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
     await settleDashboard();
