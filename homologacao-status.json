@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T20:21:41-03:00",
+  "generatedAt": "2026-10-16T20:39:35-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -17,7 +17,7 @@
       "id": "server",
       "name": "Servidor Windows/Linux",
       "kind": "server",
-      "status": "completed",
+      "status": "in_progress",
       "progressPercent": null,
       "source": "GitHub Actions e testes de integração",
       "homologation": {
@@ -33,7 +33,7 @@
         "skipped": 60,
         "failed": 0,
         "percent": 96,
-        "label": "Release 12.1.21: Jellyfin.Server.Implementations.Tests 1.437 aprovados, 60 ignorados, 0 falhas; NebulaDownloaderEngineTests 43/43. Build Release Jellyfin.Server sem avisos/erros; portal independente 17/17. Gate anterior da solução passou 4.384 e ignorou 65; a repetição final ficou inconclusiva por bloqueio do testhost de integração. Sem teste funcional em produção."
+        "label": "Release estável 12.1.21. Revalidação local: Jellyfin.Server.Implementations.Tests 1.437 aprovados, 60 ignorados, 0 falhas; testes Nebula filtrados 643 aprovados, 21 ignorados; build Release Jellyfin.Server 0 erros e 7 avisos XML. CI GitHub mais recente (run 38981348548) não iniciou os 11 jobs por bloqueio de cobrança da conta (runner_id=0; sem etapas executadas). Homologação formal e smoke tests de produção permanecem pendentes."
       }
     },
     {
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-ci-billing-block-2026-10-16-2039",
+      "title": "Revalidação do servidor e bloqueio externo do CI remoto",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T0.3"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "GitHub Actions run 38981348548; Jellyfin.Server.Implementations.Tests; Jellyfin.Server build",
+      "scope": "Repetir testes locais, confirmar o estado do pipeline remoto e refletir a homologação real sem criar release duplicada.",
+      "status": "blocked",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T20:25:20-03:00",
+      "updatedAt": "2026-10-16T20:39:35-03:00",
+      "evidence": "Testes locais passaram: filtro Nebula 643/664 aprovados (21 ignorados), suíte Implementations 1.437/1.497 aprovados (60 ignorados, zero falhas); build Release Jellyfin.Server com zero erros e sete avisos XML de documentação. GitHub Actions run 38981348548, head fda1d245, terminou failure em todos os 11 jobs antes de executar qualquer etapa: runner_id=0 e annotation oficial 'The job was not started because your account is locked due to a billing issue.' É bloqueio de cobrança da conta, não falha de código/teste. A release estável v12.1.21 já existe; sem alteração de servidor para nova release. Homologação formal, CI remoto e smoke test instalado/produção continuam pendentes."
+    },
     {
       "id": "server-nebula-configured-monitor-paths-2026-10-16",
       "title": "Nebula restrito às pastas de biblioteca configuradas",

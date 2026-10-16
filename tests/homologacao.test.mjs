@@ -350,3 +350,22 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula restrito às pastas de biblioteca configuradas/);
 });
+
+test('server audit distinguishes passing local tests from GitHub billing-blocked CI', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-ci-billing-block-2026-10-16-2039');
+
+    assert.equal(server.status, 'in_progress');
+    assert.match(server.testAudit.label, /7 avisos XML/);
+    assert.match(server.testAudit.label, /bloqueio de cobrança/);
+    assert.equal(server.testAudit.failed, 0);
+    assert.ok(event);
+    assert.equal(event.status, 'blocked');
+    assert.match(event.evidence, /runner_id=0/);
+    assert.match(event.evidence, /locked due to a billing issue/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /bloqueio externo do CI remoto/);
+});
