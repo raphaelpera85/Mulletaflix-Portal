@@ -138,7 +138,7 @@ test('portal publishes current per-download pause and resume evidence without cl
     const downloads = statusData.androidHomologation.areas.find(area => area.id === 'APK-H07');
     const event = statusData.events.find(item => item.id === 'android-per-download-pause-resume-2026-10-13');
 
-    assert.match(statusData.generatedAt, /^2026-10-14T14:\d{2}:\d{2}-03:00$/);
+    assert.match(statusData.generatedAt, /^2026-10-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
     assert.equal(android.testAudit.passed, 1741);
     assert.equal(android.testAudit.total, 1741);
     assert.equal(android.instrumentationAudit.passed, 40);
@@ -174,7 +174,7 @@ test('portal reports the latest server-switch login regression as in progress, n
     const area = statusData.androidHomologation.areas.find(item => item.id === 'APK-H02');
     const event = statusData.events.find(item => item.id === 'android-profile-server-switch-login-investigation-2026-10-14');
 
-    assert.equal(statusData.generatedAt, '2026-10-14T14:36:14-03:00');
+    assert.match(statusData.generatedAt, /^2026-10-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
     assert.equal(area.status, 'in_progress');
     assert.match(area.evidence, /108 testes unitários.*passaram/);
     assert.match(area.evidence, /falhou ao aguardar o retorno ao catálogo/);
@@ -194,7 +194,7 @@ test('portal records update-effect test isolation without changing formal homolo
     const android = statusData.tracks.find(track => track.id === 'android');
     const event = statusData.events.find(item => item.id === 'android-update-effect-test-isolation-2026-10-13');
 
-    assert.match(statusData.generatedAt, /^2026-10-14T14:\d{2}:\d{2}-03:00$/);
+    assert.match(statusData.generatedAt, /^2026-10-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
     assert.match(event.evidence, /Activity não intercepta sockets GitHub ponta a ponta/);
     assert.match(event.evidence, /AppUpdateCheckEffectTest-PHONE-API35\.xml/);
     assert.equal(android.testAudit.passed, 1741);
@@ -295,7 +295,7 @@ test('portal mirrors the Home cache URL-scope fix without closing formal homolog
     const area = statusData.androidHomologation.areas.find(item => item.id === 'APK-H04');
     const event = statusData.events.find(item => item.id === 'android-home-cache-default-port-normalization-2026-10-13');
 
-    assert.match(statusData.generatedAt, /^2026-10-14T14:\d{2}:\d{2}-03:00$/);
+    assert.match(statusData.generatedAt, /^2026-10-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
     assert.equal(android.testAudit.passed, 1741);
     assert.equal(android.testAudit.total, 1741);
     assert.match(android.testAudit.label, /1\.741 aprovados/);
@@ -330,4 +330,23 @@ test('portal records Home cache DataStore persistence tests without closing form
     assert.equal(statusData.androidHomologation.areas.filter(item => item.status === 'completed').length, 10);
     assert.equal(statusData.androidHomologation.areas.filter(item => item.status === 'in_progress').length, 2);
     assert.equal(statusData.androidHomologation.areas.filter(item => item.status === 'pending').length, 9);
+});
+
+test('portal publishes the completed MulletaFlix Server 12.1.21 release with validation limits', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-configured-monitor-paths-2026-10-16');
+    const audit = statusData.tracks.find(track => track.id === 'server').testAudit;
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
+    assert.match(event.evidence, /repetição final ficou inconclusiva/);
+    assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
+    assert.equal(audit.passed, 1437);
+    assert.equal(audit.total, 1497);
+    assert.equal(audit.skipped, 60);
+    assert.equal(audit.failed, 0);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula restrito às pastas de biblioteca configuradas/);
 });

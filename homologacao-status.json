@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-14T14:36:14-03:00",
+  "generatedAt": "2026-10-16T20:21:41-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
       },
       "testAudit": {
-        "passed": null,
-        "total": null,
-        "skipped": null,
-        "failed": null,
-        "percent": null,
-        "label": "Resultados das suites da rodada registrados por projeto no evento ativo; relatório TRX agregado e auditável ainda não consolidado."
+        "passed": 1437,
+        "total": 1497,
+        "skipped": 60,
+        "failed": 0,
+        "percent": 96,
+        "label": "Release 12.1.21: Jellyfin.Server.Implementations.Tests 1.437 aprovados, 60 ignorados, 0 falhas; NebulaDownloaderEngineTests 43/43. Build Release Jellyfin.Server sem avisos/erros; portal independente 17/17. Gate anterior da solução passou 4.384 e ignorou 65; a repetição final ficou inconclusiva por bloqueio do testhost de integração. Sem teste funcional em produção."
       }
     },
     {
@@ -2941,6 +2941,21 @@
   ],
   "events": [
     {
+      "id": "server-nebula-configured-monitor-paths-2026-10-16",
+      "title": "Nebula restrito às pastas de biblioteca configuradas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "MulletaFlix Server 12.1.21",
+      "location": "GitHub Release v12.1.21 e configuração Nebula",
+      "scope": "Impedir monitoramento de pastas fora de MonitorPaths e evitar raiz de volume como diretório de staging.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T19:44:00-03:00",
+      "updatedAt": "2026-10-16T20:21:41-03:00",
+      "evidence": "Release publicada: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.21 (commit e7222044). Artefatos Windows update ZIP, Windows installer e Linux x64 anexados. Validação: Jellyfin.Server.Implementations.Tests 1.437 aprovados, 60 ignorados, 0 falhas; testes Nebula 43/43; build Release Jellyfin.Server sem avisos/erros; portal independente 17/17. Gate agregado anterior passou 4.384 testes e ignorou 65, excluindo LiveIntegration; repetição final ficou inconclusiva após testhost de integração ASP.NET sem progresso por mais de cinco minutos. Publicação não valida reprodução, upload/download nem instalação no servidor de produção."
+    },
+    {
       "id": "android-profile-server-switch-login-investigation-2026-10-14",
       "title": "Investigar falha instrumentada ao trocar de servidor pelo Perfil",
       "agent": "Codex",
@@ -3132,7 +3147,12 @@
       "title": "Reduzir demora de inicialização e melhorar throughput de upload Nebula",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.1", "T0.3", "T2.1", "T4.2"],
+      "featureIds": [
+        "T0.1",
+        "T0.3",
+        "T2.1",
+        "T4.2"
+      ],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "MulletaFlix-master/Tools/NebulaPython/main.py, ftp/tg.py e testes",
       "scope": "Investigar as fases de startup/upload, reduzir verificações sequenciais dos bots e reaproveitar conexões HTTP do Bot API; validar com testes, build e medição controlada sem publicar release intermediária.",
@@ -3147,7 +3167,10 @@
       "title": "Atualizar baseline operacional para roadmap T0.1",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.1", "T0.4"],
+      "featureIds": [
+        "T0.1",
+        "T0.4"
+      ],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "tools/performance/measure-server-baseline.ps1 e docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
       "scope": "Executar amostra GET sequencial, read-only, na instância local se disponível; registrar versão, latência, recursos e limitações sem aplicar carga nem iniciar mídia.",
@@ -3162,7 +3185,10 @@
       "title": "Cobertura do fallback de autenticação FTP sem bcrypt",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.3", "T6.1"],
+      "featureIds": [
+        "T0.3",
+        "T6.1"
+      ],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "MulletaFlix-master/Tools/NebulaPython/ftp/auth.py",
       "scope": "Adicionar regressões para garantir que senha hashada nunca é aceita sem bcrypt e que a criação de hash exige a dependência segura.",
@@ -3177,7 +3203,10 @@
       "title": "Encerramento resiliente do control plane Nebula",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.3", "T2.6"],
+      "featureIds": [
+        "T0.3",
+        "T2.6"
+      ],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "MulletaFlix-master/Tools/NebulaPython/control_plane.py",
       "scope": "Garantir fechamento do servidor HTTP mesmo se o subprocesso feeder falhar ao parar e permitir que o shutdown principal continue limpando os serviços.",
@@ -3192,7 +3221,9 @@
       "title": "Falhas e cancelamento na geração STRM",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.3"],
+      "featureIds": [
+        "T0.3"
+      ],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaStrmGenerator.cs",
       "scope": "Garantir que falha de escrita individual não seja apresentada como geração bem-sucedida e que cancelamento seja propagado; cobrir ambos sem banco/serviços externos.",
@@ -4901,7 +4932,12 @@
       "title": "Diagnosticar e corrigir demora de inicialização e falhas Nebula",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.1", "T0.3", "T2.1", "T4.2"],
+      "featureIds": [
+        "T0.1",
+        "T0.3",
+        "T2.1",
+        "T4.2"
+      ],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula e MulletaFlix-master/Tools/NebulaPython",
       "scope": "Reduzir leituras integrais redundantes do Mongo no startup e corrigir upload Bot API acima do limite; verificar regressão de permissões legadas e erros de download com testes isolados.",
@@ -4946,7 +4982,11 @@
       "title": "Corrigir lentidão de upload e listagem incompleta do disco N",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.3", "T2.1", "T4.2"],
+      "featureIds": [
+        "T0.3",
+        "T2.1",
+        "T4.2"
+      ],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula e testes Nebula .NET",
       "scope": "Investigar concorrência do backup Supabase durante uploads e hierarquia Mongo de diretórios no FTP; corrigir apenas regressões reproduzidas e validar com testes/build de produção.",
@@ -4961,7 +5001,11 @@
       "title": "Confiabilidade do backup e concorrência de upload Nebula",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.3", "T2.1", "T4.2"],
+      "featureIds": [
+        "T0.3",
+        "T2.1",
+        "T4.2"
+      ],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula, testes Nebula .NET e schema Supabase",
       "scope": "Corrigir a consulta do cursor delta Supabase e sincronização/indexação após startup; impedir que uploads interrompidos e sem arquivo local mantenham a trava de backup; reduzir workers de upload ociosos e investigar throughput Nebula.",
@@ -4976,7 +5020,11 @@
       "title": "Corrigir interferência do backup automático e fechar validação Mongo/Nebula",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.3", "T2.1", "T4.2"],
+      "featureIds": [
+        "T0.3",
+        "T2.1",
+        "T4.2"
+      ],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula e testes Nebula .NET",
       "scope": "Usar os logs enviados para corrigir interferência do backup do Supabase nos uploads Telegram; executar integração Mongo real isolada, revisar hierarquia/listagem do N e registrar limites de validação de produção.",
