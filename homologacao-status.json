@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T03:33:45-03:00",
+  "generatedAt": "2026-10-17T03:37:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-download-current-runtime-2026-10-17-0337",
+      "title": "Revalidar falha de início do download Nebula",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "Nebula downloader instalado, fonte/stage e testes focados",
+      "scope": "Confirmar se o runtime ativo contém a correção de startup e validar a fonte, sem iniciar transferência ou alterar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T03:35:00-03:00",
+      "updatedAt": "2026-10-17T03:37:00-03:00",
+      "evidence": "Produção local segue em MulletaFlix 12.1.21; SHA-256 do strm_downloader.py instalado 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5, diferente da fonte/stage 12.1.22 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F. Logs mostram POST StartDownloader HTTP 200 após 15,74 s, sem provar item iniciado/transferido. Código fonte/stage validado: NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests 25/25; Python 3.10 scanner/helpers 86/86. Nenhum worker, transferência, config, instalação ou restart foi executado. Diagnóstico: a correção ainda não está implantada; produção permanece sem homologação do primeiro download. Release/instalação e smoke test controlado pendentes."
+    },
     {
       "id": "server-production-baseline-readonly-2026-10-17-0114",
       "title": "Atualizar baseline operacional do servidor instalado",
