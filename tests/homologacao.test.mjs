@@ -351,6 +351,23 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula restrito às pastas de biblioteca configuradas/);
 });
 
+test('portal publishes Nebula package and download-start validation without claiming production success', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-installer-validation-2026-10-17-0101');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /12\.1\.21.*stage 12\.1\.22/s);
+    assert.match(event.evidence, /581\/581.*10\/10/);
+    assert.match(event.evidence, /instalador Windows compilou com sucesso/);
+    assert.match(event.evidence, /Não houve instalação.*download real/);
+    assert.match(event.evidence, /Nenhum release publicado/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Validar pacote e correção do início do download Nebula/);
+});
+
 test('server audit publishes the complete local suite and preserves the remote CI blocker', async () => {
     const server = statusData.tracks.find(track => track.id === 'server');
     const event = statusData.events.find(item => item.id === 'server-ci-billing-block-2026-10-16-2039');

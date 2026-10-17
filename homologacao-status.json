@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T00:48:31-03:00",
+  "generatedAt": "2026-10-17T01:01:24-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-download-installer-validation-2026-10-17-0101",
+      "title": "Validar pacote e correção do início do download Nebula",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "Downloader STRM, stage Windows, instalador NSIS e testes Nebula",
+      "scope": "Validar correção do início por título A-Z e garantir bootstrap do rclone no instalador, sem instalar nem iniciar transferência em produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T00:48:31-03:00",
+      "updatedAt": "2026-10-17T01:01:24-03:00",
+      "evidence": "Instância local somente leitura continua em 12.1.21; stage 12.1.22 passou integridade, contém downloader com hash igual à fonte e o instalador Windows compilou com sucesso (SHA-256 BED442E38FA4B3113C63A2B65713853CBB374515B9BE8E42A810A41B51000F3D). Verificações locais: NebulaPython 581/581, NebulaDownloaderStartupTests 10/10, suíte determinística Server.Implementations 1.452 aprovados/60 ignorados; contratos PowerShell do bootstrap e integridade passaram. NSIS executa helper rclone com SHA-256 fixado antes do setup WinFsp e aborta se falhar. Não houve instalação, alteração de configuração, início/parada de worker, download real ou restart; rclone real não foi baixado. Primeiro download de mídia continua pendente; T2.1 e homologação seguem in_progress. Nenhum release publicado; gates planejados permanecem pendentes."
+    },
     {
       "id": "server-nebula-downloader-ready-handshake-2026-10-17-0000",
       "title": "Corrigir falso timeout no início do downloader Nebula",
