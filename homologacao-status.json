@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T03:18:22-03:00",
+  "generatedAt": "2026-10-17T03:25:51-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5375,6 +5375,21 @@
       "startedAt": "2026-10-17T03:10:00-03:00",
       "updatedAt": "2026-10-17T03:18:22-03:00",
       "evidence": "A API local ainda reporta 12.1.21 e não havia processo worker no snapshot; produção não recebeu instalação, restart, alteração de configuração ou transferência. NebulaDownloaderStartupTests: 10/10; Jellyfin.Api.Tests Release: 679/679; validador de stage passou após execução com os diretórios corretos. Ainda não houve smoke test Telegram real. A auditoria encontrou falha ao deletar imagem de usuário: DeleteUserImage capturava IOException, limpava a referência e retornava 204; a correção agora usa IFileSystem.DeleteFile e retorna 500 sem apagar a referência quando a exclusão falha. Testes focados da correção: 2/2. Nenhum release foi publicado: Linux não foi empacotado e o runtime produtivo continua 12.1.21; homologação T2.1 segue in_progress."
+    },
+    {
+      "id": "server-supabase-upload-admission-race-2026-10-17-0325",
+      "title": "Backup Supabase: corrida entre verificação ociosa e admissão Nebula",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.4"],
+      "local": "MulletaFlix-master",
+      "location": "Jellyfin.Server.Implementations/Nebula/NebulaSupabaseSyncService.cs; NebulaMongoContext.cs; NebulaUploadEngine.cs; NebulaStagingWatcher.cs; Tools/NebulaPython/main.py",
+      "scope": "Auditar se o backup automático realmente impede uploads de entrarem após a checagem de ociosidade e documentar lacunas de código/teste.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T03:20:00-03:00",
+      "updatedAt": "2026-10-17T03:25:51-03:00",
+      "evidence": "Confirmada janela entre PerformAutomaticBackupWhenIdleAsync verificar HasActiveUploadsAsync sem reserva e chamar PerformBackupAsync. Há três claims Python em main.py e admission C# por ClaimFileForUploadAsync/insert no NebulaUploadEngine; não compartilham gate. NebulaQueueConcurrencyMongoTests cobre só upload já ativo, não o interleaving check-idle→claim. Auditoria estática read-only; nenhum banco, worker ou produção foi acessado. Não se confirmou perda permanente: deltas futuros podem recapturar alterações. Correção segura exige barreira Mongo atômica comum a C#/Python com lease, heartbeat, liberação e recuperação; testes e implementação permanecem pendentes. Homologação T4.4 in_progress."
     }
   ]
 }

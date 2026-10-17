@@ -683,3 +683,19 @@ test('portal records the latest Nebula and image API regression evidence without
     assert.match(event.evidence, /não havia processo worker no snapshot/);
     assert.match(event.evidence, /ou transferência/);
 });
+
+test('portal records the Supabase backup and Nebula upload admission race as an open audit', () => {
+    const event = statusData.events.find(item => item.id === 'server-supabase-upload-admission-race-2026-10-17-0325');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T4.4']);
+    assert.match(event.evidence, /sem reserva.*PerformBackupAsync/);
+    assert.match(event.evidence, /três claims Python/);
+    assert.match(event.evidence, /não compartilham gate/);
+    assert.match(event.evidence, /não o interleaving/);
+    assert.match(event.evidence, /Auditoria estática read-only/);
+    assert.match(event.evidence, /Não se confirmou perda permanente/);
+    assert.match(event.evidence, /barreira Mongo atômica comum a C#\/Python/);
+});
