@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T08:59:00-03:00",
+  "generatedAt": "2026-10-17T09:08:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5765,6 +5765,21 @@
       "startedAt": "2026-10-17T08:55:00-03:00",
       "updatedAt": "2026-10-17T08:59:00-03:00",
       "evidence": "No HEAD d37df2d, o worker atualizava o índice Mongo antes de emitir qualquer prontidão e o manager aguardava exclusivamente `[STRM-SCAN-STARTED]`; um refresh acima de 60 s podia terminar no encerramento do processo pelo timeout. Corrigido para emitir e aceitar `[STRM-WORKER-READY]` antes do refresh, com status de preparação Mongo separado; o marcador de scan continua distinto e não afirma download. Testes observados: NebulaDownloaderStartupTests 11/11; NebulaPython 586/586; suíte .NET `FullyQualifiedName~Nebula` 660 aprovados, 23 ignorados, 0 falhas. Testes do portal 52/52. Instância continua 12.1.21; downloader instalado antigo, sem `mongo_admission.py`; nenhuma instalação, restart, worker ou transferência real ocorreu. Candidato 12.1.23 anterior não contém esta correção e precisa ser reconstruído; CI GitHub bloqueada por billing antes dos jobs e gh não autenticado. Nenhuma release criada; homologação segue in_progress."
+    },
+    {
+      "id": "server-nebula-download-runtime-stale-2026-10-17-0908",
+      "title": "Nebula: produção segue com downloader antigo; transferência não comprovada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "Logs e worker Python do Nebula em produção",
+      "scope": "Confirmar por evidência se o download Nebula iniciou e distinguir correção na fonte de implantação produtiva.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T09:03:00-03:00",
+      "updatedAt": "2026-10-17T09:08:00-03:00",
+      "evidence": "`/System/Info/Public` confirma MulletaFlix 12.1.21 ativo. O downloader instalado tem SHA-256 `3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5`; fonte atual tem `2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA` e contém scan incremental por categoria/título. Log registra POST StartDownloader HTTP 200 após 15,74 s e StopDownloader às 00:30, sem comprovar primeiro item ou transferência; GET do status autenticado retornou 401. Testes da fonte: NebulaDownloaderStartupTests 11/11 e Python focado 89/89. Nenhum worker, arquivo de mídia, configuração, instalação ou restart foi alterado. Correção não aplicada em produção. Pendências: pacote integral do HEAD, CI GitHub bloqueada por cobrança, publicação e janela controlada de instalação/restart seguida de transferência real. Homologação permanece in_progress."
     }
   ]
 }
