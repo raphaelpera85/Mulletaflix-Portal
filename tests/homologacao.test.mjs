@@ -6,7 +6,7 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
-function createDashboard() {
+function createDashboard(data = statusData) {
     const elements = new Map();
     const createElement = () => ({
         textContent: '',
@@ -39,7 +39,7 @@ function createDashboard() {
     const fetch = async url => ({
         ok: true,
         json: async () => url === 'homologacao-status.json'
-            ? statusData
+            ? data
             : url.includes('/actions/runs')
                 ? { workflow_runs: [] }
                 : []
@@ -281,7 +281,8 @@ test('portal records Android API 24 and 35 connectivity callback validation with
 });
 
 test('portal renders blocked validation events with a Portuguese warning state', async () => {
-    const dashboard = createDashboard();
+    const blockedEvent = statusData.events.find(item => item.id === 'android-local-network-api37-emulator-boot-blocked-2026-10-13');
+    const dashboard = createDashboard({ ...statusData, events: [blockedEvent, ...statusData.events.filter(item => item !== blockedEvent)] });
     await settleDashboard();
 
     const events = dashboard.getElement('event-list').innerHTML;
@@ -1035,6 +1036,25 @@ test('Nebula download remains pending while production uses the older worker run
     assert.match(event.evidence, /Nenhum worker\/download real.*restart executado/);
     assert.match(event.evidence, /publicação, instalação e smoke test continuam pendentes/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('Nebula download revalidation distinguishes passing source tests from stale production runtime', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-stale-2026-10-17-1123');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /API local responde 12\.1\.21/);
+    assert.match(event.evidence, /fonte 12\.1\.24/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests Release 11\/11/);
+    assert.match(event.evidence, /105\/105 testes Python focados/);
+    assert.match(event.evidence, /nenhum processo strm_downloader\.py foi observado/i);
+    assert.match(event.evidence, /Release\/instalação.*smoke test continuam pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: download ainda bloqueado pelo worker instalado antigo/);
 });
 
 test('public homologation data contains no absolute Windows user-profile paths', () => {

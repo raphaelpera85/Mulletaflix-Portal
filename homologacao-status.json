@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T11:14:00-03:00",
+  "generatedAt": "2026-10-17T11:23:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-download-runtime-stale-2026-10-17-1123",
+      "title": "Nebula: download ainda bloqueado pelo worker instalado antigo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "API local e validação da fonte",
+      "location": "NebulaFtpManager; Tools/NebulaPython/tools/strm_downloader.py; testes do servidor",
+      "scope": "Revalidar inicialização do downloader Nebula e diferenciar a fonte corrigida do runtime ativo; sem executar transferência real.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T11:14:00-03:00",
+      "updatedAt": "2026-10-17T11:23:00-03:00",
+      "evidence": "A API local responde 12.1.21, e o script instalado tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5, diferente da fonte 12.1.24 (2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA), que contém prontidão do worker antes do refresh Mongo e varredura incremental por título. Nenhum processo strm_downloader.py foi observado; o log disponível é do uploader, não prova tentativa do downloader. Testes da fonte: NebulaDownloaderStartupTests Release 11/11 e 105/105 testes Python focados. Nenhum worker, download real, instalação, configuração ou restart executado. Release/instalação em janela operacional e smoke test continuam pendentes."
+    },
     {
       "id": "server-nebula-stale-downloader-runtime-2026-10-17-1000",
       "title": "Diagnosticar Downloader STRM sem início de transferência",
