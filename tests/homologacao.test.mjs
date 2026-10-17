@@ -427,6 +427,6 @@ test('server Nebula download scan progress records production reproduction and s
     assert.match(event.evidence, /11m55 sem iniciar mídia/);
     assert.match(event.evidence, /571\/571 passou/);
     assert.match(event.evidence, /processa uma categoria por vez/);
-    assert.match(event.evidence, /695 avisos de analisadores/);
+    assert.match(event.evidence, /1\.077 avisos de analisadores/);
     assert.match(event.evidence, /Smoke test com binário atualizado.*pendentes/);
 });
