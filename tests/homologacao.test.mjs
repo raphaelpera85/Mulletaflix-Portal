@@ -1162,6 +1162,20 @@ test('Nebula upload startup conflict keeps deployment and real download pending'
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula mount duplicate helper records deterministic result and keeps production gate open', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-mount-duplicate-result-fix-2026-10-17-2024');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /test_mount_drive_n\.py 2\/2/);
+    assert.match(event.evidence, /NebulaPython 590\/590/);
+    assert.match(event.evidence, /26\/26/);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /download real permanecem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;

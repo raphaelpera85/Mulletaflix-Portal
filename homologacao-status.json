@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T20:16:33-03:00",
+  "generatedAt": "2026-10-17T20:24:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-mount-duplicate-result-fix-2026-10-17-2024",
+      "title": "Nebula: helper distingue unidade pronta de montagem concorrente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional fornecido e testes locais Python/.NET",
+      "location": "NebulaFtpManager.MountDriveNAsync; mount_drive_n.py; rclone N:",
+      "scope": "Corrigir a interpretação do resultado de helpers de montagem concorrentes e testar sem tocar processos produtivos.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T20:20:00-03:00",
+      "updatedAt": "2026-10-17T20:24:00-03:00",
+      "evidence": "O helper agora retorna sucesso se N: já está acessível antes do lock e código 3 se outro helper possui a tentativa sem unidade acessível; C# verifica disponibilidade da unidade antes de interpretar a saída. Testes: test_mount_drive_n.py 2/2, NebulaPython 590/590 e testes .NET NebulaMountOwnershipTests + NebulaMountRetryTests + NebulaDownloaderStartupTests 26/26. O log ainda comprova WinError 10048 em 127.0.0.1:2121; nenhum worker, mount ou serviço produtivo foi iniciado/parado. A colisão de porta, release/instalação e download real permanecem pendentes; correção não homologada em produção."
+    },
     {
       "id": "server-nebula-upload-mode-port-conflict-2026-10-17-2016",
       "title": "Nebula: conflito entre worker streaming e modo Envio bloqueia inicialização",
