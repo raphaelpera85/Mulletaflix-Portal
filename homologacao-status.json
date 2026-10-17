@@ -5420,6 +5420,21 @@
       "startedAt": "2026-10-17T03:25:51-03:00",
       "updatedAt": "2026-10-17T03:33:45-03:00",
       "evidence": "A API local responde 12.1.21; downloader instalado (2026-10-08) usa SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5. Source e stage 12.1.22 usam C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F e incluem handshake de readiness e scan incremental por título. `NebulaDownloaderStartupTests` passou 10/10; suíte Python 581/581; `validate-stage.ps1` passou. Nenhum worker, configuração, instalação, reinício ou transferência foi acionado. `gh auth status` confirma CLI sem autenticação; nenhum release publicado. Correção de source/stage não está ativa no runtime e primeiro download real segue sem homologação. T2.1 in_progress."
+    },
+    {
+      "id": "server-nebula-download-source-validation-2026-10-17-0351",
+      "title": "Nebula: testes focados da correção de início do download",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaFtpManager.cs; Tools/NebulaPython/tools/strm_downloader.py; stage",
+      "scope": "Revalidar source/stage e registrar o bloqueio entre a correção de inicialização e o runtime ativo.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T03:44:00-03:00",
+      "updatedAt": "2026-10-17T03:51:00-03:00",
+      "evidence": "GET read-only de /System/Info/Public confirma runtime 12.1.21. Downloader instalado, datado de 08/10/2026, SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5, não contém os marcadores de readiness; source/stage 12.1.22 têm SHA-256 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F e ambos os marcadores. Release NebulaDownloaderStartupTests 10/10; Python 3.10 scanner/helpers 86/86; validador de integridade do stage passou. Python 3.14 não tinha pytest e não contou. Não houve worker, instalação, restart, configuração ou download real. GitHub CLI sem autenticação; release/instalação e primeiro smoke test seguem pendentes. Status in_progress; produção não corrigida."
     }
   ]
 }
