@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T01:15:27-03:00",
+  "generatedAt": "2026-10-17T01:20:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5330,6 +5330,21 @@
       "startedAt": "2026-10-17T00:32:00-03:00",
       "updatedAt": "2026-10-17T00:42:31-03:00",
       "evidence": "O publish Release concluiu e o stage foi reconstruído com as fontes atuais. `validate-stage.ps1` passou; hash SHA-256 do downloader no stage coincide com a fonte (`C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F`). FileVersion/ProductVersion e VersionPrefix/SharedVersion estão alinhados em 12.1.22. NebulaPython passou 581/581 e `NebulaDownloaderStartupTests` passou 10/10. Teste do builder confirmou saída correta de stage-only sem anunciar instalador antigo quando `-SkipInstaller` está ativo. Web, tray e installer foram pulados; nenhum release foi emitido. O stage alertou que rclone.exe não estava presente. Produção segue 12.1.21 com script antigo; não houve instalação, restart ou transferência. Primeiro download real continua pendente; T2.1 segue in_progress. Revalidação em 2026-10-17: HTTP local continua retornando 12.1.21; NebulaPython repetido 581/581, startup .NET 10/10 e `validate-stage.ps1` passou com hash stage/fonte igual. Isso confirma que o pacote preparado não está aplicado no servidor."
+    },
+    {
+      "id": "server-nebula-download-runtime-mismatch-2026-10-17-0120",
+      "title": "Nebula: download pendente porque o runtime ativo está desatualizado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaFtpManager.cs e Tools/NebulaPython/tools/strm_downloader.py",
+      "scope": "Reproduzir por inspeção read-only o relato de que o download Nebula não inicia, validar o código atualizado e separar o estado do source/stage do runtime em produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T01:14:00-03:00",
+      "updatedAt": "2026-10-17T01:20:00-03:00",
+      "evidence": "GET /System/Info/Public retornou HTTP 200 e versão 12.1.21; MulletaFlix.exe PID 16928 estava ativo e o snapshot não mostrou worker Nebula/Python/rclone. O downloader instalado usa hash legado 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5, diferente do source/stage 12.1.22 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F. Testes desta rechecagem: NebulaDownloaderStartupTests 10/10 e testes Python de scanner/helpers 86/86 em Python 3.10. Não houve instalação, restart, início/parada de worker nem transferência. A fila configurada não foi consultada e primeiro download real não está validado; exige janela autorizada de manutenção para atualizar o runtime e testar um item."
     }
   ]
 }

@@ -612,3 +612,17 @@ test('portal records the rebuilt Nebula stage without claiming production downlo
     assert.match(event.evidence, /Revalidação em 2026-10-17: HTTP local continua retornando 12\.1\.21/);
     assert.match(event.evidence, /startup \.NET 10\/10 e `validate-stage\.ps1` passou/);
 });
+
+test('portal distinguishes the stale production Nebula runtime from validated source tests', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-mismatch-2026-10-17-0120');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /versão 12\.1\.21/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests 10\/10/);
+    assert.match(event.evidence, /testes Python de scanner\/helpers 86\/86/);
+    assert.match(event.evidence, /Não houve instalação, restart/);
+    assert.match(event.evidence, /primeiro download real não está validado/);
+});
