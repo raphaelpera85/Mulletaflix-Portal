@@ -341,9 +341,9 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
-    assert.equal(audit.passed, 4898);
-    assert.equal(audit.total, 4959);
-    assert.equal(audit.skipped, 61);
+    assert.equal(audit.passed, 4919);
+    assert.equal(audit.total, 4982);
+    assert.equal(audit.skipped, 63);
     assert.equal(audit.failed, 0);
 
     const dashboard = createDashboard();
@@ -389,8 +389,8 @@ test('server audit publishes the complete local suite and preserves the remote C
     const suiteEvent = statusData.events.find(item => item.id === 'server-full-solution-tests-release-build-2026-10-16-2051');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /4\.898 aprovados, 61 ignorados, 0 falhas/);
-    assert.match(server.testAudit.label, /homologação formal permanece pendente/);
+    assert.match(server.testAudit.label, /4\.919 aprovados, 63 ignorados, 0 falhas/);
+    assert.match(server.testAudit.label, /[Hh]omologação formal continua aberta/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
     assert.equal(event.status, 'blocked');
@@ -583,8 +583,8 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /sem host GitHub autenticado/);
     assert.match(event.evidence, /Nenhum worker ou transferência real/);
     assert.match(event.evidence, /não ativa em produção/);
-    assert.equal(server.testAudit.passed, 4898);
-    assert.equal(server.testAudit.total, 4959);
+    assert.equal(server.testAudit.passed, 4919);
+    assert.equal(server.testAudit.total, 4982);
 
     const dashboard = createDashboard();
     await settleDashboard();
@@ -807,4 +807,17 @@ test('portal records that the installer now receives the validated Nebula stage 
     assert.match(event.evidence, /StageBuildOptions\.Tests\.ps1, Assert-StageIntegrity\.Tests\.ps1 e RcloneBootstrap\.Tests\.ps1/);
     assert.match(event.evidence, /continua 12\.1\.21/);
     assert.match(event.evidence, /primeiro download real ainda não estão corrigidos\/homologados/);
+});
+
+test('portal records the Mongo readiness handshake fix without claiming a production download', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-mongo-handshake-2026-10-17-0644');
+
+    assert.ok(event, 'portal should publish the Mongo readiness handshake correction');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /emitia \[STRM-WORKER-READY\] antes/);
+    assert.match(event.evidence, /Python focado 16\/16, suíte NebulaPython 584\/584/);
+    assert.match(event.evidence, /continua 12\.1\.21/);
+    assert.match(event.evidence, /Release, instalação e primeiro download real continuam pendentes/);
 });
