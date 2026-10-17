@@ -5480,6 +5480,21 @@
       "startedAt": "2026-10-17T04:20:42-03:00",
       "updatedAt": "2026-10-17T04:29:00-03:00",
       "evidence": "GET read-only /System/Info/Public confirma produção 12.1.21. Script instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5; source/stage SHA-256 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F. Configuração sem segredos: Enabled=false, UsePythonEngine=true, UseMappedDrive=true e uma raiz existente. Enabled=false bloqueia autostart global; rota manual é separada. Log HTTP 200 de StartDownloader e StopDownloader posterior não comprovam mídia iniciada. Não havia downloader Python filho ativo do servidor no snapshot. C# NebulaDownloaderStartupTests Release 10/10; Python 3.10 suíte completa 581/581; validate-stage.ps1 passou usando ProjectRoot na raiz do monorepo. Sem código modificado; sem worker/configuração/install/restart/transferência. Stage corrigido ainda não está em produção; primeiro download e publicação/instalação controlada continuam pendentes. Homologação T2.1 in_progress."
+    },
+    {
+      "id": "server-supabase-upload-race-revalidation-2026-10-17-0437",
+      "title": "Backup Supabase e uploads Nebula: gate local não cobre admissão; Mongo validado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.4"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaSupabaseSyncService.cs; NebulaUploadEngine.cs; NebulaMongoContext.cs; Tools/NebulaPython/main.py; NebulaQueueConcurrencyMongoTests.cs",
+      "scope": "Revalidar alcance do gate Supabase e testar fila/claims com Mongo descartável, sem alterar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T04:30:00-03:00",
+      "updatedAt": "2026-10-17T04:37:00-03:00",
+      "evidence": "O _backupGate serializa operações de backup/restore Supabase entre si, mas não as admissões de upload. Confirmados três find_one_and_update dos workers Python (large, parallel, small) e o caminho C# via NebulaUploadEngine/NebulaMongoContext. NebulaQueueConcurrencyMongoTests sem opt-in: 16 ignorados; contra MongoDB 8.3.7 descartável exclusivamente em 127.0.0.1:27099: 16/16 aprovados, 0 falhas/ignorados. O mongod temporário foi encerrado e a porta ficou sem listener. Essa suíte não cobre o interleaving backup-ocioso→claim; a lacuna/barreira comum permanece aberta. Nenhuma produção, worker, configuração ou transferência alterada; homologação T4.4 in_progress."
     }
   ]
 }

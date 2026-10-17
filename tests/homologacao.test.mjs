@@ -699,3 +699,16 @@ test('portal records the Supabase backup and Nebula upload admission race as an 
     assert.match(event.evidence, /Não se confirmou perda permanente/);
     assert.match(event.evidence, /barreira Mongo atômica comum a C#\/Python/);
 });
+
+test('portal records Mongo-backed validation without closing the upload-admission race', () => {
+    const event = statusData.events.find(item => item.id === 'server-supabase-upload-race-revalidation-2026-10-17-0437');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T4.4']);
+    assert.match(event.evidence, /três find_one_and_update/);
+    assert.match(event.evidence, /16\/16 aprovados/);
+    assert.match(event.evidence, /não cobre o interleaving backup-ocioso→claim/);
+    assert.match(event.evidence, /Nenhuma produção, worker, configuração ou transferência alterada/);
+});
