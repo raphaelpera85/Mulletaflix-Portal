@@ -1039,22 +1039,22 @@ test('Nebula download remains pending while production uses the older worker run
 });
 
 test('Nebula download revalidation distinguishes passing source tests from stale production runtime', async () => {
-    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-stale-2026-10-17-1123');
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-revalidation-2026-10-17-1137');
 
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
-    assert.match(event.evidence, /API local responde 12\.1\.21/);
+    assert.match(event.evidence, /GET \/System\/Info\/Public respondeu 12\.1\.21/);
     assert.match(event.evidence, /fonte 12\.1\.24/);
-    assert.match(event.evidence, /NebulaDownloaderStartupTests Release 11\/11/);
-    assert.match(event.evidence, /105\/105 testes Python focados/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests 11\/11/);
+    assert.match(event.evidence, /NebulaPython 587\/587/);
     assert.match(event.evidence, /nenhum processo strm_downloader\.py foi observado/i);
-    assert.match(event.evidence, /Release\/instalação.*smoke test continuam pendentes/);
+    assert.match(event.evidence, /Release\/instalação.*smoke test em janela operacional continuam pendentes/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
     await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: download ainda bloqueado pelo worker instalado antigo/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: downloader de produção ainda usa runtime antigo/);
 });
 
 test('public homologation data contains no absolute Windows user-profile paths', () => {
