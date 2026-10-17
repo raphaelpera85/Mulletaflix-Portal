@@ -641,6 +641,7 @@ test('portal does not treat HTTP 200 from StartDownloader as proof of a real dow
     assert.match(event.evidence, /ação manual StartDownloader é separada/);
     assert.match(event.evidence, /Não alterei a configuração/);
     assert.match(event.evidence, /NebulaDownloaderStartupTests 10\/10 e Python scanner\/helpers 86\/86/);
+    assert.match(event.evidence, /NebulaFtpControllerTests passaram 36\/36/);
     assert.match(event.evidence, /primeiro item\/transferência/);
     assert.match(event.evidence, /release v12\.1\.22 ainda não existe/i);
 });
