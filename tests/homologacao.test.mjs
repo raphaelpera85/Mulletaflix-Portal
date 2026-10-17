@@ -519,10 +519,11 @@ test('portal records downloader startup handshake correction as partial until re
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
     assert.match(event.evidence, /\[STRM-WORKER-READY\]/);
-    assert.match(event.evidence, /depois do refresh completo do índice Mongo/);
-    assert.match(event.evidence, /Python do downloader 16\/16 e C# NebulaDownloaderStartupTests 7\/7/);
-    assert.match(event.evidence, /nenhum download, banco, worker, instalação ou restart foi exercitado/);
-    assert.match(event.evidence, /Primeiro download real, release e homologação seguem pendentes/);
+    assert.match(event.evidence, /refresh completo do índice Mongo/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests 10\/10 e NebulaPython 581\/581/);
+    assert.match(event.evidence, /após 5m52s ainda não havia iniciado uma mídia/);
+    assert.match(event.evidence, /Nenhuma transferência foi observada/);
+    assert.match(event.evidence, /Primeiro download real, release e homologação permanecem pendentes/);
 
     const dashboard = createDashboard();
     await settleDashboard();
