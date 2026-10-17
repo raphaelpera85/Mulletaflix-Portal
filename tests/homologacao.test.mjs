@@ -496,3 +496,18 @@ test('portal records library refresh admission and downloader false-response fee
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Admissão de refresh global e feedback do downloader Nebula/);
 });
+
+test('portal records Nebula worker scan readiness without claiming first download or production homologation', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-worker-startup-readiness-2026-10-16-2308');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /primeiro item efetivamente enumerado pelo os\.walk/);
+    assert.match(event.evidence, /647 aprovados, 21 ignorados, 0 falhas/);
+    assert.match(event.evidence, /NebulaPython 576\/576/);
+    assert.match(event.evidence, /não o primeiro download/);
+    assert.match(event.evidence, /Produção e download Telegram reais não foram exercitados/);
+
+});
