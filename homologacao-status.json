@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T10:45:00-03:00",
+  "generatedAt": "2026-10-17T10:57:54-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5994,6 +5994,21 @@
       "startedAt": "2026-10-17T10:29:00-03:00",
       "updatedAt": "2026-10-17T10:45:00-03:00",
       "evidence": "A resolução cruzada para CPython 3.12/manylinux confirmou que tgcrypto antigo não tem wheel e tgcrypto-pyrofork 1.2.8 tem wheel compatível; instalação local em ambiente isolado importou pyrogram/tgcrypto e passou round-trip AES-IGE. Fonte substitui a distribuição e inclui gate Ubuntu 24.04 sem compilador. Testes: NebulaPython 587/587; NebulaDownloaderStartupTests Release 11/11; Jellyfin.Server.Implementations.Tests 1.464 aprovados, 62 ignorados, 0 falhas (1.526 total); Web TypeScript/build e 407/407 testes; portal independente 57/57, espelho 43/43; payload Linux e análise Bash passaram. Verificação de artefatos web validou 1.927 arquivos e bundle inicial de 294,3 KB gzip. Instalação Ubuntu não foi executada neste Windows. GitHub Actions run 39036753498 não iniciou jobs: conta bloqueada por cobrança; `gh auth status` sem sessão. Sem tag/release; produção 12.1.21; nenhum worker/download real, instalação ou restart executado."
+    },
+    {
+      "id": "server-nebula-runtime-version-revalidation-2026-10-17-1056",
+      "title": "Downloader Nebula: produção ainda usa runtime anterior à correção",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "API local e validação de fonte",
+      "location": "NebulaFtpManager; Tools/NebulaPython/tools/strm_downloader.py; testes do servidor",
+      "scope": "Comparar runtime instalado com fonte corrigida e revalidar testes; sem iniciar worker, alterar configuração ou reiniciar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T10:52:00-03:00",
+      "updatedAt": "2026-10-17T10:57:54-03:00",
+      "evidence": "GET /System/Info/Public respondeu 12.1.21. O downloader instalado tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 e não contém os marcadores de inicialização/helpers presentes na fonte 12.1.24 (SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA); o log Nebula não é atualizado desde 11/10/2026. Testes da fonte: NebulaDownloaderStartupTests 11/11 e NebulaPython 587/587. Nenhum worker, download, instalação, alteração de configuração ou restart executado. CI permanece bloqueado por cobrança; sem release ou homologação real."
     }
   ]
 }

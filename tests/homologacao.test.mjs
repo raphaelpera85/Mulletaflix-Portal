@@ -995,6 +995,21 @@ test('portal records CPython 3.12 dependency fix and keeps release blocked by Gi
     assert.match(event.evidence, /produção 12\.1\.21/);
 });
 
+test('portal keeps the Nebula download correction pending until the runtime is updated', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-runtime-version-revalidation-2026-10-17-1056');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /GET \/System\/Info\/Public respondeu 12\.1\.21/);
+    assert.match(event.evidence, /fonte 12\.1\.24/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests 11\/11/);
+    assert.match(event.evidence, /NebulaPython 587\/587/);
+    assert.match(event.evidence, /Nenhum worker, download, instalação.*ou restart executado/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
