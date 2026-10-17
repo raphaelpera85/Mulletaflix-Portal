@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T09:24:13-03:00",
+  "generatedAt": "2026-10-17T09:37:11-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5810,6 +5810,21 @@
       "startedAt": "2026-10-17T09:24:13-03:00",
       "updatedAt": "2026-10-17T09:24:13-03:00",
       "evidence": "A API local somente leitura retornou 12.1.21. O main.py instalado importa tools.mongo_admission, mas tools\\mongo_admission.py não existe no runtime; Python 3.10 confirmou find_spec('tools.mongo_admission') = None. A fonte tem o módulo e o empacotador o inclui; o validador de integridade exige o arquivo. Testes da fonte: NebulaDownloaderStartupTests Release 11/11 e scanner/helpers Python 89/89. Não foi iniciado worker, download, instalação ou restart; nenhuma mídia/configuração foi alterada. Homologação segue in_progress: corrigir exige pacote instalado em janela operacional e smoke test de item real."
+    },
+    {
+      "id": "server-nebula-download-runtime-stale-scan-2026-10-17-0937",
+      "title": "Nebula: downloader instalado demora na varredura antes do primeiro arquivo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "mulletaflix-completo repository",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; homologação",
+      "scope": "Comparar o runtime instalado com a fonte atual e registrar testes e bloqueio de validação real sem iniciar downloads nem alterar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T09:24:13-03:00",
+      "updatedAt": "2026-10-17T09:37:11-03:00",
+      "evidence": "API local read-only retornou 12.1.21; interface mostrou Downloader parado. Logs observados registram início do worker às 00:24:21 e scan às 00:24:26, sem primeiro item transferido antes de parar às 00:30:19. O strm_downloader.py instalado não tem get_categorized_scan_batches nem get_title_scan_roots; a fonte já possui varredura incremental por categoria/título. Causa provável é runtime antigo preso em varredura completa, mas transferência real não foi reproduzida. Testes: NebulaPython 586/586, testes strm_downloader 17/17, NebulaDownloaderStartupTests Release 11/11; portal tests 53/53. Commit 64a51e659556d0f6101c69e7ee882963d3841b88 enviado para origin/main do repositório principal. Nenhum worker, mídia, configuração, instalação ou restart foi alterado. Produção segue sem correção e gate global de release continua ativo; requer package/deploy autorizado e smoke test de arquivo real."
     }
   ]
 }
