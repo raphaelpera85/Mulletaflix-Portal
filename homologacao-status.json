@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T01:12:07-03:00",
+  "generatedAt": "2026-10-17T01:15:27-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10,7 +10,7 @@
     "pending": 68,
     "total": 389,
     "definition": "Checklists de funcionalidades do roadmap (cada checkbox conta como um item); tarefas com evento ativo identificado aparecem como em execução.",
-    "inProgress": 1
+    "inProgress": 2
   },
   "tracks": [
     {
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-production-baseline-readonly-2026-10-17-0114",
+      "title": "Atualizar baseline operacional do servidor instalado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T0.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "Servidor Windows 12.1.21, endpoint público e métricas locais do processo",
+      "scope": "Coletar amostra somente de leitura para o baseline operacional, sem carga concorrente ou mudança na instância.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T01:14:58-03:00",
+      "updatedAt": "2026-10-17T01:15:27-03:00",
+      "evidence": "Uma bateria de 20 GETs sequenciais a /System/Info/Public retornou 20/20 HTTP 200. Latência do cliente p50 4,52 ms, p95 29,65 ms e máximo/p99 nearest-rank 345,98 ms. Snapshot: working set 1.442,5 MiB, private bytes 1.398,7 MiB, CPU acumulada 22.626,9 s; C: livre 27,8 GiB. É uma amostra curta sem concorrência, não fecha T0.1; faltam carga representativa, endpoints autenticados, duração/volume Nebula, Linux e janela temporal."
+    },
     {
       "id": "server-nebula-download-installer-validation-2026-10-17-0101",
       "title": "Validar pacote e correção do início do download Nebula",
