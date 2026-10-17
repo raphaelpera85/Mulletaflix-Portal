@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T21:49:00-03:00",
+  "generatedAt": "2026-10-16T22:00:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5142,18 +5142,18 @@
     },
     {
       "id": "server-nebula-download-scan-progress-2026-10-16-2149",
-      "title": "Nebula STRM: progresso visível durante indexação longa",
+      "title": "Nebula STRM: início por prioridade com progresso de indexação",
       "agent": "Codex",
       "front": "server",
       "featureIds": ["T2.1"],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
       "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; NebulaFtpManager; testes e documentação",
-      "scope": "Reproduzir a demora no início do downloader, publicar progresso do scan no painel e validar regressões sem habilitar o pipeline global nem reiniciar produção.",
+      "scope": "Iniciar cada categoria assim que sua varredura e ordenação terminam, em ordem de prioridade, e expor progresso do scan; validar sem habilitar o pipeline global nem reiniciar produção.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-16T21:38:09-03:00",
-      "updatedAt": "2026-10-16T21:49:00-03:00",
-      "evidence": "Em produção 12.1.21, o início manual realmente criou o worker Python, mas ele permaneceu em 'Escaneando e priorizando arquivos .strm...' por 11m55 sem iniciar mídia; o painel exibiu Download executando no badge e 'Downloader parado' / 0% no cartão. O processo de teste, iniciado nesta sessão, foi parado sem download ou exclusão de mídia; o estado voltou a Parado. Correção em código-fonte: scan Python agora emite contagem periódica a cada 5.000 mídias; NebulaFtpManager transforma esses logs em estado de indexação visível. Suite NebulaPython: 568/568 testes passaram em Python 3.10. Build Release de Jellyfin.Server.Implementations: 0 erros e 694 avisos de analisadores/estilo. Smoke test pós-correção em produção e download de ponta a ponta ainda pendentes; nenhuma release criada nesta rodada."
+      "updatedAt": "2026-10-16T22:00:00-03:00",
+      "evidence": "Em produção 12.1.21, o início manual criou o worker Python, mas ele permaneceu em 'Escaneando e priorizando arquivos .strm...' por 11m55 sem iniciar mídia; o painel exibiu Download executando no badge e 'Downloader parado' / 0% no cartão. O processo de teste desta sessão foi parado sem baixar/excluir mídia e o estado voltou a Parado. A fonte agora detecta fontes com subpastas categorizadas e varre/ordena/processa uma categoria por vez na prioridade configurada, antes de escanear categorias inferiores; fontes mistas mantêm fallback para scan integral. A varredura emite contagem a cada 5.000 mídias, mostrada no cartão. O caminho real D:\\midias foi detectado com Animações, Filmes, Series, Doramas e Novelas como categorias diretas. Suíte NebulaPython: 571/571 passou em Python 3.10. Build Release Jellyfin.Server.Implementations: 0 erros, 695 avisos de analisadores/estilo. Testes de portal: 34/34 no espelho e 21/21 no checkout independente. Smoke test com binário atualizado e download ponta a ponta continuam pendentes; nenhuma release criada nesta rodada."
     }
   ]
 }
