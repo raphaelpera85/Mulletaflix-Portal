@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T23:55:00-03:00",
+  "generatedAt": "2026-10-17T00:00:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,20 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-downloader-ready-handshake-2026-10-17-0000",
+      "title": "Corrigir falso timeout no início do downloader Nebula",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "location": "NebulaFtpManager; strm_downloader.py; testes Nebula",
+      "scope": "Separar readiness do processo do início do scan quando a carga inicial do índice Mongo é lenta.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T00:00:00-03:00",
+      "updatedAt": "2026-10-17T00:00:00-03:00",
+      "evidence": "Handshake anteriormente dependia de [STRM-SCAN-STARTED], emitido depois do refresh completo do índice Mongo; um worker vivo poderia exceder 60s e ser encerrado antes do scan. Worker agora emite [STRM-WORKER-READY] antes do refresh e manager aceita ambos marcadores. Testes Python do downloader 16/16 e C# NebulaDownloaderStartupTests 7/7; teste confirma a ordem readiness antes do refresh Mongo. Serviço de produção não estava presente neste ambiente; nenhum download, banco, worker, instalação ou restart foi exercitado. Primeiro download real, release e homologação seguem pendentes."
+    },
     {
       "id": "server-backup-scheduled-history-2026-10-16-2355",
       "title": "Cobrir persistência do histórico de backup agendado",

@@ -511,6 +511,24 @@ test('portal records Nebula worker scan readiness without claiming first downloa
 
 });
 
+test('portal records downloader startup handshake correction as partial until real download smoke test', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-downloader-ready-handshake-2026-10-17-0000');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /\[STRM-WORKER-READY\]/);
+    assert.match(event.evidence, /depois do refresh completo do índice Mongo/);
+    assert.match(event.evidence, /Python do downloader 16\/16 e C# NebulaDownloaderStartupTests 7\/7/);
+    assert.match(event.evidence, /nenhum download, banco, worker, instalação ou restart foi exercitado/);
+    assert.match(event.evidence, /Primeiro download real, release e homologação seguem pendentes/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Corrigir falso timeout no início do downloader Nebula/);
+});
+
 test('portal records that the installed Nebula worker predates the validated source fix', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-download-production-version-gap-2026-10-16-2326');
     const server = statusData.tracks.find(track => track.id === 'server');
