@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T20:37:00-03:00",
+  "generatedAt": "2026-10-17T20:44:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6188,8 +6188,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T20:31:00-03:00",
-      "updatedAt": "2026-10-17T20:37:00-03:00",
-      "evidence": "Regressão reproduzida: com StartEnvioAsync=false, o fluxo antigo nunca chamava StartDownloaderAsync. A fonte foi alterada para tentar o Downloader de forma independente; montagem N: continua bloqueada se Envio falhar. Teste focal de falha do Envio, cancelamento e reconfiguração 3/3; suíte Jellyfin.Server.Implementations.Tests Release 1.469 aprovados, 63 ignorados, 0 falhas. Sem start/stop, instalação ou restart de produção. A colisão 2121 persiste e sua identidade não foi confirmada; smoke test de transferência e homologação de produção pendentes."
+      "updatedAt": "2026-10-17T20:44:00-03:00",
+      "evidence": "Regressão reproduzida: com StartEnvioAsync=false, o fluxo antigo nunca chamava StartDownloaderAsync. A fonte foi alterada para tentar o Downloader independentemente; o retry automático de N: agora também é suprimido quando Envio/FTP não está ativo (nos caminhos Python e C#); mount explícito continua disponível no fluxo próprio. Testes Release NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests 35/35; suíte Jellyfin.Server.Implementations.Tests 1.473 aprovados, 63 ignorados, 0 falhas. Sem start/stop, instalação ou restart de produção. A colisão 2121 persiste e sua identidade não foi confirmada; smoke test de transferência e homologação de produção pendentes."
     }
   ]
 }
