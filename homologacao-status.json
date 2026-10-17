@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T22:28:31-03:00",
+  "generatedAt": "2026-10-16T22:33:01-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,20 @@
     }
   ],
   "events": [
+    {
+      "id": "server-library-refresh-nebula-start-feedback-2026-10-16-2233",
+      "title": "Admissão de refresh global e feedback do downloader Nebula",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T6.2"],
+      "location": "Jellyfin.Api/Middleware/RateLimitMiddleware.cs; Jellyfin.Api/Web/NebulaFTP/configPage.js; testes de API",
+      "scope": "Limitar varreduras completas de biblioteca concorrentes e avisar quando StartDownloader retorna false, sem interferir playback nem alterar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T22:30:00-03:00",
+      "updatedAt": "2026-10-16T22:33:01-03:00",
+      "evidence": "POST /Library/Refresh agora tem cota administrativa e admissão global single-flight; requests concorrentes recebem 429/Retry-After: 1 e GET playback segue sem bloqueio. A interface Nebula verifica a resposta booleana: false gera aviso e refresh de status/logs. Filtro Release RateLimitMiddlewareTests + NebulaFtpControllerTests: 126/126; node --input-type=module --check configPage.js passou; suíte NebulaPython reexecutada 574/574. Revisão independente do diff não encontrou problemas. Sem navegador real, teste de carga, download/worker de produção, instalação ou release. T6.2 permanece parcial; homologação de produção pendente."
+    },
     {
       "id": "server-nebula-first-title-download-2026-10-16-2214",
       "title": "Nebula inicia o download após indexar o primeiro título",

@@ -458,3 +458,22 @@ test('portal records title-level Nebula download startup without claiming produc
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula inicia o download após indexar o primeiro título/);
 });
+
+test('portal records library refresh admission and downloader false-response feedback as partial', async () => {
+    const event = statusData.events.find(item => item.id === 'server-library-refresh-nebula-start-feedback-2026-10-16-2233');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1', 'T6.2']);
+    assert.match(event.evidence, /POST \/Library\/Refresh.*single-flight/);
+    assert.match(event.evidence, /429\/Retry-After: 1/);
+    assert.match(event.evidence, /false gera aviso/);
+    assert.match(event.evidence, /126\/126/);
+    assert.match(event.evidence, /574\/574/);
+    assert.match(event.evidence, /Sem navegador real, teste de carga, download\/worker de produção/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Admissão de refresh global e feedback do downloader Nebula/);
+});
