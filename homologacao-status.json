@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T02:34:00-03:00",
+  "generatedAt": "2026-10-17T02:42:33-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2967,8 +2967,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T00:48:31-03:00",
-      "updatedAt": "2026-10-17T02:34:00-03:00",
-      "evidence": "Servidor ativo continua em 12.1.21; stage 12.1.22 validado contém o downloader corrigido, mas não está instalado. O downloader instalado (08/10/2026) tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5, diferente da fonte e do stage (C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F). O instalador Windows compilou com sucesso localmente (12.1.22; SHA-256 BED442E38FA4B3113C63A2B65713853CBB374515B9BE8E42A810A41B51000F3D). Revalidação: NebulaPython completo 581/581, scanner/helpers 86/86, NebulaDownloaderStartupTests 10/10, Server.Implementations Release 1.452 aprovados/60 ignorados/0 falhas. Auditoria confirmou que o marcador de readiness emitido pelo Python corresponde aos marcadores consumidos pelo manager C#. Os testes de bootstrap do rclone e de integridade do stage passaram; o stage passa seu gate de SHA-256. Uma chamada inicial de pytest no diretório errado falhou na coleta (import `tools`); repetida no diretório correto passou. Não houve instalação, alteração de configuração, início/parada de worker, download real ou restart; primeiro download continua não homologado. A release v12.1.22 não existe (GitHub Releases API 404). T2.1 e homologação seguem in_progress; gates de instalação, Linux, release e smoke test real permanecem pendentes."
+      "updatedAt": "2026-10-17T02:42:33-03:00",
+      "evidence": "Servidor ativo continua em 12.1.21; stage 12.1.22 local contém o downloader corrigido, mas não está instalado. O downloader instalado tem SHA-256 legado 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5; source/stage usam C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F. O instalador Windows compilou com sucesso localmente (12.1.22; SHA-256 BED442E38FA4B3113C63A2B65713853CBB374515B9BE8E42A810A41B51000F3D). Validação anterior: NebulaPython completo 581/581, scanner/helpers 86/86, NebulaDownloaderStartupTests 10/10, Server.Implementations Release 1.452 aprovados/60 ignorados/0 falhas. Auditoria confirmou que o marcador de readiness emitido pelo Python corresponde aos marcadores consumidos pelo manager C#. testes de bootstrap do rclone e de integridade do stage passaram; o stage passa seu gate de SHA-256. Rechecagem do log local de 17/10: POST StartDownloader respondeu HTTP 200 após 15,74 s e StopDownloader foi chamado ~6 min depois; HTTP 200 não comprova que o bool retornado foi true, e o log geral não contém confirmação do primeiro item/transferência. A configuração aponta para uma raiz existente com 197.082 arquivos STRM, o que descarta raiz ausente, não elegibilidade da fila. Testes focais repetidos: NebulaDownloaderStartupTests 10/10 e Python scanner/helpers 86/86 (Python 3.10). Não houve instalação, alteração de configuração, início/parada de worker, download real ou restart; primeiro download continua não homologado. release v12.1.22 ainda não existe (GitHub Releases API 404). T2.1 e homologação seguem in_progress; gates de instalação, Linux, release e smoke test real permanecem pendentes."
     },
     {
       "id": "server-nebula-downloader-ready-handshake-2026-10-17-0000",

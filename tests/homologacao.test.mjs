@@ -365,7 +365,7 @@ test('portal publishes Nebula package and download-start validation without clai
     assert.match(event.evidence, /testes de bootstrap do rclone e de integridade do stage passaram/);
     assert.match(event.evidence, /instalador Windows compilou com sucesso/);
     assert.match(event.evidence, /Não houve instalação.*download real/);
-    assert.match(event.evidence, /release v12\.1\.22 não existe/);
+    assert.match(event.evidence, /release v12\.1\.22 (?:ainda )?não existe/i);
 
     const dashboard = createDashboard();
     await settleDashboard();
@@ -626,6 +626,20 @@ test('portal records the rebuilt Nebula stage without claiming production downlo
     assert.match(event.evidence, /Primeiro download real continua pendente/);
     assert.match(event.evidence, /Revalidação em 2026-10-17: HTTP local continua retornando 12\.1\.21/);
     assert.match(event.evidence, /startup \.NET 10\/10 e `validate-stage\.ps1` passou/);
+});
+
+test('portal does not treat HTTP 200 from StartDownloader as proof of a real download', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-installer-validation-2026-10-17-0101');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /StartDownloader respondeu HTTP 200 após 15,74 s/);
+    assert.match(event.evidence, /HTTP 200 não comprova que o bool retornado foi true/);
+    assert.match(event.evidence, /197\.082 arquivos STRM/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests 10\/10 e Python scanner\/helpers 86\/86/);
+    assert.match(event.evidence, /primeiro item\/transferência/);
+    assert.match(event.evidence, /release v12\.1\.22 ainda não existe/i);
 });
 
 test('portal distinguishes the stale production Nebula runtime from validated source tests', () => {
