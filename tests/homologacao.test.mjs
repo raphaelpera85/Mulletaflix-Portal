@@ -947,3 +947,26 @@ test('portal publishes the Nebula path-safety audit as partial and not productio
     assert.match(event.evidence, /commit `02d6e01b1113db615956ee95827c6a8d0cb9226f`/);
     assert.match(event.evidence, /Sem instalação, restart, mídia ou validação de produção/);
 });
+
+test('public homologation data contains no absolute Windows user-profile paths', () => {
+    const matchingFields = [];
+    const userProfilePath = /[A-Za-z]:\\Users\\/i;
+    const visit = (value, fieldPath = '$') => {
+        if (typeof value === 'string') {
+            if (userProfilePath.test(value)) matchingFields.push(fieldPath);
+            return;
+        }
+
+        if (Array.isArray(value)) {
+            value.forEach((entry, index) => visit(entry, `${fieldPath}[${index}]`));
+            return;
+        }
+
+        if (value && typeof value === 'object') {
+            for (const [key, entry] of Object.entries(value)) visit(entry, `${fieldPath}.${key}`);
+        }
+    };
+
+    visit(statusData);
+    assert.deepEqual(matchingFields, []);
+});
