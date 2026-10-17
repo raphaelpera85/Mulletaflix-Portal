@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T20:03:48-03:00",
+  "generatedAt": "2026-10-17T20:16:33-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-upload-mode-port-conflict-2026-10-17-2016",
+      "title": "Nebula: conflito entre worker streaming e modo Envio bloqueia inicialização",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log fornecido e testes do checkout",
+      "location": "NebulaHostedService; NebulaFtpManager; worker Python; mount N:",
+      "scope": "Investigar o download que não inicia após alternar do modo Somente Streaming para Envio e registrar o estado de homologação.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T20:03:00-03:00",
+      "updatedAt": "2026-10-17T20:16:33-03:00",
+      "evidence": "O log confirma que o processo Python iniciado para modo Envio falha ao vincular 127.0.0.1:2121 com WinError 10048, enquanto uma sessão anterior de Somente Streaming e/ou um listener existente mantém a porta ocupada; tentativas seguintes de mount N: não provam serviço Envio nem download ativos. A fonte exige PID esperado na resposta /health para não aceitar o worker alheio em 2123 e o startup hospedado não deve avançar para Downloader/mount após falha. Testes locais: NebulaDownloaderStartupTests Release 15/15; Python 3.10 test_main_lifecycle.py + test_strm_downloader.py 22/22; restore/concorrência Mongo isolados 20/20. Nenhum worker, transferência ou serviço de produção foi iniciado/parado; listener com conexões foi preservado. Release não publicada/instalada, download real pendente e correção em produção não comprovada. A validação do restore Supabase usou somente Mongo descartável. Próximos gates: release 12.1.24/CI, janela controlada para remover o conflito e validar Envio, Downloader e primeira transferência."
+    },
     {
       "id": "server-nebula-download-runtime-revalidation-2026-10-17-1137",
       "title": "Nebula: downloader de produção ainda usa runtime antigo",

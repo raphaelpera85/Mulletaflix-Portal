@@ -1147,6 +1147,21 @@ test('Nebula port collision log keeps production homologation open', () => {
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula upload startup conflict keeps deployment and real download pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-upload-mode-port-conflict-2026-10-17-2016');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests Release 15\/15/);
+    assert.match(event.evidence, /22\/22/);
+    assert.match(event.evidence, /restore\/concorrência Mongo isolados 20\/20/);
+    assert.match(event.evidence, /Release não publicada\/instalada/);
+    assert.match(event.evidence, /download real pendente/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
