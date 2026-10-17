@@ -441,10 +441,12 @@ test('portal records title-level Nebula download startup without claiming produc
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /subdivide categorias diretas em pastas de título ordenadas A–Z/);
-    assert.match(event.evidence, /574\/574 aprovados/);
+    assert.match(event.evidence, /574\/574 aprovad[oa]/);
+    assert.match(event.evidence, /testes do portal no espelho 35\/35/);
+    assert.match(event.evidence, /GitHub CLI sem autenticação/);
     assert.match(event.evidence, /nenhum worker de produção foi iniciado\/parado/);
     assert.match(event.evidence, /instalação segue 12\.1\.21/);
-    assert.match(event.evidence, /não há nova release nesta rodada/);
+    assert.match(event.evidence, /homologação real e release permanecem pendentes/);
     assert.equal(server.status, 'in_progress');
     assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
 
