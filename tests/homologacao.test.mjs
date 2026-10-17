@@ -637,6 +637,9 @@ test('portal does not treat HTTP 200 from StartDownloader as proof of a real dow
     assert.match(event.evidence, /StartDownloader respondeu HTTP 200 após 15,74 s/);
     assert.match(event.evidence, /HTTP 200 não comprova que o bool retornado foi true/);
     assert.match(event.evidence, /197\.082 arquivos STRM/);
+    assert.match(event.evidence, /Enabled=false, que bloqueia o início automático/);
+    assert.match(event.evidence, /ação manual StartDownloader é separada/);
+    assert.match(event.evidence, /Não alterei a configuração/);
     assert.match(event.evidence, /NebulaDownloaderStartupTests 10\/10 e Python scanner\/helpers 86\/86/);
     assert.match(event.evidence, /primeiro item\/transferência/);
     assert.match(event.evidence, /release v12\.1\.22 ainda não existe/i);
