@@ -368,6 +368,17 @@ test('portal publishes Nebula package and download-start validation without clai
     assert.match(dashboard.getElement('event-list').innerHTML, /Validar pacote e correção do início do download Nebula/);
 });
 
+test('portal records MariaDB integration fixture safety and inconclusive full server suite', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-mismatch-2026-10-17-0120');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /ActivityLogController passou 1\/1/);
+    assert.match(event.evidence, /testhost.*somente na 33099, não na 3306/);
+    assert.match(event.evidence, /encerrada após mais de 18 minutos sem resultado final; permanece inconclusiva/);
+    assert.match(event.evidence, /primeiro download real não está validado/);
+});
+
 test('server audit publishes the complete local suite and preserves the remote CI blocker', async () => {
     const server = statusData.tracks.find(track => track.id === 'server');
     const event = statusData.events.find(item => item.id === 'server-ci-billing-block-2026-10-16-2039');
