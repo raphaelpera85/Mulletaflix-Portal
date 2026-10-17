@@ -459,6 +459,25 @@ test('portal records title-level Nebula download startup without claiming produc
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula inicia o download após indexar o primeiro título/);
 });
 
+test('portal records real-library Nebula scan revalidation as partial', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-first-title-revalidation-2026-10-16-2248');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.deepEqual(event.featureIds, ['T0.3', 'T2.1']);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /Produção segue 12\.1\.21/);
+    assert.match(event.evidence, /duas varreduras sem contagem ou Iniciando download/);
+    assert.match(event.evidence, /120 títulos em Animações e um item elegível no primeiro título A–Z/);
+    assert.match(event.evidence, /suíte NebulaPython 574\/574/);
+    assert.match(event.evidence, /Nenhum download, Mongo\/Telegram, worker ou configuração de produção foi alterado/);
+    assert.match(event.evidence, /Correção local não instalada/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Revalidar o início do primeiro download Nebula/);
+});
+
 test('portal records library refresh admission and downloader false-response feedback as partial', async () => {
     const event = statusData.events.find(item => item.id === 'server-library-refresh-nebula-start-feedback-2026-10-16-2233');
 

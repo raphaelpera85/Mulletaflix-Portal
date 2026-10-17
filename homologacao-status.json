@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T22:33:01-03:00",
+  "generatedAt": "2026-10-16T22:53:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,20 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-download-first-title-revalidation-2026-10-16-2248",
+      "title": "Revalidar o início do primeiro download Nebula",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T0.3", "T2.1"],
+      "location": "D:\\midias; Tools/NebulaPython/tools/strm_downloader.py; testes Nebula",
+      "scope": "Confirmar a causa do scan longo no layout real e validar a correção local sem alterar workers de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T22:44:00-03:00",
+      "updatedAt": "2026-10-16T22:53:06-03:00",
+      "evidence": "Produção segue 12.1.21. Logs autenticados mostram duas varreduras sem contagem ou Iniciando download (21:14:19–21:22:49 e 21:38:11–21:50:04), sem atribuir quem encerrou. Inspeção read-only do root D:\\midias confirmou cinco categorias; o scanner do checkout encontrou cinco lotes, 120 títulos em Animações e um item elegível no primeiro título A–Z. Testes focados 4/4; suíte NebulaPython 574/574; build Release Jellyfin.Server.Implementations 0 avisos/erros. Nenhum download, Mongo/Telegram, worker ou configuração de produção foi alterado. Correção local não instalada; release não criada, GitHub CLI sem autenticação e CI remota ainda bloqueada por cobrança. T0.3/T2.1 e homologação permanecem parciais."
+    },
     {
       "id": "server-library-refresh-nebula-start-feedback-2026-10-16-2233",
       "title": "Admissão de refresh global e feedback do downloader Nebula",
