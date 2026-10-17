@@ -835,6 +835,19 @@ test('portal records the completed isolated stage validation without claiming a 
     assert.match(event.evidence, /NebulaDownloaderStartupTests 9\/9/);
     assert.match(event.evidence, /1\.458 aprovados, 62 ignorados, 0 falhas/);
     assert.match(event.evidence, /stage Windows construído.*validado/i);
-    assert.match(event.evidence, /makensis\/NSIS não está disponível/);
-    assert.match(event.evidence, /Não houve instalação\/restart, worker ou transferência real/);
+    assert.match(event.evidence, /NSIS existe, mas não foi gerado instalador/);
+    assert.match(event.evidence, /Nenhuma instalação\/restart, worker ou download real ocorreu/);
+});
+
+test('portal records the installed Nebula worker missing its Mongo admission module', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-module-missing-2026-10-17-0803');
+
+    assert.ok(event, 'portal should publish the reproduced Nebula startup cause');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /main\.py instalado importa tools\.mongo_admission, mas o arquivo falta/);
+    assert.match(event.evidence, /ModuleNotFoundError: No module named 'tools\.mongo_admission'/);
+    assert.match(event.evidence, /NebulaPython 586\/586; NebulaDownloaderStartupTests Release 9\/9/);
+    assert.match(event.evidence, /Nenhum worker, instalação, restart, configuração ou mídia foi alterado/);
 });

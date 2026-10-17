@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T07:53:00-03:00",
+  "generatedAt": "2026-10-17T08:03:10-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 63,
         "failed": 0,
         "percent": 98.7,
-        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; stage Windows completo validado. O lock global do build agora cobre todas as etapas e o instalador. Revisão final sem achados. Instalador não compilado: NSIS/makensis indisponível. Produção 12.1.21 não recebeu instalação/restart e nenhum worker ou download real foi executado. Release, teste real e homologação formal pendentes; CI remoto continua bloqueado por cobrança GitHub (run 38981348548). Homologação formal continua aberta."
+        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; stage Windows completo validado. O lock global cobre o pipeline inteiro. Investigação atual reproduziu ModuleNotFoundError porque a instalação 12.1.21 não contém tools/mongo_admission.py, importado por main.py; fonte e stage incluem o módulo. Dois scripts de integridade/build passaram. NSIS está disponível, mas não foi gerado instalador: asset 12.1.22 já existe e tag v12.1.22 contém VersionPrefix 12.1.21. Nenhuma instalação/restart, worker ou download real ocorreu. GitHub CLI sem autenticação; nova versão/tag, release e homologação formal pendentes. Homologação formal continua aberta."
       }
     },
     {
@@ -5659,7 +5659,22 @@
       "progressPercent": null,
       "startedAt": "2026-10-17T07:28:00-03:00",
       "updatedAt": "2026-10-17T07:53:00-03:00",
-      "evidence": "Stage Windows construído em .build/candidate-nebula-download-20261017 e validado pelo próprio builder: servidor .NET Release, frontend, tray, worker/módulos Python, MariaDB e ferramentas de runtime. NSSM 2.24 veio do arquivo oficial nssm.cc; SHA-256 do binário F689EE9AF94B00E9E3F0BB072B34CAAF207F32DCB4F5782FC9CA351DF9A06C97 conferido igual ao arquivo local anterior. Testes: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; parser PowerShell passou. Revisão do lock/backup sem achados após manter lock até conclusão do pipeline. Instalador não compilado porque makensis/NSIS não está disponível. Não houve instalação/restart, worker ou transferência real; runtime continua sem prova do primeiro download. Release e homologação final permanecem pendentes."
+      "evidence": "Stage Windows construído em .build/candidate-nebula-download-20261017 e validado pelo próprio builder: servidor .NET Release, frontend, tray, worker/módulos Python, MariaDB e ferramentas de runtime. NSSM 2.24 foi verificado por SHA-256. Testes anteriores: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes de packaging 4/4. Revisão do lock/backup sem achados. Investigação read-only da instalação reproduziu ModuleNotFoundError: main.py importa tools.mongo_admission, ausente no runtime 12.1.21; import funciona na fonte e no stage candidato há o arquivo. Testes desta verificação: NebulaPython 586/586; startup 9/9; dois scripts de packaging e validate-stage passaram. NSIS existe, mas não foi gerado instalador: dist já contém asset 12.1.22 e a tag v12.1.22 aponta para VersionPrefix 12.1.21. GitHub CLI sem autenticação. Nenhuma instalação/restart, worker ou download real ocorreu; release e homologação final permanecem pendentes."
+    },
+    {
+      "id": "server-nebula-download-module-missing-2026-10-17-0803",
+      "title": "Nebula: download bloqueado por módulo Python ausente na instalação",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "MulletaFlix-master/Tools/NebulaPython/main.py; tools/mongo_admission.py; MulletaFlix-packaging-master; stage e runtime local",
+      "scope": "Reproduzir causa do worker não iniciar, validar inclusão da dependência no pacote e publicar o estado sem tocar a instalação ativa.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T07:53:00-03:00",
+      "updatedAt": "2026-10-17T08:03:10-03:00",
+      "evidence": "GET read-only /System/Info/Public confirmou 12.1.21. main.py instalado importa tools.mongo_admission, mas o arquivo falta; import no runtime reproduziu ModuleNotFoundError: No module named 'tools.mongo_admission'. Import equivalente na fonte passou. O empacotador atual copia o módulo e o validador rejeita stage sem ele. Stage candidato passou validate-stage.ps1. Testes: NebulaPython 586/586; NebulaDownloaderStartupTests Release 9/9; scripts Assert-StageIntegrity e StageBuildOptions concluíram sem erro. Log nebula.log está sem atualização desde 11/10. NSIS está disponível, mas asset local 12.1.22 já existe e tag v12.1.22 aponta para VersionPrefix 12.1.21; não sobrescrevi nem gerei instalador. gh auth status sem login. Nenhum worker, instalação, restart, configuração ou mídia foi alterado. Próximo: nova versão/tag, publicação autorizada/autenticada, instalação em janela aprovada e smoke test de download real."
     }
   ]
 }
