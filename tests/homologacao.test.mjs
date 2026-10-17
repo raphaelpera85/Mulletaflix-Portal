@@ -359,9 +359,13 @@ test('portal publishes Nebula package and download-start validation without clai
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /12\.1\.21.*stage 12\.1\.22/s);
     assert.match(event.evidence, /581\/581.*10\/10/);
+    assert.match(event.evidence, /scanner\/helpers 86\/86/);
+    assert.match(event.evidence, /1\.452 aprovados\/60 ignorados\/0 falhas/);
+    assert.match(event.evidence, /marcador de readiness emitido pelo Python corresponde aos marcadores consumidos pelo manager C\#/);
+    assert.match(event.evidence, /testes de bootstrap do rclone e de integridade do stage passaram/);
     assert.match(event.evidence, /instalador Windows compilou com sucesso/);
     assert.match(event.evidence, /Não houve instalação.*download real/);
-    assert.match(event.evidence, /Nenhum release publicado/);
+    assert.match(event.evidence, /release v12\.1\.22 não existe/);
 
     const dashboard = createDashboard();
     await settleDashboard();
