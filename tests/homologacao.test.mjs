@@ -623,6 +623,8 @@ test('portal distinguishes the stale production Nebula runtime from validated so
     assert.match(event.evidence, /versão 12\.1\.21/);
     assert.match(event.evidence, /NebulaDownloaderStartupTests 10\/10/);
     assert.match(event.evidence, /testes Python de scanner\/helpers 86\/86/);
+    assert.match(event.evidence, /21 testes Category=RequiresMongo passaram/);
+    assert.match(event.evidence, /Mongo de produção na 27017 não foi consultado/);
     assert.match(event.evidence, /Não houve instalação, restart/);
     assert.match(event.evidence, /primeiro download real não está validado/);
 });
