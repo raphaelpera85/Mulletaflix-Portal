@@ -893,5 +893,17 @@ test('portal records the isolated Windows release candidate without claiming pro
     assert.match(event.evidence, /contém `Tools\/NebulaPython\/tools\/mongo_admission\.py`/);
     assert.match(event.evidence, /Teste de colisão recusou sobrescrita/);
     assert.match(event.evidence, /runtime segue 12\.1\.21/);
-    assert.match(event.evidence, /build Linux ainda não executados/);
+    assert.match(event.evidence, /build Linux, publicação da release e primeiro download continuam pendentes/);
+});
+
+test('portal reports the pushed server commit and blocks release on GitHub billing lock', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-windows-release-candidate-2026-10-17-0843');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /Commit do servidor `074607e9a87c881934ba4e61a994cb1b5d112af8` foi enviado ao main/);
+    assert.match(event.evidence, /CI GitHub `39029908311` encerrou sem iniciar jobs/);
+    assert.match(event.evidence, /conta bloqueada por problema de cobrança/);
+    assert.match(event.evidence, /não foi criada tag/);
+    assert.match(event.evidence, /build Linux, publicação da release e primeiro download continuam pendentes/);
 });

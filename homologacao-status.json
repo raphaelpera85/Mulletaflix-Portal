@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T08:43:00-03:00",
+  "generatedAt": "2026-10-17T08:46:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5719,7 +5719,7 @@
       "progressPercent": null,
       "startedAt": "2026-10-17T08:23:00-03:00",
       "updatedAt": "2026-10-17T08:43:00-03:00",
-      "evidence": "Stage Windows isolado e instalador `mulletaflix_12.1.23_windows-x64.exe` construídos com sucesso; FileVersion do servidor 12.1.23 e do instalador 12.1.23.0. O pacote contém `Tools/NebulaPython/tools/mongo_admission.py`; hash do downloader staged B82A43390A1F13ABEC76C7DBB563422839070DC3B474F311F5DD77F62B7F7D4D. Scripts StageBuildOptions, Assert-StageIntegrity, StageBackup e RcloneBootstrap passaram. Teste de colisão recusou sobrescrita e preservou o hash do instalador. Nenhuma instalação, reinicialização, worker ou transferência foi feita; runtime segue 12.1.21. Integração real de Mongo/Telegram e primeiro download ainda pendentes. Publicação Git do servidor e build Linux ainda não executados; homologação permanece in_progress."
+      "evidence": "Stage Windows isolado e instalador `mulletaflix_12.1.23_windows-x64.exe` construídos com sucesso; FileVersion do servidor 12.1.23 e do instalador 12.1.23.0. O pacote contém `Tools/NebulaPython/tools/mongo_admission.py`; hash do downloader staged B82A43390A1F13ABEC76C7DBB563422839070DC3B474F311F5DD77F62B7F7D4D. Scripts StageBuildOptions, Assert-StageIntegrity, StageBackup e RcloneBootstrap passaram. Teste de colisão recusou sobrescrita e preservou o hash do instalador. Commit do servidor `074607e9a87c881934ba4e61a994cb1b5d112af8` foi enviado ao main. A CI GitHub `39029908311` encerrou sem iniciar jobs: conta bloqueada por problema de cobrança, conforme anotação oficial do check run. Nenhuma instalação, reinicialização, worker ou transferência foi feita; runtime segue 12.1.21. Integração real Mongo/Telegram, build Linux, publicação da release e primeiro download continuam pendentes; não foi criada tag para evitar publicar artefatos sem CI. Homologação permanece in_progress."
     }
   ]
 }
