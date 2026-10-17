@@ -442,6 +442,10 @@ test('portal records title-level Nebula download startup without claiming produc
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /subdivide categorias diretas em pastas de título ordenadas A–Z/);
     assert.match(event.evidence, /574\/574 aprovad[oa]/);
+    assert.match(event.evidence, /Model\.Tests 684\/684/);
+    assert.match(event.evidence, /Server\.Implementations\.Tests 1\.437 aprovados, 60 ignorados/);
+    assert.match(event.evidence, /zero falhas nos projetos reportados/);
+    assert.match(event.evidence, /Integrações dependentes de Mongo.*foram ignoradas/);
     assert.match(event.evidence, /testes do portal no espelho 35\/35/);
     assert.match(event.evidence, /GitHub CLI sem autenticação/);
     assert.match(event.evidence, /nenhum worker de produção foi iniciado\/parado/);

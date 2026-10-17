@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T22:14:00-03:00",
+  "generatedAt": "2026-10-16T22:26:35-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2951,8 +2951,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-16T22:07:00-03:00",
-      "updatedAt": "2026-10-16T22:20:00-03:00",
-      "evidence": "O painel local da instalação 12.1.21 mostrou o downloader parado; os logs anteriores registram o worker Python entrando na varredura da biblioteca sem evidência de que alcançou o primeiro download. Causa na fonte: o worker indexava e ordenava toda a categoria antes de processar mídia. Correção local agora subdivide categorias diretas em pastas de título ordenadas A–Z e processa cada título antes de varrer o próximo, preservando prioridade entre categorias e fallback para layout misto. Validação repetida em 2026-10-16 22:19: suíte completa NebulaPython 574/574 aprovada (25,18 s, Python 3.10); testes do portal no espelho 35/35; git diff --check passou. Testes usam filesystem temporário; nenhum arquivo real foi baixado e nenhum worker de produção foi iniciado/parado. A instalação segue 12.1.21; correção ainda não está empacotada/instalada. GitHub CLI sem autenticação nesta sessão e o workflow/tag v12.1.22 previamente falhou antes dos jobs por bloqueio de cobrança; não há GitHub Release baixável confirmada. Gate do roadmap continua pendente; homologação real e release permanecem pendentes."
+      "updatedAt": "2026-10-16T22:26:35-03:00",
+      "evidence": "O painel local da instalação 12.1.21 mostrou o downloader parado; os logs anteriores registram o worker Python entrando na varredura da biblioteca sem evidência de que alcançou o primeiro download. Causa na fonte: o worker indexava e ordenava toda a categoria antes de processar mídia. Correção local agora subdivide categorias diretas em pastas de título ordenadas A–Z e processa cada título antes de varrer o próximo, preservando prioridade entre categorias e fallback para layout misto. Validação repetida em 2026-10-16 22:19: suíte completa NebulaPython 574/574 aprovada (25,18 s, Python 3.10); testes do portal no espelho 35/35; git diff --check passou. Testes usam filesystem temporário; nenhum arquivo real foi baixado e nenhum worker de produção foi iniciado/parado. Em 2026-10-16, a suíte .NET Release da solução terminou com código 0 usando --filter 'FullyQualifiedName!~Integration': Model.Tests 684/684; Server.Tests 73 aprovados, 1 ignorado; Server.Implementations.Tests 1.437 aprovados, 60 ignorados; zero falhas nos projetos reportados. Integrações dependentes de Mongo/serviços externos foram ignoradas; não é validação de ponta a ponta. A instalação segue 12.1.21; correção ainda não está empacotada/instalada. GitHub CLI sem autenticação nesta sessão e o workflow/tag v12.1.22 previamente falhou antes dos jobs por bloqueio de cobrança; não há GitHub Release baixável confirmada. Gate do roadmap continua pendente; homologação real e release permanecem pendentes."
     },
     {
       "id": "server-nebula-download-startup-gate-2026-10-16-2136",
