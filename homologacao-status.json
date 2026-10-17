@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T19:43:00-03:00",
+  "generatedAt": "2026-10-17T20:03:48-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5962,8 +5962,8 @@
       "startedAt": "2026-10-17T09:24:13-03:00",
       "updatedAt": "2026-10-17T09:37:11-03:00",
       "evidence": "API local read-only retornou 12.1.21; interface mostrou Downloader parado. Logs observados registram início do worker às 00:24:21 e scan às 00:24:26, sem primeiro item transferido antes de parar às 00:30:19. O strm_downloader.py instalado não tem get_categorized_scan_batches nem get_title_scan_roots; a fonte já possui varredura incremental por categoria/título. Causa provável é runtime antigo preso em varredura completa, mas transferência real não foi reproduzida. Testes: NebulaPython 586/586, testes strm_downloader 17/17, NebulaDownloaderStartupTests Release 11/11; portal tests 53/53. Commit 64a51e659556d0f6101c69e7ee882963d3841b88 enviado para origin/main do repositório principal. Nenhum worker, mídia, configuração, instalação ou restart foi alterado. Produção segue sem correção e gate global de release continua ativo; requer package/deploy autorizado e smoke test de arquivo real."
-    }
-    ,{
+    },
+    {
       "id": "portal-homologation-profile-path-redaction-2026-10-17-0946",
       "title": "Portal: caminhos locais removidos dos dados públicos de homologação",
       "agent": "Codex",
@@ -6129,7 +6129,22 @@
       "progressPercent": null,
       "startedAt": "2026-10-17T19:35:00-03:00",
       "updatedAt": "2026-10-17T19:43:00-03:00",
-      "evidence": "Painel autenticado mostra produção 12.1.21, Downloader parado, raiz D:\\midias e dois diretórios Stage disponíveis. Logs visíveis mostram inícios antigos que entraram na varredura global sem progresso de título ou transferência aparente antes do encerramento. O runtime instalado strm_downloader.py tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5; a fonte 12.1.24 tem 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA e inclui handshake e varredura incremental por título. Testes da fonte: NebulaPython 587/587 e NebulaDownloaderStartupTests Release 11/11. Release pública v12.1.21. GitHub Actions run 39037932557 terminou com falha, sem runner atribuído ou etapas executadas; o motivo de cobrança não foi confirmado nesta consulta. `gh auth status` sem sessão. Não houve start de worker, transferência, instalação, alteração de configuração ou restart. Produção não corrigida/homologada; publicação e instalação 12.1.24 com smoke test controlado permanecem pendentes."
+      "evidence": "Painel autenticado mostra produção 12.1.21, Downloader parado, raiz D:\\midias e dois diretórios Stage disponíveis. Logs visíveis mostram inícios antigos que entraram na varredura global sem progresso de título ou transferência aparente antes do encerramento. O runtime instalado strm_downloader.py tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5; a fonte 12.1.24 tem 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA e inclui handshake e varredura incremental por título. Testes da fonte: NebulaPython 587/587 e NebulaDownloaderStartupTests Release 11/11. Log adicional de 17/10: o worker posterior falha ao abrir FTP 127.0.0.1:2121 com WinError 10048; o log registra retries repetidos de mount e saída prematura de rclone, sem comprovar início de download. A fonte atual valida PID de /health; o runtime de produção permanece anterior. Release pública v12.1.21. GitHub Actions run 39037932557 terminou com falha, sem runner atribuído ou etapas executadas; o motivo de cobrança não foi confirmado nesta consulta. `gh auth status` sem sessão. Nesta rechecagem foram executados NebulaDownloaderStartupTests Release 15/15 e testes Python de health/lifecycle 12/12; não houve start de worker, transferência, instalação, alteração de configuração ou restart. Produção não corrigida/homologada; publicação e instalação 12.1.24 com smoke test controlado permanecem pendentes."
+    }
+    ,{
+      "id": "server-nebula-download-port-collision-log-2026-10-17-2003",
+      "title": "Nebula: WinError 10048 e retries de mount confirmados no log",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log de execução fornecido pelo operador e testes locais do gate de readiness",
+      "location": "NebulaFTP :2121; stream HTTP :2123; montagem rclone N:",
+      "scope": "Correlacionar falha de início do download com colisão de porta e retries de montagem; manter homologação de produção aberta.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T19:49:00-03:00",
+      "updatedAt": "2026-10-17T20:03:48-03:00",
+      "evidence": "O log recebido registra WinError 10048 ao bindar 127.0.0.1:2121, depois repetidas mensagens de outro mount N: já em execução e rclone saindo com código 0; não registra mídia iniciando transferência. Isso corrobora listener antigo/concorrente e loop de retries, não prova a identidade do dono da porta. A fonte atual compara PID do /health com o processo recém-criado, mas a produção permanece 12.1.21 conforme verificação anterior e o log não demonstra essa correção instalada. Testes executados: NebulaDownloaderStartupTests Release 15/15; Python test_http_stream_security.py + test_main_lifecycle.py 12/12. Nenhum processo encerrado, mount alterado, worker/download iniciado, instalação ou restart. Publicação, janela controlada e primeiro download real pendentes."
     }
   ]
 }

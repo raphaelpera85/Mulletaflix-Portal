@@ -1133,6 +1133,20 @@ test('Nebula download runtime recheck keeps production and release gates explici
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula port collision log keeps production homologation open', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-port-collision-log-2026-10-17-2003');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /rclone saindo com código 0/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests Release 15\/15/);
+    assert.match(event.evidence, /12\/12/);
+    assert.match(event.evidence, /não registra mídia iniciando transferência/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
