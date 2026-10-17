@@ -881,3 +881,17 @@ test('portal records full local validation without claiming a real Nebula downlo
     assert.match(event.evidence, /não há confirmação de download Telegram\/Mongo real/);
     assert.match(event.evidence, /Runtime local permanece 12\.1\.21/);
 });
+
+test('portal records the isolated Windows release candidate without claiming production homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-windows-release-candidate-2026-10-17-0843');
+
+    assert.ok(event, 'portal should publish the Windows 12.1.23 candidate evidence');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /instalador `mulletaflix_12\.1\.23_windows-x64\.exe` construídos com sucesso/);
+    assert.match(event.evidence, /contém `Tools\/NebulaPython\/tools\/mongo_admission\.py`/);
+    assert.match(event.evidence, /Teste de colisão recusou sobrescrita/);
+    assert.match(event.evidence, /runtime segue 12\.1\.21/);
+    assert.match(event.evidence, /build Linux ainda não executados/);
+});

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T08:23:00-03:00",
+  "generatedAt": "2026-10-17T08:43:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5705,6 +5705,21 @@
       "startedAt": "2026-10-17T08:03:10-03:00",
       "updatedAt": "2026-10-17T08:23:00-03:00",
       "evidence": "Validação concluída: `dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~Integration` terminou com exit 0; todas as suites incluídas passaram, com casos explicitamente ignorados. Como complemento, o teste DramaFindsLiveIntegration isolado passou 1/1 após tornar a asserção de API externa tolerante a resultados fuzzy de baixa confiança. NebulaPython 586/586; NebulaDownloaderStartupTests Release 9/9; quatro scripts de teste de packaging passaram; frontend web Vitest 74 arquivos e 407 testes passou. Limite: o filtro não executa casos cujo nome contém Integration e não há confirmação de download Telegram/Mongo real. Runtime local permanece 12.1.21; nenhum worker, configuração, instalação, restart ou mídia foi alterado. Release e smoke test produtivo pendentes; homologação continua in_progress."
+    },
+    {
+      "id": "server-nebula-windows-release-candidate-2026-10-17-0843",
+      "title": "Nebula: candidato Windows 12.1.23 construído e validado em isolamento",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "Stage isolado, instalador Windows e testes de integridade do Nebula",
+      "scope": "Construir e validar o candidato de release Windows sem instalar nem alterar a instância ativa.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T08:23:00-03:00",
+      "updatedAt": "2026-10-17T08:43:00-03:00",
+      "evidence": "Stage Windows isolado e instalador `mulletaflix_12.1.23_windows-x64.exe` construídos com sucesso; FileVersion do servidor 12.1.23 e do instalador 12.1.23.0. O pacote contém `Tools/NebulaPython/tools/mongo_admission.py`; hash do downloader staged B82A43390A1F13ABEC76C7DBB563422839070DC3B474F311F5DD77F62B7F7D4D. Scripts StageBuildOptions, Assert-StageIntegrity, StageBackup e RcloneBootstrap passaram. Teste de colisão recusou sobrescrita e preservou o hash do instalador. Nenhuma instalação, reinicialização, worker ou transferência foi feita; runtime segue 12.1.21. Integração real de Mongo/Telegram e primeiro download ainda pendentes. Publicação Git do servidor e build Linux ainda não executados; homologação permanece in_progress."
     }
   ]
 }
