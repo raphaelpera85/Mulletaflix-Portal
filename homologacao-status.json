@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T02:49:31-03:00",
+  "generatedAt": "2026-10-17T03:01:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5345,6 +5345,21 @@
       "startedAt": "2026-10-17T01:14:00-03:00",
       "updatedAt": "2026-10-17T02:13:00-03:00",
       "evidence": "GET /System/Info/Public retornou HTTP 200 e versão 12.1.21; MulletaFlix.exe PID 16928 estava ativo e o snapshot não mostrou worker Nebula/Python/rclone. O downloader instalado usa hash legado 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5, diferente do source/stage 12.1.22 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F. Testes focais: NebulaDownloaderStartupTests 10/10 e testes Python de scanner/helpers 86/86 em Python 3.10. Adicionalmente, 21 testes Category=RequiresMongo passaram contra uma instância Mongo descartável 8.3.7 em 127.0.0.1:27099; Mongo de produção na 27017 não foi consultado. A suíte completa Server.Implementations Release passou 1.473 aprovados, 39 ignorados, 0 falhas (1.512 total). Auditoria de testes MariaDB encontrou fixtures destrutivos antes hardcoded em 127.0.0.1:3306; corrigidos para exigir `MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING`, aceitar somente um host loopback e porta não padrão e ignorar os testes sem opt-in. Validador: 8/8; integração MariaDB: 37/37 contra instância descartável 11.4.4 em 127.0.0.1:33099; sem opt-in: 14 aprovados e 23 ignorados. Naquela rodada, a instância de teste foi encerrada e a porta 33099 fechada; posteriormente, a MariaDB isolada foi reaberta para o fixture HTTP. O fixture foi ajustado para não iniciar nem parar serviços gerenciados pelo servidor e exigir conexão à instância de teste explícita. Teste representativo ActivityLogController passou 1/1 em 26 s e conexões do testhost foram observadas somente na 33099, não na 3306. Suíte completa Jellyfin.Server.Integration.Tests iniciou com a instância isolada, mas foi encerrada após mais de 18 minutos sem resultado final; permanece inconclusiva. Não houve instalação, restart, início/parada de worker nem transferência. A fila configurada não foi consultada e primeiro download real não está validado; exige janela autorizada de manutenção para atualizar o runtime e testar um item."
+    },
+    {
+      "id": "server-nebula-download-revalidation-2026-10-17-0301",
+      "title": "Nebula: revalidação dos testes de inicialização do download",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaFtpManager.cs e Tools/NebulaPython/tools/strm_downloader.py",
+      "scope": "Repetir testes de startup e scanner, verificar a versão instalada e a disponibilidade para empacotar a release Linux.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T02:50:00-03:00",
+      "updatedAt": "2026-10-17T03:01:00-03:00",
+      "evidence": "NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests: 25/25 aprovados em Release. Python 3.10 scanner/helpers: 86/86; tentativa em Python 3.14 não contou porque pytest não está instalado. Produção segue 12.1.21; código/stage corrigido 12.1.22. Nenhum worker foi iniciado nem transferência real executada. Docker e WSL não estão instalados, então pacote Linux não foi gerado; não houve nova release. Homologação segue in_progress até pacote Windows/Linux e smoke test controlado do primeiro download."
     }
   ]
 }
