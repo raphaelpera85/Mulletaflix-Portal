@@ -628,4 +628,9 @@ test('portal distinguishes the stale production Nebula runtime from validated so
     assert.match(event.evidence, /1\.473 aprovados, 39 ignorados, 0 falhas \(1\.512 total\)/);
     assert.match(event.evidence, /Não houve instalação, restart/);
     assert.match(event.evidence, /primeiro download real não está validado/);
+    assert.match(event.evidence, /fixtures destrutivos antes hardcoded em 127\.0\.0\.1:3306/);
+    assert.match(event.evidence, /MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
+    assert.match(event.evidence, /Validador: 8\/8; integração MariaDB: 37\/37/);
+    assert.match(event.evidence, /14 aprovados e 23 ignorados/);
+    assert.match(event.evidence, /porta 33099 fechada/);
 });
