@@ -1118,6 +1118,21 @@ test('STRM generator package gate rejects a stage missing the required module', 
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula download runtime recheck keeps production and release gates explicit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-recheck-2026-10-17-1943');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /produção 12\.1\.21/);
+    assert.match(event.evidence, /NebulaPython 587\/587/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests Release 11\/11/);
+    assert.match(event.evidence, /run 39037932557 terminou com falha/);
+    assert.match(event.evidence, /sem runner atribuído ou etapas executadas/);
+    assert.match(event.evidence, /Produção não corrigida\/homologada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;

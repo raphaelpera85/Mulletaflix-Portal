@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T19:35:00-03:00",
+  "generatedAt": "2026-10-17T19:43:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6115,6 +6115,21 @@
       "startedAt": "2026-10-17T12:22:00-03:00",
       "updatedAt": "2026-10-17T12:27:00-03:00",
       "evidence": "GET /System/Info/Public confirmou produção 12.1.21; MulletaFlix.exe PID 16928. nebula.log tem 82.510 bytes e última gravação em 11/10/2026 23:22:32 (-03). Snapshot por ancestralidade não encontrou nenhum processo Python/STRM/rclone descendente do servidor naquele instante; isso não comprova sozinho o motivo da falha. A autenticação do status interno não está disponível. Não houve tentativa de iniciar worker/download, nem alteração de configuração, instalação ou restart. Publicação/instalação e primeiro smoke test permanecem pendentes; correção ainda não homologada em produção."
+    },
+    {
+      "id": "server-nebula-download-runtime-recheck-2026-10-17-1943",
+      "title": "Nebula: causa de download parado confirmada como runtime anterior",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Painel autenticado, API pública local, hashes e testes da fonte",
+      "location": "Nebula Downloader STRM; runtime 12.1.21 e fonte 12.1.24",
+      "scope": "Distinguir falha de inicialização de atraso de varredura e registrar os gates para colocar a correção em produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T19:35:00-03:00",
+      "updatedAt": "2026-10-17T19:43:00-03:00",
+      "evidence": "Painel autenticado mostra produção 12.1.21, Downloader parado, raiz D:\\midias e dois diretórios Stage disponíveis. Logs visíveis mostram inícios antigos que entraram na varredura global sem progresso de título ou transferência aparente antes do encerramento. O runtime instalado strm_downloader.py tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5; a fonte 12.1.24 tem 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA e inclui handshake e varredura incremental por título. Testes da fonte: NebulaPython 587/587 e NebulaDownloaderStartupTests Release 11/11. Release pública v12.1.21. GitHub Actions run 39037932557 terminou com falha, sem runner atribuído ou etapas executadas; o motivo de cobrança não foi confirmado nesta consulta. `gh auth status` sem sessão. Não houve start de worker, transferência, instalação, alteração de configuração ou restart. Produção não corrigida/homologada; publicação e instalação 12.1.24 com smoke test controlado permanecem pendentes."
     }
   ]
 }
