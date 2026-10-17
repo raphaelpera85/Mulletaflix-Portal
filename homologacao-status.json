@@ -5508,8 +5508,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T04:38:00-03:00",
-      "updatedAt": "2026-10-17T04:54:05-03:00",
-      "evidence": "Python 3.10 suíte Nebula completa 584/584; .NET Release focado NebulaDownloaderStartupTests + NebulaSupabaseSyncTests 52/52. Dois testes novos RequiresMongo compilaram mas foram ignorados sem Mongo descartável. Código agora separa timestamp de tentativa/snapshot e limita cursor Mongo a 15 s; nova coleção nebula_admission coordena C#/Python com leases e heartbeat. Logs locais do Nebula terminam em 11/10 e runtime permanece 12.1.21; fonte 12.1.22. Sem processo worker, configuração, install, restart ou mídia alterados; primeiro download, validação concorrente Mongo, release e instalação continuam pendentes. Homologação server in_progress."
+      "updatedAt": "2026-10-17T04:58:00-03:00",
+      "evidence": "Python 3.10 suíte Nebula completa 584/584; .NET Release focado de startup/sync 52/52; regressões NebulaUploadEngineTests + NebulaStagingWatcherTests e testes admission 230 aprovados, 2 RequiresMongo ignorados, 0 falhas. Revisão fechou a janela claim→admissão: watcher agora adquire a lease antes do claim e a mantém pela transferência; se perder a lease, tenta liberar o próprio claim preservando partes e refileira. Retry de refresh Mongo mantém timestamp da última tentativa e limita cursor a 15 s. Os dois testes de concorrência Mongo foram compilados, mas não executados sem Mongo descartável nesta rodada. Log local termina em 11/10; runtime permanece 12.1.21 e fonte 12.1.22. Sem worker, config, instalação, restart ou mídia alterados; primeiro download, validação Mongo real, release e instalação continuam pendentes. Homologação server in_progress."
     }
   ]
 }
