@@ -376,3 +376,17 @@ test('server audit publishes the complete local suite and preserves the remote C
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /bloqueio externo do CI remoto/);
 });
+
+test('server dependency audit reports zero known vulnerabilities but keeps deprecated dependencies pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-dependency-audit-2026-10-16-2108');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /não reportou pacote vulnerável/);
+    assert.match(event.evidence, /zlib\.net-mutliplatform 1\.0\.8/);
+    assert.match(event.evidence, /não foi validada com ela/);
+    assert.match(event.evidence, /T6\.4 continua parcial/);
+    assert.equal(server.status, 'in_progress');
+    assert.equal(server.testAudit.failed, 0);
+});

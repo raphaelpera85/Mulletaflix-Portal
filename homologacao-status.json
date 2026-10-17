@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T20:51:13-03:00",
+  "generatedAt": "2026-10-16T21:08:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5095,6 +5095,21 @@
       "startedAt": "2026-10-12T06:45:00-03:00",
       "updatedAt": "2026-10-12T06:55:00-03:00",
       "evidence": "Autorização explícita do usuário para fluxo de release registrada como exceção pontual no roadmap. Pré-validação: testes LibraryMonitorTests 2/2 e build Release de Emby.Server.Implementations com 0 avisos/0 erros. Release estável publicada: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.19, tag v12.1.19 no commit 8f9f630b951ee21fa91081797b0c2c8d52926652; API GitHub confirmou draft=false, prerelease=false e os assets `mulletaflix-update-win-x64.zip` (388518979 bytes, SHA-256 6ECF5F42947C074D3B011EA4FECFF88CA9EC15CBFF4465D86C3BE36FC1895E06) e `mulletaflix_12.1.19_windows-x64.exe` (423401347 bytes, SHA-256 1F3B52DC7CCDF02D2019E9087F6E773C50F9EBE657537A1A135BE1437F95C612). O instalador foi criado por NSIS em configuração Release/self-contained; a verificação Authenticode é NotSigned, igual ao instalador oficial 12.1.18, pois o projeto não possui assinatura Authenticode configurada — não foi usada assinatura ou chave de desenvolvimento. Portal: commit daa51e8, deploy Vercel de produção READY dpl_HXMRb2AV4HxjSPtnkqcEC3CqVjAa; /, /docs, /downloads, /updates, /homologacao e /sitemap.xml retornaram HTTP 200, e /docs e /updates exibem a versão/correção. APK fora do escopo da exceção; roadmap permanece em andamento."
+    },
+    {
+      "id": "server-dependency-audit-2026-10-16-2108",
+      "title": "Auditoria NuGet: vulnerabilidades e dependências legadas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T6.4"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/MulletaFlix.sln e grafo NuGet restaurado",
+      "scope": "Revalidar pacotes vulneráveis e legados na solução do servidor; registrar cadeias e limites sem atualizar dependências sem testes de compatibilidade.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T20:54:00-03:00",
+      "updatedAt": "2026-10-16T21:08:50-03:00",
+      "evidence": "`dotnet list MulletaFlix.sln package --vulnerable --include-transitive --no-restore --verbosity quiet` terminou exit 0 e não reportou pacote vulnerável na solução. A varredura --deprecated encontrou zlib.net-mutliplatform 1.0.8 na cadeia de produção MediaBrowser.MediaEncoding -> libse 4.0.12, Microsoft.Testing.Platform.MSBuild 1.9.1 pela cadeia xUnit v3/MTP v1 e Polly.Extensions.Http/assemblies legados. NuGet oficial lista zlib 1.1.0 como versão disponível, mas a leitura de legendas Windows/Linux ainda não foi validada com ela; MTP v2 não foi imposto ao runner v1. Nenhum pacote ou código de runtime alterado. T6.4 continua parcial; testes de fixture multiplataforma, CI e homologação formal continuam pendentes. Release v12.1.21 permanece atual; nenhuma nova release criada."
     }
   ]
 }
