@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T10:57:54-03:00",
+  "generatedAt": "2026-10-17T11:02:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6007,8 +6007,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T10:52:00-03:00",
-      "updatedAt": "2026-10-17T10:57:54-03:00",
-      "evidence": "GET /System/Info/Public respondeu 12.1.21. O downloader instalado tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 e não contém os marcadores de inicialização/helpers presentes na fonte 12.1.24 (SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA); o log Nebula não é atualizado desde 11/10/2026. Testes da fonte: NebulaDownloaderStartupTests 11/11 e NebulaPython 587/587. Nenhum worker, download, instalação, alteração de configuração ou restart executado. CI permanece bloqueado por cobrança; sem release ou homologação real."
+      "updatedAt": "2026-10-17T11:02:00-03:00",
+      "evidence": "GET /System/Info/Public respondeu 12.1.21. O downloader instalado tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 e não contém os marcadores de inicialização/helpers presentes na fonte 12.1.24 (SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA); o log Nebula não é atualizado desde 11/10/2026. Reexecução: NebulaDownloaderStartupTests 11/11 e test_strm_downloader.py + test_strm_downloader_helpers.py 89/89. Nenhum worker, download, instalação, alteração de configuração ou restart executado. Isso valida a fonte, não a produção. CI permanece bloqueado por cobrança e gh auth status sem sessão; sem release ou homologação real."
     }
   ]
 }

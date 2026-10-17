@@ -1005,7 +1005,7 @@ test('portal keeps the Nebula download correction pending until the runtime is u
     assert.match(event.evidence, /GET \/System\/Info\/Public respondeu 12\.1\.21/);
     assert.match(event.evidence, /fonte 12\.1\.24/);
     assert.match(event.evidence, /NebulaDownloaderStartupTests 11\/11/);
-    assert.match(event.evidence, /NebulaPython 587\/587/);
+    assert.match(event.evidence, /test_strm_downloader\.py \+ test_strm_downloader_helpers\.py 89\/89/);
     assert.match(event.evidence, /Nenhum worker, download, instalação.*ou restart executado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
