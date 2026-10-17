@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T06:52:00-03:00",
+  "generatedAt": "2026-10-17T07:28:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 63,
         "failed": 0,
         "percent": 98.7,
-        "label": "Suíte da solução em Release não-Integration: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total; rodada anterior ao último ajuste Python). NebulaPython 3.10 revalidado 17/10 06:52: 585/585; downloader/helpers 88/88; teste focado 17/17; startup C# 10/10. O worker só declara pronto após refresh Mongo válido; se falhar, emite [STRM-WORKER-STARTUP-FAILED] e encerra antes de scan/download. Runtime local continua 12.1.21 e downloader instalado difere da fonte. Nenhuma instalação, restart, ação de worker ou transferência foi executada; primeiro download real e homologação em produção permanecem pendentes. Homologação formal continua aberta; CI remoto segue bloqueado por cobrança GitHub (run 38981348548)."
+        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython completo 586/586, downloader/helpers 89/89, NebulaDownloaderStartupTests 9/9 e Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas (1.520 total). O handshake agora só termina em [STRM-SCAN-STARTED]; [STRM-WORKER-MONGO-READY] é apenas progresso. Corrigida varredura residual de pastas desconhecidas/mídias soltas e suporte a raiz de arquivo. Revisão adversarial: sem apontamentos. Build isolado ainda bloqueado: builder exige stage preexistente e tem backup temporário apontando para a raiz do projeto; código e produção não foram instalados. Runtime verificado continua 12.1.21; nenhum worker ou download real foi iniciado. Release, instalação e smoke test permanecem pendentes. Homologação formal continua aberta; CI remoto segue bloqueado por cobrança GitHub (run 38981348548)."
       }
     },
     {
@@ -5632,19 +5632,19 @@
       "evidence": "Causa: o builder não encaminhava -StageDirectory para o compilador NSIS, que recaía no stage padrão. Correção validada por StageBuildOptions.Tests.ps1, Assert-StageIntegrity.Tests.ps1 e RcloneBootstrap.Tests.ps1; os três passaram. Execução com stage fora do root foi rejeitada pela guarda. GET read-only /System/Info/Public continua 12.1.21 e o downloader instalado permanece legado. Nenhum instalador foi compilado, servidor instalado/reiniciado, worker iniciado ou mídia transferida. O fluxo de packaging foi corrigido, mas produção e primeiro download real ainda não estão corrigidos/homologados; pacote integral e janela operacional pendentes."
     },
     {
-      "id": "server-nebula-download-mongo-handshake-2026-10-17-0644",
-      "title": "Nebula: estado de início agora aguarda refresh Mongo; instalação ainda antiga",
+      "id": "server-nebula-download-mongo-handshake-2026-10-17-0728",
+      "title": "Nebula: início confirmado na varredura; testes completos aprovados, release pendente",
       "agent": "Codex",
       "front": "server",
       "featureIds": ["T2.1"],
-      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
-      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; MulletaFlix-master/Tools/NebulaPython/tests/test_strm_downloader.py; MulletaFlix-master/docs/nebula-strm-download.md",
-      "scope": "Corrigir a confirmação prematura de início do downloader enquanto o refresh Mongo ainda não terminou e registrar homologação local sem tocar produção.",
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaFtpManager.cs; testes Nebula; docs/nebula-strm-download.md",
+      "scope": "Corrigir a confirmação prematura do downloader e o atraso de varredura em raízes mistas; validar fonte e publicar o estado de homologação sem tocar produção.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T06:39:00-03:00",
-      "updatedAt": "2026-10-17T06:52:00-03:00",
-      "evidence": "O worker emitia [STRM-WORKER-READY] antes de MediaValidator.refresh_cache(force=True), permitindo estado de execução prematuro. A fonte agora só declara pronto após refresh Mongo válido; refresh_cache retorna sucesso/falha e, em falha, o worker emite [STRM-WORKER-STARTUP-FAILED] e encerra antes do scan/download. Testes: Python focado 17/17, downloader/helpers 88/88, suíte NebulaPython 585/585 e NebulaDownloaderStartupTests 10/10. SHA-256 atual da fonte 0E9393C23ABAEE9625ED7387499F9F6798A6B90954948CC8E0DC8F2CCA13F728; instalado 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5. Runtime continua 12.1.21. Nenhum worker foi iniciado/parado; sem instalação, restart ou mídia transferida. Release, instalação e primeiro download real continuam pendentes; homologação permanece in_progress."
+      "updatedAt": "2026-10-17T07:28:00-03:00",
+      "evidence": "A revalidação adversarial encontrou dois casos: diretório superior desconhecido ou mídia solta podia forçar scan global antes das categorias prioritárias; o handshake podia considerar Mongo-ready como início antes da enumeração do filesystem. Corrigidos: raízes desconhecidas/soltas são lote A–Z final; raiz de arquivo é aceita; [STRM-WORKER-MONGO-READY] atualiza progresso e somente [STRM-SCAN-STARTED] confirma início. RED/green reproduzido. Testes Python focados 89/89, suíte Python 586/586, NebulaDownloaderStartupTests Release 9/9, Jellyfin.Server.Implementations.Tests Release 1.458 aprovados, 62 ignorados, 0 falhas (1.520 total); revisor adversarial sem apontamentos. Hash da fonte strm_downloader.py: B82A43390A1F13ABEC76C7DBB563422839070DC3B474F311F5DD77F62B7F7D4D. GET read-only confirma runtime 12.1.21; nenhum worker, instalação, restart ou transferência foi executado. Build isolado parou antes da compilação por exigir stage preexistente; inspeção detectou que o backup temporário usa a raiz do projeto, então não foi repetido. Release, instalação e primeiro download real continuam pendentes."
     }
   ]
 }

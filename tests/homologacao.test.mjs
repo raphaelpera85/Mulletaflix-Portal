@@ -809,17 +809,17 @@ test('portal records that the installer now receives the validated Nebula stage 
     assert.match(event.evidence, /primeiro download real ainda não estão corrigidos\/homologados/);
 });
 
-test('portal records the Mongo readiness handshake fix without claiming a production download', () => {
-    const event = statusData.events.find(item => item.id === 'server-nebula-download-mongo-handshake-2026-10-17-0644');
+test('portal records latest Nebula scanner and readiness fixes without claiming a production download', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-mongo-handshake-2026-10-17-0728');
 
     assert.ok(event, 'portal should publish the Mongo readiness handshake correction');
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
-    assert.match(event.evidence, /emitia \[STRM-WORKER-READY\] antes/);
-    assert.match(event.evidence, /Python focado 17\/17, downloader\/helpers 88\/88, suíte NebulaPython 585\/585/);
-    assert.match(event.evidence, /refresh_cache retorna sucesso\/falha/);
-    assert.match(event.evidence, /\[STRM-WORKER-STARTUP-FAILED\].*encerra antes do scan\/download/);
-    assert.match(event.evidence, /continua 12\.1\.21/);
+    assert.match(event.evidence, /diretório superior desconhecido ou mídia solta/);
+    assert.match(event.evidence, /Python focados 89\/89, suíte Python 586\/586/);
+    assert.match(event.evidence, /somente \[STRM-SCAN-STARTED\] confirma início/);
+    assert.match(event.evidence, /backup temporário usa a raiz do projeto/);
+    assert.match(event.evidence, /confirma runtime 12\.1\.21/);
     assert.match(event.evidence, /Release, instalação e primeiro download real continuam pendentes/);
 });
