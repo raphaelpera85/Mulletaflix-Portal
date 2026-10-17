@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T05:10:00-03:00",
+  "generatedAt": "2026-10-17T05:18:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5525,6 +5525,21 @@
       "startedAt": "2026-10-17T05:00:00-03:00",
       "updatedAt": "2026-10-17T05:10:00-03:00",
       "evidence": "GET read-only /System/Info/Public informa servidor 12.1.21. Downloader instalado (08/10/2026) SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 não contém readiness/scan incremental. Fonte 12.1.22 SHA-256 EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79. Stage SHA-256 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F diverge e validate-stage.ps1 falhou; assemblies stage também diferem dos builds Release atuais. NebulaDownloaderStartupTests 10/10; Jellyfin.Server.Implementations.Tests 1452 aprovados, 62 ignorados, 0 falhas; NebulaPython 584/584 em Python 3.10. Log local termina em 11/10, sem evidência atual do worker ou primeiro item. Nenhum worker, configuração, instalação, restart ou mídia foi alterado. T2.1 segue in_progress até reconstruir stage, publicar/instalar em janela segura e provar o primeiro download."
+    },
+    {
+      "id": "server-nebula-isolated-stage-candidate-2026-10-17-0518",
+      "title": "Candidato isolado do servidor Nebula validado; produção ainda não testada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-packaging-master/build-stage-and-installer.ps1; scripts/Assert-StageIntegrity.ps1; scripts/validate-stage.ps1; scripts/tests/; .build/nebula-download-candidate-20261017",
+      "scope": "Gerar um candidato isolado e verificar consistência do downloader e das assemblies, preservando stage ativo e produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T05:10:00-03:00",
+      "updatedAt": "2026-10-17T05:18:00-03:00",
+      "evidence": "Candidato isolado contém 3.224 arquivos (1.151.468.892 bytes). Integridade do stage passou; downloader staged corresponde à fonte por SHA-256 EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79; MulletaFlix.dll e MulletaFlix.Server.Implementations.dll staged correspondem ao publish selecionado. Testes PowerShell do packaging passaram. Web/tray foram preservados do stage-base e build do instalador foi omitido; isso não é uma release completa. Produção 12.1.21 não foi instalada/reiniciada e nenhum download real foi executado; primeira transferência e homologação continuam pendentes."
     }
   ]
 }

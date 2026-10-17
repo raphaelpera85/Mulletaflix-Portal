@@ -727,3 +727,17 @@ test('portal shows the current stale Nebula runtime and failed stage integrity c
     assert.match(event.evidence, /Log local termina em 11\/10/);
     assert.match(event.evidence, /primeiro item/);
 });
+
+test('portal records the isolated Nebula stage candidate without claiming a full release', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-isolated-stage-candidate-2026-10-17-0518');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /Candidato isolado contém 3\.224 arquivos/);
+    assert.match(event.evidence, /Integridade do stage passou/);
+    assert.match(event.evidence, /Web\/tray foram preservados do stage-base/);
+    assert.match(event.evidence, /isso não é uma release completa/);
+    assert.match(event.evidence, /nenhum download real foi executado/);
+});
