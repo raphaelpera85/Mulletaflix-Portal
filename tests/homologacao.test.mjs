@@ -884,6 +884,20 @@ test('portal reports the 12.1.24 Nebula candidate without claiming a successful 
     assert.doesNotMatch(JSON.stringify(event), /[A-Z]:\\Users\\/i);
 });
 
+test('portal records the GitHub CI infrastructure block without miscounting it as test failure', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-release-ci-block-2026-10-17-1027');
+
+    assert.ok(event, 'portal should publish the CI/release blocker');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /39036436583 e 39036616551/);
+    assert.match(event.evidence, /11 jobs sem etapas executadas/);
+    assert.match(event.evidence, /Não classificar como falha dos testes/);
+    assert.match(event.evidence, /Release\/tag ainda não publicada/);
+    assert.doesNotMatch(JSON.stringify(event), /[A-Z]:\\Users\\/i);
+});
+
 test('portal records full local validation without claiming a real Nebula download', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-download-full-validation-2026-10-17-0823');
 
