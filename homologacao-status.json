@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T23:49:00-03:00",
+  "generatedAt": "2026-10-16T23:55:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-backup-scheduled-history-2026-10-16-2355",
+      "title": "Cobrir persistência do histórico de backup agendado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.4"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs",
+      "scope": "Auditar e testar que execuções de backup agendadas persistem sua identidade, status e caminho no histórico, sem acessar bancos externos ou o agendador de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T23:50:00-03:00",
+      "updatedAt": "2026-10-16T23:55:00-03:00",
+      "evidence": "A auditoria identificou que o caminho CreateScheduledBackupAsync não tinha teste direto de seu registro no histórico. O novo teste usa diretórios temporários, exclui Database/Metadata/Subtitles/Trickplay e valida Key=BackupScheduledTask, nome, status Completed e mesmo caminho do manifesto. O teste novo passou 1/1; FullSystemBackup 32/32; Jellyfin.Server.Implementations.Tests Release sem Integration: 1.446 aprovados, 60 ignorados, 0 falhas. Não houve acesso a bancos externos, agendador, mídia ou produção. Isto não valida execução do scheduler nem restore completo; T4.4/T4.3 continuam parciais. Sem release de servidor nesta sessão."
+    },
     {
       "id": "server-nebula-download-production-version-gap-2026-10-16-2326",
       "title": "Nebula: produção ainda executa o scanner anterior à correção",

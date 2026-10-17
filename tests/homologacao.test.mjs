@@ -539,3 +539,20 @@ test('portal records that the installed Nebula worker predates the validated sou
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /produção ainda executa o scanner anterior à correção/);
 });
+
+test('portal records scheduled backup history coverage as partial', async () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-scheduled-history-2026-10-16-2355');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T4.4']);
+    assert.match(event.evidence, /CreateScheduledBackupAsync/);
+    assert.match(event.evidence, /FullSystemBackup 32\/32/);
+    assert.match(event.evidence, /1\.446 aprovados, 60 ignorados, 0 falhas/);
+    assert.match(event.evidence, /não valida execução do scheduler nem restore completo/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Cobrir persistência do histórico de backup agendado/);
+});
