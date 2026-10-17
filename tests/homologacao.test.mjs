@@ -868,18 +868,18 @@ test('portal records current Nebula runtime, stage parity, and source-only test 
     assert.match(event.evidence, /transferência real continuam pendentes/);
 });
 
-test('portal reports the stale STRM scanner runtime without claiming a successful download', () => {
+test('portal reports the 12.1.24 Nebula candidate without claiming a successful download', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-stale-downloader-runtime-2026-10-17-1000');
 
     assert.ok(event, 'portal should publish the latest STRM downloader diagnosis');
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
-    assert.match(event.evidence, /servidor 12\.1\.21, Downloader parado/);
-    assert.match(event.evidence, /não tem os helpers de scan incremental/);
-    assert.match(event.evidence, /NebulaPython 586\/586 e NebulaDownloaderStartupTests Release 11\/11/);
-    assert.match(event.evidence, /não comprova um download específico/);
-    assert.match(event.evidence, /Rebuild 12\.1\.24/);
+    assert.match(event.evidence, /Candidato 12\.1\.24 reconstruído localmente para Windows e Linux/);
+    assert.match(event.evidence, /Tools\/NebulaPython\/tools\/strm_downloader\.py e requirements\.txt/);
+    assert.match(event.evidence, /NebulaPython 89\/89 e NebulaDownloaderStartupTests Release 11\/11/);
+    assert.match(event.evidence, /Produção continua 12\.1\.21/);
+    assert.match(event.evidence, /publicação, instalação controlada e smoke test permanecem pendentes/);
     assert.doesNotMatch(JSON.stringify(event), /[A-Z]:\\Users\\/i);
 });
 
