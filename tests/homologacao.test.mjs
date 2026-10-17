@@ -1168,8 +1168,9 @@ test('Nebula mount duplicate helper records deterministic result and keeps produ
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
-    assert.match(event.evidence, /test_mount_drive_n\.py 2\/2/);
-    assert.match(event.evidence, /NebulaPython 590\/590/);
+    assert.match(event.evidence, /test_mount_drive_n\.py 3\/3/);
+    assert.match(event.evidence, /NebulaPython 591\/591/);
+    assert.match(event.evidence, /código 3 indica somente outro helper/);
     assert.match(event.evidence, /26\/26/);
     assert.match(event.evidence, /WinError 10048/);
     assert.match(event.evidence, /download real permanecem pendentes/);

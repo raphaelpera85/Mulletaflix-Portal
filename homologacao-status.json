@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T20:24:00-03:00",
+  "generatedAt": "2026-10-17T20:31:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2952,8 +2952,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T20:20:00-03:00",
-      "updatedAt": "2026-10-17T20:24:00-03:00",
-      "evidence": "O helper agora retorna sucesso se N: já está acessível antes do lock e código 3 se outro helper possui a tentativa sem unidade acessível; C# verifica disponibilidade da unidade antes de interpretar a saída. Testes: test_mount_drive_n.py 2/2, NebulaPython 590/590 e testes .NET NebulaMountOwnershipTests + NebulaMountRetryTests + NebulaDownloaderStartupTests 26/26. O log ainda comprova WinError 10048 em 127.0.0.1:2121; nenhum worker, mount ou serviço produtivo foi iniciado/parado. A colisão de porta, release/instalação e download real permanecem pendentes; correção não homologada em produção."
+      "updatedAt": "2026-10-17T20:31:00-03:00",
+      "evidence": "O helper retorna sucesso se N: já está acessível; código 3 indica somente outro helper com lock ativo sem unidade acessível; erros operacionais reais ao adquirir o lock retornam código 2 e log explícito. C# verifica disponibilidade da unidade antes de interpretar a saída. Revisão corrigiu a distinção entre lock ocupado e erro de permissão/arquivo. Testes: test_mount_drive_n.py 3/3, NebulaPython 591/591 e testes .NET NebulaMountOwnershipTests + NebulaMountRetryTests + NebulaDownloaderStartupTests 26/26. O log ainda comprova WinError 10048 em 127.0.0.1:2121; nenhum worker, mount ou serviço produtivo foi iniciado/parado. A colisão de porta, release/instalação e download real permanecem pendentes; correção não homologada em produção."
     },
     {
       "id": "server-nebula-upload-mode-port-conflict-2026-10-17-2016",
