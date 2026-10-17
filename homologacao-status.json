@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T21:29:00-03:00",
+  "generatedAt": "2026-10-16T21:36:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,20 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-download-startup-gate-2026-10-16-2136",
+      "title": "Downloader Nebula sem início automático: configuração global desabilitada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "location": "NebulaHostedService; NebulaFtpManager; configuração e logs locais de produção",
+      "scope": "Investigar a ausência de início do downloader STRM sem ativar envio ou alterar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T21:33:00-03:00",
+      "updatedAt": "2026-10-16T21:36:00-03:00",
+      "evidence": "Configuração local ativa tinha Enabled=false; o log de inicialização registra que NebulaFTP está desabilitado. O código confirma que o início automático só chama o pipeline quando Enabled=true; esse pipeline inicia Envio antes do downloader e pode montar N:. A configuração tem uma fonte MonitorPaths existente. Não alteramos produção. Dois processos Python filhos existem, mas o Windows não expôs suas linhas de comando; não foi possível confirmar se algum é o downloader. Não foi observado se houve tentativa manual. Smoke test manual, reprodução de mídia, homologação e release seguem pendentes; habilitar o pipeline global exige decisão operacional porque também pode iniciar uploads."
+    },
     {
       "id": "server-nebula-strm-scan-status-2026-10-16-2127",
       "title": "Fila de download STRM do Nebula: scan e feedback de estado",

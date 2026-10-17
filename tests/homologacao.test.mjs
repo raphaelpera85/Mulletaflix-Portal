@@ -401,3 +401,19 @@ test('server Nebula STRM download scan records tests without claiming production
     assert.match(event.evidence, /90\/90 passaram/);
     assert.match(event.evidence, /Smoke test de download real.*pendentes/);
 });
+
+test('server Nebula startup audit records the disabled global gate without claiming manual validation', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-startup-gate-2026-10-16-2136');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /Enabled=false/);
+    assert.match(event.evidence, /Não foi observado se houve tentativa manual/);
+    assert.match(event.evidence, /Smoke test manual.*pendentes/);
+    assert.match(event.evidence, /não expôs suas linhas de comando/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Downloader Nebula sem início automático/);
+});
