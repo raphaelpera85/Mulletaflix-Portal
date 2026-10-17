@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T03:25:51-03:00",
+  "generatedAt": "2026-10-17T03:33:45-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5390,6 +5390,21 @@
       "startedAt": "2026-10-17T03:20:00-03:00",
       "updatedAt": "2026-10-17T03:25:51-03:00",
       "evidence": "Confirmada janela entre PerformAutomaticBackupWhenIdleAsync verificar HasActiveUploadsAsync sem reserva e chamar PerformBackupAsync. Há três claims Python em main.py e admission C# por ClaimFileForUploadAsync/insert no NebulaUploadEngine; não compartilham gate. NebulaQueueConcurrencyMongoTests cobre só upload já ativo, não o interleaving check-idle→claim. Auditoria estática read-only; nenhum banco, worker ou produção foi acessado. Não se confirmou perda permanente: deltas futuros podem recapturar alterações. Correção segura exige barreira Mongo atômica comum a C#/Python com lease, heartbeat, liberação e recuperação; testes e implementação permanecem pendentes. Homologação T4.4 in_progress."
+    },
+    {
+      "id": "server-nebula-download-runtime-recheck-2026-10-17-0333",
+      "title": "Nebula: correção de início validada na fonte, runtime segue desatualizado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaFtpManager.cs; Tools/NebulaPython/tools/strm_downloader.py; stage",
+      "scope": "Revalidar a falha de início do download, os testes atuais e a diferença entre runtime instalado e pacote stage.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T03:25:51-03:00",
+      "updatedAt": "2026-10-17T03:33:45-03:00",
+      "evidence": "A API local responde 12.1.21; downloader instalado (2026-10-08) usa SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5. Source e stage 12.1.22 usam C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F e incluem handshake de readiness e scan incremental por título. `NebulaDownloaderStartupTests` passou 10/10; suíte Python 581/581; `validate-stage.ps1` passou. Nenhum worker, configuração, instalação, reinício ou transferência foi acionado. `gh auth status` confirma CLI sem autenticação; nenhum release publicado. Correção de source/stage não está ativa no runtime e primeiro download real segue sem homologação. T2.1 in_progress."
     }
   ]
 }
