@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T21:36:00-03:00",
+  "generatedAt": "2026-10-16T21:49:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5139,6 +5139,21 @@
       "startedAt": "2026-10-16T20:54:00-03:00",
       "updatedAt": "2026-10-16T21:15:00-03:00",
       "evidence": "`dotnet list MulletaFlix.sln package --vulnerable --include-transitive --no-restore --verbosity quiet` terminou exit 0 e não reportou pacote vulnerável na solução. A cadeia de produção `MediaBrowser.MediaEncoding -> libse 4.0.12 -> zlib.net-mutliplatform 1.0.8` foi confirmada no grafo e no assembly local. Testes focais SRT/ASS/SSA passaram 5/5, mas não exercitam legenda comprimida nem a troca de zlib; 1.1.0 está publicada, porém não instalada no cache local nem compatibilidade Windows/Linux verificada. A versão 1.0.8 continua sem substituição. Também não se forçou MTP v2 sobre runner xUnit/MTP v1. T6.4 continua parcial; fixture comprimida, validação multiplataforma, CI e homologação formal continuam pendentes. Nenhum código/pacote alterado. Release v12.1.21 permanece atual; nenhuma nova release criada."
+    },
+    {
+      "id": "server-nebula-download-scan-progress-2026-10-16-2149",
+      "title": "Nebula STRM: progresso visível durante indexação longa",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; NebulaFtpManager; testes e documentação",
+      "scope": "Reproduzir a demora no início do downloader, publicar progresso do scan no painel e validar regressões sem habilitar o pipeline global nem reiniciar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T21:38:09-03:00",
+      "updatedAt": "2026-10-16T21:49:00-03:00",
+      "evidence": "Em produção 12.1.21, o início manual realmente criou o worker Python, mas ele permaneceu em 'Escaneando e priorizando arquivos .strm...' por 11m55 sem iniciar mídia; o painel exibiu Download executando no badge e 'Downloader parado' / 0% no cartão. O processo de teste, iniciado nesta sessão, foi parado sem download ou exclusão de mídia; o estado voltou a Parado. Correção em código-fonte: scan Python agora emite contagem periódica a cada 5.000 mídias; NebulaFtpManager transforma esses logs em estado de indexação visível. Suite NebulaPython: 568/568 testes passaram em Python 3.10. Build Release de Jellyfin.Server.Implementations: 0 erros e 694 avisos de analisadores/estilo. Smoke test pós-correção em produção e download de ponta a ponta ainda pendentes; nenhuma release criada nesta rodada."
     }
   ]
 }

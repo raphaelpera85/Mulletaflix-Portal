@@ -417,3 +417,14 @@ test('server Nebula startup audit records the disabled global gate without claim
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Downloader Nebula sem início automático/);
 });
+
+test('server Nebula download scan progress records production reproduction and source validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-scan-progress-2026-10-16-2149');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /11m55 sem iniciar mídia/);
+    assert.match(event.evidence, /568\/568 testes passaram/);
+    assert.match(event.evidence, /Smoke test pós-correção em produção.*pendentes/);
+});
