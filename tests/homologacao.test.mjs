@@ -1177,6 +1177,21 @@ test('Nebula mount duplicate helper records deterministic result and keeps produ
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula downloader is attempted after Envio failure without mounting N drive', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-downloader-independent-start-2026-10-17-2037');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /StartDownloaderAsync/);
+    assert.match(event.evidence, /montagem N: continua bloqueada/);
+    assert.match(event.evidence, /3\/3/);
+    assert.match(event.evidence, /1\.469 aprovados, 63 ignorados, 0 falhas/);
+    assert.match(event.evidence, /colisão 2121 persiste/);
+    assert.match(event.evidence, /smoke test de transferência e homologação de produção pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
