@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T00:00:00-03:00",
+  "generatedAt": "2026-10-17T00:13:12-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5254,7 +5254,22 @@
       "progressPercent": null,
       "startedAt": "2026-10-16T23:00:00-03:00",
       "updatedAt": "2026-10-16T23:12:26-03:00",
-      "evidence": "O manager agora só confirma início após o primeiro item efetivamente enumerado pelo os.walk; erro de acesso não sinaliza prontidão. Saída antecipada ou timeout de 60 s falha e tenta encerrar o worker. A referência é mantida se o encerramento não for confirmado. Suíte Nebula em Release: 647 aprovados, 21 ignorados, 0 falhas; suíte NebulaPython 576/576. A validação local comprova inicialização do scan, não o primeiro download. Produção e download Telegram reais não foram exercitados; release e homologação ponta a ponta continuam pendentes."
+      "evidence": "O manager agora só confirma início após o primeiro item efetivamente enumerado pelo os.walk; erro de acesso não sinaliza prontidão. Saída antecipada ou timeout de 60 s falha e tenta encerrar o worker. A referência é mantida se o encerramento não for confirmado. Suíte Nebula em Release: 647 aprovados, 21 ignorados, 0 falhas; suíte NebulaPython 576/576. A validação local comprova inicialização do scan, não o primeiro download. Produção e download Telegram reais não foram exercitados. Release e homologação ponta a ponta continuam pendentes."
+    },
+    {
+      "id": "server-nebula-package-integrity-2026-10-17-0013",
+      "title": "Nebula: validar integridade do downloader no pacote",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-packaging-master/scripts/Assert-StageIntegrity.ps1 e teste PowerShell dedicado",
+      "scope": "Impedir que o estágio do instalador contenha uma cópia divergente/desatualizada do downloader STRM em relação à fonte validada.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T00:00:00-03:00",
+      "updatedAt": "2026-10-17T00:13:12-03:00",
+      "evidence": "A validação de integridade agora compara SHA-256 de Tools/NebulaPython/tools/strm_downloader.py no stage com a fonte do servidor e falha em divergência; o teste com fixtures confirmou aceite de hash igual e rejeição de conteúdo diferente. Testes locais: gate PowerShell passou; NebulaPython 581/581; NebulaDownloaderStartupTests Release 7/7. A instância ativa ainda reporta 12.1.21 e mantém script antigo; nenhum worker, download/upload, instalação, restart ou mudança de configuração foi executado. A guarda não equivale a smoke test nem corrige o runtime atual. Release/instalação e download real permanecem pendentes; T2.1 e homologação continuam in_progress."
     }
   ]
 }
