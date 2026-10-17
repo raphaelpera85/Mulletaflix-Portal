@@ -752,3 +752,16 @@ test('portal records Nebula admission lease unit evidence without claiming relea
     assert.match(event.evidence, /Mongo real não executados/);
     assert.match(event.evidence, /Primeiro download real, pacote integral e gates de release pendentes/);
 });
+
+test('portal distinguishes the corrected Nebula source from the stale production runtime', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-recheck-2026-10-17-0544');
+
+    assert.ok(event, 'portal should publish the latest Nebula runtime check');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /retornou 12\.1\.21/);
+    assert.match(event.evidence, /25\/25/);
+    assert.match(event.evidence, /87\/87/);
+    assert.match(event.evidence, /não prova transferência real/);
+    assert.match(event.evidence, /Pacote integral, instalação em janela aprovada e primeiro download seguem pendentes/);
+});
