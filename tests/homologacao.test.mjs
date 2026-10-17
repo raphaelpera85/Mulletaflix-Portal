@@ -907,3 +907,17 @@ test('portal reports the pushed server commit and blocks release on GitHub billi
     assert.match(event.evidence, /não foi criada tag/);
     assert.match(event.evidence, /build Linux, publicação da release e primeiro download continuam pendentes/);
 });
+
+test('portal records locally built Linux package and outstanding release gates', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-release-linux-built-github-billing-block-2026-10-17-0847');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /commit do servidor .* está no main/);
+    assert.match(event.evidence, /Pacote Linux 12\.1\.23 construído localmente/);
+    assert.match(event.evidence, /systemd-analyze e smoke Linux não executados em Windows/);
+    assert.match(event.evidence, /conta bloqueada por cobrança/);
+    assert.match(event.evidence, /gh sem sessão autenticada/);
+    assert.match(event.evidence, /nenhuma tag\/release criada/);
+    assert.match(event.evidence, /sem instalação, restart, worker ou download real/);
+});
