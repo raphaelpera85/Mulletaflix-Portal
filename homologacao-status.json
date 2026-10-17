@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T11:37:00-03:00",
+  "generatedAt": "2026-10-17T12:06:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2952,8 +2952,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T11:30:00-03:00",
-      "updatedAt": "2026-10-17T11:37:00-03:00",
-      "evidence": "GET /System/Info/Public respondeu 12.1.21; o downloader instalado tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 e não contém o handshake [STRM-WORKER-READY] já presente na fonte 12.1.24 (SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA). Nenhum processo strm_downloader.py foi observado. Testes atuais da fonte: NebulaDownloaderStartupTests 11/11 e NebulaPython 587/587. Não foi iniciada transferência, instalado pacote ou reiniciado serviço; o download real segue sem validação. Release/instalação e smoke test em janela operacional continuam pendentes."
+      "updatedAt": "2026-10-17T12:06:00-03:00",
+      "evidence": "GET /System/Info/Public respondeu 12.1.21; o worker instalado tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5, diferente da fonte 12.1.24 (2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA). Nenhum processo strm_downloader.py foi observado. Regressão da fonte: NebulaDownloaderStartupTests 11/11 (Release), NebulaPython 587/587 e Implementations 1.464 aprovados, 62 ignorados, 0 falhas; testes de packaging passaram. Pacotes candidatos Windows/Linux reconstruídos e hash do worker no tar coincide com a fonte. GitHub Actions 39037932557 falhou antes de executar steps e gh não está autenticado. Nenhum download, instalação ou restart em produção; Release/instalação e smoke test em janela operacional continuam pendentes."
     },
     {
       "id": "server-nebula-stale-downloader-runtime-2026-10-17-1000",
