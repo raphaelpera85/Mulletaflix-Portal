@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T00:13:12-03:00",
+  "generatedAt": "2026-10-17T00:15:57-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5270,6 +5270,21 @@
       "startedAt": "2026-10-17T00:00:00-03:00",
       "updatedAt": "2026-10-17T00:13:12-03:00",
       "evidence": "A validação de integridade agora compara SHA-256 de Tools/NebulaPython/tools/strm_downloader.py no stage com a fonte do servidor e falha em divergência; o teste com fixtures confirmou aceite de hash igual e rejeição de conteúdo diferente. Testes locais: gate PowerShell passou; NebulaPython 581/581; NebulaDownloaderStartupTests Release 7/7. A instância ativa ainda reporta 12.1.21 e mantém script antigo; nenhum worker, download/upload, instalação, restart ou mudança de configuração foi executado. A guarda não equivale a smoke test nem corrige o runtime atual. Release/instalação e download real permanecem pendentes; T2.1 e homologação continuam in_progress."
+    },
+    {
+      "id": "server-nebula-stage-staleness-confirmed-2026-10-17-0015",
+      "title": "Nebula: estágio local antigo bloqueado pela validação de integridade",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-packaging-master/stage e scripts/Assert-StageIntegrity.ps1",
+      "scope": "Confirmar se a discrepância entre o downloader corrigido no source e o executável no servidor se repete no estágio de pacote local.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T00:13:12-03:00",
+      "updatedAt": "2026-10-17T00:15:57-03:00",
+      "evidence": "Confirmação read-only: a instância local HTTP reporta 12.1.21; o script instalado de 2026-10-08 e o downloader no stage têm o mesmo SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 e não contêm o scanner/readiness atuais. A fonte tem SHA-256 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F. O comando validate-stage.ps1 -StageDirectory stage -ProjectRoot . falhou precisamente por divergência, bloqueando pacote obsoleto. Gate PowerShell 7 e Windows PowerShell 5.1 passou na fixture; NebulaPython 581/581, NebulaDownloaderStartupTests 7/7. Nenhum worker, mídia, instalação ou restart foi executado; nenhum download real está homologado. Release não publicada e T2.1 permanece in_progress."
     }
   ]
 }
