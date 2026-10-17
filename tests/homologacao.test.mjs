@@ -667,3 +667,19 @@ test('portal distinguishes the stale production Nebula runtime from validated so
     assert.match(event.evidence, /14 aprovados e 23 ignorados/);
     assert.match(event.evidence, /porta 33099 fechada/);
 });
+
+test('portal records the latest Nebula and image API regression evidence without claiming production homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-audit-2026-10-17-0318');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /API local ainda reporta 12\.1\.21/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests: 10\/10/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests Release: 679\/679/);
+    assert.match(event.evidence, /falha ao deletar imagem de usuário/);
+    assert.match(event.evidence, /Ainda não houve smoke test Telegram real/);
+    assert.match(event.evidence, /não havia processo worker no snapshot/);
+    assert.match(event.evidence, /ou transferência/);
+});

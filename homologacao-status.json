@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T03:01:00-03:00",
+  "generatedAt": "2026-10-17T03:18:22-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5360,6 +5360,21 @@
       "startedAt": "2026-10-17T02:50:00-03:00",
       "updatedAt": "2026-10-17T03:01:00-03:00",
       "evidence": "NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests: 25/25 aprovados em Release. Python 3.10 scanner/helpers: 86/86; tentativa em Python 3.14 não contou porque pytest não está instalado. Produção segue 12.1.21; código/stage corrigido 12.1.22. Nenhum worker foi iniciado nem transferência real executada. Docker e WSL não estão instalados, então pacote Linux não foi gerado; não houve nova release. Homologação segue in_progress até pacote Windows/Linux e smoke test controlado do primeiro download."
+    },
+    {
+      "id": "server-nebula-download-audit-2026-10-17-0318",
+      "title": "Nebula: auditoria complementar e regressão de exclusão de imagem",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaFtpManager.cs; Tools/NebulaPython/tools/strm_downloader.py; Jellyfin.Api/Controllers/ImageController.cs",
+      "scope": "Revalidar o estado de início do downloader e corrigir o contrato de deleção da imagem de usuário quando o sistema de arquivos falha.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T03:10:00-03:00",
+      "updatedAt": "2026-10-17T03:18:22-03:00",
+      "evidence": "A API local ainda reporta 12.1.21 e não havia processo worker no snapshot; produção não recebeu instalação, restart, alteração de configuração ou transferência. NebulaDownloaderStartupTests: 10/10; Jellyfin.Api.Tests Release: 679/679; validador de stage passou após execução com os diretórios corretos. Ainda não houve smoke test Telegram real. A auditoria encontrou falha ao deletar imagem de usuário: DeleteUserImage capturava IOException, limpava a referência e retornava 204; a correção agora usa IFileSystem.DeleteFile e retorna 500 sem apagar a referência quando a exclusão falha. Testes focados da correção: 2/2. Nenhum release foi publicado: Linux não foi empacotado e o runtime produtivo continua 12.1.21; homologação T2.1 segue in_progress."
     }
   ]
 }
