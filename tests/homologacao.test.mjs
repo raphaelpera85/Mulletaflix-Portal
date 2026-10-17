@@ -795,3 +795,16 @@ test('portal records the rebuilt Nebula stage without claiming production instal
     assert.match(event.evidence, /instalador foi pulado/);
     assert.match(event.evidence, /primeiro download real pendentes/);
 });
+
+test('portal records that the installer now receives the validated Nebula stage without claiming production is fixed', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-installer-stage-path-2026-10-17-0615');
+
+    assert.ok(event, 'portal should publish the installer stage-path regression fix');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /não encaminhava -StageDirectory/);
+    assert.match(event.evidence, /StageBuildOptions\.Tests\.ps1, Assert-StageIntegrity\.Tests\.ps1 e RcloneBootstrap\.Tests\.ps1/);
+    assert.match(event.evidence, /continua 12\.1\.21/);
+    assert.match(event.evidence, /primeiro download real ainda não estão corrigidos\/homologados/);
+});

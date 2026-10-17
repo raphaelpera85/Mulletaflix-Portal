@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T06:09:00-03:00",
+  "generatedAt": "2026-10-17T06:15:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 61,
         "failed": 0,
         "percent": 98.8,
-        "label": "Baseline determinístico da solução em Release: 4.898 aprovados, 61 ignorados, 0 falhas (4.959 total; exclui Integration/live externos). Rechecagem 17/10 06:04: NebulaPython 584/584; Implementations 1.458 aprovados, 62 ignorados, 0 falhas; startup C# 10/10 e Python focado 103/103. Stage isolado reconstruído e passou validate-stage contra publish; script staged igual à fonte (SHA-256 EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79). Instalador foi pulado; web/tray preservados do stage-base. Runtime continua 12.1.21 com downloader antigo; nenhum worker, install, restart ou mídia. Primeiro download e correção em produção pendentes. A homologação formal permanece pendente; CI remoto segue bloqueado por cobrança GitHub (run 38981348548)."
+        "label": "Baseline determinístico da solução em Release: 4.898 aprovados, 61 ignorados, 0 falhas (4.959 total; exclui Integration/live externos). Rechecagem 17/10 06:15: NebulaPython 584/584; Implementations 1.458 aprovados, 62 ignorados, 0 falhas; startup C# 10/10 e Python focado 103/103. Testes packaging StageBuildOptions, Assert-StageIntegrity e RcloneBootstrap passaram. Corrigida a propagação de StageDirectory ao compilador NSIS; stage externo foi rejeitado pela guarda. Runtime continua 12.1.21 com downloader antigo; nenhum worker, instalação, restart ou mídia. Primeiro download e correção em produção pendentes. A homologação formal permanece pendente; CI remoto segue bloqueado por cobrança GitHub (run 38981348548)."
       }
     },
     {
@@ -5615,6 +5615,21 @@
       "startedAt": "2026-10-17T06:04:00-03:00",
       "updatedAt": "2026-10-17T06:09:00-03:00",
       "evidence": "Nebula C# Release: 659 aprovados, 23 ignorados, 0 falhas (682 total). NebulaPython 3.10: 584/584. validate-stage.ps1 passou com PublishDirectory. GET read-only /System/Info/Public continua 12.1.21; downloader instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 difere do source/stage EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79. Nenhum worker, instalação, restart, config ou mídia foi alterado; primeiro download real não foi observado. Stage sem instalador e web/tray reaproveitados não é release. gh auth status informa ausência de sessão GitHub; release/publicação bloqueadas. T2.1 e homologação continuam in_progress."
+    },
+    {
+      "id": "server-nebula-download-installer-stage-path-2026-10-17-0615",
+      "title": "Nebula: instalador agora usa exatamente o stage validado; produção ainda antiga",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-packaging-master/build-stage-and-installer.ps1; build-mulletaflix-installer.ps1; MulletaFlix-packaging-master/scripts/tests/StageBuildOptions.Tests.ps1",
+      "scope": "Corrigir divergência em que o instalador podia empacotar o stage padrão após validar um stage isolado; preservar runtime ativo e não iniciar transferências.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T06:09:00-03:00",
+      "updatedAt": "2026-10-17T06:15:00-03:00",
+      "evidence": "Causa: o builder não encaminhava -StageDirectory para o compilador NSIS, que recaía no stage padrão. Correção validada por StageBuildOptions.Tests.ps1, Assert-StageIntegrity.Tests.ps1 e RcloneBootstrap.Tests.ps1; os três passaram. Execução com stage fora do root foi rejeitada pela guarda. GET read-only /System/Info/Public continua 12.1.21 e o downloader instalado permanece legado. Nenhum instalador foi compilado, servidor instalado/reiniciado, worker iniciado ou mídia transferida. O fluxo de packaging foi corrigido, mas produção e primeiro download real ainda não estão corrigidos/homologados; pacote integral e janela operacional pendentes."
     }
   ]
 }
