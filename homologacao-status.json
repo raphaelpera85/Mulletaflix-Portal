@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T01:01:24-03:00",
+  "generatedAt": "2026-10-17T01:12:07-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2952,8 +2952,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T00:48:31-03:00",
-      "updatedAt": "2026-10-17T01:01:24-03:00",
-      "evidence": "Instância local somente leitura continua em 12.1.21; stage 12.1.22 passou integridade, contém downloader com hash igual à fonte e o instalador Windows compilou com sucesso (SHA-256 BED442E38FA4B3113C63A2B65713853CBB374515B9BE8E42A810A41B51000F3D). Verificações locais: NebulaPython 581/581, NebulaDownloaderStartupTests 10/10, suíte determinística Server.Implementations 1.452 aprovados/60 ignorados; contratos PowerShell do bootstrap e integridade passaram. NSIS executa helper rclone com SHA-256 fixado antes do setup WinFsp e aborta se falhar. Não houve instalação, alteração de configuração, início/parada de worker, download real ou restart; rclone real não foi baixado. Primeiro download de mídia continua pendente; T2.1 e homologação seguem in_progress. Nenhum release publicado; gates planejados permanecem pendentes."
+    "updatedAt": "2026-10-17T01:12:07-03:00",
+    "evidence": "Servidor ativo continua em 12.1.21; stage 12.1.22 validado contém o downloader corrigido, mas não está instalado. O downloader instalado (08/10/2026) tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5, diferente da fonte e do stage (C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F). O instalador Windows compilou com sucesso localmente (12.1.22; SHA-256 BED442E38FA4B3113C63A2B65713853CBB374515B9BE8E42A810A41B51000F3D). Testes repetidos: NebulaPython 581/581; NebulaDownloaderStartupTests 10/10; Server.Implementations 1.452 aprovados/60 ignorados; validador de integridade do stage passou. Não houve instalação, alteração de configuração, início/parada de worker, download real ou restart; primeiro download continua não homologado. T2.1 e homologação seguem in_progress. Nenhum release publicado; gates do roadmap permanecem pendentes."
     },
     {
       "id": "server-nebula-downloader-ready-handshake-2026-10-17-0000",
