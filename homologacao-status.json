@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T08:03:10-03:00",
+  "generatedAt": "2026-10-17T08:10:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5675,6 +5675,21 @@
       "startedAt": "2026-10-17T07:53:00-03:00",
       "updatedAt": "2026-10-17T08:03:10-03:00",
       "evidence": "GET read-only /System/Info/Public confirmou 12.1.21. main.py instalado importa tools.mongo_admission, mas o arquivo falta; import no runtime reproduziu ModuleNotFoundError: No module named 'tools.mongo_admission'. Import equivalente na fonte passou. O empacotador atual copia o módulo e o validador rejeita stage sem ele. Stage candidato passou validate-stage.ps1. Testes: NebulaPython 586/586; NebulaDownloaderStartupTests Release 9/9; scripts Assert-StageIntegrity e StageBuildOptions concluíram sem erro. Log nebula.log está sem atualização desde 11/10. NSIS está disponível, mas asset local 12.1.22 já existe e tag v12.1.22 aponta para VersionPrefix 12.1.21; não sobrescrevi nem gerei instalador. gh auth status sem login. Nenhum worker, instalação, restart, configuração ou mídia foi alterado. Próximo: nova versão/tag, publicação autorizada/autenticada, instalação em janela aprovada e smoke test de download real."
+    },
+    {
+      "id": "server-nebula-download-runtime-recheck-2026-10-17-0810",
+      "title": "Nebula: fonte e stage alinhados; runtime segue antigo e sem download comprovado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "Worker de download Nebula, stage isolado e testes de regressão",
+      "scope": "Revalidar fonte, stage e runtime do download Nebula sem iniciar workers nem interferir em transferências existentes.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T08:03:10-03:00",
+      "updatedAt": "2026-10-17T08:10:00-03:00",
+      "evidence": "Rechecagem read-only confirma runtime MulletaFlix 12.1.21 e hash instalado de strm_downloader.py diferente da fonte/stage, que estão alinhados em B82A43390A1F13ABEC76C7DBB563422839070DC3B474F311F5DD77F62B7F7D4D. NebulaDownloaderStartupTests Release 9/9 e testes Python focados 89/89 passaram. O log do servidor não recebe atualização desde 11/10/2026; o snapshot não encontrou worker Python descendente do processo MulletaFlix. Há outros processos Nebula em execução, pertencentes a outra árvore, preservados sem intervenção. NSIS existe em instalação local; saída e tag 12.1.22 já existem e o commit da tag contém VersionPrefix 12.1.21; não existe tag remota v12.1.23. Nenhum worker, configuração, instalação, restart ou mídia foi alterado. Correção validada em fonte/stage, não em produção; release 12.1.23, instalação controlada e transferência real continuam pendentes."
     }
   ]
 }

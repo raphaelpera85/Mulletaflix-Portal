@@ -851,3 +851,19 @@ test('portal records the installed Nebula worker missing its Mongo admission mod
     assert.match(event.evidence, /NebulaPython 586\/586; NebulaDownloaderStartupTests Release 9\/9/);
     assert.match(event.evidence, /Nenhum worker, instalação, restart, configuração ou mídia foi alterado/);
 });
+
+test('portal records current Nebula runtime, stage parity, and source-only test evidence without claiming production success', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-recheck-2026-10-17-0810');
+
+    assert.ok(event, 'portal should publish the latest Nebula runtime recheck');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /runtime MulletaFlix 12\.1\.21/);
+    assert.match(event.evidence, /fonte\/stage, que estão alinhados/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests Release 9\/9/);
+    assert.match(event.evidence, /testes Python focados 89\/89 passaram/);
+    assert.match(event.evidence, /não recebe atualização desde 11\/10\/2026/);
+    assert.match(event.evidence, /não em produção/);
+    assert.match(event.evidence, /transferência real continuam pendentes/);
+});
