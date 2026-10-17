@@ -741,3 +741,14 @@ test('portal records the isolated Nebula stage candidate without claiming a full
     assert.match(event.evidence, /isso não é uma release completa/);
     assert.match(event.evidence, /nenhum download real foi executado/);
 });
+
+test('portal records Nebula admission lease unit evidence without claiming release readiness', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-admission-lease-unit-tests-2026-10-17-0526');
+
+    assert.ok(event, 'portal should publish this server validation update');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /1\.455 aprovados, 62 ignorados, 0 falhas/);
+    assert.match(event.evidence, /NebulaPython 3\.10 584\/584/);
+    assert.match(event.evidence, /Mongo real não executados/);
+    assert.match(event.evidence, /Primeiro download real, pacote integral e gates de release pendentes/);
+});

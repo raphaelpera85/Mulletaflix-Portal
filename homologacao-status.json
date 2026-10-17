@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T05:18:00-03:00",
+  "generatedAt": "2026-10-17T05:26:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5540,6 +5540,21 @@
       "startedAt": "2026-10-17T05:10:00-03:00",
       "updatedAt": "2026-10-17T05:18:00-03:00",
       "evidence": "Candidato isolado contém 3.224 arquivos (1.151.468.892 bytes). Integridade do stage passou; downloader staged corresponde à fonte por SHA-256 EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79; MulletaFlix.dll e MulletaFlix.Server.Implementations.dll staged correspondem ao publish selecionado. Testes PowerShell do packaging passaram. Web/tray foram preservados do stage-base e build do instalador foi omitido; isso não é uma release completa. Produção 12.1.21 não foi instalada/reiniciada e nenhum download real foi executado; primeira transferência e homologação continuam pendentes."
+    },
+    {
+      "id": "server-nebula-admission-lease-unit-tests-2026-10-17-0526",
+      "title": "Nebula: cobertura unitária da lease ampliada; Mongo real e primeiro download pendentes",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.4"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaMongoAdmissionLeaseTests.cs; MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md; MulletaFlix-master/docs/nebula-strm-download.md",
+      "scope": "Publicar os resultados da cobertura unitária de leases e manter explícitas as limitações de integração e release.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T05:19:00-03:00",
+      "updatedAt": "2026-10-17T05:26:50-03:00",
+      "evidence": "Novos testes de lease .NET Release 3/3; Jellyfin.Server.Implementations.Tests completo 1.455 aprovados, 62 ignorados, 0 falhas; NebulaPython 3.10 584/584. Testes de integração cross-process que exigem Mongo real não executados (mongod indisponível nesta rodada). Produção continua 12.1.21, sem instalação/restart/worker ou transferência de mídia. Stage candidato anterior não é pacote completo: web/tray foram reaproveitados e instalador não foi reconstruído. Primeiro download real, pacote integral e gates de release pendentes; homologação permanece in_progress."
     }
   ]
 }
