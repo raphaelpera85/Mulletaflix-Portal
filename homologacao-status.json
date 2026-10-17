@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T06:04:00-03:00",
+  "generatedAt": "2026-10-17T06:09:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5600,6 +5600,21 @@
       "startedAt": "2026-10-17T05:59:00-03:00",
       "updatedAt": "2026-10-17T06:04:00-03:00",
       "evidence": "O builder publicou o servidor Release em diretório isolado e reconstruiu stage; `validate-stage.ps1` passou com `PublishDirectory`, e o teste de integridade aceitou o script igual à fonte e rejeitou cópia stale. SHA-256 do downloader fonte/stage: EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79. Testes repetidos: startup C# 10/10, NebulaPython 584/584, Implementations 1.458 aprovados/62 ignorados/0 falhas. Web/tray foram reaproveitados do stage-base; instalador foi pulado, portanto ainda não é release completa. Runtime ativo segue 12.1.21 com script antigo; nenhum worker, instalação, restart ou transferência foi realizada. Instalação e primeiro download real pendentes; homologação permanece in_progress."
+    },
+    {
+      "id": "server-nebula-download-test-recheck-2026-10-17-0609",
+      "title": "Nebula: gates locais repetidos; runtime de produção segue antigo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/docs/nebula-strm-download.md; .build/nebula-download-build-20261017; MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py",
+      "scope": "Repetir testes Nebula e integridade do stage; separar o resultado local do estado de produção. Sem mutação de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T06:04:00-03:00",
+      "updatedAt": "2026-10-17T06:09:00-03:00",
+      "evidence": "Nebula C# Release: 659 aprovados, 23 ignorados, 0 falhas (682 total). NebulaPython 3.10: 584/584. validate-stage.ps1 passou com PublishDirectory. GET read-only /System/Info/Public continua 12.1.21; downloader instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 difere do source/stage EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79. Nenhum worker, instalação, restart, config ou mídia foi alterado; primeiro download real não foi observado. Stage sem instalador e web/tray reaproveitados não é release. gh auth status informa ausência de sessão GitHub; release/publicação bloqueadas. T2.1 e homologação continuam in_progress."
     }
   ]
 }
