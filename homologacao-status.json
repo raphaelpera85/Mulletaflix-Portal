@@ -5750,6 +5750,21 @@
       "startedAt": "2026-10-17T08:51:00-03:00",
       "updatedAt": "2026-10-17T08:54:00-03:00",
       "evidence": "CI run 39030347425 no commit b6607485c7e6ab93dce3f64d94a4fa17fd941a50 terminou com conclusão failure e 0/11 jobs iniciados. Anotação oficial da primeira tarefa: The job was not started because your account is locked due to a billing issue. Isso não é resultado de testes de código. Builds locais candidatos Windows/Linux e suítes locais constam no evento anterior; release/tag não publicada, nenhum deploy/restart ou download real. Próximo passo externo: regularizar o bloqueio de cobrança do GitHub Actions; depois rerodar a CI e continuar o release workflow."
+    },
+    {
+      "id": "server-nebula-worker-readiness-regression-2026-10-17-0859",
+      "title": "Nebula: regressão no início do download corrigida na fonte; produção ainda desatualizada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "NebulaFtpManager e worker Python STRM",
+      "scope": "Evitar que atualização lenta do índice Mongo faça o manager abortar o worker antes da varredura; manter explícita a diferença entre processo ativo e download real.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T08:55:00-03:00",
+      "updatedAt": "2026-10-17T08:59:00-03:00",
+      "evidence": "No HEAD d37df2d, o worker atualizava o índice Mongo antes de emitir qualquer prontidão e o manager aguardava exclusivamente `[STRM-SCAN-STARTED]`; um refresh acima de 60 s podia terminar no encerramento do processo pelo timeout. Corrigido para emitir e aceitar `[STRM-WORKER-READY]` antes do refresh, com status de preparação Mongo separado; o marcador de scan continua distinto e não afirma download. Testes observados: NebulaDownloaderStartupTests 11/11; NebulaPython 586/586; suíte .NET `FullyQualifiedName~Nebula` 660 aprovados, 23 ignorados, 0 falhas. Testes do portal 52/52. Instância continua 12.1.21; downloader instalado antigo, sem `mongo_admission.py`; nenhuma instalação, restart, worker ou transferência real ocorreu. Candidato 12.1.23 anterior não contém esta correção e precisa ser reconstruído; CI GitHub bloqueada por billing antes dos jobs e gh não autenticado. Nenhuma release criada; homologação segue in_progress."
     }
   ]
 }
