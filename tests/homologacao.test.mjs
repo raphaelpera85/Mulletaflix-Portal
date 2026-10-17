@@ -765,3 +765,19 @@ test('portal distinguishes the corrected Nebula source from the stale production
     assert.match(event.evidence, /não prova transferência real/);
     assert.match(event.evidence, /Pacote integral, instalação em janela aprovada e primeiro download seguem pendentes/);
 });
+
+test('portal publishes the isolated Mongo cancellation and upload-admission validation without claiming production approval', () => {
+    const event = statusData.events.find(item => item.id === 'server-supabase-cancellation-mongo-validation-2026-10-17-0551');
+
+    assert.ok(event, 'portal should publish the latest Supabase/Nebula validation');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T4.4']);
+    assert.match(event.evidence, /21\/21 aprovados, 0 falhas/);
+    assert.match(event.evidence, /Mongo descartável limitado a 127\.0\.0\.1:27099/);
+    assert.match(event.evidence, /1\.481 aprovados, 39 ignorados, 0 falhas \(1\.520 total\)/);
+    assert.match(event.evidence, /Mongo de produção 127\.0\.0\.1:27017 não foi tocado/);
+    assert.match(event.evidence, /Nenhum backup Supabase remoto, transferência Telegram/);
+    assert.match(event.evidence, /primeiro download/);
+    assert.match(event.evidence, /T4\.4 permanece in_progress/);
+});

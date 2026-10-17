@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T05:44:00-03:00",
+  "generatedAt": "2026-10-17T05:51:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5570,6 +5570,21 @@
       "startedAt": "2026-10-17T05:36:00-03:00",
       "updatedAt": "2026-10-17T05:44:00-03:00",
       "evidence": "GET read-only /System/Info/Public retornou 12.1.21. Script instalado (08/10) SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 difere da fonte atual EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79. Snapshot não mostrou worker Python/rclone filho do MulletaFlix; nebula.log não atualiza desde 11/10 23:22. C# NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests 25/25; Python 3.10 scanner/helpers 87/87. A fonte passa, mas isso não prova transferência real e o runtime continua sem a revisão atual. Enabled=false foi verificado às 04:29 e bloqueia autostart global; não foi relido nem alterado. Sem worker, config, instalação, restart ou mídia modificada. Pacote integral, instalação em janela aprovada e primeiro download seguem pendentes; T2.1 in_progress, sem release/homologação final."
+    },
+    {
+      "id": "server-supabase-cancellation-mongo-validation-2026-10-17-0551",
+      "title": "Supabase/Nebula: cancelamento e admissão de uploads validados em Mongo descartável",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.4"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaSupabaseSyncService.cs; NebulaMongoContext.cs; NebulaQueueConcurrencyMongoTests.cs; NebulaSupabaseSyncTests.cs",
+      "scope": "Validar propagação de cancelamento HTTP Supabase e serialização atômica entre backup e uploads usando Mongo descartável, sem tocar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T05:44:00-03:00",
+      "updatedAt": "2026-10-17T05:51:00-03:00",
+      "evidence": "Testes focados NebulaQueueConcurrencyMongoTests + SupabaseHttpHelpers_PropagateCallerCancellation: 21/21 aprovados, 0 falhas, contra Mongo descartável limitado a 127.0.0.1:27099; suíte Jellyfin.Server.Implementations.Tests: 1.481 aprovados, 39 ignorados, 0 falhas (1.520 total). Mongo temporário encerrado e porta 27099 fechada; Mongo de produção 127.0.0.1:27017 não foi tocado. Nenhum backup Supabase remoto, transferência Telegram, worker, configuração, instalação ou restart foi executado. Arquivos temporários ficaram em %TEMP%\\mfx-nebula-mongo-tests-20261017 porque a política local bloqueou remoção recursiva. Isso valida o gate/cancelamento local, não o primeiro download nem a integração remota. T4.4 permanece in_progress; T2.1 e homologação de produção também seguem in_progress."
     }
   ]
 }
