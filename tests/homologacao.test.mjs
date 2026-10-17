@@ -592,4 +592,6 @@ test('portal records the rebuilt Nebula stage without claiming production downlo
     assert.match(event.evidence, /Web, tray e installer foram pulados/);
     assert.match(event.evidence, /Produção segue 12\.1\.21/);
     assert.match(event.evidence, /Primeiro download real continua pendente/);
+    assert.match(event.evidence, /Revalidação em 2026-10-17: HTTP local continua retornando 12\.1\.21/);
+    assert.match(event.evidence, /startup \.NET 10\/10 e `validate-stage\.ps1` passou/);
 });

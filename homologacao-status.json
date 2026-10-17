@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T00:42:31-03:00",
+  "generatedAt": "2026-10-17T00:48:31-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5299,7 +5299,7 @@
       "progressPercent": null,
       "startedAt": "2026-10-17T00:32:00-03:00",
       "updatedAt": "2026-10-17T00:42:31-03:00",
-      "evidence": "O publish Release concluiu e o stage foi reconstruído com as fontes atuais. `validate-stage.ps1` passou; hash SHA-256 do downloader no stage coincide com a fonte (`C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F`). FileVersion/ProductVersion e VersionPrefix/SharedVersion estão alinhados em 12.1.22. NebulaPython passou 581/581 e `NebulaDownloaderStartupTests` passou 10/10. Teste do builder confirmou saída correta de stage-only sem anunciar instalador antigo quando `-SkipInstaller` está ativo. Web, tray e installer foram pulados; nenhum release foi emitido. O stage alertou que rclone.exe não estava presente. Produção segue 12.1.21 com script antigo; não houve instalação, restart ou transferência. Primeiro download real continua pendente; T2.1 segue in_progress."
+      "evidence": "O publish Release concluiu e o stage foi reconstruído com as fontes atuais. `validate-stage.ps1` passou; hash SHA-256 do downloader no stage coincide com a fonte (`C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F`). FileVersion/ProductVersion e VersionPrefix/SharedVersion estão alinhados em 12.1.22. NebulaPython passou 581/581 e `NebulaDownloaderStartupTests` passou 10/10. Teste do builder confirmou saída correta de stage-only sem anunciar instalador antigo quando `-SkipInstaller` está ativo. Web, tray e installer foram pulados; nenhum release foi emitido. O stage alertou que rclone.exe não estava presente. Produção segue 12.1.21 com script antigo; não houve instalação, restart ou transferência. Primeiro download real continua pendente; T2.1 segue in_progress. Revalidação em 2026-10-17: HTTP local continua retornando 12.1.21; NebulaPython repetido 581/581, startup .NET 10/10 e `validate-stage.ps1` passou com hash stage/fonte igual. Isso confirma que o pacote preparado não está aplicado no servidor."
     }
   ]
 }
