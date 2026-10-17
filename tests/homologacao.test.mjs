@@ -933,3 +933,17 @@ test('portal records the final GitHub Actions billing block without calling it a
     assert.match(event.evidence, /não é resultado de testes de código/);
     assert.match(event.evidence, /release\/tag não publicada/);
 });
+
+test('portal publishes the Nebula path-safety audit as partial and not production-homologated', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-path-safety-2026-10-17-0914');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T6.3']);
+    assert.match(event.evidence, /NebulaPathSafetyTests` 4\/4/);
+    assert.match(event.evidence, /664 aprovados, 23 ignorados, 0 falhas/);
+    assert.match(event.evidence, /risco TOCTOU/);
+    assert.match(event.evidence, /commit `02d6e01b1113db615956ee95827c6a8d0cb9226f`/);
+    assert.match(event.evidence, /Sem instalação, restart, mídia ou validação de produção/);
+});

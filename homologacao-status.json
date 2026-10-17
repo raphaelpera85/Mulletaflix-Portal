@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T09:08:00-03:00",
+  "generatedAt": "2026-10-17T09:18:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5780,6 +5780,21 @@
       "startedAt": "2026-10-17T09:03:00-03:00",
       "updatedAt": "2026-10-17T09:08:00-03:00",
       "evidence": "`/System/Info/Public` confirma MulletaFlix 12.1.21 ativo. O downloader instalado tem SHA-256 `3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5`; fonte atual tem `2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA` e contém scan incremental por categoria/título. Log registra POST StartDownloader HTTP 200 após 15,74 s e StopDownloader às 00:30, sem comprovar primeiro item ou transferência; GET do status autenticado retornou 401. Testes da fonte: NebulaDownloaderStartupTests 11/11 e Python focado 89/89. Nenhum worker, arquivo de mídia, configuração, instalação ou restart foi alterado. Correção não aplicada em produção. Pendências: pacote integral do HEAD, CI GitHub bloqueada por cobrança, publicação e janela controlada de instalação/restart seguida de transferência real. Homologação permanece in_progress."
+    },
+    {
+      "id": "server-nebula-path-safety-2026-10-17-0914",
+      "title": "T6.3: contenção de caminhos e links simbólicos no Nebula reforçada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T6.3"],
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "Validadores internos de caminhos do downloader, Mongo e exportador de metadados Nebula",
+      "scope": "Unificar contenção canonicalizada e rejeitar symlinks/junctions nos caminhos existentes sem alterar o fluxo produtivo nem acessar dados reais.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T09:08:00-03:00",
+      "updatedAt": "2026-10-17T09:18:00-03:00",
+      "evidence": "Os três validadores Nebula delegam a `NebulaPathSafety`, que aplica `Path.GetRelativePath`, rejeita escape/prefixo irmão e inspeciona componentes existentes desde os ancestrais da raiz até o destino para `ReparsePoint`, inclusive links pendentes e raiz configurada como symlink; destinos ainda inexistentes são aceitos. `NebulaPathSafetyTests` 4/4. Suíte Release `FullyQualifiedName~Nebula`: 664 aprovados, 23 ignorados, 0 falhas (687 total); testes Mongo opt-in ignorados. `dotnet format whitespace --verify-no-changes` nos arquivos afetados e `git diff --check` passaram. Código enviado ao main no commit `02d6e01b1113db615956ee95827c6a8d0cb9226f`. T6.3 permanece parcial por risco TOCTOU e auditoria restante. Sem instalação, restart, mídia ou validação de produção; release não criada."
     }
   ]
 }
