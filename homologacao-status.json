@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T12:19:00-03:00",
+  "generatedAt": "2026-10-17T12:22:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6055,6 +6055,21 @@
       "startedAt": "2026-10-17T11:08:00-03:00",
       "updatedAt": "2026-10-17T11:14:00-03:00",
       "evidence": "GET /System/Info/Public continua em 12.1.21. SHA-256 do worker instalado: 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5; fonte 12.1.24: 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA. O worker instalado não contém os marcadores de readiness nem os helpers de scan incremental da fonte. Testes da fonte: NebulaDownloaderStartupTests Release 11/11; Python 3.10 scanner/helpers 89/89. Nenhum worker/download real, instalação, alteração de configuração ou restart executado. gh auth status sem sessão; publicação, instalação e smoke test continuam pendentes."
+    },
+    {
+      "id": "server-nebula-download-runtime-recheck-2026-10-17-1222",
+      "title": "Nebula: release 12.1.24 validada localmente, mas produção permanece em 12.1.21",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "API local, testes Release e artefatos candidatos",
+      "location": "Nebula Downloader STRM; pacote Windows/Linux; publicação e homologação",
+      "scope": "Revalidar a correção de início do downloader e separar evidência de fonte de estado real de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T12:18:00-03:00",
+      "updatedAt": "2026-10-17T12:22:00-03:00",
+      "evidence": "GET read-only em /System/Info/Public confirmou produção 12.1.21; tag v12.1.24 ausente local/remoto e gh auth status sem sessão. `NebulaDownloaderStartupTests` Release 11/11 e Python 3.10 scanner/helpers 89/89. Stage coincide com fonte no SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA; candidato Windows SHA-256 F100E72EC8761DD87B972975F521AC411F30F553A2AD51C748A5111E1E7C7B66 e Linux SHA-256 142D3B9EF33FBABDD189A1D11665970F0B84FE877BFD543695793F2F3119464F existem localmente. Nenhum download, worker, configuração, instalação ou restart foi executado. A correção ainda não está aplicada/homologada em produção; publicação e janela controlada com smoke test permanecem pendentes."
     }
   ]
 }

@@ -1059,6 +1059,22 @@ test('Nebula download revalidation distinguishes passing source tests from stale
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: downloader de produção ainda usa runtime antigo/);
 });
 
+test('Nebula download recheck publishes passing source tests but keeps production and release gates open', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-recheck-2026-10-17-1222');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /produção 12\.1\.21/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests` Release 11\/11/);
+    assert.match(event.evidence, /scanner\/helpers 89\/89/);
+    assert.match(event.evidence, /candidato Windows SHA-256/);
+    assert.match(event.evidence, /Linux SHA-256/);
+    assert.match(event.evidence, /tag v12\.1\.24 ausente/);
+    assert.match(event.evidence, /não está aplicada\/homologada em produção/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
