@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T12:22:00-03:00",
+  "generatedAt": "2026-10-17T12:27:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6070,6 +6070,21 @@
       "startedAt": "2026-10-17T12:18:00-03:00",
       "updatedAt": "2026-10-17T12:22:00-03:00",
       "evidence": "GET read-only em /System/Info/Public confirmou produção 12.1.21; tag v12.1.24 ausente local/remoto e gh auth status sem sessão. `NebulaDownloaderStartupTests` Release 11/11 e Python 3.10 scanner/helpers 89/89. Stage coincide com fonte no SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA; candidato Windows SHA-256 F100E72EC8761DD87B972975F521AC411F30F553A2AD51C748A5111E1E7C7B66 e Linux SHA-256 142D3B9EF33FBABDD189A1D11665970F0B84FE877BFD543695793F2F3119464F existem localmente. Nenhum download, worker, configuração, instalação ou restart foi executado. A correção ainda não está aplicada/homologada em produção; publicação e janela controlada com smoke test permanecem pendentes."
+    },
+    {
+      "id": "server-nebula-live-process-log-recheck-2026-10-17-1227",
+      "title": "Nebula: nenhum worker de download ativo e log sem atualização recente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "API local e snapshot de processos; verificação read-only",
+      "location": "MulletaFlix.exe; Nebula downloader; nebula.log",
+      "scope": "Revalidar o estado do downloader ativo e do log sem iniciar worker, transferência, instalação ou restart.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T12:22:00-03:00",
+      "updatedAt": "2026-10-17T12:27:00-03:00",
+      "evidence": "GET /System/Info/Public confirmou produção 12.1.21; MulletaFlix.exe PID 16928. nebula.log tem 82.510 bytes e última gravação em 11/10/2026 23:22:32 (-03). Snapshot por ancestralidade não encontrou nenhum processo Python/STRM/rclone descendente do servidor naquele instante; isso não comprova sozinho o motivo da falha. A autenticação do status interno não está disponível. Não houve tentativa de iniciar worker/download, nem alteração de configuração, instalação ou restart. Publicação/instalação e primeiro smoke test permanecem pendentes; correção ainda não homologada em produção."
     }
   ]
 }

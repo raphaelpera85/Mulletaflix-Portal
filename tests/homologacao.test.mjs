@@ -1075,6 +1075,20 @@ test('Nebula download recheck publishes passing source tests but keeps productio
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula live recheck records stale production log and no active downloader child', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-live-process-log-recheck-2026-10-17-1227');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /produção 12\.1\.21/);
+    assert.match(event.evidence, /nebula\.log.*11\/10\/2026 23:22:32/i);
+    assert.match(event.evidence, /nenhum processo Python\/STRM\/rclone descendente/i);
+    assert.match(event.evidence, /não comprova.*motivo.*falha/i);
+    assert.match(event.evidence, /não houve.*iniciar worker.*download.*instalação.*restart/i);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
