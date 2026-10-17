@@ -341,8 +341,8 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
-    assert.equal(audit.passed, 4882);
-    assert.equal(audit.total, 4943);
+    assert.equal(audit.passed, 4898);
+    assert.equal(audit.total, 4959);
     assert.equal(audit.skipped, 61);
     assert.equal(audit.failed, 0);
 
@@ -357,8 +357,7 @@ test('server audit publishes the complete local suite and preserves the remote C
     const suiteEvent = statusData.events.find(item => item.id === 'server-full-solution-tests-release-build-2026-10-16-2051');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /4\.882 aprovados, 61 ignorados, 0 falhas/);
-    assert.match(server.testAudit.label, /0 avisos e 0 erros/);
+    assert.match(server.testAudit.label, /4\.898 aprovados, 61 ignorados, 0 falhas/);
     assert.match(server.testAudit.label, /homologação formal permanece pendente/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
@@ -510,4 +509,26 @@ test('portal records Nebula worker scan readiness without claiming first downloa
     assert.match(event.evidence, /não o primeiro download/);
     assert.match(event.evidence, /Produção e download Telegram reais não foram exercitados/);
 
+});
+
+test('portal records that the installed Nebula worker predates the validated source fix', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-production-version-gap-2026-10-16-2326');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /System\/Info\/Public responde 12\.1\.21/);
+    assert.match(event.evidence, /não contém a divisão incremental por título/);
+    assert.match(event.evidence, /Enabled=false bloqueia o início automático/);
+    assert.match(event.evidence, /4\.898\/4\.959.*61 ignorados, 0 falhas/);
+    assert.match(event.evidence, /Nenhum worker ou transferência real/);
+    assert.match(event.evidence, /não ativa em produção/);
+    assert.equal(server.testAudit.passed, 4898);
+    assert.equal(server.testAudit.total, 4959);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /produção ainda executa o scanner anterior à correção/);
 });
