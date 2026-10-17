@@ -523,6 +523,12 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /não contém a divisão incremental por título/);
     assert.match(event.evidence, /Enabled=false bloqueia o início automático/);
     assert.match(event.evidence, /4\.898\/4\.959.*61 ignorados, 0 falhas/);
+    assert.match(event.evidence, /instalado em 08\/10\/2026.*reparse points/);
+    assert.match(event.evidence, /NebulaPython 580\/580/);
+    assert.match(event.evidence, /1\.445 aprovados, 60 ignorados/);
+    assert.match(event.evidence, /RateLimitMiddlewareTests 92\/92/);
+    assert.match(event.evidence, /web tests 407\/407/);
+    assert.match(event.evidence, /sem host GitHub autenticado/);
     assert.match(event.evidence, /Nenhum worker ou transferência real/);
     assert.match(event.evidence, /não ativa em produção/);
     assert.equal(server.testAudit.passed, 4898);
