@@ -817,7 +817,9 @@ test('portal records the Mongo readiness handshake fix without claiming a produc
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
     assert.match(event.evidence, /emitia \[STRM-WORKER-READY\] antes/);
-    assert.match(event.evidence, /Python focado 16\/16, suíte NebulaPython 584\/584/);
+    assert.match(event.evidence, /Python focado 17\/17, downloader\/helpers 88\/88, suíte NebulaPython 585\/585/);
+    assert.match(event.evidence, /refresh_cache retorna sucesso\/falha/);
+    assert.match(event.evidence, /\[STRM-WORKER-STARTUP-FAILED\].*encerra antes do scan\/download/);
     assert.match(event.evidence, /continua 12\.1\.21/);
     assert.match(event.evidence, /Release, instalação e primeiro download real continuam pendentes/);
 });

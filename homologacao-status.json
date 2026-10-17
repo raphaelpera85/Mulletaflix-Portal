@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T06:44:00-03:00",
+  "generatedAt": "2026-10-17T06:52:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 63,
         "failed": 0,
         "percent": 98.7,
-        "label": "Suíte da solução em Release não-Integration: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). NebulaPython 3.10 revalidado 17/10 06:44: 584/584; teste focado do handshake 16/16; startup C# 10/10. Corrigido na fonte o marcador prematuro [STRM-WORKER-READY], agora emitido após refresh Mongo. Runtime local continua 12.1.21 e downloader instalado difere da fonte. Nenhuma instalação, restart, ação de worker ou transferência foi executada; primeiro download real e homologação em produção permanecem pendentes. Homologação formal continua aberta; CI remoto segue bloqueado por cobrança GitHub (run 38981348548)."
+        "label": "Suíte da solução em Release não-Integration: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total; rodada anterior ao último ajuste Python). NebulaPython 3.10 revalidado 17/10 06:52: 585/585; downloader/helpers 88/88; teste focado 17/17; startup C# 10/10. O worker só declara pronto após refresh Mongo válido; se falhar, emite [STRM-WORKER-STARTUP-FAILED] e encerra antes de scan/download. Runtime local continua 12.1.21 e downloader instalado difere da fonte. Nenhuma instalação, restart, ação de worker ou transferência foi executada; primeiro download real e homologação em produção permanecem pendentes. Homologação formal continua aberta; CI remoto segue bloqueado por cobrança GitHub (run 38981348548)."
       }
     },
     {
@@ -5643,8 +5643,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T06:39:00-03:00",
-      "updatedAt": "2026-10-17T06:44:00-03:00",
-      "evidence": "O worker emitia [STRM-WORKER-READY] antes de MediaValidator.refresh_cache(force=True), permitindo que o manager/UI marcasse o downloader em execução antes do scan. A fonte agora emite o marcador após o refresh e teste confirma ordem Mongo → pronto → scan. Python focado 16/16, suíte NebulaPython 584/584 e NebulaDownloaderStartupTests 10/10. Leitura HTTP do runtime continua 12.1.21; script instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 diverge da fonte E0B9A8F3461E78B9CBC9F4F5434DA7C65E38B1518D5041E50A44671C29128980. Nenhum worker foi iniciado/parado; sem instalação, restart ou mídia transferida. Release, instalação e primeiro download real continuam pendentes; homologação permanece in_progress."
+      "updatedAt": "2026-10-17T06:52:00-03:00",
+      "evidence": "O worker emitia [STRM-WORKER-READY] antes de MediaValidator.refresh_cache(force=True), permitindo estado de execução prematuro. A fonte agora só declara pronto após refresh Mongo válido; refresh_cache retorna sucesso/falha e, em falha, o worker emite [STRM-WORKER-STARTUP-FAILED] e encerra antes do scan/download. Testes: Python focado 17/17, downloader/helpers 88/88, suíte NebulaPython 585/585 e NebulaDownloaderStartupTests 10/10. SHA-256 atual da fonte 0E9393C23ABAEE9625ED7387499F9F6798A6B90954948CC8E0DC8F2CCA13F728; instalado 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5. Runtime continua 12.1.21. Nenhum worker foi iniciado/parado; sem instalação, restart ou mídia transferida. Release, instalação e primeiro download real continuam pendentes; homologação permanece in_progress."
     }
   ]
 }
