@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T04:29:00-03:00",
+  "generatedAt": "2026-10-17T04:54:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 61,
         "failed": 0,
         "percent": 98.8,
-        "label": "Baseline determinístico da solução em Release: 4.898 aprovados, 61 ignorados, 0 falhas (4.959 total; exclui Integration/live externos). Rechecagem 17/10 04:29: NebulaDownloaderStartupTests 10/10; NebulaPython 581/581; stage validado contra fonte. Produção 12.1.21 ainda usa downloader legado; fonte/stage 12.1.22 têm hash correspondente e readiness/scan por título. Configuração global Enabled=false bloqueia autostart; start manual é separado. Registro HTTP 200 e stop posterior não comprovam primeiro item. Sem worker, install, restart, alteração de configuração ou mídia nesta sessão; correção em produção e primeiro download pendentes; homologação formal permanece pendente. CI remoto continua bloqueado por cobrança GitHub (run 38981348548, nenhum job executado)."
+        "label": "Baseline determinístico da solução em Release: 4.898 aprovados, 61 ignorados, 0 falhas (4.959 total; exclui Integration/live externos). Rechecagem 17/10: NebulaPython completo 584/584; testes C# Release focados em startup/Supabase 52/52; 2 testes novos de concorrência Mongo foram compilados mas ignorados sem Mongo descartável. Corrigido retry repetido do refresh Mongo após falha; gate de lease compartilhado entre backup e uploads implementado em fonte, pendente validação Mongo real. Produção continua 12.1.21 e sem evidência atual de worker: log local termina em 11/10. Nenhum worker, install, restart, alteração de configuração ou mídia nesta sessão; primeiro download e correção em produção pendentes. A homologação formal permanece pendente. CI remoto segue bloqueado por cobrança GitHub (run 38981348548, nenhum job executado)."
       }
     },
     {
@@ -5495,6 +5495,21 @@
       "startedAt": "2026-10-17T04:30:00-03:00",
       "updatedAt": "2026-10-17T04:37:00-03:00",
       "evidence": "O _backupGate serializa operações de backup/restore Supabase entre si, mas não as admissões de upload. Confirmados três find_one_and_update dos workers Python (large, parallel, small) e o caminho C# via NebulaUploadEngine/NebulaMongoContext. NebulaQueueConcurrencyMongoTests sem opt-in: 16 ignorados; contra MongoDB 8.3.7 descartável exclusivamente em 127.0.0.1:27099: 16/16 aprovados, 0 falhas/ignorados. O mongod temporário foi encerrado e a porta ficou sem listener. Essa suíte não cobre o interleaving backup-ocioso→claim; a lacuna/barreira comum permanece aberta. Nenhuma produção, worker, configuração ou transferência alterada; homologação T4.4 in_progress."
+    },
+    {
+      "id": "server-nebula-download-refresh-and-admission-2026-10-17-0454",
+      "title": "Nebula: fila de download e gate Mongo compartilhado em validação",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.4"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; Tools/NebulaPython/main.py; Tools/NebulaPython/tools/mongo_admission.py; Jellyfin.Server.Implementations/Nebula/NebulaMongoAdmissionLease.cs; NebulaMongoContext.cs; NebulaSupabaseSyncService.cs; NebulaUploadEngine.cs",
+      "scope": "Evitar que falhas do refresh Mongo repitam o scan completo por item e coordenar backups Supabase com uploads C#/Python via lease Mongo. Sem mutação de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T04:38:00-03:00",
+      "updatedAt": "2026-10-17T04:54:05-03:00",
+      "evidence": "Python 3.10 suíte Nebula completa 584/584; .NET Release focado NebulaDownloaderStartupTests + NebulaSupabaseSyncTests 52/52. Dois testes novos RequiresMongo compilaram mas foram ignorados sem Mongo descartável. Código agora separa timestamp de tentativa/snapshot e limita cursor Mongo a 15 s; nova coleção nebula_admission coordena C#/Python com leases e heartbeat. Logs locais do Nebula terminam em 11/10 e runtime permanece 12.1.21; fonte 12.1.22. Sem processo worker, configuração, install, restart ou mídia alterados; primeiro download, validação concorrente Mongo, release e instalação continuam pendentes. Homologação server in_progress."
     }
   ]
 }
