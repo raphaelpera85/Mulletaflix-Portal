@@ -385,8 +385,19 @@ test('server dependency audit reports zero known vulnerabilities but keeps depre
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /não reportou pacote vulnerável/);
     assert.match(event.evidence, /zlib\.net-mutliplatform 1\.0\.8/);
-    assert.match(event.evidence, /não foi validada com ela/);
+    assert.match(event.evidence, /SRT\/ASS\/SSA passaram 5\/5/);
+    assert.match(event.evidence, /não exercitam legenda comprimida/);
+    assert.match(event.evidence, /compatibilidade Windows\/Linux verificada/);
     assert.match(event.evidence, /T6\.4 continua parcial/);
     assert.equal(server.status, 'in_progress');
     assert.equal(server.testAudit.failed, 0);
+});
+
+test('server Nebula STRM download scan records tests without claiming production homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-strm-scan-status-2026-10-16-2127');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /90\/90 passaram/);
+    assert.match(event.evidence, /Smoke test de download real.*pendentes/);
 });

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T21:08:50-03:00",
+  "generatedAt": "2026-10-16T21:27:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2941,6 +2941,21 @@
   ],
   "events": [
     {
+      "id": "server-nebula-strm-scan-status-2026-10-16-2127",
+      "title": "Fila de download STRM do Nebula: scan e feedback de estado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; NebulaFtpManager; testes do downloader",
+      "scope": "Investigar demora aparente na inicialização do download STRM, reduzir trabalho repetido no scan e expor estado/contagem da fila sem interromper uploads ativos.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T21:14:00-03:00",
+      "updatedAt": "2026-10-16T21:27:00-03:00",
+      "evidence": "Worker iniciou e entrou em 'Escaneando e priorizando arquivos .strm...'; a UI antes permanecia em estado de espera/0% até a ordenação terminar. MonitorPaths apontava para D:\\midias, com cerca de 197 mil itens; uma varredura somente leitura mediu ~26 s. Scanner agora cacheia categoria por diretório; o status do painel passa a indicar indexação, quantidade encontrada ou fila vazia. Testes focados Python: 90/90 passaram; build local Jellyfin.Server.Implementations: 0 erros (avisos preexistentes); sintaxe Python, teste funcional isolado e diff check passaram. O downloader foi encontrado parado posteriormente, sem causa/ator comprovados; havia uploads ativos, portanto não foi reiniciado. Smoke test de download real, homologação e release permanecem pendentes."
+    },
+    {
       "id": "server-ci-billing-block-2026-10-16-2039",
       "title": "Revalidação do servidor e bloqueio externo do CI remoto",
       "agent": "Codex",
@@ -5108,8 +5123,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-16T20:54:00-03:00",
-      "updatedAt": "2026-10-16T21:08:50-03:00",
-      "evidence": "`dotnet list MulletaFlix.sln package --vulnerable --include-transitive --no-restore --verbosity quiet` terminou exit 0 e não reportou pacote vulnerável na solução. A varredura --deprecated encontrou zlib.net-mutliplatform 1.0.8 na cadeia de produção MediaBrowser.MediaEncoding -> libse 4.0.12, Microsoft.Testing.Platform.MSBuild 1.9.1 pela cadeia xUnit v3/MTP v1 e Polly.Extensions.Http/assemblies legados. NuGet oficial lista zlib 1.1.0 como versão disponível, mas a leitura de legendas Windows/Linux ainda não foi validada com ela; MTP v2 não foi imposto ao runner v1. Nenhum pacote ou código de runtime alterado. T6.4 continua parcial; testes de fixture multiplataforma, CI e homologação formal continuam pendentes. Release v12.1.21 permanece atual; nenhuma nova release criada."
+      "updatedAt": "2026-10-16T21:15:00-03:00",
+      "evidence": "`dotnet list MulletaFlix.sln package --vulnerable --include-transitive --no-restore --verbosity quiet` terminou exit 0 e não reportou pacote vulnerável na solução. A cadeia de produção `MediaBrowser.MediaEncoding -> libse 4.0.12 -> zlib.net-mutliplatform 1.0.8` foi confirmada no grafo e no assembly local. Testes focais SRT/ASS/SSA passaram 5/5, mas não exercitam legenda comprimida nem a troca de zlib; 1.1.0 está publicada, porém não instalada no cache local nem compatibilidade Windows/Linux verificada. A versão 1.0.8 continua sem substituição. Também não se forçou MTP v2 sobre runner xUnit/MTP v1. T6.4 continua parcial; fixture comprimida, validação multiplataforma, CI e homologação formal continuam pendentes. Nenhum código/pacote alterado. Release v12.1.21 permanece atual; nenhuma nova release criada."
     }
   ]
 }
