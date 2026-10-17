@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T04:20:42-03:00",
+  "generatedAt": "2026-10-17T04:29:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 61,
         "failed": 0,
         "percent": 98.8,
-        "label": "Baseline determinístico da solução em Release: 4.898 aprovados, 61 ignorados, 0 falhas (4.959 total; exclui Integration/live externos). Rechecagem de 17/10: NebulaDownloaderStartupTests 10/10; NebulaPython 581/581; stage validado contra a fonte. Servidor instalado ainda em 12.1.21. Tag v12.1.22 existe, mas não contém o handshake atual e não há GitHub Release/assets para ela; fonte/stage 12.1.22 exigem nova patch version para publicação. Nenhum install/restart/download real nesta rodada; homologação formal permanece pendente. CI remoto continua bloqueado por cobrança GitHub (run 38981348548, nenhum job executado)."
+        "label": "Baseline determinístico da solução em Release: 4.898 aprovados, 61 ignorados, 0 falhas (4.959 total; exclui Integration/live externos). Rechecagem 17/10 04:29: NebulaDownloaderStartupTests 10/10; NebulaPython 581/581; stage validado contra fonte. Produção 12.1.21 ainda usa downloader legado; fonte/stage 12.1.22 têm hash correspondente e readiness/scan por título. Configuração global Enabled=false bloqueia autostart; start manual é separado. Registro HTTP 200 e stop posterior não comprovam primeiro item. Sem worker, install, restart, alteração de configuração ou mídia nesta sessão; correção em produção e primeiro download pendentes; homologação formal permanece pendente. CI remoto continua bloqueado por cobrança GitHub (run 38981348548, nenhum job executado)."
       }
     },
     {
@@ -5465,6 +5465,21 @@
       "startedAt": "2026-10-17T03:30:00-03:00",
       "updatedAt": "2026-10-17T04:20:42-03:00",
       "evidence": "dotnet test MulletaFlix.sln --configuration Release --no-build --no-restore --filter FullyQualifiedName!~Integration: Providers 775/775, API 679/679, Server.Implementations 1.452 aprovados/60 ignorados, Server 73 aprovados/1 ignorado, Controller 63/63, Naming 681/681, Model 684/684, Networking 124/124, MediaEncoding 71/71, LiveTv 75/75, XbmcMetadata 39/39, Common 31/31, HLS 18/18, Extensions 144/144 e Keyframes 3/3; nenhum projeto determinístico reportou falha. Integrações foram excluídas e testes de banco sem opt-in foram ignorados. NebulaPython em Python 3.10 passou 581/581. A execução inicial com filtro Category!=LiveIntegration incluiu DramaFindsLiveIntegrationTests, que acessa a internet e falhou porque a API retornou resultados onde a expectativa era lista vazia; a suíte determinística de Providers depois passou 775/775. Portal: 35/35. Não houve worker, transferência, instalação, restart ou alteração de configuração. Runtime de produção continua 12.1.21, source/stage 12.1.22; primeiro download real e gates restantes do roadmap pendentes. Homologação permanece in_progress; não declarar release pronta."
+    },
+    {
+      "id": "server-nebula-download-not-starting-2026-10-17-0429",
+      "title": "Nebula: downloader de produção desatualizado; autostart desabilitado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaFtpManager.cs; Tools/NebulaPython/tools/strm_downloader.py; stage; homologacao-status.json",
+      "scope": "Investigar o download Nebula não iniciado, revalidar o código/stage e publicar evidência sem iniciar workers ou declarar produção corrigida.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T04:20:42-03:00",
+      "updatedAt": "2026-10-17T04:29:00-03:00",
+      "evidence": "GET read-only /System/Info/Public confirma produção 12.1.21. Script instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5; source/stage SHA-256 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F. Configuração sem segredos: Enabled=false, UsePythonEngine=true, UseMappedDrive=true e uma raiz existente. Enabled=false bloqueia autostart global; rota manual é separada. Log HTTP 200 de StartDownloader e StopDownloader posterior não comprovam mídia iniciada. Não havia downloader Python filho ativo do servidor no snapshot. C# NebulaDownloaderStartupTests Release 10/10; Python 3.10 suíte completa 581/581; validate-stage.ps1 passou usando ProjectRoot na raiz do monorepo. Sem código modificado; sem worker/configuração/install/restart/transferência. Stage corrigido ainda não está em produção; primeiro download e publicação/instalação controlada continuam pendentes. Homologação T2.1 in_progress."
     }
   ]
 }
