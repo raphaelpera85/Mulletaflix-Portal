@@ -1021,6 +1021,22 @@ test('avatar admin routes publish HTTP denial evidence without claiming producti
     assert.match(event.evidence, /não foi instalado nem liberado em produção/);
 });
 
+test('Nebula download remains pending while production uses the older worker runtime', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-stale-2026-10-17-1114');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /continua em 12\.1\.21/);
+    assert.match(event.evidence, /fonte 12\.1\.24/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests Release 11\/11/);
+    assert.match(event.evidence, /scanner\/helpers 89\/89/);
+    assert.match(event.evidence, /Nenhum worker\/download real.*restart executado/);
+    assert.match(event.evidence, /publicação, instalação e smoke test continuam pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
