@@ -1046,12 +1046,12 @@ test('Nebula download revalidation distinguishes passing source tests from stale
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
-    assert.match(event.evidence, /servidor 12\.1\.21, Download parado, botão iniciar habilitado/);
+    assert.match(event.evidence, /API local confirmou servidor 12\.1\.21/);
     assert.match(event.evidence, /fonte 12\.1\.24/);
     assert.match(event.evidence, /NebulaDownloaderStartupTests Release 11\/11/);
     assert.match(event.evidence, /NebulaPython 587\/587/);
-    assert.match(event.evidence, /tag v12\.1\.24 ausente e gh sem sessão/);
-    assert.match(event.evidence, /não houve download real, instalação, restart ou alteração de código de produto/i);
+    assert.match(event.evidence, /tag v12\.1\.24 ausente.*gh sem sessão/);
+    assert.match(event.evidence, /Não houve download real, instalação ou restart/i);
     assert.match(event.evidence, /release e smoke test real continuam pendentes/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 

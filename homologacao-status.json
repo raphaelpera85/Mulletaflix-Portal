@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T12:47:00-03:00",
+  "generatedAt": "2026-10-17T19:35:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2952,8 +2952,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T11:30:00-03:00",
-      "updatedAt": "2026-10-17T12:47:00-03:00",
-      "evidence": "Revalidação somente leitura do painel e da API local: servidor 12.1.21, Download parado, botão iniciar habilitado. Histórico visível mostra workers do runtime antigo chegando à varredura global e encerrando sem título/transferência. O script instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 diverge da fonte 12.1.24 SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA; a fonte contém handshake e scan incremental. Testes repetidos nesta sessão: NebulaPython 587/587 e NebulaDownloaderStartupTests Release 11/11. GitHub latest release v12.1.21; tag v12.1.24 ausente e gh sem sessão. Não houve download real, instalação, restart ou alteração de código de produto. A fonte está validada em testes, mas produção segue sem a correção; release e smoke test real continuam pendentes."
+      "updatedAt": "2026-10-17T19:35:00-03:00",
+      "evidence": "Revalidação somente leitura: API local confirmou servidor 12.1.21. O strm_downloader.py instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 diverge da fonte 12.1.24 SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA; os marcadores de startup e helpers de scan incremental existem na fonte e estão ausentes no instalado. Testes desta sessão: NebulaPython 587/587 e NebulaDownloaderStartupTests Release 11/11. GitHub latest release v12.1.21; tag v12.1.24 ausente, gh sem sessão e workflow bloqueado por cobrança. Não houve download real, instalação ou restart. A correção segue fora da produção; release e smoke test real continuam pendentes."
     },
     {
       "id": "server-nebula-stale-downloader-runtime-2026-10-17-1000",
