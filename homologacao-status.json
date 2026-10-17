@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T00:30:19-03:00",
+  "generatedAt": "2026-10-17T00:42:31-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5284,7 +5284,22 @@
       "progressPercent": null,
       "startedAt": "2026-10-17T00:13:12-03:00",
       "updatedAt": "2026-10-17T00:15:57-03:00",
-      "evidence": "Confirmação read-only: a instância local HTTP reporta 12.1.21; o script instalado de 2026-10-08 e o downloader no stage têm o mesmo SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 e não contêm o scanner/readiness atuais. A fonte tem SHA-256 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F. O comando validate-stage.ps1 -StageDirectory stage -ProjectRoot . falhou precisamente por divergência, bloqueando pacote obsoleto. Gate PowerShell 7 e Windows PowerShell 5.1 passou na fixture; NebulaPython 581/581, NebulaDownloaderStartupTests 7/7. Nenhum worker, mídia, instalação ou restart foi executado; nenhum download real está homologado. Release não publicada e T2.1 permanece in_progress."
+      "evidence": "Confirmação read-only: antes do rebuild, a instância local HTTP reportava 12.1.21; o script instalado de 2026-10-08 e o downloader no stage tinham SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5. A fonte tem SHA-256 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F. O `validate-stage.ps1` rejeitou o stage antigo. Em seguida, o stage Windows foi reconstruído do checkout: publish Release, runtime Python atual e `validate-stage.ps1` passaram; hash stage/fonte coincide, FileVersion/ProductVersion 12.1.22. `Directory.Build.props` foi alinhado a `SharedVersion.cs` em 12.1.22. NebulaPython 581/581 e NebulaDownloaderStartupTests 10/10; teste de saída confirmou que `-SkipInstaller` não anuncia instalador antigo. Build sem web/tray/installer; rclone.exe não estava no stage e requer validar bootstrap. Produção permanece 12.1.21 com o script antigo; nenhum instalador, release, instalação, restart ou download real foi realizado. T2.1 e homologação permanecem in_progress."
+    },
+    {
+      "id": "server-nebula-stage-rebuilt-2026-10-17-0042",
+      "title": "Nebula: stage Windows reconstruído com downloader atual",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-packaging-master/build-stage-and-installer.ps1; stage; MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py",
+      "scope": "Rebuild local do stage Windows e validação da cópia atual do downloader, sem publicar instalador ou alterar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T00:32:00-03:00",
+      "updatedAt": "2026-10-17T00:42:31-03:00",
+      "evidence": "O publish Release concluiu e o stage foi reconstruído com as fontes atuais. `validate-stage.ps1` passou; hash SHA-256 do downloader no stage coincide com a fonte (`C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F`). FileVersion/ProductVersion e VersionPrefix/SharedVersion estão alinhados em 12.1.22. NebulaPython passou 581/581 e `NebulaDownloaderStartupTests` passou 10/10. Teste do builder confirmou saída correta de stage-only sem anunciar instalador antigo quando `-SkipInstaller` está ativo. Web, tray e installer foram pulados; nenhum release foi emitido. O stage alertou que rclone.exe não estava presente. Produção segue 12.1.21 com script antigo; não houve instalação, restart ou transferência. Primeiro download real continua pendente; T2.1 segue in_progress."
     }
   ]
 }

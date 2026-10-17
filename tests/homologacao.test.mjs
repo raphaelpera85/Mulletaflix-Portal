@@ -575,3 +575,21 @@ test('portal records scheduled backup history coverage as partial', async () => 
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Cobrir persistência do histórico de backup agendado/);
 });
+
+test('portal records the rebuilt Nebula stage without claiming production download completion', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-stage-rebuilt-2026-10-17-0042');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /publish Release concluiu/);
+    assert.match(event.evidence, /validate-stage\.ps1` passou/);
+    assert.match(event.evidence, /C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F/);
+    assert.match(event.evidence, /VersionPrefix\/SharedVersion estão alinhados em 12\.1\.22/);
+    assert.match(event.evidence, /581\/581/);
+    assert.match(event.evidence, /10\/10/);
+    assert.match(event.evidence, /Web, tray e installer foram pulados/);
+    assert.match(event.evidence, /Produção segue 12\.1\.21/);
+    assert.match(event.evidence, /Primeiro download real continua pendente/);
+});
