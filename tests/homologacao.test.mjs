@@ -1089,6 +1089,19 @@ test('Nebula live recheck records stale production log and no active downloader 
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('STRM generator package gate rejects a stage missing the required module', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-strm-generator-stage-integrity-2026-10-17-1234');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T0.3']);
+    assert.match(event.evidence, /Assert-StageIntegrity\.Tests\.ps1 passou/);
+    assert.match(event.evidence, /StageBuildOptions\.Tests\.ps1 passou/);
+    assert.match(event.evidence, /test_generate_strm\.py \+ test_control_plane_operations\.py: 27\/27/);
+    assert.match(event.evidence, /T0\.3 permanece parcial/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;

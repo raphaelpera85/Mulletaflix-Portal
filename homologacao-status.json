@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T12:27:00-03:00",
+  "generatedAt": "2026-10-17T12:34:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6070,6 +6070,21 @@
       "startedAt": "2026-10-17T12:18:00-03:00",
       "updatedAt": "2026-10-17T12:22:00-03:00",
       "evidence": "GET read-only em /System/Info/Public confirmou produção 12.1.21; tag v12.1.24 ausente local/remoto e gh auth status sem sessão. `NebulaDownloaderStartupTests` Release 11/11 e Python 3.10 scanner/helpers 89/89. Stage coincide com fonte no SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA; candidato Windows SHA-256 F100E72EC8761DD87B972975F521AC411F30F553A2AD51C748A5111E1E7C7B66 e Linux SHA-256 142D3B9EF33FBABDD189A1D11665970F0B84FE877BFD543695793F2F3119464F existem localmente. Nenhum download, worker, configuração, instalação ou restart foi executado. A correção ainda não está aplicada/homologada em produção; publicação e janela controlada com smoke test permanecem pendentes."
+    },
+    {
+      "id": "server-nebula-strm-generator-stage-integrity-2026-10-17-1234",
+      "title": "Nebula STRM: teste agora rejeita pacote sem gerador Python",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T0.3"],
+      "local": "Testes de packaging e control plane Python; stage Windows candidato",
+      "location": "Tools/NebulaPython/generate_strm.py; Assert-StageIntegrity; builder Windows",
+      "scope": "Fechar a lacuna de regressão do módulo STRM obrigatório no pacote e revisar a evidência histórica sem alegar homologação de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T12:27:00-03:00",
+      "updatedAt": "2026-10-17T12:34:00-03:00",
+      "evidence": "O arquivo generate_strm.py existe no checkout, builder e lista de integridade. Adicionada regressão para remover o módulo do stage e exigir rejeição. Assert-StageIntegrity.Tests.ps1 passou; StageBuildOptions.Tests.ps1 passou; Python 3.10 test_generate_strm.py + test_control_plane_operations.py: 27/27. Stage Windows candidato tem hash SHA-256 igual à fonte A123B90D083DD39B964795E0A6DA70E4F26723046FBA4FFD8E8360BB216B8CFD. T0.3 permanece parcial; artefato instalado, integração real e primeiro download Nebula seguem sem homologação."
     },
     {
       "id": "server-nebula-live-process-log-recheck-2026-10-17-1227",
