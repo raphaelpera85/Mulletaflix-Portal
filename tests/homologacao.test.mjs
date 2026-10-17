@@ -875,11 +875,12 @@ test('portal reports the 12.1.24 Nebula candidate without claiming a successful 
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
-    assert.match(event.evidence, /Candidato 12\.1\.24 reconstruído localmente para Windows e Linux/);
+    assert.match(event.evidence, /Candidato 12\.1\.24 (?:reconstruído|construído) localmente para Windows e Linux/);
     assert.match(event.evidence, /Tools\/NebulaPython\/tools\/strm_downloader\.py e requirements\.txt/);
-    assert.match(event.evidence, /NebulaPython 89\/89 e NebulaDownloaderStartupTests Release 11\/11/);
-    assert.match(event.evidence, /Produção continua 12\.1\.21/);
-    assert.match(event.evidence, /publicação, instalação controlada e smoke test permanecem pendentes/);
+    assert.match(event.evidence, /NebulaPython 89\/89(?: e|,) NebulaDownloaderStartupTests Release 11\/11/);
+    assert.match(event.evidence, /produção continua 12\.1\.21/i);
+    assert.match(event.evidence, /Release ainda não publicada/);
+    assert.match(event.evidence, /Instalação controlada e smoke test permanecem pendentes/);
     assert.doesNotMatch(JSON.stringify(event), /[A-Z]:\\Users\\/i);
 });
 
