@@ -433,3 +433,22 @@ test('server Nebula download scan progress records production reproduction and s
     assert.match(event.evidence, /binário de produção continua 12\.1\.21/);
     assert.match(event.evidence, /Smoke test ponta a ponta.*pendentes/);
 });
+
+test('portal records title-level Nebula download startup without claiming production homologation', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-first-title-download-2026-10-16-2214');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /subdivide categorias diretas em pastas de título ordenadas A–Z/);
+    assert.match(event.evidence, /574\/574 aprovados/);
+    assert.match(event.evidence, /nenhum worker de produção foi iniciado\/parado/);
+    assert.match(event.evidence, /instalação segue 12\.1\.21/);
+    assert.match(event.evidence, /não há nova release nesta rodada/);
+    assert.equal(server.status, 'in_progress');
+    assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula inicia o download após indexar o primeiro título/);
+});

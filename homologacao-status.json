@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T22:06:00-03:00",
+  "generatedAt": "2026-10-16T22:14:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,20 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-first-title-download-2026-10-16-2214",
+      "title": "Nebula inicia o download após indexar o primeiro título",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T0.3", "T2.1"],
+      "location": "Tools/NebulaPython/tools/strm_downloader.py; testes do downloader; documentação de operação",
+      "scope": "Reduzir a espera até a primeira mídia sem quebrar a prioridade de categoria/título nem alterar a produção ativa.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-16T22:07:00-03:00",
+      "updatedAt": "2026-10-16T22:14:00-03:00",
+      "evidence": "O painel local da instalação 12.1.21 mostrou o downloader parado; os logs anteriores registram o worker Python entrando na varredura da biblioteca sem evidência de que alcançou o primeiro download. Causa na fonte: o worker indexava e ordenava toda a categoria antes de processar mídia. Correção local agora subdivide categorias diretas em pastas de título ordenadas A–Z e processa cada título antes de varrer o próximo, preservando prioridade entre categorias e fallback para layout misto. Validação: 4 testes focados e suíte NebulaPython 574/574 aprovados com Python 3.10; git diff --check passou. Testes usam filesystem temporário; nenhum arquivo real foi baixado e nenhum worker de produção foi iniciado/parado. A instalação segue 12.1.21; correção ainda não está empacotada/instalada. Homologação real, CI remoto bloqueado pela cobrança GitHub e gate do roadmap continuam pendentes; não há nova release nesta rodada."
+    },
     {
       "id": "server-nebula-download-startup-gate-2026-10-16-2136",
       "title": "Downloader Nebula sem início automático: configuração global desabilitada",
