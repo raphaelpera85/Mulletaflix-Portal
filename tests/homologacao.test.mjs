@@ -823,3 +823,18 @@ test('portal records latest Nebula scanner and readiness fixes without claiming 
     assert.match(event.evidence, /confirma runtime 12\.1\.21/);
     assert.match(event.evidence, /Release, instalação e primeiro download real continuam pendentes/);
 });
+
+test('portal records the completed isolated stage validation without claiming a release or production download', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-stage-lock-validation-2026-10-17-0753');
+
+    assert.ok(event, 'portal should publish current Nebula stage and test results');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /NebulaPython 586\/586/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests 9\/9/);
+    assert.match(event.evidence, /1\.458 aprovados, 62 ignorados, 0 falhas/);
+    assert.match(event.evidence, /stage Windows construído.*validado/i);
+    assert.match(event.evidence, /makensis\/NSIS não está disponível/);
+    assert.match(event.evidence, /Não houve instalação\/restart, worker ou transferência real/);
+});

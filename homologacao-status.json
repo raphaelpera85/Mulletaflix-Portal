@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T07:28:00-03:00",
+  "generatedAt": "2026-10-17T07:53:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 63,
         "failed": 0,
         "percent": 98.7,
-        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython completo 586/586, downloader/helpers 89/89, NebulaDownloaderStartupTests 9/9 e Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas (1.520 total). O handshake agora só termina em [STRM-SCAN-STARTED]; [STRM-WORKER-MONGO-READY] é apenas progresso. Corrigida varredura residual de pastas desconhecidas/mídias soltas e suporte a raiz de arquivo. Revisão adversarial: sem apontamentos. Build isolado ainda bloqueado: builder exige stage preexistente e tem backup temporário apontando para a raiz do projeto; código e produção não foram instalados. Runtime verificado continua 12.1.21; nenhum worker ou download real foi iniciado. Release, instalação e smoke test permanecem pendentes. Homologação formal continua aberta; CI remoto segue bloqueado por cobrança GitHub (run 38981348548)."
+        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; stage Windows completo validado. O lock global do build agora cobre todas as etapas e o instalador. Revisão final sem achados. Instalador não compilado: NSIS/makensis indisponível. Produção 12.1.21 não recebeu instalação/restart e nenhum worker ou download real foi executado. Release, teste real e homologação formal pendentes; CI remoto continua bloqueado por cobrança GitHub (run 38981348548). Homologação formal continua aberta."
       }
     },
     {
@@ -5645,6 +5645,21 @@
       "startedAt": "2026-10-17T06:39:00-03:00",
       "updatedAt": "2026-10-17T07:28:00-03:00",
       "evidence": "A revalidação adversarial encontrou dois casos: diretório superior desconhecido ou mídia solta podia forçar scan global antes das categorias prioritárias; o handshake podia considerar Mongo-ready como início antes da enumeração do filesystem. Corrigidos: raízes desconhecidas/soltas são lote A–Z final; raiz de arquivo é aceita; [STRM-WORKER-MONGO-READY] atualiza progresso e somente [STRM-SCAN-STARTED] confirma início. RED/green reproduzido. Testes Python focados 89/89, suíte Python 586/586, NebulaDownloaderStartupTests Release 9/9, Jellyfin.Server.Implementations.Tests Release 1.458 aprovados, 62 ignorados, 0 falhas (1.520 total); revisor adversarial sem apontamentos. Hash da fonte strm_downloader.py: B82A43390A1F13ABEC76C7DBB563422839070DC3B474F311F5DD77F62B7F7D4D. GET read-only confirma runtime 12.1.21; nenhum worker, instalação, restart ou transferência foi executado. Build isolado parou antes da compilação por exigir stage preexistente; inspeção detectou que o backup temporário usa a raiz do projeto, então não foi repetido. Release, instalação e primeiro download real continuam pendentes."
+    },
+    {
+      "id": "server-nebula-download-stage-lock-validation-2026-10-17-0753",
+      "title": "Nebula: stage Release integral validado; instalador e download real pendentes",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "MulletaFlix-packaging-master/build-stage-and-installer.ps1; MulletaFlix-packaging-master/scripts/StageBackup.ps1; testes Python/.NET e empacotamento",
+      "scope": "Concluir a validação isolada do stage Nebula, corrigir a serialização do pipeline de build e atualizar o registro público de homologação sem tocar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T07:28:00-03:00",
+      "updatedAt": "2026-10-17T07:53:00-03:00",
+      "evidence": "Stage Windows construído em .build/candidate-nebula-download-20261017 e validado pelo próprio builder: servidor .NET Release, frontend, tray, worker/módulos Python, MariaDB e ferramentas de runtime. NSSM 2.24 veio do arquivo oficial nssm.cc; SHA-256 do binário F689EE9AF94B00E9E3F0BB072B34CAAF207F32DCB4F5782FC9CA351DF9A06C97 conferido igual ao arquivo local anterior. Testes: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; parser PowerShell passou. Revisão do lock/backup sem achados após manter lock até conclusão do pipeline. Instalador não compilado porque makensis/NSIS não está disponível. Não houve instalação/restart, worker ou transferência real; runtime continua sem prova do primeiro download. Release e homologação final permanecem pendentes."
     }
   ]
 }
