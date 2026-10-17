@@ -526,6 +526,7 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /instalado em 08\/10\/2026.*reparse points/);
     assert.match(event.evidence, /NebulaPython 580\/580/);
     assert.match(event.evidence, /1\.445 aprovados, 60 ignorados/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests 674\/674/);
     assert.match(event.evidence, /RateLimitMiddlewareTests 92\/92/);
     assert.match(event.evidence, /web tests 407\/407/);
     assert.match(event.evidence, /sem host GitHub autenticado/);

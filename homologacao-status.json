@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T23:48:00-03:00",
+  "generatedAt": "2026-10-16T23:49:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2952,8 +2952,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-16T23:12:00-03:00",
-      "updatedAt": "2026-10-16T23:48:00-03:00",
-      "evidence": "O endpoint System/Info/Public responde 12.1.21. O script instalado em 08/10/2026 não contém a divisão incremental por título, [STRM-SCAN-STARTED] nem a proteção contra reparse points existentes no checkout. A configuração observada tem Enabled=false, UsePythonEngine=true e MonitorPaths configurado; Enabled=false bloqueia o início automático, enquanto a ação manual é independente. POSTs manuais anteriores ao último start do servidor retornaram HTTP 200, mas o log não registra o bool e não prova início de mídia; não foi observada tentativa manual após 23:09. A suíte determinística completa anterior registrou 4.898/4.959 (61 ignorados, 0 falhas). Nesta revalidação: NebulaPython 580/580; Jellyfin.Server.Implementations.Tests 1.445 aprovados, 60 ignorados; NebulaDownloaderStartupTests 4/4; RateLimitMiddlewareTests 92/92; web tests 407/407. O build web e verify:build passaram com 1.927 artefatos e payload inicial 294,3 KiB gzip (limite 420 KiB). Nenhum worker ou transferência real, instalação ou reinício foi executado. A tag v12.1.22 não inclui as mudanças de título/prontidão; gh auth status informa sem host GitHub autenticado e o workflow anterior estava bloqueado por cobrança. Correção validada no checkout, mas não ativa em produção; smoke test e homologação permanecem pendentes."
+      "updatedAt": "2026-10-16T23:49:00-03:00",
+      "evidence": "O endpoint System/Info/Public responde 12.1.21. O script instalado em 08/10/2026 não contém a divisão incremental por título, [STRM-SCAN-STARTED] nem a proteção contra reparse points existentes no checkout. A configuração observada tem Enabled=false, UsePythonEngine=true e MonitorPaths configurado; Enabled=false bloqueia o início automático, enquanto a ação manual é independente. POSTs manuais anteriores ao último start do servidor retornaram HTTP 200, mas o log não registra o bool e não prova início de mídia; não foi observada tentativa manual após 23:09. A suíte determinística completa anterior registrou 4.898/4.959 (61 ignorados, 0 falhas). Nesta revalidação: NebulaPython 580/580; Jellyfin.Server.Implementations.Tests 1.445 aprovados, 60 ignorados; NebulaDownloaderStartupTests 4/4; Jellyfin.Api.Tests 674/674; RateLimitMiddlewareTests 92/92; web tests 407/407. O build web e verify:build passaram com 1.927 artefatos e payload inicial 294,3 KiB gzip (limite 420 KiB). Nenhum worker ou transferência real, instalação ou reinício foi executado. A tag v12.1.22 não inclui as mudanças de título/prontidão; gh auth status informa sem host GitHub autenticado e o workflow anterior estava bloqueado por cobrança. Correção validada no checkout, mas não ativa em produção; smoke test e homologação permanecem pendentes."
     },
     {
       "id": "server-nebula-download-first-title-revalidation-2026-10-16-2248",
