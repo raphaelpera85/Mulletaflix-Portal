@@ -1095,7 +1095,7 @@ test('Nebula download investigation distinguishes worker startup from long produ
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
-    assert.match(event.evidence, /três workers iniciados/);
+    assert.match(event.evidence, /três workers iniciados e sem progresso de mídia aparente/);
     assert.match(event.evidence, /produção 12\.1\.21/);
     assert.match(event.evidence, /fonte 12\.1\.24/);
     assert.match(event.evidence, /Python 89\/89 e C# startup\/hosted service 26\/26/);

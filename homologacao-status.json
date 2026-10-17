@@ -6099,7 +6099,7 @@
       "progressPercent": null,
       "startedAt": "2026-10-17T12:34:00-03:00",
       "updatedAt": "2026-10-17T12:40:00-03:00",
-      "evidence": "Painel autenticado mostra produção 12.1.21, Download Parado; logs visíveis registram três workers iniciados e presos na mensagem de varredura por vários minutos, sem linha de mídia baixada no trecho. O script instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 não tem a varredura incremental por título; fonte 12.1.24 SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA inclui. Testes Python 89/89 e C# startup/hosted service 26/26. Não foi disparada a fila completa nem alterada a produção. gh auth sem sessão; sem tag v12.1.24, release/instalação e smoke test limitado ainda pendentes. Homologação real permanece aberta."
+      "evidence": "Painel autenticado mostra produção 12.1.21, Download Parado; logs visíveis registram três workers iniciados e sem progresso de mídia aparente após entrar na varredura; o trecho não mostra uma mídia baixada antes do encerramento. O script instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 não tem a varredura incremental por título; fonte 12.1.24 SHA-256 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA inclui. Testes Python 89/89 e C# startup/hosted service 26/26. Não foi disparada a fila completa nem alterada a produção. gh auth sem sessão; sem tag v12.1.24, release/instalação e smoke test limitado ainda pendentes. Homologação real permanece aberta."
     },
     {
       "id": "server-nebula-live-process-log-recheck-2026-10-17-1227",
