@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T08:47:00-03:00",
+  "generatedAt": "2026-10-17T08:54:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5735,6 +5735,21 @@
       "startedAt": "2026-10-17T08:43:00-03:00",
       "updatedAt": "2026-10-17T08:47:00-03:00",
       "evidence": "O commit do servidor 074607e9a87c881934ba4e61a994cb1b5d112af8 está no main. Stage/instalador Windows 12.1.23 validados; instalador SHA-256 D4B97A545C103A7C07AD6872DC3BFB74E80DDC0EBB4D9DADF5D219EC1541FC62. Pacote Linux 12.1.23 construído localmente (134577717 bytes; SHA-256 e03e352a0dc40d39c3b6316503eb186a4b2507f0118e83e7647549811bd00065); bash -n do instalador e conteúdo do arquivo passaram. systemd-analyze e smoke Linux não executados em Windows. CI GitHub 39029908311 falhou antes de iniciar jobs: conta bloqueada por cobrança (anotação oficial). gh sem sessão autenticada; nenhuma tag/release criada. Runtime permanece 12.1.21; sem instalação, restart, worker ou download real. Pendentes: regularizar cobrança CI/autenticar publicação, validar pipeline Windows/systemd Linux, publicar ativos, instalar em janela aprovada e provar download Mongo/Telegram ponta a ponta."
+    },
+    {
+      "id": "server-nebula-release-ci-billing-repeat-2026-10-17-0854",
+      "title": "Nebula 12.1.23: CI repetida sem iniciar por bloqueio de cobrança",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "GitHub Actions CI no commit documental b6607485",
+      "scope": "Registrar a última tentativa da CI e manter pendente publicação da release sem fingir validação.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T08:51:00-03:00",
+      "updatedAt": "2026-10-17T08:54:00-03:00",
+      "evidence": "CI run 39030347425 no commit b6607485c7e6ab93dce3f64d94a4fa17fd941a50 terminou com conclusão failure e 0/11 jobs iniciados. Anotação oficial da primeira tarefa: The job was not started because your account is locked due to a billing issue. Isso não é resultado de testes de código. Builds locais candidatos Windows/Linux e suítes locais constam no evento anterior; release/tag não publicada, nenhum deploy/restart ou download real. Próximo passo externo: regularizar o bloqueio de cobrança do GitHub Actions; depois rerodar a CI e continuar o release workflow."
     }
   ]
 }

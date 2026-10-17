@@ -921,3 +921,15 @@ test('portal records locally built Linux package and outstanding release gates',
     assert.match(event.evidence, /nenhuma tag\/release criada/);
     assert.match(event.evidence, /sem instalação, restart, worker ou download real/);
 });
+
+test('portal records the final GitHub Actions billing block without calling it a test result', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-release-ci-billing-repeat-2026-10-17-0854');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /CI run 39030347425/);
+    assert.match(event.evidence, /0\/11 jobs iniciados/);
+    assert.match(event.evidence, /account is locked due to a billing issue/);
+    assert.match(event.evidence, /não é resultado de testes de código/);
+    assert.match(event.evidence, /release\/tag não publicada/);
+});
