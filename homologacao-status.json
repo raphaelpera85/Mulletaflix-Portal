@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T03:58:00-03:00",
+  "generatedAt": "2026-10-17T04:20:42-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5450,6 +5450,21 @@
       "startedAt": "2026-10-17T03:52:00-03:00",
       "updatedAt": "2026-10-17T03:58:00-03:00",
       "evidence": "GET read-only /System/Info/Public: servidor 12.1.21; downloader instalado SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5. Fonte e stage SHA-256 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F; validate-stage.ps1 passou. NebulaDownloaderStartupTests 10/10; NebulaPython 581/581. Tag remota v12.1.22 existe em 86dd41257cc60152307c7f44ee0cf79f823a42ed, mas o downloader marcado não contém STRM-WORKER-READY; GitHub Release API retorna 404. A versão-fonte/stage 12.1.22 exige a próxima patch version para publicar a correção; gh sem autenticação e não há ferramenta de escrita para releases GitHub. Sem install, restart ou transferência real; T2.1 permanece in_progress."
+    },
+    {
+      "id": "server-wide-validation-2026-10-17-0420",
+      "title": "Homologação local ampla do servidor: suites determinísticas aprovadas; gates de produção abertos",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/MulletaFlix.sln, Tools/NebulaPython/tests e homologacao-status.json",
+      "scope": "Executar a suíte Release determinística do servidor, validar NebulaPython e publicar a evidência sem declarar release ou homologação de produção concluída.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T03:30:00-03:00",
+      "updatedAt": "2026-10-17T04:20:42-03:00",
+      "evidence": "dotnet test MulletaFlix.sln --configuration Release --no-build --no-restore --filter FullyQualifiedName!~Integration: Providers 775/775, API 679/679, Server.Implementations 1.452 aprovados/60 ignorados, Server 73 aprovados/1 ignorado, Controller 63/63, Naming 681/681, Model 684/684, Networking 124/124, MediaEncoding 71/71, LiveTv 75/75, XbmcMetadata 39/39, Common 31/31, HLS 18/18, Extensions 144/144 e Keyframes 3/3; nenhum projeto determinístico reportou falha. Integrações foram excluídas e testes de banco sem opt-in foram ignorados. NebulaPython em Python 3.10 passou 581/581. A execução inicial com filtro Category!=LiveIntegration incluiu DramaFindsLiveIntegrationTests, que acessa a internet e falhou porque a API retornou resultados onde a expectativa era lista vazia; a suíte determinística de Providers depois passou 775/775. Portal: 33/33. Não houve worker, transferência, instalação, restart ou alteração de configuração. Runtime de produção continua 12.1.21, source/stage 12.1.22; primeiro download real e gates restantes do roadmap pendentes. Homologação permanece in_progress; não declarar release pronta."
     }
   ]
 }
