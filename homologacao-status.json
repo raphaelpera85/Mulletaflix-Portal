@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T12:06:00-03:00",
+  "generatedAt": "2026-10-17T12:19:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6036,8 +6036,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T11:02:00-03:00",
-      "updatedAt": "2026-10-17T11:08:00-03:00",
-      "evidence": "Seis endpoints admin-only agora exigem role Administrator. TestServer provou anônimo=401 e usuário comum=403 para upload, exclusão, remoção, validação, limpeza e status (12/12 casos); Jellyfin.Api.Tests Release 697/697. Nenhuma operação foi executada com role admin; não foi instalado nem liberado em produção. Mudança requer a próxima release de servidor e homologação controlada."
+      "updatedAt": "2026-10-17T12:19:00-03:00",
+      "evidence": "Seis endpoints admin-only exigem role Administrator. TestServer provou anônimo=401 e usuário comum=403 nas seis rotas (12/12); novo teste passou pelas seis actions como Administrator em diretório temporário isolado, com respostas esperadas 400/404/200. Matriz focada Nebula+GetAvatar: 26/26; Jellyfin.Api.Tests Release: 706/706. Respostas 200 provam entrada na action, não efeitos funcionais com arquivos/usuários reais. Sem instalação ou validação em produção; homologação de operação administrativa controlada continua pendente."
     },
     {
       "id": "server-nebula-download-runtime-stale-2026-10-17-1114",

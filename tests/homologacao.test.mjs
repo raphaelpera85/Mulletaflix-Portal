@@ -1011,15 +1011,17 @@ test('portal keeps the Nebula download correction pending until the runtime is u
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
-test('avatar admin routes publish HTTP denial evidence without claiming production deployment', () => {
+test('avatar admin routes publish denial and authorized-pipeline evidence without claiming production deployment', () => {
     const event = statusData.events.find(item => item.id === 'server-avatar-admin-authorization-2026-10-17-1108');
 
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.equal(event.front, 'Servidor / autorização de API');
-    assert.match(event.evidence, /TestServer.*12\/12 casos/);
-    assert.match(event.evidence, /Jellyfin\.Api\.Tests Release 697\/697/);
-    assert.match(event.evidence, /não foi instalado nem liberado em produção/);
+    assert.match(event.evidence, /12\/12/);
+    assert.match(event.evidence, /Matriz focada Nebula\+GetAvatar: 26\/26/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests Release: 706\/706/);
+    assert.match(event.evidence, /não foi instalado nem liberado em produção|Sem instalação ou validação em produção/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
 test('Nebula download remains pending while production uses the older worker runtime', () => {
