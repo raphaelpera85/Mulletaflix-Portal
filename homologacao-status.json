@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T04:58:00-03:00",
+  "generatedAt": "2026-10-17T05:10:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5510,6 +5510,21 @@
       "startedAt": "2026-10-17T04:38:00-03:00",
       "updatedAt": "2026-10-17T04:58:00-03:00",
       "evidence": "Python 3.10 suíte Nebula completa 584/584; .NET Release focado de startup/sync 52/52; regressões NebulaUploadEngineTests + NebulaStagingWatcherTests e testes admission 230 aprovados, 2 RequiresMongo ignorados, 0 falhas. Revisão fechou a janela claim→admissão: watcher agora adquire a lease antes do claim e a mantém pela transferência; se perder a lease, tenta liberar o próprio claim preservando partes e refileira. Retry de refresh Mongo mantém timestamp da última tentativa e limita cursor a 15 s. Os dois testes de concorrência Mongo foram compilados, mas não executados sem Mongo descartável nesta rodada. Log local termina em 11/10; runtime permanece 12.1.21 e fonte 12.1.22. Sem worker, config, instalação, restart ou mídia alterados; primeiro download, validação Mongo real, release e instalação continuam pendentes. Homologação server in_progress."
+    },
+    {
+      "id": "server-nebula-download-runtime-stage-recheck-2026-10-17-0510",
+      "title": "Nebula: fonte aprovada nos testes; runtime e stage estão desatualizados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
+      "location": "MulletaFlix-master/docs/nebula-strm-download.md; MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; MulletaFlix-packaging-master/scripts/Assert-StageIntegrity.ps1; stage",
+      "scope": "Revalidar a falha de início do download comparando runtime instalado, fonte, stage e testes sem alterar processos de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T05:00:00-03:00",
+      "updatedAt": "2026-10-17T05:10:00-03:00",
+      "evidence": "GET read-only /System/Info/Public informa servidor 12.1.21. Downloader instalado (08/10/2026) SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5 não contém readiness/scan incremental. Fonte 12.1.22 SHA-256 EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79. Stage SHA-256 C588DD2006A182440A57AC02D33730531E1FD0575FB3B971B6441D459FDAA88F diverge e validate-stage.ps1 falhou; assemblies stage também diferem dos builds Release atuais. NebulaDownloaderStartupTests 10/10; Jellyfin.Server.Implementations.Tests 1452 aprovados, 62 ignorados, 0 falhas; NebulaPython 584/584 em Python 3.10. Log local termina em 11/10, sem evidência atual do worker ou primeiro item. Nenhum worker, configuração, instalação, restart ou mídia foi alterado. T2.1 segue in_progress até reconstruir stage, publicar/instalar em janela segura e provar o primeiro download."
     }
   ]
 }

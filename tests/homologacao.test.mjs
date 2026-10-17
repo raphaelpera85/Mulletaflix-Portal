@@ -712,3 +712,18 @@ test('portal records Mongo-backed validation without closing the upload-admissio
     assert.match(event.evidence, /não cobre o interleaving backup-ocioso→claim/);
     assert.match(event.evidence, /Nenhuma produção, worker, configuração ou transferência alterada/);
 });
+
+test('portal shows the current stale Nebula runtime and failed stage integrity check', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-stage-recheck-2026-10-17-0510');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /servidor 12\.1\.21/);
+    assert.match(event.evidence, /validate-stage\.ps1 falhou/);
+    assert.match(event.evidence, /Jellyfin\.Server\.Implementations\.Tests 1452 aprovados, 62 ignorados, 0 falhas/);
+    assert.match(event.evidence, /NebulaPython 584\/584/);
+    assert.match(event.evidence, /Log local termina em 11\/10/);
+    assert.match(event.evidence, /primeiro item/);
+});
