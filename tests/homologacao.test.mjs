@@ -867,3 +867,17 @@ test('portal records current Nebula runtime, stage parity, and source-only test 
     assert.match(event.evidence, /não em produção/);
     assert.match(event.evidence, /transferência real continuam pendentes/);
 });
+
+test('portal records full local validation without claiming a real Nebula download', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-full-validation-2026-10-17-0823');
+
+    assert.ok(event, 'portal should publish the completed local validation evidence');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /dotnet test .* terminou com exit 0/);
+    assert.match(event.evidence, /NebulaPython 586\/586/);
+    assert.match(event.evidence, /74 arquivos e 407 testes passou/);
+    assert.match(event.evidence, /não há confirmação de download Telegram\/Mongo real/);
+    assert.match(event.evidence, /Runtime local permanece 12\.1\.21/);
+});

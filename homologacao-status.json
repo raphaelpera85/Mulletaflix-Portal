@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T08:10:00-03:00",
+  "generatedAt": "2026-10-17T08:23:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -5690,6 +5690,21 @@
       "startedAt": "2026-10-17T08:03:10-03:00",
       "updatedAt": "2026-10-17T08:10:00-03:00",
       "evidence": "Rechecagem read-only confirma runtime MulletaFlix 12.1.21 e hash instalado de strm_downloader.py diferente da fonte/stage, que estão alinhados em B82A43390A1F13ABEC76C7DBB563422839070DC3B474F311F5DD77F62B7F7D4D. NebulaDownloaderStartupTests Release 9/9 e testes Python focados 89/89 passaram. O log do servidor não recebe atualização desde 11/10/2026; o snapshot não encontrou worker Python descendente do processo MulletaFlix. Há outros processos Nebula em execução, pertencentes a outra árvore, preservados sem intervenção. NSIS existe em instalação local; saída e tag 12.1.22 já existem e o commit da tag contém VersionPrefix 12.1.21; não existe tag remota v12.1.23. Nenhum worker, configuração, instalação, restart ou mídia foi alterado. Correção validada em fonte/stage, não em produção; release 12.1.23, instalação controlada e transferência real continuam pendentes."
+    },
+    {
+      "id": "server-nebula-download-full-validation-2026-10-17-0823",
+      "title": "Nebula: suítes do servidor, Python e web revalidadas; download real pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Servidor MulletaFlix (checkout de desenvolvimento)",
+      "location": "Testes do servidor, downloader Python, frontend web e runtime local",
+      "scope": "Completar validação local do fluxo Nebula e publicar evidências sem modificar a instância produtiva.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T08:03:10-03:00",
+      "updatedAt": "2026-10-17T08:23:00-03:00",
+      "evidence": "Validação concluída: `dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~Integration` terminou com exit 0; todas as suites incluídas passaram, com casos explicitamente ignorados. Como complemento, o teste DramaFindsLiveIntegration isolado passou 1/1 após tornar a asserção de API externa tolerante a resultados fuzzy de baixa confiança. NebulaPython 586/586; NebulaDownloaderStartupTests Release 9/9; quatro scripts de teste de packaging passaram; frontend web Vitest 74 arquivos e 407 testes passou. Limite: o filtro não executa casos cujo nome contém Integration e não há confirmação de download Telegram/Mongo real. Runtime local permanece 12.1.21; nenhum worker, configuração, instalação, restart ou mídia foi alterado. Release e smoke test produtivo pendentes; homologação continua in_progress."
     }
   ]
 }
