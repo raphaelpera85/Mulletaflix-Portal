@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T05:59:00-03:00",
+  "generatedAt": "2026-10-17T06:04:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 61,
         "failed": 0,
         "percent": 98.8,
-        "label": "Baseline determinístico da solução em Release: 4.898 aprovados, 61 ignorados, 0 falhas (4.959 total; exclui Integration/live externos). Rechecagem 17/10 05:59: NebulaPython 584/584; Implementations 1.458 aprovados, 62 ignorados, 0 falhas; startup C# 10/10 e Python focado 103/103. O candidato isolado falha integridade porque MulletaFlix.Server.Implementations.dll diverge do publish atual. Runtime continua 12.1.21 com downloader antigo; nenhum worker, install, restart ou mídia nesta sessão. Primeiro download e correção em produção pendentes. A homologação formal permanece pendente; CI remoto segue bloqueado por cobrança GitHub (run 38981348548)."
+        "label": "Baseline determinístico da solução em Release: 4.898 aprovados, 61 ignorados, 0 falhas (4.959 total; exclui Integration/live externos). Rechecagem 17/10 06:04: NebulaPython 584/584; Implementations 1.458 aprovados, 62 ignorados, 0 falhas; startup C# 10/10 e Python focado 103/103. Stage isolado reconstruído e passou validate-stage contra publish; script staged igual à fonte (SHA-256 EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79). Instalador foi pulado; web/tray preservados do stage-base. Runtime continua 12.1.21 com downloader antigo; nenhum worker, install, restart ou mídia. Primeiro download e correção em produção pendentes. A homologação formal permanece pendente; CI remoto segue bloqueado por cobrança GitHub (run 38981348548)."
       }
     },
     {
@@ -5587,19 +5587,19 @@
       "evidence": "Testes focados NebulaQueueConcurrencyMongoTests + SupabaseHttpHelpers_PropagateCallerCancellation: 21/21 aprovados, 0 falhas, contra Mongo descartável limitado a 127.0.0.1:27099; suíte Jellyfin.Server.Implementations.Tests: 1.481 aprovados, 39 ignorados, 0 falhas (1.520 total). Mongo temporário encerrado e porta 27099 fechada; Mongo de produção 127.0.0.1:27017 não foi tocado. Nenhum backup Supabase remoto, transferência Telegram, worker, configuração, instalação ou restart foi executado. Arquivos temporários ficaram em %TEMP%\\mfx-nebula-mongo-tests-20261017 porque a política local bloqueou remoção recursiva. Isso valida o gate/cancelamento local, não o primeiro download nem a integração remota. T4.4 permanece in_progress; T2.1 e homologação de produção também seguem in_progress."
     },
     {
-      "id": "server-nebula-download-recheck-2026-10-17-0559",
-      "title": "Nebula: runtime antigo confirmado; testes da fonte passaram, pacote não passa integridade",
+      "id": "server-nebula-download-stage-rebuilt-2026-10-17-0604",
+      "title": "Nebula: stage isolado reconstruído e íntegro; instalação e primeiro download pendentes",
       "agent": "Codex",
       "front": "server",
       "featureIds": ["T2.1"],
       "local": "D:\\Users\\Raphael\\Documents\\Projetos\\mulletaflix",
-      "location": "MulletaFlix-master/docs/nebula-strm-download.md; NebulaFtpManager; strm_downloader.py; candidato isolado",
-      "scope": "Reverificar por que o download Nebula não inicia, comparar runtime e fonte, executar testes e preservar produção.",
+      "location": "MulletaFlix-packaging-master/build-stage-and-installer.ps1; stage isolado em .build/nebula-download-build-20261017",
+      "scope": "Reconstruir stage do servidor em destino isolado, verificar integridade e manter a produção sem alterações.",
       "status": "in_progress",
       "progressPercent": null,
-      "startedAt": "2026-10-17T05:51:00-03:00",
-      "updatedAt": "2026-10-17T05:59:00-03:00",
-      "evidence": "GET read-only /System/Info/Public: servidor 12.1.21. Downloader instalado (08/10) SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5, sem get_title_scan_roots/[STRM-WORKER-READY]. Fonte 12.1.22 e script candidato coincidem em SHA-256 EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79. Testes startup C# 10/10, Python focal 103/103, NebulaPython completo 584/584 e Implementations 1.458 aprovados/62 ignorados/0 falhas. validate-stage falha porque MulletaFlix.Server.Implementations.dll difere do publish atual; candidato não publicável. Sem worker, download, install, restart ou alteração de configuração. Correção já existe na fonte, mas não está na instância. Reconstruir pacote integral; instalação e primeiro download real pendentes. Homologação permanece in_progress."
+      "startedAt": "2026-10-17T05:59:00-03:00",
+      "updatedAt": "2026-10-17T06:04:00-03:00",
+      "evidence": "O builder publicou o servidor Release em diretório isolado e reconstruiu stage; `validate-stage.ps1` passou com `PublishDirectory`, e o teste de integridade aceitou o script igual à fonte e rejeitou cópia stale. SHA-256 do downloader fonte/stage: EC7ABF827990C3992A7E3F926D09C189161BF6DFCCA6457E8C78899081DFAD79. Testes repetidos: startup C# 10/10, NebulaPython 584/584, Implementations 1.458 aprovados/62 ignorados/0 falhas. Web/tray foram reaproveitados do stage-base; instalador foi pulado, portanto ainda não é release completa. Runtime ativo segue 12.1.21 com script antigo; nenhum worker, instalação, restart ou transferência foi realizada. Instalação e primeiro download real pendentes; homologação permanece in_progress."
     }
   ]
 }

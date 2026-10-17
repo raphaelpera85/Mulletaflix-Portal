@@ -782,15 +782,16 @@ test('portal publishes the isolated Mongo cancellation and upload-admission vali
     assert.match(event.evidence, /T4\.4 permanece in_progress/);
 });
 
-test('portal records the latest Nebula download blocker without claiming the production fix', () => {
-    const event = statusData.events.find(item => item.id === 'server-nebula-download-recheck-2026-10-17-0559');
+test('portal records the rebuilt Nebula stage without claiming production installation or download success', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-stage-rebuilt-2026-10-17-0604');
 
     assert.ok(event, 'portal should publish the latest Nebula download verification');
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
-    assert.match(event.evidence, /servidor 12\.1\.21/);
-    assert.match(event.evidence, /candidato não publicável/);
+    assert.match(event.evidence, /reconstruiu stage/i);
+    assert.match(event.evidence, /validate-stage\.ps1.*passou/);
     assert.match(event.evidence, /Implementations 1\.458 aprovados\/62 ignorados\/0 falhas/);
+    assert.match(event.evidence, /instalador foi pulado/);
     assert.match(event.evidence, /primeiro download real pendentes/);
 });
