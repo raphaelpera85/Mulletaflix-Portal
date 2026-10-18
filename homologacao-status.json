@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T14:04:00-03:00",
+  "generatedAt": "2026-10-18T14:53:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3005,18 +3005,18 @@
   "events": [
     {
       "id": "server-image-metadata-flow-audit-2026-10-18-1404",
-      "title": "Imagens de mídia: sobrescrita Primary e falha silenciosa identificadas na fonte",
+      "title": "Capas: preservação de imagem principal e falhas reportadas na fonte",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T6.1"],
-      "local": "Rastreamento estático do fluxo de metadata e persistência de imagens",
-      "location": "MetadataService.SaveRemoteResultImages → ProviderManager.SaveImage → ImageSaver",
-      "scope": "Verificar por que metadados aparecem sem posters e por que imagens podem se substituir, sem alterar itens de produção.",
+      "featureIds": ["T8.2"],
+      "local": "Correção de persistência e regressões de capas em metadata local e remoto",
+      "location": "MetadataService.RefreshWithProviders / SaveRemoteResultImages → ProviderManager.SaveImage → ImageSaver",
+      "scope": "Evitar sobrescrita de imagens singulares, registrar falhas finais e preservar fluxo de imagens múltiplas, sem alterar mídia de produção.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T14:04:00-03:00",
-      "updatedAt": "2026-10-18T14:04:00-03:00",
-      "evidence": "Na fonte, SaveRemoteResultImages seleciona todas as RemoteImages antes de gravá-las e não as limita por tipo singular. Para Primary, ImageSaver usa índice/destino 0; múltiplas capas Primary de um mesmo resultado podem sobrescrever o mesmo arquivo, e OpenLibrary possui caminhos que retornam múltiplas capas. Após retries, falha ao salvar imagem é capturada como warning sem incrementar RefreshResult.Failures, enquanto o metadata provider ainda mescla os campos textuais. Isso explica mecanismos compatíveis com capas substituídas e metadados sem imagem, mas não comprova que todas as falhas do screenshot tenham essa causa. Não havia log atual, ImageInfos/ImageTags ou resposta do endpoint dos títulos afetados. Nenhuma produção ou arquivo foi alterado. Testes específicos para duplicidade/falha de imagem, correção, validação em biblioteca isolada e smoke test visual seguem pendentes; sem release."
+      "updatedAt": "2026-10-18T14:58:00-03:00",
+      "evidence": "A fonte agora compartilha os tipos de imagem singulares já salvos durante todo o refresh (providers locais e remotos): tenta candidatos por ordem, mantém o primeiro sucesso e não permite que uma fonte posterior substitua a capa. A exceção identificada preserva a substituição explicitamente solicitada, uma vez, sem salvar outras Primary do mesmo resultado. Falhas singulares são consolidadas após os fallbacks; erros finais de I/O/download entram em RefreshResult.Failures; cancelamento é propagado e URLs potencialmente assinadas não são registradas. Testes Release: MetadataServiceTests 37/37; Jellyfin.Providers.Tests 798/798, repetidos após a última alteração e aprovados em 3m23s. Um log adicional de 18/10 (14:53) referente a A Era de Miyu - S01E06 mostra avisos Chromaprint sem pontos e falha separada do plugin Intro Skipper no passe ChangedItems (EF Core/LINQ ao avaliar ReadOnlySpan<AnalysisMode>); não contém erro de carregamento de imagem e não foi usado como validação de capas. A correção de fonte é compatível com capas ausentes/substituídas, mas ainda não comprova a causa de cada título da captura. Sem ImageInfos/ImageTags, arquivo verificado, endpoint ou renderização visual de item real em sandbox. Produção não alterada; sem release até homologação completa."
     },
     {
       "id": "server-nebula-broad-regression-2026-10-18-1404",

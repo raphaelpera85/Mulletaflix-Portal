@@ -6,17 +6,18 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
-test('image metadata audit records confirmed source risks without claiming production root cause', () => {
+test('image metadata audit records source correction without claiming production root cause', () => {
     const event = statusData.events.find(item => item.id === 'server-image-metadata-flow-audit-2026-10-18-1404');
 
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.deepEqual(event.featureIds, ['T6.1']);
-    assert.match(event.evidence, /não as limita por tipo singular/);
-    assert.match(event.evidence, /múltiplas capas Primary.*sobrescrever/);
-    assert.match(event.evidence, /warning sem incrementar RefreshResult\.Failures/);
-    assert.match(event.evidence, /não comprova que todas as falhas/);
+    assert.deepEqual(event.featureIds, ['T8.2']);
+    assert.match(event.evidence, /compartilha os tipos de imagem singulares já salvos/);
+    assert.match(event.evidence, /MetadataServiceTests 37\/37/);
+    assert.match(event.evidence, /Jellyfin\.Providers\.Tests 798\/798/);
+    assert.match(event.evidence, /uma vez, sem salvar outras Primary/);
+    assert.match(event.evidence, /não comprova a causa de cada título/);
     assert.match(event.evidence, /sem release/);
 });
 
