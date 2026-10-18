@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T09:12:00-03:00",
+  "generatedAt": "2026-10-18T09:33:02-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6694,6 +6694,21 @@
       "startedAt": "2026-10-18T08:41:00-03:00",
       "updatedAt": "2026-10-18T08:57:00-03:00",
       "evidence": "O log histórico anexado mostra que o runtime iniciado em 16/10 estava explicitamente em Somente Streaming, com feeder/fila/workers desativados; em 17/10, o modo Envio falhou ao vincular 127.0.0.1:2121 (WinError 10048), seguido de retries de mount. O recorte não contém marcadores de start/readiness/scan ou transferência do Downloader. Na fonte local, o HostedService tenta o Downloader mesmo se Envio falha; o teste focal EnvioStartupException_DoesNotPreventDownloaderFromStarting foi reexecutado e passou 1/1. Gates locais: .NET Release 5.081 aprovados/64 ignorados/0 falhas (5.145 total; Integration filtrado), NebulaPython 592/592, frontend typecheck aprovado e 418/418 testes em 75 arquivos. O workflow de release agora provisiona MongoDB 7 descartável em 127.0.0.1:27099 para executar os testes RequiresMongo antes de empacotar Linux/Windows; YAML e dependências dos jobs foram validados localmente. Os testes Mongo foram ignorados na execução local por ausência desse serviço, portanto o gate Mongo ainda aguarda execução no GitHub Actions. Portal independente passou 87/87. CI remoto, revisão instalada, download real e release não foram executados; não houve alteração de runtime/produção."
+    },
+    {
+      "id": "server-nebula-full-suite-validation-2026-10-18-0933",
+      "title": "Nebula download: suíte do servidor validada; homologação de transferência segue pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Solução .NET Release e teste de integração NartoDrama executado isoladamente",
+      "location": "Suítes automatizadas do servidor; fluxo Nebula ainda depende de validação runtime",
+      "scope": "Executar regressão ampla do servidor após as correções Nebula e registrar limites de teste sem alegar homologação produtiva.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T09:12:00-03:00",
+      "updatedAt": "2026-10-18T09:33:02-03:00",
+      "evidence": "A solução MulletaFlix.sln em Release, com filtro CI FullyQualifiedName!~Integration, terminou com exit code 0 e sem falhas nos projetos executados. Jellyfin.Server.Implementations.Tests: 1.494 aprovados, 63 ignorados, 0 falhas (1.557); testes focados Nebula startup/mount: 37/37. A execução ampla sem filtro teve uma falha não determinística no teste ao vivo NartoDrama Search_FindsTheSeriesFromAnAccentedTerm; o mesmo teste passou 1/1 isoladamente e o endpoint público respondeu HTTP 200 com resultado correspondente. A causa da intermitência não foi determinada. Testes locais não comprovam download real; a produção permanece na versão 12.1.21, divergente da fonte atual. Nenhuma instalação, reinicialização, configuração ou transferência produtiva foi executada; T2.1 e release continuam pendentes."
     }
   ]
 }

@@ -1516,6 +1516,23 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records broad server validation without claiming a production download or release', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-full-suite-validation-2026-10-18-0933');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /FullyQualifiedName!~Integration, terminou com exit code 0/);
+    assert.match(event.evidence, /1\.494 aprovados, 63 ignorados/);
+    assert.match(event.evidence, /falha não determinística no teste ao vivo NartoDrama/);
+    assert.match(event.evidence, /passou 1\/1 isoladamente/);
+    assert.match(event.evidence, /Nenhuma instalação, reinicialização, configuração ou transferência produtiva/);
+    assert.equal(server.status, 'in_progress');
+    assert.equal(statusData.coverage.pending, 65);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
