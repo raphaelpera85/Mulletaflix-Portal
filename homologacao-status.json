@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T12:15:00-03:00",
+  "generatedAt": "2026-10-18T12:20:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6924,8 +6924,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T11:53:00-03:00",
-      "updatedAt": "2026-10-18T12:15:00-03:00",
-      "evidence": "O anexo histórico (16–17/10) mostra Somente Streaming, colisão FTP 2121 e lock de mount ocupado, mas não registra chamada StartDownloader, readiness, scan, item de fila ou transferência. Inspeção read-only: worker instalado (08/10/2026; SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5) diverge da fonte (557DFF0CD6D5D1C3D1AB5806C9C86DA764690FB9378A02D17697DCBBB8942300); a versão instalada emite a mensagem legada Escaneando e priorizando arquivos .strm após refresh_cache(force=True), mas não os novos marcadores esperados pelo manager. Fonte ajustada para reconhecer ambos; incompatibilidade plausível, causalidade do caso não comprovada sem saída do clique. Regressão falhou antes e passou após o ajuste. Implementations Release: 1.498 aprovados/63 ignorados/0 falhas; NebulaPython 592/592; solução .NET sem Integration exit 0 antes do patch pontual. Integrações Mongo sem instância descartável. Rechecagem read-only: serviço MulletaFlixNginx está ativo, mas não foi encontrado serviço/processo do backend MulletaFlix/Jellyfin e a API 8096 recusa conexão. Engine Python responde em 2123/health HTTP 200, o que não comprova o Downloader. Nenhum serviço ou processo foi alterado; não foi iniciado download. Homologação e release seguem abertas até o backend voltar, a candidata ser instalada e uma transferência ser observada em escopo seguro."
+      "updatedAt": "2026-10-18T12:20:00-03:00",
+      "evidence": "O anexo histórico (16–17/10) mostra Somente Streaming, colisão FTP 2121 e lock de mount ocupado, mas não registra chamada StartDownloader, readiness, scan, item de fila ou transferência. Inspeção read-only: worker instalado (08/10/2026; SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5) diverge da fonte (557DFF0CD6D5D1C3D1AB5806C9C86DA764690FB9378A02D17697DCBBB8942300); a versão instalada emite a mensagem legada Escaneando e priorizando arquivos .strm após refresh_cache(force=True), mas não os novos marcadores esperados pelo manager. Fonte ajustada para reconhecer ambos; incompatibilidade plausível, causalidade do caso não comprovada sem saída do clique. Regressão falhou antes e passou após o ajuste. Implementations Release: 1.498 aprovados/63 ignorados/0 falhas; NebulaPython 592/592; solução .NET sem Integration exit 0 antes do patch pontual. Integrações Mongo sem instância descartável. Rechecagem read-only: API 8096 recusa conexão; serviço Windows MulletaFlixServer não existe (sc.exe query retorna erro 1060), enquanto MulletaFlixNginx está ativo. O instalador configura e inicia MulletaFlixServer via NSSM. Engine Python responde em 2123/health HTTP 200, sem comprovar Downloader. Nenhum serviço/processo foi alterado; não foi iniciado download. Homologação e release seguem abertas até restaurar o backend, instalar a candidata e observar transferência real."
     }
   ]
 }
