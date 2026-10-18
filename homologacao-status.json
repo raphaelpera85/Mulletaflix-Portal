@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T11:05:00-03:00",
+  "generatedAt": "2026-10-18T11:14:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6851,6 +6851,21 @@
       "startedAt": "2026-10-18T10:51:00-03:00",
       "updatedAt": "2026-10-18T11:05:00-03:00",
       "evidence": "O catch de startup agora rastreia a propriedade do NebulaSupabaseSyncService e só descarta o serviço quando criado pela tentativa atual. Testes focados NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests + NebulaCleanupLifecycleTests: 57/57. A suíte completa Jellyfin.Server.Implementations.Tests Release passou com 1.496 aprovados, 63 ignorados e 0 falhas. Busca de equivalentes achou dois descartes adicionais, limitados a StopEnvioAsync e descarte explícito do manager. Python Nebula 3.10: 592/592 na auditoria desta rodada. Nenhum runtime produtivo foi iniciado/parado; API 8096 segue indisponível e o PID 6080 ocupa 2121/2123. Sem prova de transição real ou download. T2.1/T4.2 e release permanecem abertos."
+    },
+    {
+      "id": "server-nebula-downloader-package-readiness-contract-2026-10-18-1114",
+      "title": "Nebula: empacotamento agora bloqueia worker STRM sem contrato de prontidão Mongo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Gate PowerShell de integridade do stage e testes C# de startup do Downloader",
+      "location": "Assert-StageIntegrity.ps1; NebulaFtpManager.StartPythonDownloaderAsync; strm_downloader.py",
+      "scope": "Impedir que um pacote de servidor combine manager que aguarda readiness Mongo com worker STRM antigo que não emite o marcador exigido.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T11:08:00-03:00",
+      "updatedAt": "2026-10-18T11:14:00-03:00",
+      "evidence": "A instalação auditada contém strm_downloader.py de 08/10 sem [STRM-WORKER-MONGO-READY] e [STRM-SCAN-STARTED], enquanto a fonte atual emite o readiness Mongo aguardado pelo manager. Isso torna incompatibilidade do runtime antigo uma causa provável para falha/timeout do Downloader, mas o log recebido não mostra chamada manual ou stdout e não prova causalidade. Assert-StageIntegrity.ps1 agora exige o marcador na fonte e mantém a comparação de hash fonte/stage. O teste PowerShell passou cobrindo artefato válido, cópia desatualizada e ausência de marcador; NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests Debug: 47/47; git diff --check sem erros. API local indisponível; sem instalação, restart, scan ou transferência real e processos/listeners preservados. T2.1 e release continuam pendentes até instalação autorizada em janela controlada e smoke test do botão, readiness, scan e transferência de um título."
     }
   ]
 }

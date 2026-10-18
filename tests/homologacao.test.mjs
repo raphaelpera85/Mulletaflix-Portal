@@ -1702,3 +1702,19 @@ test('Nebula startup rollback preserves a pre-existing Supabase sync and stays i
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('Nebula package gate requires downloader Mongo readiness without claiming production download', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-downloader-package-readiness-contract-2026-10-18-1114');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /sem \[STRM-WORKER-MONGO-READY\]/);
+    assert.match(event.evidence, /causa provável/);
+    assert.match(event.evidence, /47\/47/);
+    assert.match(event.evidence, /sem instalação, restart, scan ou transferência real/);
+    assert.match(event.evidence, /smoke test do botão/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
