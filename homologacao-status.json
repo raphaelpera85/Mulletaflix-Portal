@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T10:26:30-03:00",
+  "generatedAt": "2026-10-18T10:33:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6806,6 +6806,21 @@
       "startedAt": "2026-10-18T10:23:00-03:00",
       "updatedAt": "2026-10-18T10:26:30-03:00",
       "evidence": "Na interface autenticada, Download está Parado, botão Iniciar Downloader STRM habilitado e painel informa Aguardando início do downloader. O handler da fonte envia POST NebulaFtp/Actions/StartDownloader e o controller retorna o resultado do manager; não há evidência no log fornecido de que essa ação tenha sido chamada. GET /System/Info/Public local respondeu HTTP 200 e reportou 12.1.21, anterior à fonte candidata 12.1.24. Testes C# Release NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests: 47/47. Acionar o botão varre a raiz MonitorPaths inteira (D:\\midias); não foi iniciado para evitar carga/transferência ampla. Nenhuma alteração ou restart produtivo. O gate de transferência real, T2.1 e release seguem pendentes."
+    },
+    {
+      "id": "server-nebula-download-log-followup-2026-10-18-1033",
+      "title": "Nebula download: log confirma modo streaming e conflito de porta; teste de fonte passa",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log de 16–17/10, processo/portas, API local e testes focados do servidor",
+      "location": "NebulaFTP modo streaming/envio, portas 2121/2123 e Downloader STRM",
+      "scope": "Atualizar a homologação com nova amostra do log e estado read-only do runtime, sem interromper reprodução nem iniciar varredura ampla.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T10:27:00-03:00",
+      "updatedAt": "2026-10-18T10:33:00-03:00",
+      "evidence": "A nova leitura do log anexado confirma: em 16/10 o runtime foi iniciado em Somente Streaming, que desativa feeder, fila e workers; em 17/10 duas inicializações do modo Envio aparecem e o bind de 127.0.0.1:2121 falha com WinError 10048, seguido de retries do mount. Nenhum marcador StartDownloader, STRM-WORKER-READY, STRM-SCAN-STARTED, item enfileirado ou transferência consta no trecho. Checagem local read-only em 18/10: GET /System/Info/Public recusou conexão em 127.0.0.1:8096; Python PID 6080 mantém 2121 e 2123 em LISTEN desde 16/10, pai PID 19764 já não está presente. Isso é compatível com worker antigo/órfão, mas ele pode servir streams; não foi encerrado. C# Release (NebulaDownloaderStartupTests, NebulaHostedServiceConfigurationTests e NebulaMountRuntimeHealthTests): 54/54 aprovados. Python tests não executaram: pytest ausente no Python 3.14 disponível. Sem API disponível e sem autorização segura para parar o listener, a ação/download produtivo permanece pendente; nenhum restart ou transferência foi feito. T2.1 e gate de release permanecem abertos."
     }
   ]
 }

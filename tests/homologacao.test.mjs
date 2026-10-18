@@ -1580,6 +1580,22 @@ test('Nebula log separates the intentional streaming-only mount from transfer mo
     assert.equal(statusData.tracks.find(track => track.id === 'server').status, 'in_progress');
 });
 
+test('Nebula follow-up log records the unavailable API and preserves the live Python worker', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-log-followup-2026-10-18-1033');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /GET \/System\/Info\/Public recusou conexão em 127\.0\.0\.1:8096/);
+    assert.match(event.evidence, /Python PID 6080 mantém 2121 e 2123 em LISTEN/);
+    assert.match(event.evidence, /não foi encerrado/);
+    assert.match(event.evidence, /54\/54 aprovados/);
+    assert.match(event.evidence, /pytest ausente/);
+    assert.match(event.evidence, /nenhum restart ou transferência foi feito/);
+    assert.equal(statusData.coverage.pending, 65);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('server roadmap coverage includes the 18 October baseline resample and current Nebula incident evidence', () => {
     const resample = statusData.features.find(item => item.id === 'T0.1.4');
     const remainingBaseline = statusData.features.find(item => item.id === 'T0.1.5');
