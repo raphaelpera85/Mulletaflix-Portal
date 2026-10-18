@@ -1211,6 +1211,20 @@ test('Nebula production recheck publishes the stale runtime, port collision, and
     assert.match(dashboard.getElement('event-list').innerHTML, /produção segue 12\.1\.21; porta FTP impede validar o download/);
 });
 
+test('Nebula stream-only logs are not treated as proof that the STRM downloader started', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-streaming-vs-downloader-2026-10-18-0233');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /Modo Somente Streaming/);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /Não há \[STRM-WORKER-READY\]/);
+    assert.match(event.evidence, /causa da ausência de marcadores permanece indeterminada/);
+    assert.match(event.evidence, /smoke test de download real pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;

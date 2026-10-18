@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T02:25:00-03:00",
+  "generatedAt": "2026-10-18T02:33:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-streaming-vs-downloader-2026-10-18-0233",
+      "title": "Nebula: log confirma somente streaming; downloader STRM não comprovado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional anexado e inspeção do fluxo atual de startup",
+      "location": "main.py stream-only; NebulaHostedService; StartDownloaderAsync; strm_downloader.py",
+      "scope": "Distinguir log do servidor de streaming da execução independente do downloader STRM e manter homologação aberta.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T02:28:00-03:00",
+      "updatedAt": "2026-10-18T02:33:00-03:00",
+      "evidence": "O log registra main.py em Modo Somente Streaming, que desativa feeder/fila/workers de upload; outra tentativa de Envio falha ao vincular FTP 127.0.0.1:2121 com WinError 10048 e repete retries de mount. Não há [STRM-WORKER-READY], [STRM-SCAN-STARTED], mídia em fila ou transferência no trecho. Isso não comprova que strm_downloader.py foi chamado; causa da ausência de marcadores permanece indeterminada e pode exigir log separado/estado da ação manual. A fonte atual tenta StartDownloaderAsync mesmo após falha de Envio e tem testes focados 39/39; NebulaPython 592/592. Produção 12.1.21 não foi alterada. Release, instalação controlada e smoke test de download real pendentes."
+    },
     {
       "id": "server-nebula-download-runtime-check-2026-10-18-0225",
       "title": "Nebula: produção segue 12.1.21; porta FTP impede validar o download",
