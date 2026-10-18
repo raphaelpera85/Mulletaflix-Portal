@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T02:33:00-03:00",
+  "generatedAt": "2026-10-18T02:47:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
       },
       "testAudit": {
-        "passed": 4919,
-        "total": 4982,
-        "skipped": 63,
+        "passed": 4977,
+        "total": 5041,
+        "skipped": 64,
         "failed": 0,
         "percent": 98.7,
-        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; stage Windows completo validado. O lock global cobre o pipeline inteiro. Investigação atual reproduziu ModuleNotFoundError porque a instalação 12.1.21 não contém tools/mongo_admission.py, importado por main.py; fonte e stage incluem o módulo. Dois scripts de integridade/build passaram. NSIS está disponível, mas não foi gerado instalador: asset 12.1.22 já existe e tag v12.1.22 contém VersionPrefix 12.1.21. Nenhuma instalação/restart, worker ou download real ocorreu. GitHub CLI sem autenticação; nova versão/tag, release e homologação formal pendentes. Rechecagem de 18/10: endpoint local ainda reporta produção 12.1.21; Python Nebula 592/592 e testes C# focados de startup 39/39; WinError 10048 segue sem PID dono identificado e sem confirmação do Downloader/transferência. Homologação formal continua aberta."
+        "label": "Gate determinístico da solução .NET Release (FullyQualifiedName!~Integration): 4.977 aprovados, 64 ignorados, 0 falhas (5.041 total). NebulaPython completo: 592/592. Projetos Integration/live foram excluídos; Server Integration e IntroSkipper Integration não tiveram testes correspondentes ao filtro, portanto não são considerados aprovados. Provedores foi validado apenas com filtro; uma execução sem filtro, que inclui testes externos, foi interrompida sem resultado. Sem CI remoto, instalação, operação ou smoke test de produção nesta rodada; homologação formal continua aberta."
       }
     },
     {
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-server-suite-gate-2026-10-18-0247",
+      "title": "Servidor: gate determinístico .NET aprovado; integrações seguem pendentes",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T0.3"],
+      "local": "Execução local Release da solução .NET e suíte Nebula Python 3.10",
+      "location": "MulletaFlix.sln; testes determinísticos não-Integration; Tools/NebulaPython/tests",
+      "scope": "Publicar evidência do gate amplo local sem afirmar aprovação de integração, CI ou produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T02:39:00-03:00",
+      "updatedAt": "2026-10-18T02:47:00-03:00",
+      "evidence": "Comando: dotnet test MulletaFlix.sln --configuration Release --no-build --no-restore --filter \"FullyQualifiedName!~Integration\" --verbosity minimal; total agregado conferido por projeto: 4.977 aprovados, 64 ignorados, 0 falhas (5.041 total). NebulaPython: py -3.10 -m pytest tests -q, 592/592 aprovados. O filtro excluiu projetos/casos Integration e testes externos/live; os projetos Server Integration e IntroSkipper Integration não tiveram testes correspondentes ao filtro e não contam como aprovados. Providers passou no filtro; execução sem filtro foi interrompida durante testes externos e não tem resultado válido. Sem CI remoto, build de pacote, instalação, produção ou transferência real homologados. Nenhuma release de servidor criada; homologação formal continua aberta."
+    },
     {
       "id": "server-nebula-streaming-vs-downloader-2026-10-18-0233",
       "title": "Nebula: log confirma somente streaming; downloader STRM não comprovado",

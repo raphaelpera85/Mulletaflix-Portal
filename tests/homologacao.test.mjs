@@ -342,14 +342,11 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
-    assert.equal(audit.passed, 4919);
-    assert.equal(audit.total, 4982);
-    assert.equal(audit.skipped, 63);
+    assert.equal(audit.passed, 4977);
+    assert.equal(audit.total, 5041);
+    assert.equal(audit.skipped, 64);
     assert.equal(audit.failed, 0);
 
-    const dashboard = createDashboard();
-    await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula restrito às pastas de biblioteca configuradas/);
 });
 
 test('portal publishes Nebula package and download-start validation without claiming production success', async () => {
@@ -390,7 +387,7 @@ test('server audit publishes the complete local suite and preserves the remote C
     const suiteEvent = statusData.events.find(item => item.id === 'server-full-solution-tests-release-build-2026-10-16-2051');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /4\.919 aprovados, 63 ignorados, 0 falhas/);
+    assert.match(server.testAudit.label, /4\.977 aprovados, 64 ignorados, 0 falhas/);
     assert.match(server.testAudit.label, /[Hh]omologação formal continua aberta/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
@@ -407,6 +404,28 @@ test('server audit publishes the complete local suite and preserves the remote C
     const dashboard = createDashboard();
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /bloqueio externo do CI remoto/);
+});
+
+test('portal records the current deterministic server suite without claiming integration or production validation', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-server-suite-gate-2026-10-18-0247');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(server.testAudit.passed, 4977);
+    assert.equal(server.testAudit.total, 5041);
+    assert.equal(server.testAudit.skipped, 64);
+    assert.equal(server.testAudit.failed, 0);
+    assert.match(server.testAudit.label, /FullyQualifiedName!~Integration/);
+    assert.match(event.evidence, /NebulaPython.*592\/592/);
+    assert.match(event.evidence, /não tiveram testes correspondentes ao filtro/);
+    assert.match(event.evidence, /Nenhuma release de servidor criada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /gate determinístico \.NET aprovado/);
 });
 
 test('server dependency audit reports zero known vulnerabilities but keeps deprecated dependencies pending', () => {
@@ -584,8 +603,8 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /sem host GitHub autenticado/);
     assert.match(event.evidence, /Nenhum worker ou transferência real/);
     assert.match(event.evidence, /não ativa em produção/);
-    assert.equal(server.testAudit.passed, 4919);
-    assert.equal(server.testAudit.total, 4982);
+    assert.equal(server.testAudit.passed, 4977);
+    assert.equal(server.testAudit.total, 5041);
 
     const dashboard = createDashboard();
     await settleDashboard();
