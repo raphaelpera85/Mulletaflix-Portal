@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T21:01:00-03:00",
+  "generatedAt": "2026-10-17T21:34:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6204,7 +6204,22 @@
       "progressPercent": null,
       "startedAt": "2026-10-17T20:44:00-03:00",
       "updatedAt": "2026-10-17T21:01:00-03:00",
-      "evidence": "Log recebido registra início em Somente Streaming (fila/workers desativados) e depois WinError 10048 ao bindar FTP 127.0.0.1:2121, seguido de retries repetidos do mount; não mostra mídia iniciando download nem identifica o processo proprietário da porta. Fonte corrigida para não reutilizar worker stream-only em pedido completo, serializar starts, liberar listeners nativos, preservar o sincronizador Supabase e limpar host de lease de cache sem processo associado. Testes Release NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests: 39/39 aprovados; mount_drive_n.py pytest sob Python 3.10: 3/3. Nenhum processo/worker foi iniciado ou encerrado, sem instalação/restart ou transferência real. Publicação e smoke test controlado pendentes; produção não homologada."
+      "evidence": "Log recebido registra início em Somente Streaming, WinError 10048 ao bindar FTP 127.0.0.1:2121 e repetidas tentativas enquanto outro helper mantém o lock do mount N:. O proprietário do listener não foi identificado e o log não comprova transferência. Auditoria local: frontend web 418/418 (75 arquivos, quatro workers), Python Nebula 591/591, Jellyfin.Api.Tests 717/717, Providers 790/790, Server 73 aprovados/1 ignorado, Server Integration 3 aprovados/140 ignorados, Nebula filtrada em Implementations 677 aprovados/24 ignorados; BrandingControllerPrivacyTests 2/2 e build:check aprovados. A solução .NET irrestrita não concluiu: o testhost de Implementations foi encerrado após 465 aprovados/23 ignorados de 488 descobertos, sem falha de asserção reportada; portanto não há aprovação agregada. Nenhum processo, serviço, mount, banco, configuração ou instalação de produção foi alterado. Homologação real, transferência, CI Windows/Linux e instalação limpa seguem pendentes; release não criada."
+    },
+    {
+      "id": "server-wide-suite-audit-2026-10-17-2134",
+      "title": "Auditoria de suítes do servidor: resultados parciais e testhost .NET pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T0.3", "T2.1"],
+      "local": "Suítes locais web, Python Nebula e .NET Release; log operacional fornecido pelo operador",
+      "location": "WebVitals; suítes .NET; startup Nebula FTP 2121 e mount N:",
+      "scope": "Validar suítes locais e registrar os limites da execução .NET ampla e do log Nebula sem afirmar homologação de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T21:01:00-03:00",
+      "updatedAt": "2026-10-17T21:34:00-03:00",
+      "evidence": "Web: 418/418 em 75 arquivos com quatro workers; Python Nebula: 591/591; .NET API 717/717, Providers 790/790, Server 73 aprovados/1 ignorado, Server Integration 3 aprovados/140 ignorados, Nebula filtrada 677 aprovados/24 ignorados; build:check e branding focado 2/2 aprovados. A suíte .NET irrestrita foi anulada pelo testhost de Implementations após 465 aprovados/23 ignorados de 488 descobertos, sem falha de asserção reportada. O log mostra WinError 10048 em 127.0.0.1:2121 e outro helper segurando o lock de mount N:, mas não identifica o processo dono nem confirma transferência. Nenhum estado de produção foi alterado. Homologação, testes reais de transferência, instalação limpa e CI multiplataforma continuam pendentes; sem release nesta etapa."
     }
   ]
 }
