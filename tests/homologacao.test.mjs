@@ -888,6 +888,19 @@ test('portal records scan-only downloader readiness and keeps production validat
     assert.match(event.evidence, /Nenhum Mongo\/Telegram real, download, instalação ou restart foi testado/);
 });
 
+test('portal records the expanded STRM startup and mount retest without claiming production success', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-strm-scan-readiness-validation-2026-10-18-0910');
+
+    assert.ok(event, 'portal should publish the expanded regression retest');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /59\/59/);
+    assert.match(event.evidence, /20\/20/);
+    assert.match(event.evidence, /88\/88/);
+    assert.match(event.evidence, /release e smoke test real permanecem pendentes/);
+});
+
 test('portal records the completed isolated stage validation without claiming a release or production download', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-download-stage-lock-validation-2026-10-17-0753');
 
