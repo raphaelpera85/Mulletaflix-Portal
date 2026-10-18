@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T20:44:00-03:00",
+  "generatedAt": "2026-10-17T21:01:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6190,6 +6190,21 @@
       "startedAt": "2026-10-17T20:31:00-03:00",
       "updatedAt": "2026-10-17T20:44:00-03:00",
       "evidence": "Regressão reproduzida: com StartEnvioAsync=false, o fluxo antigo nunca chamava StartDownloaderAsync. A fonte foi alterada para tentar o Downloader independentemente; o retry automático de N: agora também é suprimido quando Envio/FTP não está ativo (nos caminhos Python e C#); mount explícito continua disponível no fluxo próprio. Testes Release NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests 35/35; suíte Jellyfin.Server.Implementations.Tests 1.473 aprovados, 63 ignorados, 0 falhas. Sem start/stop, instalação ou restart de produção. A colisão 2121 persiste e sua identidade não foi confirmada; smoke test de transferência e homologação de produção pendentes."
+    },
+    {
+      "id": "server-nebula-streaming-to-full-mode-promotion-2026-10-17-2101",
+      "title": "Nebula: promoção de Somente Streaming para modo completo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Fonte C# e testes Release; sem alteração de produção",
+      "location": "NebulaFtpManager.StartEnvioAsync; serviço FTP/HTTP; downloader STRM",
+      "scope": "Impedir que um worker iniciado para montagem em Somente Streaming seja tratado como Envio completo e habilitar a transição serializada.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T20:44:00-03:00",
+      "updatedAt": "2026-10-17T21:01:00-03:00",
+      "evidence": "Log recebido registra início em Somente Streaming (fila/workers desativados) e depois WinError 10048 ao bindar FTP 127.0.0.1:2121, seguido de retries repetidos do mount; não mostra mídia iniciando download nem identifica o processo proprietário da porta. Fonte corrigida para não reutilizar worker stream-only em pedido completo, serializar starts, liberar listeners nativos, preservar o sincronizador Supabase e limpar host de lease de cache sem processo associado. Testes Release NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests: 39/39 aprovados; mount_drive_n.py pytest sob Python 3.10: 3/3. Nenhum processo/worker foi iniciado ou encerrado, sem instalação/restart ou transferência real. Publicação e smoke test controlado pendentes; produção não homologada."
     }
   ]
 }
