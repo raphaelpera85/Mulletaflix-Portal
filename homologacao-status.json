@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T11:38:52-03:00",
+  "generatedAt": "2026-10-18T11:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3015,8 +3015,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T11:38:00-03:00",
-      "updatedAt": "2026-10-18T11:38:52-03:00",
-      "evidence": "O job agora usa Category=RequiresMongo e seleciona cinco classes/24 casos: topologia, fila, recuperação, backup de tokens e restauração. O teste de contrato local passou 1/1 e o YAML foi parseado. Os 24 testes .NET foram selecionados, mas ficaram ignorados porque não havia Mongo descartável local em 127.0.0.1:27099; não contar como integração aprovada. CI remoto, instalação, homologação formal e primeiro download real permanecem pendentes; nenhuma produção ou mídia foi alterada."
+      "updatedAt": "2026-10-18T11:42:00-03:00",
+      "evidence": "O job agora usa Category=RequiresMongo e seleciona cinco classes/24 casos: topologia, fila, recuperação, backup de tokens e restauração. O contrato Node local passou 1/1 e verifica o escopo do job, tags das cinco classes atuais e Mongo isolado; o YAML foi parseado. Timeout preventivo ampliado para 15 minutos por causa do restore frio, sem timeout anterior comprovado. Os 24 testes .NET foram selecionados, mas ficaram ignorados porque não havia Mongo descartável local em 127.0.0.1:27099; não contar como integração aprovada. CI remoto, instalação, homologação formal e primeiro download real permanecem pendentes; nenhuma produção ou mídia foi alterada."
     },
     {
       "id": "server-nebula-live-runtime-stale-2026-10-18-0912",

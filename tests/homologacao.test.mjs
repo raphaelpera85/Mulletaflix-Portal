@@ -96,6 +96,8 @@ test('publishes complete Mongo-backed CI selection without claiming integration 
     assert.deepEqual(event.featureIds, ['T0.3']);
     assert.match(event.evidence, /Category=RequiresMongo/);
     assert.match(event.evidence, /24 casos/);
+    assert.match(event.evidence, /Timeout preventivo ampliado para 15 minutos/);
+    assert.match(event.evidence, /tags das cinco classes atuais/);
     assert.match(event.evidence, /ficaram ignorados/);
     assert.match(event.evidence, /CI remoto/);
 });
