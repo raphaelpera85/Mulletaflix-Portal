@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T10:51:17-03:00",
+  "generatedAt": "2026-10-18T11:05:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6849,8 +6849,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T10:51:00-03:00",
-      "updatedAt": "2026-10-18T10:51:17-03:00",
-      "evidence": "O catch de startup agora rastreia a propriedade do NebulaSupabaseSyncService e só descarta o serviço quando criado pela tentativa atual. Testes NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests: 49/49; suíte Jellyfin.Server.Implementations.Tests: 1.498 aprovados, 63 ignorados por dependências externas, 0 falhas. Busca de equivalentes achou dois descartes adicionais, limitados a StopEnvioAsync e descarte explícito do manager. Python Nebula 3.10: 592/592 na auditoria desta rodada. Nenhum runtime produtivo foi iniciado/parado; API 8096 segue indisponível e o PID 6080 ocupa 2121/2123. Sem prova de transição real ou download. T2.1/T4.2 e release permanecem abertos."
+      "updatedAt": "2026-10-18T11:05:00-03:00",
+      "evidence": "O catch de startup agora rastreia a propriedade do NebulaSupabaseSyncService e só descarta o serviço quando criado pela tentativa atual. Testes focados NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests + NebulaCleanupLifecycleTests: 57/57. A suíte completa Jellyfin.Server.Implementations.Tests Release passou com 1.496 aprovados, 63 ignorados e 0 falhas. Busca de equivalentes achou dois descartes adicionais, limitados a StopEnvioAsync e descarte explícito do manager. Python Nebula 3.10: 592/592 na auditoria desta rodada. Nenhum runtime produtivo foi iniciado/parado; API 8096 segue indisponível e o PID 6080 ocupa 2121/2123. Sem prova de transição real ou download. T2.1/T4.2 e release permanecem abertos."
     }
   ]
 }

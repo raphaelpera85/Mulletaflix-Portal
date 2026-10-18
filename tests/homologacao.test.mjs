@@ -1695,8 +1695,8 @@ test('Nebula startup rollback preserves a pre-existing Supabase sync and stays i
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1', 'T4.2']);
-    assert.match(event.evidence, /49\/49/);
-    assert.match(event.evidence, /1\.498 aprovados, 63 ignorados(?: por dependências externas)?, 0 falhas/);
+    assert.match(event.evidence, /57\/57/);
+    assert.match(event.evidence, /suíte completa Jellyfin\.Server\.Implementations\.Tests Release passou com 1\.496 aprovados, 63 ignorados e 0 falhas/);
     assert.match(event.evidence, /Sem prova de transição real ou download/);
     assert.match(event.evidence, /release permanecem abertos/);
     assert.equal(server.status, 'in_progress');
