@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T10:44:04-03:00",
+  "generatedAt": "2026-10-18T10:51:17-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6836,6 +6836,21 @@
       "startedAt": "2026-10-18T10:36:00-03:00",
       "updatedAt": "2026-10-18T10:44:04-03:00",
       "evidence": "O log histórico confirma que em 16/10 o runtime iniciou em Somente Streaming, desativando feeder/fila/workers; em 17/10 o modo Envio falhou ao vincular 127.0.0.1:2121 (WinError 10048) e houve retries do mount. O trecho não contém chamada StartDownloader, readiness/scan STRM, item enfileirado ou transferência; não comprova falha da ação separada de download. Validação local da fonte: NebulaPython Python 3.10 592/592; testes C# NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests Release 47/47; suíte .NET Release da solução com filtro FullyQualifiedName!~Integration terminou exit 0; Jellyfin.Server.Implementations.Tests reportou 1.496 aprovados, 63 ignorados, 0 falhas. A primeira execução pytest na raiz falhou apenas na resolução de imports; repetida no diretório Tools/NebulaPython passou. Nenhum processo, serviço, configuração, mount, banco ou mídia produtiva foi alterado; não houve transferência real. Homologação operacional T2.1 e release permanecem abertas até runtime atualizado e smoke de um item com readiness, scan e transferência observados."
+    },
+    {
+      "id": "server-nebula-supabase-service-retained-on-start-failure-2026-10-18-1051",
+      "title": "Nebula preserva sincronizador Supabase em falha de startup",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "Fonte e testes C# do manager Nebula; suíte Implementations",
+      "location": "NebulaFtpManager.StartEnvioAsync rollback",
+      "scope": "Evitar que falha de promoção para Envio encerre sincronizador Supabase já ativo no runtime anterior.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T10:51:00-03:00",
+      "updatedAt": "2026-10-18T10:51:17-03:00",
+      "evidence": "O catch de startup agora rastreia a propriedade do NebulaSupabaseSyncService e só descarta o serviço quando criado pela tentativa atual. Testes NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests: 49/49; suíte Jellyfin.Server.Implementations.Tests: 1.498 aprovados, 63 ignorados por dependências externas, 0 falhas. Busca de equivalentes achou dois descartes adicionais, limitados a StopEnvioAsync e descarte explícito do manager. Python Nebula 3.10: 592/592 na auditoria desta rodada. Nenhum runtime produtivo foi iniciado/parado; API 8096 segue indisponível e o PID 6080 ocupa 2121/2123. Sem prova de transição real ou download. T2.1/T4.2 e release permanecem abertos."
     }
   ]
 }

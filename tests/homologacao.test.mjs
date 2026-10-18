@@ -1687,3 +1687,18 @@ test('Nebula log validation distinguishes source tests from production download 
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('Nebula startup rollback preserves a pre-existing Supabase sync and stays in progress', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-supabase-service-retained-on-start-failure-2026-10-18-1051');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1', 'T4.2']);
+    assert.match(event.evidence, /49\/49/);
+    assert.match(event.evidence, /1\.498 aprovados, 63 ignorados(?: por dependências externas)?, 0 falhas/);
+    assert.match(event.evidence, /Sem prova de transição real ou download/);
+    assert.match(event.evidence, /release permanecem abertos/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
