@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T04:29:00-03:00",
+  "generatedAt": "2026-10-18T04:44:21-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6453,6 +6453,21 @@
       "startedAt": "2026-10-18T04:03:00-03:00",
       "updatedAt": "2026-10-18T04:29:00-03:00",
       "evidence": "O log de 16–17/10 registra `main.py` em Somente Streaming, que desativa feeder, fila e workers de upload. Uma inicialização posterior em modo Envio falha ao vincular `127.0.0.1:2121` (WinError 10048); as tentativas seguintes encontram outro helper de montagem, e código 0 do helper antigo não comprova que N: esteja pronto. Não aparecem `[STRM-WORKER-READY]`, `[STRM-SCAN-STARTED]`, item em fila ou transferência. A fonte atual inicia o Downloader em processo separado mesmo se Envio falhar, espera readiness do processo recém-criado e distingue concorrência do mount (código 3); isso não prova que a instalação antiga esteja corrigida. Testes direcionados Release: startup/configuração/mount C# 45/45; ciclo de vida/mount Python 9/9; suíte NebulaPython completa 592/592. A solução .NET serial chegou a Providers após testes de projetos anteriores, mas ficou mais de cinco minutos sem progresso e foi cancelada sem falha de asserção observada; execução global inconclusiva, não aprovada. Nenhum serviço/processo/mount/configuração, instalação, banco, Telegram ou mídia de produção foi alterado e nenhuma transferência real foi feita. Homologação de runtime/download e release permanecem pendentes."
+    },
+    {
+      "id": "server-nebula-python-mode-promotion-fix-2026-10-18-0444",
+      "title": "Nebula: promoção Python de Somente Streaming para Envio libera FTP antes do novo worker",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional, fonte C#/Python e testes focados",
+      "location": "NebulaFtpManager.StartEnvioAsync; runtime Python; FTP 2121",
+      "scope": "Corrigir a colisão de porta ao promover o mesmo serviço de Somente Streaming para Envio completo.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T04:29:00-03:00",
+      "updatedAt": "2026-10-18T04:44:00-03:00",
+      "evidence": "Causa confirmada na fonte: a promoção só encerrava o runtime antigo para a engine C#; no caminho Python o worker stream-only permanecia ativo e o worker novo falhava ao vincular 127.0.0.1:2121 (WinError 10048). Corrigido para parar o runtime anterior antes da promoção e adicionado teste da condição de transição. C# Nebula startup/hosted/mount Release passou 49/49; Python ciclo de vida/health/mount passou 16/16; diff check aprovado. A primeira coleta Python falhou por PYTHONPATH ausente e passou na repetição correta. GET read-only confirma produção 12.1.21; listeners atuais foram preservados. Sem instalação, restart ou download real; fonte corrigida, homologação produtiva e release pendentes."
     }
   ]
 }

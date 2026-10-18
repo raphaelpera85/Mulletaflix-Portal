@@ -1340,6 +1340,20 @@ test('Nebula download startup log remains partial until runtime transfer is veri
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula Python mode promotion fix remains in progress until production transfer is verified', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-python-mode-promotion-fix-2026-10-18-0444');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /a promoção só encerrava o runtime antigo para a engine C#/);
+    assert.match(event.evidence, /C# Nebula startup\/hosted\/mount Release passou 49\/49/);
+    assert.match(event.evidence, /Python ciclo de vida\/health\/mount passou 16\/16/);
+    assert.match(event.evidence, /GET read-only confirma produção 12\.1\.21/);
+    assert.match(event.evidence, /homologação produtiva e release pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
