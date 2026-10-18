@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T03:52:00-03:00",
+  "generatedAt": "2026-10-18T04:03:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6423,6 +6423,21 @@
       "startedAt": "2026-10-18T03:40:00-03:00",
       "updatedAt": "2026-10-18T03:52:00-03:00",
       "evidence": "O log anexado, de 16–17/10, mostra uma inicialização em Somente Streaming e mount N: concluído; duas inicializações posteriores de Envio falham ao vincular `127.0.0.1:2121` com WinError 10048. O helper relata outro mount em andamento e encerra com código 0, o que não prova que a unidade ficou pronta. Não aparecem `[STRM-WORKER-READY]`, `[STRM-SCAN-STARTED]`, título em fila ou transferência. GET read-only atual `/System/Info/Public` respondeu HTTP 200 e confirmou produção 12.1.21. Na fonte atual, o Downloader é tentado independentemente do Envio, readiness exige PID do processo criado e mount é serializado. Regressões Release repetidas: `NebulaDownloaderStartupTests` + `NebulaHostedServiceConfigurationTests`, 39/39. Nenhuma configuração, processo, serviço, banco, Telegram, mídia, instalação ou download de produção foi alterado. Fonte testada não equivale a release instalada nem a download real; homologação T2.1 permanece aberta até pacote aprovado, resolução controlada do listener e transferência concluída."
+    },
+    {
+      "id": "server-nebula-autosave-download-check-2026-10-18-0403",
+      "title": "Nebula: autosave preserva Enabled; log antigo não comprova download STRM",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional anexado, regressões JavaScript/Python/C#",
+      "location": "Jellyfin.Api/Web/NebulaFTP/configPage.js; Nebula downloader startup e mount N:",
+      "scope": "Evitar que autosave altere o estado global do Nebula e registrar a limitação de evidência do runtime sem iniciar operação de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T03:52:00-03:00",
+      "updatedAt": "2026-10-18T04:03:00-03:00",
+      "evidence": "Corrigido o painel: autosaves preservam o Enabled persistido; somente salvar explicitamente usa o checkbox e passa pela confirmação. Testes: JavaScript 4/4, helper de mount Python 3.10 3/3, testes C# focados Release 39/39; node --check aprovado. A tentativa Python 3.12 foi omitida porque esse runtime não está instalado. O log do operador é de 16–17/10: modo Somente Streaming, conflito de bind FTP 127.0.0.1:2121 (WinError 10048) e retries do helper antigo; não há readiness/scan STRM, item de fila ou transferência. A fonte atual distingue concorrência de mount com código 3, mas o runtime atualmente instalado não foi comparado nesta sessão. Nenhuma configuração, serviço, processo, mídia, instalação ou download de produção foi alterado. Produção 12.1.21 não foi homologada e nenhuma release foi criada; T2.1 permanece em andamento."
     }
   ]
 }

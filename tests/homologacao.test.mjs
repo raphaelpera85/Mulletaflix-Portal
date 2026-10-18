@@ -1308,6 +1308,22 @@ test('Nebula port collision log keeps production download homologation open', ()
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula autosave correction remains partial until a real STRM download is verified', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-autosave-download-check-2026-10-18-0403');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /autosaves preservam o Enabled persistido/);
+    assert.match(event.evidence, /JavaScript 4\/4/);
+    assert.match(event.evidence, /Python 3\.10 3\/3/);
+    assert.match(event.evidence, /Release 39\/39/);
+    assert.match(event.evidence, /não há readiness\/scan STRM, item de fila ou transferência/);
+    assert.match(event.evidence, /nenhuma release foi criada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+    assert.match(event.title, /autosave preserva Enabled/);
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
