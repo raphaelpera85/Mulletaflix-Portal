@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T03:14:00-03:00",
+  "generatedAt": "2026-10-18T03:17:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2952,8 +2952,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T03:10:00-03:00",
-      "updatedAt": "2026-10-18T03:14:00-03:00",
-      "evidence": "O log operacional de 16/10 mostra main.py em modo Somente Streaming, que desativa feeder/fila/workers de upload, e falha de bind FTP 127.0.0.1:2121; não contém marcadores [STRM-WORKER-READY]/[STRM-SCAN-STARTED], item na fila ou transferência. Fonte atual chama o Downloader separadamente do Envio. API Release 718/718; NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests 39/39; test_strm_downloader.py 17/17. Runtime de produção conhecido segue 12.1.21 versus fonte 12.1.24. Sem instalação, POST manual, operação Mongo/Telegram ou download real nesta sessão; T2.1 e homologação permanecem abertos."
+      "updatedAt": "2026-10-18T03:17:00-03:00",
+      "evidence": "O log operacional de 16/10 mostra main.py em modo Somente Streaming, que desativa feeder/fila/workers de upload, e falha de bind FTP 127.0.0.1:2121; não contém marcadores [STRM-WORKER-READY]/[STRM-SCAN-STARTED], item na fila ou transferência. Fonte atual chama o Downloader separadamente do Envio. API Release 718/718; NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests 39/39; test_strm_downloader.py 17/17. Leitura somente de /System/Info/Public respondeu HTTP 200 e confirmou runtime 12.1.21 versus fonte 12.1.24. Sem instalação, POST manual, operação Mongo/Telegram ou download real nesta sessão; T2.1 e homologação permanecem abertos."
     },
     {
       "id": "server-nebula-orphaned-worker-2026-10-18-0254",
