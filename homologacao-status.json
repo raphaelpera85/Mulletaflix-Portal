@@ -6541,8 +6541,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T06:08:00-03:00",
-      "updatedAt": "2026-10-18T06:18:00-03:00",
-      "evidence": "O log não registra a chamada StartDownloader, [STRM-WORKER-READY], [STRM-SCAN-STARTED], item na fila ou transferência. Fonte atual tenta Downloader após falha do Envio e passou 51/51 testes C# Release focados e 3/3 testes Python de mount. Produção local segue em 12.1.21; processo Python antigo mantém HTTP 2123, FTP 2121 livre nesta coleta. O teste não inicia worker nem download produtivo; T2.1 permanece pendente até janela segura, instalação e smoke test de um item."
+      "updatedAt": "2026-10-18T06:32:00-03:00",
+      "evidence": "O anexo é o mesmo log histórico de 17/10 (54.444 bytes, 516 linhas; timestamp 19:52:55), sem execução nova. Repete modo Somente Streaming, conflito de bind FTP 127.0.0.1:2121 (WinError 10048) e retries de mount; não contém StartDownloader, readiness/scan STRM, item em fila nem transferência. Build Release de Jellyfin.Server.Implementations.Tests aprovado com 0 avisos/erros; regressões focadas C# passaram 51/51 (startup 27/27; hosted service + mount 24/24), Python 3.10 mount 3/3 e git diff --check sem erros. Primeiro comando .NET agrupado foi interrompido sem progresso observável; repetição granular aprovada. Estado produtivo não foi reconsultado nesta rodada; última observação em 06:18 era 12.1.21. Nenhum serviço, processo, configuração, mount, instalação ou mídia de produção foi alterado; não houve download real ou release. T2.1 segue pendente até janela segura, instalação e smoke test de um item."
     }
   ]
 }
