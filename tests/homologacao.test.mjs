@@ -1462,7 +1462,11 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.match(event.evidence, /Somente Streaming/);
     assert.match(event.evidence, /WinError 10048/);
     assert.match(event.evidence, /não contém marcadores de start\/readiness\/scan ou transferência/);
-    assert.match(event.evidence, /teste de regressão focal passou 1\/1/);
+    assert.match(event.evidence, /teste focal EnvioStartupException_DoesNotPreventDownloaderFromStarting foi reexecutado e passou 1\/1/);
+    assert.match(event.evidence, /MongoDB 7 descartável em 127\.0\.0\.1:27099/);
+    assert.match(event.evidence, /testes Mongo foram ignorados na execução local/);
+    assert.match(event.evidence, /EnvioStartupException_DoesNotPreventDownloaderFromStarting foi reexecutado e passou 1\/1/);
+    assert.match(event.evidence, /Portal independente passou 87\/87/);
     assert.match(event.evidence, /CI remoto, revisão instalada, download real e release não foram executados/);
     assert.equal(server.testAudit.passed, 5081);
     assert.equal(server.testAudit.total, 5145);

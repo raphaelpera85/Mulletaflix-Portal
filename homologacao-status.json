@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T08:41:00-03:00",
+  "generatedAt": "2026-10-18T08:57:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6647,8 +6647,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T08:41:00-03:00",
-      "updatedAt": "2026-10-18T08:41:00-03:00",
-      "evidence": "O log histórico anexado mostra que o runtime iniciado em 16/10 estava explicitamente em Somente Streaming, com feeder/fila/workers desativados; em 17/10, o modo Envio falhou ao vincular 127.0.0.1:2121 (WinError 10048), seguido de retries de mount. O recorte não contém marcadores de start/readiness/scan ou transferência do Downloader. Na fonte local, o HostedService tenta o Downloader mesmo se Envio falha; teste de regressão focal passou 1/1. Gates locais: .NET Release 5.081 aprovados/64 ignorados/0 falhas (5.145 total; Integration filtrado), NebulaPython 592/592, frontend typecheck aprovado e 418/418 testes em 75 arquivos. O workflow raiz release.yml agora exige .NET, Python e frontend antes do pacote Linux/Windows; YAML e cadeia de dependências validados localmente. CI remoto, revisão instalada, download real e release não foram executados; não houve alteração de runtime/produção."
+      "updatedAt": "2026-10-18T08:57:00-03:00",
+      "evidence": "O log histórico anexado mostra que o runtime iniciado em 16/10 estava explicitamente em Somente Streaming, com feeder/fila/workers desativados; em 17/10, o modo Envio falhou ao vincular 127.0.0.1:2121 (WinError 10048), seguido de retries de mount. O recorte não contém marcadores de start/readiness/scan ou transferência do Downloader. Na fonte local, o HostedService tenta o Downloader mesmo se Envio falha; o teste focal EnvioStartupException_DoesNotPreventDownloaderFromStarting foi reexecutado e passou 1/1. Gates locais: .NET Release 5.081 aprovados/64 ignorados/0 falhas (5.145 total; Integration filtrado), NebulaPython 592/592, frontend typecheck aprovado e 418/418 testes em 75 arquivos. O workflow de release agora provisiona MongoDB 7 descartável em 127.0.0.1:27099 para executar os testes RequiresMongo antes de empacotar Linux/Windows; YAML e dependências dos jobs foram validados localmente. Os testes Mongo foram ignorados na execução local por ausência desse serviço, portanto o gate Mongo ainda aguarda execução no GitHub Actions. Portal independente passou 87/87. CI remoto, revisão instalada, download real e release não foram executados; não houve alteração de runtime/produção."
     }
   ]
 }
