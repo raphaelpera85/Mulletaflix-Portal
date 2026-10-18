@@ -6880,7 +6880,7 @@
       "progressPercent": null,
       "startedAt": "2026-10-18T11:14:00-03:00",
       "updatedAt": "2026-10-18T11:26:00-03:00",
-      "evidence": "Testes locais: Jellyfin.Server.Implementations.Tests Release 1.498 aprovados, 63 ignorados, 0 falhas (1.561); Jellyfin.Api.Tests 730/730; Jellyfin.Providers.Tests 790/790; NebulaPython 592/592; Assert-StageIntegrity.Tests.ps1 aprovado. A suíte do portal será reexecutada após esta publicação. Testes ignorados não contam como aprovação; Mongo descartável em 127.0.0.1:27099 indisponível. Nenhum Mongo/Supabase de produção, worker, upload/download, instalação ou restart foi usado. API local 8096 indisponível na última verificação; listeners preexistentes foram preservados. Log histórico não prova readiness, scan ou transferência. CI remoto, integração Mongo/Supabase isolada e smoke test controlado ainda pendentes; homologação e release do servidor permanecem em andamento."
+      "evidence": "Testes locais: Jellyfin.Server.Implementations.Tests Release 1.498 aprovados, 63 ignorados, 0 falhas (1.561); Jellyfin.Api.Tests 730/730; Jellyfin.Providers.Tests 790/790; NebulaPython 592/592; Assert-StageIntegrity.Tests.ps1 aprovado; portal 102/102. Testes ignorados não contam como aprovação; Mongo descartável em 127.0.0.1:27099 indisponível. Nenhum Mongo/Supabase de produção, worker, upload/download, instalação ou restart foi usado. API local 8096 indisponível na última verificação; listeners preexistentes foram preservados. Log histórico não prova readiness, scan ou transferência. CI remoto, integração Mongo/Supabase isolada e smoke test controlado ainda pendentes; homologação e release do servidor permanecem em andamento."
     }
   ]
 }
