@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T03:17:00-03:00",
+  "generatedAt": "2026-10-18T03:23:03-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
   },
   "coverage": {
-    "completed": 320,
-    "pending": 68,
-    "total": 389,
+    "completed": 326,
+    "pending": 62,
+    "total": 395,
     "definition": "Checklists de funcionalidades do roadmap (cada checkbox conta como um item); tarefas com evento ativo identificado aparecem como em execução.",
-    "inProgress": 2
+    "inProgress": 7
   },
   "tracks": [
     {
@@ -219,7 +219,7 @@
       "id": "T0.1",
       "name": "Definir baseline de produção",
       "area": "Servidor",
-      "status": "pending",
+      "status": "in_progress",
       "source": "roadmap"
     },
     {
@@ -231,6 +231,20 @@
     },
     {
       "id": "T0.1.2",
+      "name": "Repetir a amostra em 08/10 após a instalação de `12.1.16`, com 20 GETs sequenciais por endpoint; sem concorrência, autenticação ou chamadas mutáveis",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T0.1.3",
+      "name": "Atualização read-only em 17/10/2026 no servidor Windows 12.1.21: `/System/Info/Public` respondeu 20/20 HTTP 200; uma bateria sequencial teve latência do cliente p50 4,52 ms, p95…",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T0.1.4",
       "name": "Repetir sob carga representativa e incluir métricas autenticadas de duração/volume Nebula, footprint dos dados, Linux e amostra temporal suficiente",
       "area": "Servidor",
       "status": "pending",
@@ -273,48 +287,62 @@
     },
     {
       "id": "T0.3.4",
-      "name": "Corrigir a validação condicional do keystore no workflow: steps passam a consultar flag de ambiente, sem referenciar `secrets` diretamente em `if`",
+      "name": "Cobrir falha do subprocesso feeder durante shutdown: o runner HTTP do control plane é fechado mesmo com erro, e `main.py` registra o tipo da falha sem interromper a limpeza da f…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T0.3.5",
-      "name": "Criar recuperação integrada de metadados persistidos no Mongo com falha/retorno de fetch simulado, cache em disco e Mongo descartável provisionado por workflow",
+      "name": "Corrigir a validação condicional do keystore no workflow: steps passam a consultar flag de ambiente, sem referenciar `secrets` diretamente em `if`",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T0.3.6",
-      "name": "Executar localmente o cenário Mongo integrado em serviço descartável, incluindo recuperação após falha e reutilização do cache em disco; ver evidências de 04/10/2026 no Registro…",
+      "name": "Criar recuperação integrada de metadados persistidos no Mongo com falha/retorno de fetch simulado, cache em disco e Mongo descartável provisionado por workflow",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T0.3.7",
-      "name": "Serializar na suíte Providers as classes de teste que compartilham `Video.RecordingsManager`: as regressões que restauram estado estático global não podem executar em paralelo c…",
+      "name": "Executar localmente o cenário Mongo integrado em serviço descartável, incluindo recuperação após falha e reutilização do cache em disco; ver evidências de 04/10/2026 no Registro…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T0.3.8",
-      "name": "Declarar dependências de teste do Nebula Python (`pytest`, `pytest-asyncio`, `pytest-cov`), adicionar matriz Python Linux/Windows ao CI e cobrir permissões FTP legadas, seguranç…",
+      "name": "Cobrir geração STRM com falha parcial de escrita entre destinos e cancelamento: a geração tenta os demais destinos, retorna erro explícito em vez de sucesso falso e propaga `Ope…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T0.3.9",
-      "name": "Aguardar execução remota do job Python e ampliar cenários de negócio/erro em `feed_ftp`, `strm_downloader`, `supabase_sync`, `main.py`, `control_plane.py`, FTP e Mongo; suíte lo…",
+      "name": "Serializar na suíte Providers as classes de teste que compartilham `Video.RecordingsManager`: as regressões que restauram estado estático global não podem executar em paralelo c…",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T0.3.10",
+      "name": "Declarar dependências de teste do Nebula Python (`pytest`, `pytest-asyncio`, `pytest-cov`), adicionar matriz Python Linux/Windows ao CI e cobrir permissões FTP legadas, seguranç…",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T0.3.11",
+      "name": "Reexecutar a matriz CI remota após liberação da conta GitHub e ampliar cenários de negócio/erro em `feed_ftp`, `strm_downloader`, `supabase_sync`, `main.py`, `control_plane.py`,…",
       "area": "Servidor",
       "status": "pending",
       "source": "roadmap"
     },
     {
-      "id": "T0.3.10",
+      "id": "T0.3.12",
       "name": "Confirmar execução remota dos jobs representativos Windows/Linux e do job Mongo Linux; exige CI acionado por push, ainda não autorizado",
       "area": "Servidor",
       "status": "pending",
@@ -1066,7 +1094,7 @@
       "id": "T4.2",
       "name": "Garantir consistência do backup",
       "area": "Servidor",
-      "status": "pending",
+      "status": "in_progress",
       "source": "roadmap"
     },
     {
@@ -1241,7 +1269,7 @@
       "id": "T4.4",
       "name": "Expor status acionável no painel",
       "area": "Servidor",
-      "status": "pending",
+      "status": "in_progress",
       "source": "roadmap"
     },
     {
@@ -1640,7 +1668,7 @@
       "id": "T6.2",
       "name": "Aplicar rate limits e limites concorrentes seletivos",
       "area": "Servidor",
-      "status": "pending",
+      "status": "in_progress",
       "source": "roadmap"
     },
     {
@@ -1841,27 +1869,34 @@
     },
     {
       "id": "T6.2.29",
+      "name": "`POST /Library/Refresh` agora usa cota administrativa e admissão concorrente exclusiva (uma varredura global por vez), respondendo `429` com `Retry-After: 1` se outra varredura…",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T6.2.30",
       "name": "T6.2 ainda requer auditoria dos outros trabalhos assíncronos e operações caras, medição/calibração sob carga representativa e validação do collector remoto de produção",
       "area": "Servidor",
       "status": "pending",
       "source": "roadmap"
     },
     {
-      "id": "T6.2.30",
+      "id": "T6.2.31",
       "name": "Refresh de cache rclone após uploads agora usa um despachante único sequencial. A fila preserva uma invalidação por pasta, renova o debounce em uploads repetidos e aguarda o can…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
-      "id": "T6.2.31",
+      "id": "T6.2.32",
       "name": "A tela legada de NebulaFTP consulta `UploadQueueSummary` a cada 30 s e diferencia o total pendente persistido no MongoDB dos itens carregados no limite em memória. O limite de a…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
-      "id": "T6.2.32",
+      "id": "T6.2.33",
       "name": "Pendente: medir por usuário/worker sem dados sensíveis, calibrar janelas e capacidades com carga real, adicionar telemetria às demais operações e continuar a auditoria de trabal…",
       "area": "Servidor",
       "status": "pending",
@@ -1871,67 +1906,74 @@
       "id": "T6.3",
       "name": "Validar entrada e caminhos de arquivo",
       "area": "Servidor",
-      "status": "pending",
+      "status": "in_progress",
       "source": "roadmap"
     },
     {
       "id": "T6.3.1",
-      "name": "`LibraryStructureController.RenameVirtualFolder` agora canonicaliza os caminhos derivados dos nomes de biblioteca e rejeita com `400 Bad Request` nomes que escapem de `DefaultUs…",
+      "name": "17/10/2026 — Os três validadores de caminho Nebula (`NebulaDownloaderEngine`, `NebulaMongoContext` e `NebulaMetadataExportService`) foram unificados em `NebulaPathSafety`: conte…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T6.3.2",
-      "name": "Complemento: `IsPathWithinRoot` agora compara o caminho relativo canonicalizado e examina os componentes existentes abaixo da raiz, recusando `ReparsePoint` (symlink/junction) a…",
+      "name": "`LibraryStructureController.RenameVirtualFolder` agora canonicaliza os caminhos derivados dos nomes de biblioteca e rejeita com `400 Bad Request` nomes que escapem de `DefaultUs…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T6.3.3",
-      "name": "Raiz e ancestrais também protegidos contra symlink/junction:",
+      "name": "Complemento: `IsPathWithinRoot` agora compara o caminho relativo canonicalizado e examina os componentes existentes abaixo da raiz, recusando `ReparsePoint` (symlink/junction) a…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T6.3.4",
-      "name": "`BackupController` agora restringe manifest, validação e restauração a arquivos regulares dentro de `BackupPath`: continua usando apenas o nome do arquivo, canonicaliza a raiz e…",
+      "name": "Raiz e ancestrais também protegidos contra symlink/junction:",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T6.3.5",
-      "name": "Auditoria dos endpoints que aceitam caminhos físicos concluída",
+      "name": "`BackupController` agora restringe manifest, validação e restauração a arquivos regulares dentro de `BackupPath`: continua usando apenas o nome do arquivo, canonicaliza a raiz e…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T6.3.6",
-      "name": "Contrato travado por teste (`FirstTimeSetupPolicyTests`, 4 casos): usuário comum é **recusado** após o setup, administrador é aceito, principal anônimo é recusado, e a janela de…",
+      "name": "Auditoria dos endpoints que aceitam caminhos físicos concluída",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T6.3.7",
-      "name": "Upload da imagem de abertura não altera mais a configuração antes de terminar a cópia: usa caminho novo não publicado, limite de 20 MiB decodificados/28 MiB no corpo codificado,…",
+      "name": "Contrato travado por teste (`FirstTimeSetupPolicyTests`, 4 casos): usuário comum é **recusado** após o setup, administrador é aceito, principal anônimo é recusado, e a janela de…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T6.3.8",
-      "name": "Desativar a imagem de abertura não exclui mais um arquivo escolhido pelo operador: o endpoint limpa o caminho por atualização atômica e apaga somente arquivo cujo nome gerenciad…",
+      "name": "Upload da imagem de abertura não altera mais a configuração antes de terminar a cópia: usa caminho novo não publicado, limite de 20 MiB decodificados/28 MiB no corpo codificado,…",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
     },
     {
       "id": "T6.3.9",
+      "name": "Desativar a imagem de abertura não exclui mais um arquivo escolhido pelo operador: o endpoint limpa o caminho por atualização atômica e apaga somente arquivo cujo nome gerenciad…",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T6.3.10",
       "name": "Pendente: auditoria de extensões/tipos de arquivo aceitos em upload permanece aberta; exige definir a lista permitida com o operador em vez de inferir do código atual",
       "area": "Servidor",
       "status": "pending",
@@ -1941,7 +1983,7 @@
       "id": "T6.4",
       "name": "Revisar segredos, logs e transporte",
       "area": "Servidor",
-      "status": "pending",
+      "status": "in_progress",
       "source": "roadmap"
     },
     {
@@ -2945,22 +2987,26 @@
       "title": "Nebula Downloader: log não comprova chamada do worker STRM; testes da fonte aprovados",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Análise do log anexado e testes locais Release",
       "location": "NebulaHostedService; NebulaFtpManager; strm_downloader.py",
       "scope": "Distinguir o processo de streaming do Downloader STRM e revalidar o caminho de inicialização no código-fonte.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T03:10:00-03:00",
-      "updatedAt": "2026-10-18T03:17:00-03:00",
-      "evidence": "O log operacional de 16/10 mostra main.py em modo Somente Streaming, que desativa feeder/fila/workers de upload, e falha de bind FTP 127.0.0.1:2121; não contém marcadores [STRM-WORKER-READY]/[STRM-SCAN-STARTED], item na fila ou transferência. Fonte atual chama o Downloader separadamente do Envio. API Release 718/718; NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests 39/39; test_strm_downloader.py 17/17. Leitura somente de /System/Info/Public respondeu HTTP 200 e confirmou runtime 12.1.21 versus fonte 12.1.24. Sem instalação, POST manual, operação Mongo/Telegram ou download real nesta sessão; T2.1 e homologação permanecem abertos."
+      "updatedAt": "2026-10-18T03:22:00-03:00",
+      "evidence": "O log de 16–17/10 mostra main.py em Somente Streaming e falha de bind FTP 127.0.0.1:2121, sem readiness/scan STRM, fila ou transferência. Rechecagem read-only: /System/Info/Public HTTP 200, servidor 12.1.21; python.exe PID 6080, iniciado em 16/10 21:16, escuta FTP 2121 e HTTP 2123; PID pai 19764 ausente. Processo preservado para não interromper streams. Fonte 12.1.24 tenta StartDownloaderAsync independentemente do Envio. Testes nesta sessão: startup C# 39/39 e Python 3.10 17/17. Nenhum POST, instalação/restart, acesso Mongo/Telegram ou download real; T2.1 e homologação permanecem abertos."
     },
     {
       "id": "server-nebula-orphaned-worker-2026-10-18-0254",
       "title": "Nebula: worker Python órfão ocupa FTP/HTTP; produção segue 12.1.21",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Consulta somente leitura a endpoints locais e sockets em escuta",
       "location": "Nebula Python; FTP 2121; HTTP stream 2123; /health; /System/Info/Public",
       "scope": "Confirmar estado/runtime que impede novo bind FTP sem encerrar processos nem interromper reprodução.",
@@ -2975,7 +3021,9 @@
       "title": "Servidor: gate determinístico .NET aprovado; integrações seguem pendentes",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.3"],
+      "featureIds": [
+        "T0.3"
+      ],
       "local": "Execução local Release da solução .NET e suíte Nebula Python 3.10",
       "location": "MulletaFlix.sln; testes determinísticos não-Integration; Tools/NebulaPython/tests",
       "scope": "Publicar evidência do gate amplo local sem afirmar aprovação de integração, CI ou produção.",
@@ -2990,7 +3038,9 @@
       "title": "Nebula: log confirma somente streaming; downloader STRM não comprovado",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Log operacional anexado e inspeção do fluxo atual de startup",
       "location": "main.py stream-only; NebulaHostedService; StartDownloaderAsync; strm_downloader.py",
       "scope": "Distinguir log do servidor de streaming da execução independente do downloader STRM e manter homologação aberta.",
@@ -3005,7 +3055,9 @@
       "title": "Nebula: produção segue 12.1.21; porta FTP impede validar o download",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Log operacional anexado, endpoint local somente leitura e testes focados da fonte",
       "location": "NebulaHostedService; NebulaFtpManager; FTP 2121; readiness HTTP 2123",
       "scope": "Revalidar a colisão FTP/readiness, confirmar versão executada e ampliar cobertura do comportamento de falha sem tocar na produção.",
@@ -3020,7 +3072,9 @@
       "title": "Nebula: helper distingue unidade pronta de montagem concorrente",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Log operacional fornecido e testes locais Python/.NET",
       "location": "NebulaFtpManager.MountDriveNAsync; mount_drive_n.py; rclone N:",
       "scope": "Corrigir a interpretação do resultado de helpers de montagem concorrentes e testar sem tocar processos produtivos.",
@@ -3035,7 +3089,9 @@
       "title": "Nebula: conflito entre worker streaming e modo Envio bloqueia inicialização",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Log fornecido e testes do checkout",
       "location": "NebulaHostedService; NebulaFtpManager; worker Python; mount N:",
       "scope": "Investigar o download que não inicia após alternar do modo Somente Streaming para Envio e registrar o estado de homologação.",
@@ -3050,7 +3106,9 @@
       "title": "Nebula: downloader de produção ainda usa runtime antigo",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "API local e testes do checkout",
       "location": "NebulaFtpManager; Tools/NebulaPython/tools/strm_downloader.py; testes do servidor",
       "scope": "Revalidar o fluxo de início do download e registrar a diferença entre a fonte corrigida e o runtime ativo.",
@@ -6105,7 +6163,9 @@
       "title": "Nebula 12.1.24: wheel Linux CPython 3.12 corrigido; CI bloqueada",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "checkout local e portal público",
       "location": "MulletaFlix-master/Tools/NebulaPython/requirements.txt; workflow de release; testes e homologação",
       "scope": "Validar o requisito Python do pacote Linux e atualizar a evidência pública; não instalar nem iniciar worker em produção.",
@@ -6120,7 +6180,9 @@
       "title": "Downloader Nebula: produção ainda usa runtime anterior à correção",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "API local e validação de fonte",
       "location": "NebulaFtpManager; Tools/NebulaPython/tools/strm_downloader.py; testes do servidor",
       "scope": "Comparar runtime instalado com fonte corrigida e revalidar testes; sem iniciar worker, alterar configuração ou reiniciar produção.",
@@ -6166,7 +6228,9 @@
       "title": "Nebula: release 12.1.24 validada localmente, mas produção permanece em 12.1.21",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "API local, testes Release e artefatos candidatos",
       "location": "Nebula Downloader STRM; pacote Windows/Linux; publicação e homologação",
       "scope": "Revalidar a correção de início do downloader e separar evidência de fonte de estado real de produção.",
@@ -6181,7 +6245,9 @@
       "title": "Nebula STRM: teste agora rejeita pacote sem gerador Python",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.3"],
+      "featureIds": [
+        "T0.3"
+      ],
       "local": "Testes de packaging e control plane Python; stage Windows candidato",
       "location": "Tools/NebulaPython/generate_strm.py; Assert-StageIntegrity; builder Windows",
       "scope": "Fechar a lacuna de regressão do módulo STRM obrigatório no pacote e revisar a evidência histórica sem alegar homologação de produção.",
@@ -6196,7 +6262,9 @@
       "title": "Nebula: worker inicia, mas runtime antigo demora na varredura",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Painel de produção, hashes dos workers e testes locais",
       "location": "Nebula Downloader STRM; Tools/NebulaPython/tools/strm_downloader.py",
       "scope": "Investigar o sintoma de download sem início; distinguir falha do comando de inicialização de varredura longa no runtime instalado.",
@@ -6211,7 +6279,9 @@
       "title": "Nebula: nenhum worker de download ativo e log sem atualização recente",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "API local e snapshot de processos; verificação read-only",
       "location": "MulletaFlix.exe; Nebula downloader; nebula.log",
       "scope": "Revalidar o estado do downloader ativo e do log sem iniciar worker, transferência, instalação ou restart.",
@@ -6226,7 +6296,9 @@
       "title": "Nebula: causa de download parado confirmada como runtime anterior",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Painel autenticado, API pública local, hashes e testes da fonte",
       "location": "Nebula Downloader STRM; runtime 12.1.21 e fonte 12.1.24",
       "scope": "Distinguir falha de inicialização de atraso de varredura e registrar os gates para colocar a correção em produção.",
@@ -6235,13 +6307,15 @@
       "startedAt": "2026-10-17T19:35:00-03:00",
       "updatedAt": "2026-10-17T19:43:00-03:00",
       "evidence": "Painel autenticado mostra produção 12.1.21, Downloader parado, raiz D:\\midias e dois diretórios Stage disponíveis. Logs visíveis mostram inícios antigos que entraram na varredura global sem progresso de título ou transferência aparente antes do encerramento. O runtime instalado strm_downloader.py tem SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5; a fonte 12.1.24 tem 2A671AFCA11BF06B48AAAEAA0DA49032F0A7FAD96F4963F6FEFEBD08B0B9CDBA e inclui handshake e varredura incremental por título. Testes da fonte: NebulaPython 587/587 e NebulaDownloaderStartupTests Release 11/11. Log adicional de 17/10: o worker posterior falha ao abrir FTP 127.0.0.1:2121 com WinError 10048; o log registra retries repetidos de mount e saída prematura de rclone, sem comprovar início de download. A fonte atual valida PID de /health; o runtime de produção permanece anterior. Release pública v12.1.21. GitHub Actions run 39037932557 terminou com falha, sem runner atribuído ou etapas executadas; o motivo de cobrança não foi confirmado nesta consulta. `gh auth status` sem sessão. Nesta rechecagem foram executados NebulaDownloaderStartupTests Release 15/15 e testes Python de health/lifecycle 12/12; não houve start de worker, transferência, instalação, alteração de configuração ou restart. Produção não corrigida/homologada; publicação e instalação 12.1.24 com smoke test controlado permanecem pendentes."
-    }
-    ,{
+    },
+    {
       "id": "server-nebula-download-port-collision-log-2026-10-17-2003",
       "title": "Nebula: WinError 10048 e retries de mount confirmados no log",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Log de execução fornecido pelo operador e testes locais do gate de readiness",
       "location": "NebulaFTP :2121; stream HTTP :2123; montagem rclone N:",
       "scope": "Correlacionar falha de início do download com colisão de porta e retries de montagem; manter homologação de produção aberta.",
@@ -6256,7 +6330,9 @@
       "title": "Nebula: Downloader agora é tentado mesmo se o Envio falhar",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Fonte C# e testes Release; sem alteração do runtime de produção",
       "location": "NebulaHostedService.StartComponentsAsync; Downloader STRM; FTP 2121",
       "scope": "Corrigir o retorno antecipado que impedia a tentativa de Downloader após falha de bind do serviço Envio.",
@@ -6271,7 +6347,9 @@
       "title": "Nebula: promoção de Somente Streaming para modo completo",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Fonte C# e testes Release; sem alteração de produção",
       "location": "NebulaFtpManager.StartEnvioAsync; serviço FTP/HTTP; downloader STRM",
       "scope": "Impedir que um worker iniciado para montagem em Somente Streaming seja tratado como Envio completo e habilitar a transição serializada.",
@@ -6286,7 +6364,10 @@
       "title": "Suíte isolada aprovada; execução serial global travou em Providers",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T0.3", "T2.1"],
+      "featureIds": [
+        "T0.3",
+        "T2.1"
+      ],
       "local": "Suítes locais web, Python Nebula e .NET Release; log operacional fornecido pelo operador",
       "location": "WebVitals; suítes .NET; startup Nebula FTP 2121 e mount N:",
       "scope": "Validar suítes locais e registrar os limites da execução .NET ampla e do log Nebula sem afirmar homologação de produção.",
@@ -6301,7 +6382,9 @@
       "title": "Nebula: log mostra Somente Streaming e colisão; Downloader sem confirmação",
       "agent": "Codex",
       "front": "server",
-      "featureIds": ["T2.1"],
+      "featureIds": [
+        "T2.1"
+      ],
       "local": "Log operacional fornecido pelo operador e testes focados da fonte",
       "location": "NebulaHostedService.StartComponentsAsync; StartDownloaderAsync; FTP 2121; mount N:",
       "scope": "Distinguir o modo streaming da fila de download e validar o comportamento independente de startup sem tocar produção.",
