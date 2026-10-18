@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T12:20:00-03:00",
+  "generatedAt": "2026-10-18T13:06:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6924,8 +6924,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T11:53:00-03:00",
-      "updatedAt": "2026-10-18T12:20:00-03:00",
-      "evidence": "O anexo histórico (16–17/10) mostra Somente Streaming, colisão FTP 2121 e lock de mount ocupado, mas não registra chamada StartDownloader, readiness, scan, item de fila ou transferência. Inspeção read-only: worker instalado (08/10/2026; SHA-256 3D41354345B79EAB19CB7A1FE0C01A02D0579130F18301D156CAF1C3221664C5) diverge da fonte (557DFF0CD6D5D1C3D1AB5806C9C86DA764690FB9378A02D17697DCBBB8942300); a versão instalada emite a mensagem legada Escaneando e priorizando arquivos .strm após refresh_cache(force=True), mas não os novos marcadores esperados pelo manager. Fonte ajustada para reconhecer ambos; incompatibilidade plausível, causalidade do caso não comprovada sem saída do clique. Regressão falhou antes e passou após o ajuste. Implementations Release: 1.498 aprovados/63 ignorados/0 falhas; NebulaPython 592/592; solução .NET sem Integration exit 0 antes do patch pontual. Integrações Mongo sem instância descartável. Rechecagem read-only: API 8096 recusa conexão; serviço Windows MulletaFlixServer não existe (sc.exe query retorna erro 1060), enquanto MulletaFlixNginx está ativo. O instalador configura e inicia MulletaFlixServer via NSSM. Engine Python responde em 2123/health HTTP 200, sem comprovar Downloader. Nenhum serviço/processo foi alterado; não foi iniciado download. Homologação e release seguem abertas até restaurar o backend, instalar a candidata e observar transferência real."
+      "updatedAt": "2026-10-18T13:06:00-03:00",
+      "evidence": "O anexo histórico (16–17/10) mostra Somente Streaming, colisão FTP 2121 e lock de mount ocupado, mas não registra chamada StartDownloader, readiness, scan, item de fila ou transferência. Revalidação em 18/10 13:06: anexo idêntico ao log de 17/10 (54.444 bytes, 516 linhas, SHA-256 68137C7A9B1846B15486441DC8435AF944874B4FEDB13DAD4EABFEDDD1188079), sem nova evidência de execução. Testes focados da fonte: C# NebulaMountRuntimeHealthTests + NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests Release 54/54; Python 3.10 test_mount_drive_n.py 3/3. Python 3.14 não tinha pytest; essa tentativa não executou testes. Snapshot read-only: MulletaFlixServer ausente, MulletaFlixNginx ativo, API 8096 sem listener; Python escuta 2121/2123 e health 2123 HTTP 200 ready, sem comprovar Downloader. Nenhum processo/serviço/configuração/produção foi alterado. Homologação e release seguem abertas até restaurar backend, instalar candidata e observar transferência real."
     }
   ]
 }
