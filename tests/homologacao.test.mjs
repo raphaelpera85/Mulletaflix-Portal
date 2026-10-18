@@ -428,7 +428,7 @@ test('portal records MariaDB integration fixture safety and inconclusive full se
     assert.match(event.evidence, /primeiro download real não está validado/);
 });
 
-test('server audit publishes the complete local suite and preserves the remote CI blocker', async () => {
+test('server audit preserves the remote CI blocker and displays the latest Mongo CI audit', async () => {
     const server = statusData.tracks.find(track => track.id === 'server');
     const event = statusData.events.find(item => item.id === 'server-ci-billing-block-2026-10-16-2039');
     const suiteEvent = statusData.events.find(item => item.id === 'server-full-solution-tests-release-build-2026-10-16-2051');
@@ -450,7 +450,7 @@ test('server audit publishes the complete local suite and preserves the remote C
 
     const dashboard = createDashboard();
     await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /bloqueio externo do CI remoto|seleção completa dos testes RequiresMongo/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /seleção completa dos testes RequiresMongo/);
 });
 
 test('portal records the current deterministic server suite without claiming integration or production validation', async () => {
