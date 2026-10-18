@@ -1773,7 +1773,7 @@ test('Nebula downloader audit records duplicate log, focused tests, and producti
 
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
-    assert.equal(event.updatedAt, '2026-10-18T13:39:00-03:00');
+    assert.equal(event.updatedAt, '2026-10-18T13:42:00-03:00');
     assert.match(event.evidence, /54\.444 bytes, 516 linhas/);
     assert.match(event.evidence, /Implementations Release 1\.499 aprovados\/63 ignorados\/0 falhas/);
     assert.match(event.evidence, /Python 595\/595/);
@@ -1789,6 +1789,8 @@ test('Nebula downloader audit records duplicate log, focused tests, and producti
     assert.match(event.evidence, /test_main_lifecycle\.py 12\/12/);
     assert.match(event.evidence, /NebulaPython 598\/598/);
     assert.match(event.evidence, /fallback stream_service\.py sem heartbeat/);
+    assert.match(event.evidence, /37 conexões TCP estabelecidas/);
+    assert.match(event.evidence, /não deve ser classificado como inativo/);
     assert.match(event.evidence, /Revisão independente via cavecrew indisponível/);
     assert.match(event.evidence, /Release, instalação candidata/);
     assert.equal(server.status, 'in_progress');
