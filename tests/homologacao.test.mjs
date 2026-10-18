@@ -6,6 +6,20 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('image metadata audit records confirmed source risks without claiming production root cause', () => {
+    const event = statusData.events.find(item => item.id === 'server-image-metadata-flow-audit-2026-10-18-1404');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T6.1']);
+    assert.match(event.evidence, /não as limita por tipo singular/);
+    assert.match(event.evidence, /múltiplas capas Primary.*sobrescrever/);
+    assert.match(event.evidence, /warning sem incrementar RefreshResult\.Failures/);
+    assert.match(event.evidence, /não comprova que todas as falhas/);
+    assert.match(event.evidence, /sem release/);
+});
+
 function createDashboard(data = statusData) {
     const elements = new Map();
     const createElement = () => ({
@@ -391,8 +405,8 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
-    assert.equal(audit.passed, 5081);
-    assert.equal(audit.total, 5145);
+    assert.equal(audit.passed, 5012);
+    assert.equal(audit.total, 5076);
     assert.equal(audit.skipped, 64);
     assert.equal(audit.failed, 0);
 
@@ -434,9 +448,10 @@ test('server audit preserves the remote CI blocker and displays the latest Mongo
     const server = statusData.tracks.find(track => track.id === 'server');
     const event = statusData.events.find(item => item.id === 'server-ci-billing-block-2026-10-16-2039');
     const suiteEvent = statusData.events.find(item => item.id === 'server-full-solution-tests-release-build-2026-10-16-2051');
+    const mongoEvent = statusData.events.find(item => item.id === 'server-ci-mongo-category-filter-2026-10-18-1138');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /5\.081 aprovados, 64 ignorados, 0 falhas/);
+    assert.match(server.testAudit.label, /5\.012 aprovados, 64 ignorados e 0 falhas/);
     assert.match(server.testAudit.label, /[Hh]omologação formal continua aberta/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
@@ -450,7 +465,7 @@ test('server audit preserves the remote CI blocker and displays the latest Mongo
     assert.match(suiteEvent.evidence, /nenhuma nova release de servidor foi criada/);
     assert.ok(Date.parse(suiteEvent.updatedAt) <= Date.parse(statusData.generatedAt));
 
-    const dashboard = createDashboard();
+    const dashboard = createDashboard({ ...statusData, events: [mongoEvent] });
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /seleção completa dos testes RequiresMongo/);
 });
@@ -462,8 +477,8 @@ test('portal records the current deterministic server suite without claiming int
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.equal(server.testAudit.passed, 5081);
-    assert.equal(server.testAudit.total, 5145);
+    assert.equal(server.testAudit.passed, 5012);
+    assert.equal(server.testAudit.total, 5076);
     assert.equal(server.testAudit.skipped, 64);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /FullyQualifiedName!~Integration/);
@@ -489,8 +504,8 @@ test('portal records the orphaned Nebula worker and avoids claiming a production
     assert.match(event.evidence, /não expõe PID/);
     assert.match(event.evidence, /não foi encerrado/);
     assert.match(event.evidence, /passou 1\/1/);
-    assert.equal(server.testAudit.passed, 5081);
-    assert.equal(server.testAudit.total, 5145);
+    assert.equal(server.testAudit.passed, 5012);
+    assert.equal(server.testAudit.total, 5076);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard({ ...statusData, events: [event] });
@@ -534,7 +549,7 @@ test('server Nebula startup audit records the disabled global gate without claim
     assert.match(event.evidence, /Smoke test manual.*pendentes/);
     assert.match(event.evidence, /não expôs suas linhas de comando/);
 
-    const dashboard = createDashboard();
+    const dashboard = createDashboard({ ...statusData, events: [event] });
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Downloader Nebula sem início automático/);
 });
@@ -575,7 +590,7 @@ test('portal records title-level Nebula download startup without claiming produc
     assert.equal(server.status, 'in_progress');
     assert.equal(statusData.androidHomologation.formalSignoff, 'pending');
 
-    const dashboard = createDashboard();
+    const dashboard = createDashboard({ ...statusData, events: [event] });
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula inicia o download após indexar o primeiro título/);
 });
@@ -673,8 +688,8 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /sem host GitHub autenticado/);
     assert.match(event.evidence, /Nenhum worker ou transferência real/);
     assert.match(event.evidence, /não ativa em produção/);
-    assert.equal(server.testAudit.passed, 5081);
-    assert.equal(server.testAudit.total, 5145);
+    assert.equal(server.testAudit.passed, 5012);
+    assert.equal(server.testAudit.total, 5076);
 
     const dashboard = createDashboard();
     await settleDashboard();
@@ -1522,7 +1537,7 @@ test('Nebula Supabase admission audit reports evidence limits without claiming a
     assert.match(event.evidence, /592\/592/);
     assert.match(event.evidence, /Três testes C# Mongo compilaram e foram ignorados/);
     assert.match(event.evidence, /não identifica proprietário ou expiração da lease/);
-    assert.match(server.testAudit.label, /592\/592/);
+    assert.match(server.testAudit.label, /598\/598/);
     assert.match(server.testAudit.label, /Homologação formal continua aberta/);
     assert.equal(statusData.coverage.pending, 65);
     assert.equal(statusData.coverage.inProgress, 4);
@@ -1545,12 +1560,12 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.match(event.evidence, /EnvioStartupException_DoesNotPreventDownloaderFromStarting foi reexecutado e passou 1\/1/);
     assert.match(event.evidence, /Portal independente passou 87\/87/);
     assert.match(event.evidence, /CI remoto, revisão instalada, download real e release não foram executados/);
-    assert.equal(server.testAudit.passed, 5081);
-    assert.equal(server.testAudit.total, 5145);
+    assert.equal(server.testAudit.passed, 5012);
+    assert.equal(server.testAudit.total, 5076);
     assert.equal(server.testAudit.skipped, 64);
     assert.equal(server.testAudit.failed, 0);
-    assert.match(server.testAudit.label, /NebulaPython 592\/592/);
-    assert.match(server.testAudit.label, /418\/418 testes em 75 arquivos/);
+    assert.match(server.testAudit.label, /NebulaPython 3\.10: 598\/598/);
+    assert.match(server.testAudit.label, /casos Mongo ignorados não validam integração/);
     assert.equal(statusData.coverage.pending, 65);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });

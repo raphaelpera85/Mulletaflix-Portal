@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T13:47:00-03:00",
+  "generatedAt": "2026-10-18T14:04:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
       },
       "testAudit": {
-        "passed": 5081,
-        "total": 5145,
+        "passed": 5012,
+        "total": 5076,
         "skipped": 64,
         "failed": 0,
-        "percent": 98.8,
-        "label": "Validação local: .NET Release (FullyQualifiedName!~Integration) 5.081 aprovados, 64 ignorados, 0 falhas (5.145 total); NebulaPython 592/592; frontend typecheck aprovado e 418/418 testes em 75 arquivos. O log histórico de 16–17/10 mostra runtime Somente Streaming (fila/workers desativados) e depois WinError 10048 ao vincular FTP 127.0.0.1:2121; não contém marcador de readiness/scan/transferência do Downloader. O workflow de release local ganhou gate de testes antes de empacotar, mas GitHub Actions, instalação, operação e download real ainda não foram executados. Homologação formal continua aberta."
+        "percent": 98.7,
+        "label": "Revalidação local em 18/10: solução .NET Release 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), com FullyQualifiedName!~Integration; Server.Implementations: 1.499/1.562, 63 ignorados. NebulaPython 3.10: 598/598. Projetos de integração estão excluídos; casos Mongo ignorados não validam integração. Esta rodada não testou frontend, CI remota, instalação ou runtime, nem observou chamada do Downloader/transferência real. Homologação formal continua aberta."
       }
     },
     {
@@ -3003,6 +3003,36 @@
     }
   ],
   "events": [
+    {
+      "id": "server-image-metadata-flow-audit-2026-10-18-1404",
+      "title": "Imagens de mídia: sobrescrita Primary e falha silenciosa identificadas na fonte",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T6.1"],
+      "local": "Rastreamento estático do fluxo de metadata e persistência de imagens",
+      "location": "MetadataService.SaveRemoteResultImages → ProviderManager.SaveImage → ImageSaver",
+      "scope": "Verificar por que metadados aparecem sem posters e por que imagens podem se substituir, sem alterar itens de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T14:04:00-03:00",
+      "updatedAt": "2026-10-18T14:04:00-03:00",
+      "evidence": "Na fonte, SaveRemoteResultImages seleciona todas as RemoteImages antes de gravá-las e não as limita por tipo singular. Para Primary, ImageSaver usa índice/destino 0; múltiplas capas Primary de um mesmo resultado podem sobrescrever o mesmo arquivo, e OpenLibrary possui caminhos que retornam múltiplas capas. Após retries, falha ao salvar imagem é capturada como warning sem incrementar RefreshResult.Failures, enquanto o metadata provider ainda mescla os campos textuais. Isso explica mecanismos compatíveis com capas substituídas e metadados sem imagem, mas não comprova que todas as falhas do screenshot tenham essa causa. Não havia log atual, ImageInfos/ImageTags ou resposta do endpoint dos títulos afetados. Nenhuma produção ou arquivo foi alterado. Testes específicos para duplicidade/falha de imagem, correção, validação em biblioteca isolada e smoke test visual seguem pendentes; sem release."
+    },
+    {
+      "id": "server-nebula-broad-regression-2026-10-18-1404",
+      "title": "Nebula: regressão ampla aprovada; download real segue sem homologação",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": ".NET Release solution suite and NebulaPython pytest",
+      "location": "MulletaFlix.sln; Tools/NebulaPython/tests",
+      "scope": "Executar regressão automatizada ampla sem alterar produção e registrar os limites de homologação do Downloader.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T13:47:00-03:00",
+      "updatedAt": "2026-10-18T14:04:00-03:00",
+      "evidence": "dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~Integration concluiu com exit 0. Totais dos assemblies executados: 5.012 aprovados, 64 ignorados, 0 falhas (5.076); Server.Implementations: 1.499 aprovados, 63 ignorados, 0 falhas. Integrações foram excluídas e os testes RequiresMongo ignorados não contam como validação integrada. NebulaPython: py -3.10 -m pytest tests -q, 598/598. Sem alteração de runtime/produção, sem chamada StartDownloader ou transferência observada. CI Mongo, leitura de log atual e smoke test controlado seguem pendentes; nenhuma release foi criada."
+    },
     {
       "id": "server-nebula-download-kickoff-recheck-2026-10-18-1347",
       "title": "Nebula: log repetido; início do Downloader sem reprodução",
