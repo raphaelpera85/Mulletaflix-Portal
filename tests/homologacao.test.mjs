@@ -1368,6 +1368,22 @@ test('Nebula Envio startup exception does not block downloader attempt and keeps
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula stale runtime and preexisting drive stop mount retry loops without closing production gate', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-stale-runtime-mount-retries-2026-10-18-0600');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /código 4/);
+    assert.match(event.evidence, /C# Release recompilado passou 29\/29/);
+    assert.match(event.evidence, /Python 3\.10 test_mount_drive_n\.py passou 3\/3/);
+    assert.match(event.evidence, /servidor local 12\.1\.21/);
+    assert.match(event.evidence, /processo Python pré-existente escutando 2121\/2123/);
+    assert.match(event.evidence, /release e smoke test real permanecem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;

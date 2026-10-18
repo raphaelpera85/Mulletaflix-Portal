@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T05:42:00-03:00",
+  "generatedAt": "2026-10-18T06:08:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6513,6 +6513,21 @@
       "startedAt": "2026-10-18T05:33:00-03:00",
       "updatedAt": "2026-10-18T05:42:00-03:00",
       "evidence": "Análise do log confirma WinError 10048 na porta FTP 127.0.0.1:2121, sem readiness STRM, fila ou transferência. Corrigido o startup local para capturar exceções de Envio, exceto cancelamento, registrar falha e continuar a tentativa independente do Downloader; montagem N: continua bloqueada sem Envio ativo. Testes Release NebulaHostedServiceConfigurationTests + NebulaDownloaderStartupTests: 44/44. GET local read-only respondeu HTTP 200 e mostrou versão 12.1.21, anterior à fonte atual. Nenhum serviço, processo, configuração, mount, instalação ou mídia de produção alterado. Release e download real seguem pendentes de janela segura e smoke test controlado."
+    },
+    {
+      "id": "server-nebula-stale-runtime-mount-retries-2026-10-18-0600",
+      "title": "Nebula: evita retry infinito quando runtime morreu ou N: está ocupado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional de 16–17/10, fonte C#/Python e testes Release focados",
+      "location": "NebulaFtpManager.MountDriveNAsync; Tools/mount_drive_n.py; porta FTP 2121 e mount N:",
+      "scope": "Corrigir a recuperação do runtime FTP após saída do worker e impedir que a existência de N: em outra sessão seja reportada como montagem saudável.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T05:42:00-03:00",
+      "updatedAt": "2026-10-18T06:08:00-03:00",
+      "evidence": "O log registra WinError 10048 no bind 127.0.0.1:2121 e o helper encerrando com código 0 enquanto o serviço não confirma acesso a N:. Corrigido na fonte: MountDriveNAsync verifica host/processo vivo em vez de confiar apenas em _isEnvioRunning; o helper retorna código 4 para drive preexistente sem propriedade confirmada; códigos 0/4 sem N: acessível pausam retries automáticos. C# Release recompilado passou 29/29; Python 3.10 test_mount_drive_n.py passou 3/3. Inspeção read-only confirma servidor local 12.1.21 e um processo Python pré-existente escutando 2121/2123; ele foi preservado. O log não tem readiness STRM, scan, item ou transferência. Nenhum processo, instalação, configuração, mount, banco ou mídia de produção alterado; release e smoke test real permanecem pendentes."
     }
   ]
 }
