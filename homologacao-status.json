@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T11:42:00-03:00",
+  "generatedAt": "2026-10-18T12:00:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6911,6 +6911,21 @@
       "startedAt": "2026-10-18T11:26:00-03:00",
       "updatedAt": "2026-10-18T11:29:00-03:00",
       "evidence": "O log registra backup inicial concluído em 13,5 s (255 arquivos, 7 usuários FTP, 28 tokens; usuários do app não incluídos), mas depois repete 248 adiamentos de backup por uploads Telegram ativos, apesar de o runtime dizer Somente Streaming com feeder/fila/workers de upload desativados. O log não identifica a lease/proprietário; atividade de outro processo ou divergência de build é hipótese, não fato confirmado. Há ainda duas colisões WinError 10048 em 127.0.0.1:2121 e 14 tentativas de mount com lock já ocupado, sem confirmação de N: saudável. Não aparece StartDownloader, readiness Mongo, scan STRM de biblioteca ou transferência; a busca da mensagem literal de adiamento não a encontrou na fonte atual. Testes locais aprovados permanecem no evento amplo anterior. Nenhum processo/configuração/produção foi alterado; API local indisponível. Requer correlacionar versão instalada, lease ativa e dono dos listeners em janela controlada. Homologação e release continuam em andamento."
+    },
+    {
+      "id": "server-nebula-downloader-readiness-audit-2026-10-18-1200",
+      "title": "Nebula: prontidão do Downloader revalidada; runtime ainda pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "Suítes Release .NET, pytest Nebula e health checks read-only",
+      "location": "NebulaFtpManager.StartDownloaderAsync; mount_drive_n.py; Python STRM worker",
+      "scope": "Revalidar o log de inicialização e cobertura local sem interromper produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T11:53:00-03:00",
+      "updatedAt": "2026-10-18T12:00:00-03:00",
+      "evidence": "O anexo é histórico (16–17/10), mostra Somente Streaming, colisão FTP 2121 e lock de mount ocupado, mas não registra chamada StartDownloader, readiness, scan, item de fila ou transferência. Fonte atual trata lock ocupado com código 3 e pausa retries; o worker STRM é processo separado e exige marcador de prontidão. Testes Release: solução .NET (FullyQualifiedName!~Integration) terminou com exit 0; Implementations 1.498 aprovados/63 ignorados, API 730/730, Providers 777/777 e Server 73 aprovados/1 ignorado. NebulaPython completo 592/592; testes focados Downloader/mount C# 48/48 e Python 92/92. Testes de integração Mongo não foram executados sem instância descartável. Health read-only em 2123 respondeu ready; API 8096 recusou conexão. Isso não comprova download real nem confirma causa no runtime instalado. Nenhum processo produtivo, configuração, banco, mídia ou serviço foi alterado. Homologação e release seguem abertas até instalação candidata e transferência observada em escopo seguro."
     }
   ]
 }
