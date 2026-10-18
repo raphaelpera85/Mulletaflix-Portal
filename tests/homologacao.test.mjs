@@ -1289,9 +1289,11 @@ test('Nebula downloader disabled startup remains pending and does not imply manu
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
     assert.match(event.evidence, /NebulaFTP está desabilitado na configuração/);
-    assert.match(event.evidence, /POST StartDownloader.*antecedem o início do processo atual/);
-    assert.match(event.evidence, /uma ação manual atual não foi executada nem confirmada/);
-    assert.match(event.evidence, /poderá varrer e baixar itens de toda a pasta monitorada/);
+    assert.match(event.evidence, /falham ao vincular `127\.0\.0\.1:2121` com WinError 10048/);
+    assert.match(event.evidence, /Não aparecem `\[STRM-WORKER-READY\]`, `\[STRM-SCAN-STARTED\]`, título em fila ou transferência/);
+    assert.match(event.evidence, /39\/39/);
+    assert.match(event.evidence, /Ação manual atual não foi executada/);
+    assert.match(event.evidence, /pode varrer e baixar toda a pasta monitorada/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
