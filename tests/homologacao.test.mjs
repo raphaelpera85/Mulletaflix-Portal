@@ -428,6 +428,27 @@ test('portal records the current deterministic server suite without claiming int
     assert.match(dashboard.getElement('event-list').innerHTML, /gate determinístico \.NET aprovado/);
 });
 
+test('portal records the orphaned Nebula worker and avoids claiming a production repair', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-nebula-orphaned-worker-2026-10-18-0254');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /12\.1\.21/);
+    assert.match(event.evidence, /PID pai já não existe/);
+    assert.match(event.evidence, /não expõe PID/);
+    assert.match(event.evidence, /não foi encerrado/);
+    assert.match(event.evidence, /passou 1\/1/);
+    assert.equal(server.testAudit.passed, 4977);
+    assert.equal(server.testAudit.total, 5041);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard({ ...statusData, events: [event] });
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, new RegExp(event.title));
+});
+
 test('server dependency audit reports zero known vulnerabilities but keeps deprecated dependencies pending', () => {
     const event = statusData.events.find(item => item.id === 'server-dependency-audit-2026-10-16-2108');
     const server = statusData.tracks.find(track => track.id === 'server');

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T02:47:00-03:00",
+  "generatedAt": "2026-10-18T02:54:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-orphaned-worker-2026-10-18-0254",
+      "title": "Nebula: worker Python órfão ocupa FTP/HTTP; produção segue 12.1.21",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Consulta somente leitura a endpoints locais e sockets em escuta",
+      "location": "Nebula Python; FTP 2121; HTTP stream 2123; /health; /System/Info/Public",
+      "scope": "Confirmar estado/runtime que impede novo bind FTP sem encerrar processos nem interromper reprodução.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T02:50:00-03:00",
+      "updatedAt": "2026-10-18T02:54:00-03:00",
+      "evidence": "Consulta somente leitura confirmou servidor instalado 12.1.21. Um python.exe iniciado em 16/10 ainda escuta nas portas FTP 2121 e HTTP 2123; o PID pai já não existe, portanto o worker está órfão no snapshot. /health responde com status=ready e engine, mas não expõe PID, ao contrário do contrato com PID da fonte atual. Isso explica o WinError 10048 no novo bind FTP e o runtime antigo não pode validar identidade do worker. Processo não foi encerrado para evitar interromper streams. Fonte Release: NebulaHostedServiceConfigurationTests.EnvioFailure_DoesNotPreventIndependentDownloaderStartup_AndSkipsDriveMount passou 1/1; gate .NET não-Integration 4.977/5.041, Python 592/592. Release/instalação e download real seguem pendentes."
+    },
     {
       "id": "server-server-suite-gate-2026-10-18-0247",
       "title": "Servidor: gate determinístico .NET aprovado; integrações seguem pendentes",
