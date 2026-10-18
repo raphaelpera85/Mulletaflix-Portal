@@ -86,8 +86,8 @@ test('search, status filter and pagination expose the matching roadmap rows', as
     dashboard.getElement('feature-search').listeners.input();
     assert.match(dashboard.getElement('feature-table').innerHTML, /T6\.1/);
     const t61Count = statusData.features.filter(feature => `${feature.id} ${feature.name} ${feature.area}`.includes('T6.1')).length;
-    assert.equal((dashboard.getElement('feature-table').innerHTML.match(/<tr>/g) || []).length, t61Count);
-    assert.equal(dashboard.getElement('feature-page-status').textContent, `Itens 1–${t61Count} de ${t61Count}`);
+    assert.equal((dashboard.getElement('feature-table').innerHTML.match(/<tr>/g) || []).length, Math.min(t61Count, 25));
+    assert.equal(dashboard.getElement('feature-page-status').textContent, `Itens 1–${Math.min(t61Count, 25)} de ${t61Count}`);
 
     dashboard.getElement('feature-search').value = '';
     dashboard.getElement('feature-search').listeners.input();
@@ -1401,9 +1401,13 @@ test('GetAvatar user visibility source regression is complete while production a
     assert.match(fixed.name, /Pipeline HTTP completo da rota e produção seguem pendentes/);
     assert.equal(productionGate.status, 'pending');
     assert.equal(parent.status, 'pending');
-    assert.equal(statusData.coverage.completed, 327);
+    const rollback = statusData.features.find(item => item.id === 'T6.1.25');
+    assert.ok(rollback);
+    assert.equal(rollback.status, 'completed');
+    assert.match(rollback.name, /12\/12/);
+    assert.equal(statusData.coverage.completed, 328);
     assert.equal(statusData.coverage.pending, 62);
-    assert.equal(statusData.coverage.total, 396);
+    assert.equal(statusData.coverage.total, 397);
     assert.ok(Date.parse(statusData.generatedAt) >= Date.parse('2026-10-18T07:11:36-03:00'));
 });
 

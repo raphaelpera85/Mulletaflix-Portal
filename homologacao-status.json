@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T07:37:18-03:00",
+  "generatedAt": "2026-10-18T07:51:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
   },
   "coverage": {
-    "completed": 327,
+    "completed": 328,
     "pending": 62,
-    "total": 396,
+    "total": 397,
     "definition": "Checklists de funcionalidades do roadmap (cada checkbox conta como um item); tarefas com evento ativo identificado aparecem como em execução.",
     "inProgress": 7
   },
@@ -1667,6 +1667,13 @@
     {
       "id": "T6.1.24",
       "name": "Visibilidade de GET /GetAvatar/UserAvatar/{userId} corrigida na fonte; matriz controller 11/11 e Release focal combinada 37/37. Pipeline HTTP completo da rota e produção seguem pendentes.",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T6.1.25",
+      "name": "GetAvatar reverte arquivo e catálogo transitórios se falhar a persistência do XML; regressão Release 12/12. Sem validação de instalação/produção.",
       "area": "Servidor",
       "status": "completed",
       "source": "roadmap"
@@ -6565,6 +6572,21 @@
       "startedAt": "2026-10-18T07:32:00-03:00",
       "updatedAt": "2026-10-18T07:37:18-03:00",
       "evidence": "O log histórico de 16–17/10 mostra modo Somente Streaming (fila/workers desativados), depois WinError 10048 no bind FTP 2121 e retries de montagem sem confirmação de N:. Não mostra StartDownloader, readiness/scan STRM, item em fila ou transferência. Reconsulta read-only às 07:32: versão 12.1.21; listeners 2121/2123 presentes e downloader separado em --watch. Processos foram preservados; sem POST, restart, mudança de configuração ou mídia. Nenhuma alteração de código/teste ou release nesta reanálise. T2.1 segue em andamento até candidato instalado e download real observado em escopo seguro."
+    },
+    {
+      "id": "server-getavatar-persistence-rollback-2026-10-18-0751",
+      "title": "GetAvatar limpa arquivo parcial quando a configuração não persiste",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T6.1.25"],
+      "local": "Fonte GetAvatar e teste Release em diretório temporário",
+      "location": "AvatarService.SaveAvatarAsync; catálogo XML e pasta de avatares",
+      "scope": "Garantir rollback de arquivo e entrada em memória se a persistência da imagem ou catálogo falhar.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T07:37:18-03:00",
+      "updatedAt": "2026-10-18T07:51:50-03:00",
+      "evidence": "SaveAvatarAsync agora valida o plugin/configuração antes da gravação e reverte a entrada recém-adicionada e remove o arquivo parcial se a gravação da configuração falhar; erro secundário de limpeza não substitui a exceção original. Teste Release AvatarControllerUserAvatarAuthorizationTests: 12/12, incluindo IOException injetada no serializer, preservação do avatar/catálogo anterior e ausência do novo arquivo em diretório temporário. Busca por caminhos equivalentes de gravação no plugin encontrou somente SaveAvatarAsync; a instalação, uso com dados reais e produção não foram testados. Sem release; gates globais continuam abertos."
     }
   ]
 }
