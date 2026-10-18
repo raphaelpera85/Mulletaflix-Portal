@@ -352,8 +352,8 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
-    assert.equal(audit.passed, 4977);
-    assert.equal(audit.total, 5041);
+    assert.equal(audit.passed, 5081);
+    assert.equal(audit.total, 5145);
     assert.equal(audit.skipped, 64);
     assert.equal(audit.failed, 0);
 
@@ -397,7 +397,7 @@ test('server audit publishes the complete local suite and preserves the remote C
     const suiteEvent = statusData.events.find(item => item.id === 'server-full-solution-tests-release-build-2026-10-16-2051');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /4\.977 aprovados, 64 ignorados, 0 falhas/);
+    assert.match(server.testAudit.label, /5\.081 aprovados, 64 ignorados, 0 falhas/);
     assert.match(server.testAudit.label, /[Hh]omologação formal continua aberta/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
@@ -423,8 +423,8 @@ test('portal records the current deterministic server suite without claiming int
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.equal(server.testAudit.passed, 4977);
-    assert.equal(server.testAudit.total, 5041);
+    assert.equal(server.testAudit.passed, 5081);
+    assert.equal(server.testAudit.total, 5145);
     assert.equal(server.testAudit.skipped, 64);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /FullyQualifiedName!~Integration/);
@@ -450,8 +450,8 @@ test('portal records the orphaned Nebula worker and avoids claiming a production
     assert.match(event.evidence, /não expõe PID/);
     assert.match(event.evidence, /não foi encerrado/);
     assert.match(event.evidence, /passou 1\/1/);
-    assert.equal(server.testAudit.passed, 4977);
-    assert.equal(server.testAudit.total, 5041);
+    assert.equal(server.testAudit.passed, 5081);
+    assert.equal(server.testAudit.total, 5145);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard({ ...statusData, events: [event] });
@@ -634,8 +634,8 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /sem host GitHub autenticado/);
     assert.match(event.evidence, /Nenhum worker ou transferência real/);
     assert.match(event.evidence, /não ativa em produção/);
-    assert.equal(server.testAudit.passed, 4977);
-    assert.equal(server.testAudit.total, 5041);
+    assert.equal(server.testAudit.passed, 5081);
+    assert.equal(server.testAudit.total, 5145);
 
     const dashboard = createDashboard();
     await settleDashboard();
@@ -1449,6 +1449,28 @@ test('Nebula Supabase admission audit reports evidence limits without claiming a
     assert.match(server.testAudit.label, /Homologação formal continua aberta/);
     assert.equal(statusData.coverage.pending, 65);
     assert.equal(statusData.coverage.inProgress, 4);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('Nebula download audit distinguishes historical streaming/FTP failure from current local test evidence', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-log-and-release-test-gate-2026-10-18-0841');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /Somente Streaming/);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /não contém marcadores de start\/readiness\/scan ou transferência/);
+    assert.match(event.evidence, /teste de regressão focal passou 1\/1/);
+    assert.match(event.evidence, /CI remoto, revisão instalada, download real e release não foram executados/);
+    assert.equal(server.testAudit.passed, 5081);
+    assert.equal(server.testAudit.total, 5145);
+    assert.equal(server.testAudit.skipped, 64);
+    assert.equal(server.testAudit.failed, 0);
+    assert.match(server.testAudit.label, /NebulaPython 592\/592/);
+    assert.match(server.testAudit.label, /418\/418 testes em 75 arquivos/);
+    assert.equal(statusData.coverage.pending, 65);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 

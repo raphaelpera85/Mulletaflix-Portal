@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T08:29:36-03:00",
+  "generatedAt": "2026-10-18T08:41:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
       },
       "testAudit": {
-        "passed": 4977,
-        "total": 5041,
+        "passed": 5081,
+        "total": 5145,
         "skipped": 64,
         "failed": 0,
-        "percent": 98.7,
-        "label": "Gate determinístico da solução .NET Release (FullyQualifiedName!~Integration): 4.977 aprovados, 64 ignorados, 0 falhas (5.041 total). NebulaPython completo revalidado em 18/10: 592/592. Três testes C# de admissão Mongo compilaram, mas foram ignorados porque o Mongo isolado 127.0.0.1:27099 não estava disponível. O log histórico não comprova lease órfã; integração C#/Python, CI remoto, instalação, operação e smoke test continuam pendentes. Homologação formal continua aberta."
+        "percent": 98.8,
+        "label": "Validação local: .NET Release (FullyQualifiedName!~Integration) 5.081 aprovados, 64 ignorados, 0 falhas (5.145 total); NebulaPython 592/592; frontend typecheck aprovado e 418/418 testes em 75 arquivos. O log histórico de 16–17/10 mostra runtime Somente Streaming (fila/workers desativados) e depois WinError 10048 ao vincular FTP 127.0.0.1:2121; não contém marcador de readiness/scan/transferência do Downloader. O workflow de release local ganhou gate de testes antes de empacotar, mas GitHub Actions, instalação, operação e download real ainda não foram executados. Homologação formal continua aberta."
       }
     },
     {
@@ -6632,6 +6632,23 @@
       "startedAt": "2026-10-18T08:12:00-03:00",
       "updatedAt": "2026-10-18T08:12:00-03:00",
       "evidence": "Anexo duplicado da execução histórica de 16–17/10; cadência de 30 s pode coincidir com heartbeat e não identifica proprietário ou expiração da lease. NebulaPython completo: 592/592. Três testes C# Mongo compilaram e foram ignorados por ausência de Mongo descartável em 127.0.0.1:27099. Nenhum banco de produção, Supabase ou Telegram foi acessado; nenhum runtime alterado. Integração C#/Python no mesmo Mongo e transferência real permanecem pendentes."
+    },
+    {
+      "id": "server-nebula-download-log-and-release-test-gate-2026-10-18-0841",
+      "title": "Log do Nebula confirma modo streaming e conflito FTP; gate de testes adicionado à release",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [
+        "T2.1"
+      ],
+      "local": "Fonte do servidor, testes .NET/NebulaPython/frontend e workflow de release",
+      "location": "NebulaHostedService; NebulaFtpManager; .github/workflows/release.yml",
+      "scope": "Investigar por que downloads não iniciam, validar a tentativa independente do Downloader quando o Envio falha e impedir publicação de artefato antes dos testes locais de origem.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T08:41:00-03:00",
+      "updatedAt": "2026-10-18T08:41:00-03:00",
+      "evidence": "O log histórico anexado mostra que o runtime iniciado em 16/10 estava explicitamente em Somente Streaming, com feeder/fila/workers desativados; em 17/10, o modo Envio falhou ao vincular 127.0.0.1:2121 (WinError 10048), seguido de retries de mount. O recorte não contém marcadores de start/readiness/scan ou transferência do Downloader. Na fonte local, o HostedService tenta o Downloader mesmo se Envio falha; teste de regressão focal passou 1/1. Gates locais: .NET Release 5.081 aprovados/64 ignorados/0 falhas (5.145 total; Integration filtrado), NebulaPython 592/592, frontend typecheck aprovado e 418/418 testes em 75 arquivos. O workflow raiz release.yml agora exige .NET, Python e frontend antes do pacote Linux/Windows; YAML e cadeia de dependências validados localmente. CI remoto, revisão instalada, download real e release não foram executados; não houve alteração de runtime/produção."
     }
   ]
 }
