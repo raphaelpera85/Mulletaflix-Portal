@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T09:46:23-03:00",
+  "generatedAt": "2026-10-18T09:54:38-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6739,6 +6739,21 @@
       "startedAt": "2026-10-18T09:36:00-03:00",
       "updatedAt": "2026-10-18T09:42:43-03:00",
       "evidence": "Duas baterias de 15 GETs sequenciais a /System/Info/Public responderam 15/15 HTTP 200. Bateria A: p50 4,39 ms e p95 nearest-rank/max 785,36 ms; B: p50 10,64 ms e p95 nearest-rank/max 366,86 ms. N=15 faz p95 nearest-rank coincidir com o máximo, então cauda não é estimativa estável. Snapshot do processo: working set 2.452,9 MiB, private bytes 2.578,5 MiB e uptime aproximado 13,1 h. Uma chamada isolada excedeu timeout de 5 s; próxima chamada recebeu HTTP 200 em 946 ms. Causa não determinada. Somente leituras; sem restart/configuração/carga concorrente. Baseline T0.1 segue parcial: falta endpoint autenticado, janela/carga representativa, disco, duração/volume Nebula e Linux."
+    },
+    {
+      "id": "server-nebula-cleanup-first-pass-2026-10-18-0954",
+      "title": "Nebula: primeira varredura de limpeza agora inicia em background sem esperar 15 minutos",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.6"],
+      "local": "Validação local do servidor em Release; sem instalação nem operação de produção",
+      "location": "NebulaFtpManager.RunContinuousCleanupLoopAsync e NebulaPeriodicLoop",
+      "scope": "Remover a espera inicial de 15 minutos da limpeza sem bloquear o startup ou sobrepor travessias periódicas.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T09:50:00-03:00",
+      "updatedAt": "2026-10-18T09:54:38-03:00",
+      "evidence": "Antes, RunContinuousCleanupLoopAsync aguardava 15 minutos antes da primeira varredura. Agora a tarefa de background executa uma primeira passagem imediatamente após a conexão/restauração Mongo; os próximos ciclos usam PeriodicTimer de 15 minutos, sem sobrepor trabalho. NebulaCompletedMediaRefresh reutiliza o agendador interno NebulaPeriodicLoop. Build Release da solução passou; testes de loop/refresh 17/17 e loop/refresh/checkpoint/lifecycle 33/33 aprovados. Não houve instalação/restart em produção nem medição de latência real. A homologação operacional e os gates globais de release continuam pendentes."
     }
   ]
 }

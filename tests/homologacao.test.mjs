@@ -1571,6 +1571,22 @@ test('server baseline publishes short live samples without claiming T0.1 complet
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula cleanup documents an immediate background first pass and periodic follow-up', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-cleanup-first-pass-2026-10-18-0954');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.6']);
+    assert.match(event.evidence, /primeira passagem imediatamente/);
+    assert.match(event.evidence, /PeriodicTimer de 15 minutos/);
+    assert.match(event.evidence, /sem sobrepor trabalho/);
+    assert.match(event.evidence, /loop\/refresh\/checkpoint\/lifecycle 33\/33/);
+    assert.match(event.evidence, /Não houve instalação\/restart em produção/);
+    assert.equal(statusData.features.find(item => item.id === 'T2.6').status, 'completed');
+    assert.equal(statusData.coverage.pending, 65);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
