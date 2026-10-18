@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T09:10:00-03:00",
+  "generatedAt": "2026-10-18T09:12:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2996,6 +2996,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-live-runtime-stale-2026-10-18-0912",
+      "title": "Nebula: runtime ativo ainda está na versão 12.1.21",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "GET público local, processo/portas e hashes do worker instalado e da fonte",
+      "location": "MulletaFlix 12.1.21; Nebula FTP 2121; HTTP stream 2123",
+      "scope": "Verificar se o runtime de produção local contém o worker e a correção de prontidão validados na fonte, sem reiniciar/alterar serviço.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T09:12:00-03:00",
+      "updatedAt": "2026-10-18T09:12:00-03:00",
+      "evidence": "System/Info/Public HTTP 200 e executável confirmado em 12.1.21; o worker instalado tem hash começando 3D41354345B7, não inclui marcadores de readiness/scan, e difere da fonte candidata (hash começando 2A671AFCA11B). As portas 2121/2123 estão no mesmo processo Python, mas sua linha de comando não pôde ser lida; não se presume processo órfão. Nenhum processo/serviço foi alterado, nenhum banco/Telegram acessado e nenhum download iniciado. Fato confirma runtime desatualizado, não causa exclusiva do bind nem êxito de transferência. Instalação/restart e smoke test controlados continuam pendentes."
+    },
     {
       "id": "server-nebula-strm-scan-readiness-validation-2026-10-18-0910",
       "title": "Nebula: revalidação ampliada do contrato de prontidão STRM",

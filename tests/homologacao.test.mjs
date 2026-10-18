@@ -901,6 +901,18 @@ test('portal records the expanded STRM startup and mount retest without claiming
     assert.match(event.evidence, /release e smoke test real permanecem pendentes/);
 });
 
+test('portal records the stale installed Nebula runtime without claiming the bind cause or download success', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-live-runtime-stale-2026-10-18-0912');
+
+    assert.ok(event, 'portal should publish the local runtime/source comparison');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /HTTP 200 e executável confirmado em 12\.1\.21/);
+    assert.match(event.evidence, /não se presume processo órfão/);
+    assert.match(event.evidence, /Instalação\/restart e smoke test controlados continuam pendentes/);
+});
+
 test('portal records the completed isolated stage validation without claiming a release or production download', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-download-stage-lock-validation-2026-10-17-0753');
 
