@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T08:16:00-03:00",
+  "generatedAt": "2026-10-18T08:29:36-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2996,6 +2996,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-live-runtime-promotion-2026-10-18-0827",
+      "title": "Nebula: startup usa runtime vivo para promover streaming a transferência",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Testes de fonte C# Release e revisão do log anexado",
+      "location": "NebulaFtpManager.StartEnvioAsync; FTP 2121; STREAM_ONLY",
+      "scope": "Evitar que uma flag lógica atrasada inicie uma segunda instância enquanto o worker FTP ainda está vivo; preservar o modo completo de transferência.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T08:22:00-03:00",
+      "updatedAt": "2026-10-18T08:29:36-03:00",
+      "evidence": "O log histórico mostra o modo Somente Streaming (fila/workers desligados), depois WinError 10048 no bind 127.0.0.1:2121 e tentativas com outro helper de mount. StartEnvioAsync agora considera o processo/host vivo como fonte de verdade, restaura a flag lógica e promove o runtime streaming antes de criar outro. C# Release: 95/95 testes focados de startup, hosted service e Supabase; incluindo retry cursor 500→200, 503 persistente e 401 sem retry. A revisão independente não encontrou defeito demonstrado; integração completa e concorrência de serviço real ainda não testadas. O anexo não contém readiness/scan STRM nem transferência. Sem ação sobre produção, sem instalação/release e sem download real; T2.1 continua aberto até resolver o listener em janela segura e observar um item controlado."
+    },
     {
       "id": "server-nebula-downloader-startup-log-recheck-2026-10-18-0314",
       "title": "Nebula Downloader: log não comprova chamada do worker STRM; testes da fonte aprovados",

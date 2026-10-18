@@ -78,6 +78,16 @@ test('renders every roadmap item and matching coverage counters', async () => {
     assert.equal(dashboard.getElement('feature-page-number').textContent, `Página 1 de ${Math.ceil(statusData.features.length / 25)}`);
 });
 
+test('publishes the latest Nebula startup finding without marking T2.1 complete', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-live-runtime-promotion-2026-10-18-0827');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /95\/95/);
+    assert.match(event.evidence, /sem download real/i);
+});
+
 test('search, status filter and pagination expose the matching roadmap rows', async () => {
     const dashboard = createDashboard();
     await settleDashboard();
