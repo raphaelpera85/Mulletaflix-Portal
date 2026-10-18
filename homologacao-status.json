@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T07:04:20-03:00",
+  "generatedAt": "2026-10-18T07:16:28-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
   },
   "coverage": {
-    "completed": 326,
+    "completed": 327,
     "pending": 62,
-    "total": 395,
+    "total": 396,
     "definition": "Checklists de funcionalidades do roadmap (cada checkbox conta como um item); tarefas com evento ativo identificado aparecem como em execução.",
     "inProgress": 7
   },
@@ -1662,6 +1662,13 @@
       "name": "Pendente: validar a autorização HTTP contra a instalação real em ambiente isolado; testes atuais são unitários",
       "area": "Servidor",
       "status": "pending",
+      "source": "roadmap"
+    },
+    {
+      "id": "T6.1.24",
+      "name": "Visibilidade de GET /GetAvatar/UserAvatar/{userId} corrigida na fonte; matriz controller 11/11 e Release focal combinada 37/37. Pipeline HTTP completo da rota e produção seguem pendentes.",
+      "area": "Servidor",
+      "status": "completed",
       "source": "roadmap"
     },
     {

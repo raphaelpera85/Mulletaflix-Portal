@@ -1389,6 +1389,24 @@ test('Nebula stale runtime and preexisting drive stop mount retry loops without 
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('GetAvatar user visibility source regression is complete while production and full HTTP gates stay open', () => {
+    const fixed = statusData.features.find(item => item.id === 'T6.1.24');
+    const productionGate = statusData.features.find(item => item.id === 'T6.1.23');
+    const parent = statusData.features.find(item => item.id === 'T6.1');
+
+    assert.ok(fixed);
+    assert.equal(fixed.status, 'completed');
+    assert.match(fixed.name, /controller 11\/11/);
+    assert.match(fixed.name, /Release focal combinada 37\/37/);
+    assert.match(fixed.name, /Pipeline HTTP completo da rota e produção seguem pendentes/);
+    assert.equal(productionGate.status, 'pending');
+    assert.equal(parent.status, 'pending');
+    assert.equal(statusData.coverage.completed, 327);
+    assert.equal(statusData.coverage.pending, 62);
+    assert.equal(statusData.coverage.total, 396);
+    assert.ok(Date.parse(statusData.generatedAt) >= Date.parse('2026-10-18T07:11:36-03:00'));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
