@@ -1543,7 +1543,10 @@ test('Nebula log separates the intentional streaming-only mount from transfer mo
     assert.match(event.evidence, /feeder, fila e workers de upload estão desativados/);
     assert.match(event.evidence, /streamOnly: true/);
     assert.match(event.evidence, /streamOnly:false/);
-    assert.match(event.evidence, /não prova defeito do motor de download/);
+    assert.match(event.evidence, /não contém marcador de start\/readiness\/scan do Downloader STRM/);
+    assert.match(event.evidence, /tenta o Downloader STRM separadamente, mesmo que Envio falhe/);
+    assert.match(event.evidence, /runtime instalado 12\.1\.21 diverge dessa fonte/);
+    assert.match(event.evidence, /não prova se o downloader atual foi tentado nem que o motor atual falhou/);
     assert.match(event.evidence, /Nenhum comando foi enviado à produção/);
     assert.equal(statusData.tracks.find(track => track.id === 'server').status, 'in_progress');
 });
