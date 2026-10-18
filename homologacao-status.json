@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T07:51:50-03:00",
+  "generatedAt": "2026-10-18T07:55:57-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6585,8 +6585,8 @@
       "status": "completed",
       "progressPercent": null,
       "startedAt": "2026-10-18T07:37:18-03:00",
-      "updatedAt": "2026-10-18T07:51:50-03:00",
-      "evidence": "SaveAvatarAsync agora valida o plugin/configuração antes da gravação e reverte a entrada recém-adicionada e remove o arquivo parcial se a gravação da configuração falhar; erro secundário de limpeza não substitui a exceção original. Teste Release AvatarControllerUserAvatarAuthorizationTests: 12/12, incluindo IOException injetada no serializer, preservação do avatar/catálogo anterior e ausência do novo arquivo em diretório temporário. Busca por caminhos equivalentes de gravação no plugin encontrou somente SaveAvatarAsync; a instalação, uso com dados reais e produção não foram testados. Sem release; gates globais continuam abertos."
+      "updatedAt": "2026-10-18T07:55:57-03:00",
+      "evidence": "SaveAvatarAsync agora valida o plugin/configuração antes da gravação e reverte a entrada recém-adicionada e remove o arquivo parcial se a gravação da configuração falhar; erro secundário de limpeza não substitui a exceção original. Teste Release AvatarControllerUserAvatarAuthorizationTests: 12/12 e suíte completa Jellyfin.Api.Tests: 730/730, sem ignorados/falhas. A regressão injeta IOException no serializer, preserva avatar/catálogo anterior e confirma ausência do arquivo novo em diretório temporário. Busca por caminhos equivalentes de gravação no plugin encontrou somente SaveAvatarAsync; instalação, uso com dados reais e produção não foram testados. Sem release; gates globais continuam abertos."
     }
   ]
 }
