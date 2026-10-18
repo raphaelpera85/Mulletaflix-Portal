@@ -1265,6 +1265,23 @@ test('Nebula stream-only logs are not treated as proof that the STRM downloader 
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula downloader startup log recheck stays in progress without claiming production success', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-downloader-startup-log-recheck-2026-10-18-0314');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /API Release 718\/718/);
+    assert.match(event.evidence, /39\/39/);
+    assert.match(event.evidence, /17\/17/);
+    assert.match(event.evidence, /Sem instalação, POST manual.*ou download real/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula Downloader: log não comprova chamada do worker STRM/);
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
