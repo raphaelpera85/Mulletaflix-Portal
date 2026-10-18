@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T09:33:02-03:00",
+  "generatedAt": "2026-10-18T09:35:32-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6709,6 +6709,21 @@
       "startedAt": "2026-10-18T09:12:00-03:00",
       "updatedAt": "2026-10-18T09:33:02-03:00",
       "evidence": "A solução MulletaFlix.sln em Release, com filtro CI FullyQualifiedName!~Integration, terminou com exit code 0 e sem falhas nos projetos executados. Jellyfin.Server.Implementations.Tests: 1.494 aprovados, 63 ignorados, 0 falhas (1.557); testes focados Nebula startup/mount: 37/37. A execução ampla sem filtro teve uma falha não determinística no teste ao vivo NartoDrama Search_FindsTheSeriesFromAnAccentedTerm; o mesmo teste passou 1/1 isoladamente e o endpoint público respondeu HTTP 200 com resultado correspondente. A causa da intermitência não foi determinada. Testes locais não comprovam download real; a produção permanece na versão 12.1.21, divergente da fonte atual. Nenhuma instalação, reinicialização, configuração ou transferência produtiva foi executada; T2.1 e release continuam pendentes."
+    },
+    {
+      "id": "server-nebula-stream-only-runtime-log-2026-10-18-0935",
+      "title": "Log Nebula: montagem do disco iniciou deliberadamente em modo somente streaming",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log anexado de 16/10 e leitura do fluxo de montagem/start da fonte C#",
+      "location": "NebulaFtpManager.MountDriveNAsync, StartEnvioAsync e endpoint administrativo de start",
+      "scope": "Determinar por que o log não apresenta início da fila de download/upload, distinguindo modo de montagem streaming do modo completo de transferência.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T09:33:02-03:00",
+      "updatedAt": "2026-10-18T09:35:32-03:00",
+      "evidence": "O log histórico anexado (16/10) mostra MountDriveN inicializando o runtime em Modo Somente Streaming. Em seguida o worker registra explicitamente que feeder, fila e workers de upload estão desativados, e lista apenas as pastas de stage F:\\NebulaStage e E:\\NebulaStage; não há confirmação de fila/transferência. A fonte confirma que a montagem automática chama StartEnvioAsync(streamOnly: true), enquanto o comando administrativo Iniciar Envio chama streamOnly:false. Assim, esse recorte comprova que aquela execução foi iniciada sem o pipeline de transferência; não prova defeito do motor de download nem descreve necessariamente o estado atual. Nenhum comando foi enviado à produção. Próximo passo é confirmar em janela segura que o administrador iniciou o modo Envio e que o Downloader STRM atingiu readiness/scan; T2.1 e release seguem pendentes."
     }
   ]
 }

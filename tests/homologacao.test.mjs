@@ -1533,6 +1533,21 @@ test('portal records broad server validation without claiming a production downl
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula log separates the intentional streaming-only mount from transfer mode', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-stream-only-runtime-log-2026-10-18-0935');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /Modo Somente Streaming/);
+    assert.match(event.evidence, /feeder, fila e workers de upload estão desativados/);
+    assert.match(event.evidence, /streamOnly: true/);
+    assert.match(event.evidence, /streamOnly:false/);
+    assert.match(event.evidence, /não prova defeito do motor de download/);
+    assert.match(event.evidence, /Nenhum comando foi enviado à produção/);
+    assert.equal(statusData.tracks.find(track => track.id === 'server').status, 'in_progress');
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
