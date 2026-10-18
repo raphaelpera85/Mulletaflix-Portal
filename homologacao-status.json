@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T09:54:38-03:00",
+  "generatedAt": "2026-10-18T10:03:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6754,6 +6754,21 @@
       "startedAt": "2026-10-18T09:50:00-03:00",
       "updatedAt": "2026-10-18T09:54:38-03:00",
       "evidence": "Antes, RunContinuousCleanupLoopAsync aguardava 15 minutos antes da primeira varredura. Agora a tarefa de background executa uma primeira passagem imediatamente após a conexão/restauração Mongo; os próximos ciclos usam PeriodicTimer de 15 minutos, sem sobrepor trabalho. NebulaCompletedMediaRefresh reutiliza o agendador interno NebulaPeriodicLoop. Build Release da solução passou; testes de loop/refresh 17/17 e loop/refresh/checkpoint/lifecycle 33/33 aprovados. Não houve instalação/restart em produção nem medição de latência real. A homologação operacional e os gates globais de release continuam pendentes."
+    },
+    {
+      "id": "server-nebula-mongo-ready-before-library-discovery-2026-10-18-1003",
+      "title": "Downloader Nebula: prontidão confirmada após Mongo, antes da descoberta das bibliotecas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Testes Release focados C# e Python; consulta HTTP local somente leitura",
+      "location": "NebulaFtpManager.IsPythonDownloaderReadyOutput e strm_downloader.run_downloader",
+      "scope": "Evitar que o timeout de startup encerre um worker válido enquanto ele descobre raízes STRM grandes ou remotas; manter a varredura observável como progresso separado.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T10:00:00-03:00",
+      "updatedAt": "2026-10-18T10:03:06-03:00",
+      "evidence": "Na fonte, o manager aguardava [STRM-SCAN-STARTED], emitido depois da descoberta das raízes e títulos monitorados; essa enumeração podia exceder o timeout de startup de 60 segundos e encerrar um worker ainda válido. Agora [STRM-WORKER-MONGO-READY], emitido somente após refresh_cache bem-sucedido, confirma prontidão antes da descoberta; [STRM-SCAN-STARTED] continua como progresso da varredura. Testes Release focados: C# 30/30 e Python 3.10 test_strm_downloader.py 17/17. Consulta local read-only confirmou runtime instalado 12.1.21; as portas 2121 e 2123 estão no mesmo processo Python. Runtime instalado é anterior à fonte candidata; o log histórico não prova causa atual nem transferência. Nenhuma instalação, reinicialização ou transferência produtiva ocorreu. T2.1, smoke test real e gates globais de release seguem pendentes."
     }
   ]
 }

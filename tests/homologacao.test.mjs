@@ -88,6 +88,17 @@ test('publishes the latest Nebula startup finding without marking T2.1 complete'
     assert.match(event.evidence, /sem download real/i);
 });
 
+test('records downloader readiness after Mongo and before potentially slow library discovery', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-mongo-ready-before-library-discovery-2026-10-18-1003');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /timeout de startup de 60 segundos/);
+    assert.match(event.evidence, /C# 30\/30 e Python 3\.10 test_strm_downloader\.py 17\/17/);
+    assert.match(event.evidence, /Nenhuma instalação, reinicialização ou transferência produtiva/);
+});
+
 test('search, status filter and pagination expose the matching roadmap rows', async () => {
     const dashboard = createDashboard();
     await settleDashboard();
