@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T11:26:00-03:00",
+  "generatedAt": "2026-10-18T11:29:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6881,6 +6881,21 @@
       "startedAt": "2026-10-18T11:14:00-03:00",
       "updatedAt": "2026-10-18T11:26:00-03:00",
       "evidence": "Testes locais: Jellyfin.Server.Implementations.Tests Release 1.498 aprovados, 63 ignorados, 0 falhas (1.561); Jellyfin.Api.Tests 730/730; Jellyfin.Providers.Tests 790/790; NebulaPython 592/592; Assert-StageIntegrity.Tests.ps1 aprovado; portal 102/102. Testes ignorados não contam como aprovação; Mongo descartável em 127.0.0.1:27099 indisponível. Nenhum Mongo/Supabase de produção, worker, upload/download, instalação ou restart foi usado. API local 8096 indisponível na última verificação; listeners preexistentes foram preservados. Log histórico não prova readiness, scan ou transferência. CI remoto, integração Mongo/Supabase isolada e smoke test controlado ainda pendentes; homologação e release do servidor permanecem em andamento."
+    },
+    {
+      "id": "server-nebula-startup-log-analysis-2026-10-18-1129",
+      "title": "Nebula: backup inicial conclui, mas runtime antigo adia ciclos e falha no mount",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "Log anexado de 516 linhas, fonte atual e testes locais Release",
+      "location": "Backup automático Supabase, workers de upload, FTP 2121 e montagem N:",
+      "scope": "Separar o sucesso do backup inicial dos adiamentos posteriores e investigar ausência de início/scan STRM sem interferir no runtime produtivo.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T11:26:00-03:00",
+      "updatedAt": "2026-10-18T11:29:00-03:00",
+      "evidence": "O log registra backup inicial concluído em 13,5 s (255 arquivos, 7 usuários FTP, 28 tokens; usuários do app não incluídos), mas depois repete 248 adiamentos de backup por uploads Telegram ativos, apesar de o runtime dizer Somente Streaming com feeder/fila/workers de upload desativados. O log não identifica a lease/proprietário; atividade de outro processo ou divergência de build é hipótese, não fato confirmado. Há ainda duas colisões WinError 10048 em 127.0.0.1:2121 e 14 tentativas de mount com lock já ocupado, sem confirmação de N: saudável. Não aparece StartDownloader, readiness Mongo, scan STRM de biblioteca ou transferência; a busca da mensagem literal de adiamento não a encontrou na fonte atual. Testes locais aprovados permanecem no evento amplo anterior. Nenhum processo/configuração/produção foi alterado; API local indisponível. Requer correlacionar versão instalada, lease ativa e dono dos listeners em janela controlada. Homologação e release continuam em andamento."
     }
   ]
 }

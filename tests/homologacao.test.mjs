@@ -1735,3 +1735,20 @@ test('broad server validation reports local suite results without closing produc
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('Nebula startup log separates successful initial backup from stale auto-sync and mount evidence', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-startup-log-analysis-2026-10-18-1129');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1', 'T4.2']);
+    assert.match(event.evidence, /backup inicial concluído em 13,5 s/);
+    assert.match(event.evidence, /248 adiamentos/);
+    assert.match(event.evidence, /duas colisões WinError 10048/);
+    assert.match(event.evidence, /14 tentativas de mount/);
+    assert.match(event.evidence, /Não aparece StartDownloader/);
+    assert.match(event.evidence, /Homologação e release continuam em andamento/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
