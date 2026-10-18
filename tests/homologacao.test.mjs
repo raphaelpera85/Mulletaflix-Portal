@@ -1354,6 +1354,20 @@ test('Nebula Python mode promotion fix remains in progress until production tran
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula Envio startup exception does not block downloader attempt and keeps production gate open', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-downloader-survives-envio-start-failure-2026-10-18-0542');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /continuar a tentativa independente do Downloader/);
+    assert.match(event.evidence, /44\/44/);
+    assert.match(event.evidence, /versão 12\.1\.21/);
+    assert.match(event.evidence, /Release e download real seguem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;

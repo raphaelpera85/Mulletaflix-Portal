@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T05:33:00-03:00",
+  "generatedAt": "2026-10-18T05:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6498,6 +6498,21 @@
       "startedAt": "2026-10-18T04:59:51-03:00",
       "updatedAt": "2026-10-18T05:33:00-03:00",
       "evidence": "Log anexado (516 linhas, execuções de 16–17/10) mostra WinError 10048 ao vincular FTP 127.0.0.1:2121 e repetidas respostas do helper de mount indicando outra tentativa já ativa. Não contém marcadores STRM de worker, scan, fila ou transferência e não comprova início do Downloader. Correção de fonte: StopPythonStreamServiceAsync preserva referência e aborta transição se não confirmar o encerramento do worker, evitando tentar promover com a porta ainda ocupada. Testes locais: C# Nebula startup/hosted Release 43/43; Jellyfin.Api.Tests Release 729/729; Python 3.10 lifecycle/mount 9/9. A suíte completa de Implementations foi interrompida sem progresso observável e é inconclusiva. Sem teste de produção ou download real; nenhum serviço, worker, configuração ou mount alterado. Instalação e smoke test controlado seguem pendentes."
+    },
+    {
+      "id": "server-nebula-downloader-survives-envio-start-failure-2026-10-18-0542",
+      "title": "Nebula: falha do Envio não bloqueia mais a tentativa do Downloader",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional de 16–17/10, fonte C# e testes Release",
+      "location": "NebulaHostedService.StartComponentsAsync; Envio FTP 2121; Downloader STRM",
+      "scope": "Isolar falha de startup do Envio para que o Downloader STRM ainda seja tentado; preservar cancelamento e mount condicionado ao FTP.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T05:33:00-03:00",
+      "updatedAt": "2026-10-18T05:42:00-03:00",
+      "evidence": "Análise do log confirma WinError 10048 na porta FTP 127.0.0.1:2121, sem readiness STRM, fila ou transferência. Corrigido o startup local para capturar exceções de Envio, exceto cancelamento, registrar falha e continuar a tentativa independente do Downloader; montagem N: continua bloqueada sem Envio ativo. Testes Release NebulaHostedServiceConfigurationTests + NebulaDownloaderStartupTests: 44/44. GET local read-only respondeu HTTP 200 e mostrou versão 12.1.21, anterior à fonte atual. Nenhum serviço, processo, configuração, mount, instalação ou mídia de produção alterado. Release e download real seguem pendentes de janela segura e smoke test controlado."
     }
   ]
 }
