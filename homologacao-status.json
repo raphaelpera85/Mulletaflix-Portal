@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T21:39:00-03:00",
+  "generatedAt": "2026-10-17T21:46:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6208,7 +6208,7 @@
     },
     {
       "id": "server-wide-suite-audit-2026-10-17-2134",
-      "title": "Suíte .NET Implementations isolada aprovada; homologação global segue parcial",
+      "title": "Suíte isolada aprovada; execução serial global travou em Providers",
       "agent": "Codex",
       "front": "server",
       "featureIds": ["T0.3", "T2.1"],
@@ -6218,8 +6218,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-17T21:01:00-03:00",
-      "updatedAt": "2026-10-17T21:39:00-03:00",
-      "evidence": "A auditoria anterior registrou web 418/418 em 75 arquivos (4 workers), Python Nebula 591/591, API .NET 717/717, Providers 790/790, Server 73/1 ignorado, Server Integration 3/140 ignorados, build:check, Branding focado 2/2 e Nebula filtrada 677/24 ignorados. A suíte .NET completa da solução abortou em testhost, sem falha de asserção identificada. Reexecução isolada do Jellyfin.Server.Implementations.Tests em Release concluiu: 1.477 aprovados, 63 ignorados, 0 falhas, total 1.540 (1m21s). Isto valida a execução isolada, não a solução agregada. O log registra WinError 10048 em 127.0.0.1:2121 e outro helper segurando o lock de mount N:, sem identificação do processo nem confirmação de transferência. Nenhum estado de produção foi alterado. Homologação real, transferência, instalação limpa, testes opt-in externos e CI multiplataforma continuam pendentes; sem release nesta etapa."
+      "updatedAt": "2026-10-17T21:46:00-03:00",
+      "evidence": "A auditoria anterior registrou web 418/418 em 75 arquivos (4 workers), Python Nebula 591/591, API .NET 717/717, Providers 790/790 em execução focal, Server 73/1 ignorado, Server Integration 3/140 ignorados, build:check, Branding focado 2/2 e Nebula filtrada 677/24 ignorados. A suíte .NET completa da solução abortou em testhost, sem falha de asserção identificada. Reexecução isolada de Jellyfin.Server.Implementations.Tests concluiu 1.477 aprovados, 63 ignorados, 0 falhas, total 1.540 (1m21s). Nova tentativa serial da solução aprovou Common 31, MediaEncoding 71, Naming 681, API 717, Implementations 1.477/63 ignorados, Controller 63, XbmcMetadata 39, Model 684, Networking 124, Server 73/1 ignorado, Server Integration 3/140 ignorados e IntroSkipper Integration 14/23 ignorados. O testhost não mostrou progresso ao iniciar Providers por mais de um minuto; a execução foi cancelada manualmente, sem asserção falha. Isso não é aprovação agregada. Log registra WinError 10048 em 127.0.0.1:2121 e outro helper segurando o lock de mount N:, sem identificação do processo nem confirmação de transferência. Nenhum estado de produção foi alterado. Homologação real, transferência, instalação limpa, testes opt-in externos e CI multiplataforma continuam pendentes; sem release nesta etapa."
     }
   ]
 }
