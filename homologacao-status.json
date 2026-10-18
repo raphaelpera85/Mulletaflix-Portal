@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T10:20:14-03:00",
+  "generatedAt": "2026-10-18T10:26:30-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6791,6 +6791,21 @@
       "startedAt": "2026-10-18T10:10:00-03:00",
       "updatedAt": "2026-10-18T10:16:36-03:00",
       "evidence": "O log histórico registra runtime explicitamente em Somente Streaming (fila e workers desativados), depois WinError 10048 ao abrir 127.0.0.1:2121 e tentativas de mount repetidas; não contém marcador STRM de start/readiness/scan nem transferência. Verificação read-only atual: /System/Info/Public HTTP 200, versão instalada 12.1.21; health local da porta 2123 retorna status ready. O processo Python que mantém 2121/2123 iniciou em 16/10, antes do servidor atual iniciado em 17/10, e seu processo pai já não existe: forte evidência de worker órfão, ainda que possa estar servindo playback. Nenhuma ação de parada foi feita para não interromper reprodução. Testes da fonte: NebulaDownloaderStartupTests Release 30/30 e test_strm_downloader.py Python 3.10 17/17. Não há evidência de chamada da ação StartDownloader neste log; o download real e a transição produtiva continuam sem homologação. A liberação das portas depende de janela segura para encerrar o worker antigo; a correção local não está instalada (12.1.21). T2.1 e gate de release permanecem abertos."
+    },
+    {
+      "id": "server-nebula-download-ui-runtime-recheck-2026-10-18-1026",
+      "title": "Nebula: interface aguarda início; produção ainda está na versão 12.1.21",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Interface Nebula aberta em leitura, rota da ação na fonte, versão pública local e testes C# Release",
+      "location": "Painel NebulaFTP; POST NebulaFtp/Actions/StartDownloader; NebulaHostedService",
+      "scope": "Verificar se botão, estado visível e ação do Downloader indicam tentativa de início, sem disparar varredura sobre a raiz completa.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T10:23:00-03:00",
+      "updatedAt": "2026-10-18T10:26:30-03:00",
+      "evidence": "Na interface autenticada, Download está Parado, botão Iniciar Downloader STRM habilitado e painel informa Aguardando início do downloader. O handler da fonte envia POST NebulaFtp/Actions/StartDownloader e o controller retorna o resultado do manager; não há evidência no log fornecido de que essa ação tenha sido chamada. GET /System/Info/Public local respondeu HTTP 200 e reportou 12.1.21, anterior à fonte candidata 12.1.24. Testes C# Release NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests: 47/47. Acionar o botão varre a raiz MonitorPaths inteira (D:\\midias); não foi iniciado para evitar carga/transferência ampla. Nenhuma alteração ou restart produtivo. O gate de transferência real, T2.1 e release seguem pendentes."
     }
   ]
 }

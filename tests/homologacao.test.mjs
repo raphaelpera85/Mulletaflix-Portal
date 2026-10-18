@@ -99,6 +99,20 @@ test('records downloader readiness after Mongo and before potentially slow libra
     assert.match(event.evidence, /Nenhuma instalação, reinicialização ou transferência produtiva/);
 });
 
+test('keeps downloader UI/runtime discrepancy in progress until a real transfer is proven', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-ui-runtime-recheck-2026-10-18-1026');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /Download está Parado/);
+    assert.match(event.evidence, /POST NebulaFtp\/Actions\/StartDownloader/);
+    assert.match(event.evidence, /12\.1\.21/);
+    assert.match(event.evidence, /47\/47/);
+    assert.match(event.evidence, /não foi iniciado/);
+    assert.match(event.evidence, /transferência real, T2\.1 e release seguem pendentes/);
+});
+
 test('search, status filter and pagination expose the matching roadmap rows', async () => {
     const dashboard = createDashboard();
     await settleDashboard();
