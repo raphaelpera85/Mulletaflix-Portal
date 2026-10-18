@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T11:14:00-03:00",
+  "generatedAt": "2026-10-18T11:26:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6866,6 +6866,21 @@
       "startedAt": "2026-10-18T11:08:00-03:00",
       "updatedAt": "2026-10-18T11:14:00-03:00",
       "evidence": "A instalação auditada contém strm_downloader.py de 08/10 sem [STRM-WORKER-MONGO-READY] e [STRM-SCAN-STARTED], enquanto a fonte atual emite o readiness Mongo aguardado pelo manager. Isso torna incompatibilidade do runtime antigo uma causa provável para falha/timeout do Downloader, mas o log recebido não mostra chamada manual ou stdout e não prova causalidade. Assert-StageIntegrity.ps1 agora exige o marcador na fonte e mantém a comparação de hash fonte/stage. O teste PowerShell passou cobrindo artefato válido, cópia desatualizada e ausência de marcador; NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests Debug: 47/47; git diff --check sem erros. API local indisponível; sem instalação, restart, scan ou transferência real e processos/listeners preservados. T2.1 e release continuam pendentes até instalação autorizada em janela controlada e smoke test do botão, readiness, scan e transferência de um título."
+    },
+    {
+      "id": "server-broad-validation-2026-10-18-1126",
+      "title": "Servidor: suítes amplas locais aprovadas; gates externos permanecem abertos",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "Suítes Release .NET, pytest Nebula, integridade do pacote e testes do portal",
+      "location": "Implementations, API, Providers, NebulaPython, pacote e homologação",
+      "scope": "Registrar validação ampla da fonte sem modificar ou reiniciar serviços produtivos.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T11:14:00-03:00",
+      "updatedAt": "2026-10-18T11:26:00-03:00",
+      "evidence": "Testes locais: Jellyfin.Server.Implementations.Tests Release 1.498 aprovados, 63 ignorados, 0 falhas (1.561); Jellyfin.Api.Tests 730/730; Jellyfin.Providers.Tests 790/790; NebulaPython 592/592; Assert-StageIntegrity.Tests.ps1 aprovado. A suíte do portal será reexecutada após esta publicação. Testes ignorados não contam como aprovação; Mongo descartável em 127.0.0.1:27099 indisponível. Nenhum Mongo/Supabase de produção, worker, upload/download, instalação ou restart foi usado. API local 8096 indisponível na última verificação; listeners preexistentes foram preservados. Log histórico não prova readiness, scan ou transferência. CI remoto, integração Mongo/Supabase isolada e smoke test controlado ainda pendentes; homologação e release do servidor permanecem em andamento."
     }
   ]
 }

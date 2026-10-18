@@ -1718,3 +1718,20 @@ test('Nebula package gate requires downloader Mongo readiness without claiming p
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('broad server validation reports local suite results without closing production gates', () => {
+    const event = statusData.events.find(item => item.id === 'server-broad-validation-2026-10-18-1126');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1', 'T4.2']);
+    assert.match(event.evidence, /1\.498 aprovados, 63 ignorados, 0 falhas/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests 730\/730/);
+    assert.match(event.evidence, /Jellyfin\.Providers\.Tests 790\/790/);
+    assert.match(event.evidence, /NebulaPython 592\/592/);
+    assert.match(event.evidence, /Mongo descartável em 127\.0\.0\.1:27099 indisponível/);
+    assert.match(event.evidence, /release do servidor permanecem em andamento/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
