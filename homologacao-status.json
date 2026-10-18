@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T09:42:43-03:00",
+  "generatedAt": "2026-10-18T09:46:23-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6722,8 +6722,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T09:33:02-03:00",
-      "updatedAt": "2026-10-18T09:36:31-03:00",
-      "evidence": "O log histórico anexado (16/10) mostra MountDriveN inicializando o runtime em Modo Somente Streaming. Em seguida o worker registra explicitamente que feeder, fila e workers de upload estão desativados, e lista apenas as pastas de stage F:\\NebulaStage e E:\\NebulaStage; não há confirmação de fila/transferência. O anexo também não contém marcador de start/readiness/scan do Downloader STRM. A fonte confirma que a montagem automática chama StartEnvioAsync(streamOnly: true), enquanto o comando administrativo Iniciar Envio chama streamOnly:false. No código atual, NebulaHostedService tenta o Downloader STRM separadamente, mesmo que Envio falhe; mas runtime instalado 12.1.21 diverge dessa fonte. Assim, o log antigo confirma streaming-only naquela execução e não prova se o downloader atual foi tentado nem que o motor atual falhou. Nenhum comando foi enviado à produção. Próximo passo é validar runtime compatível e download controlado em ambiente seguro; T2.1 e release seguem pendentes."
+      "updatedAt": "2026-10-18T09:46:23-03:00",
+      "evidence": "O log histórico anexado (16–17/10) mostra MountDriveN iniciando primeiro o runtime em Modo Somente Streaming, com feeder, fila e workers de upload desativados; N: monta automaticamente. Na tentativa posterior de Modo Envio, o Python falha ao vincular 127.0.0.1:2121 com WinError 10048. Em seguida, o helper informa repetidamente que outra montagem de N: já está ativa, enquanto o chamador registra saída prematura do rclone código 0 e tenta novamente. Isto comprova conflito de bind e retries sobre uma montagem considerada ativa naquele runtime, mas não identifica o processo dono nem causa raiz única. Não há marcador de start/readiness/scan do Downloader STRM, título enfileirado ou transferência. Cleanup está configurado em ciclo de 15 minutos com Dry-run=false, mas não há resultado de varredura/remoção no log. Backups MongoDB/Supabase concluem no trecho visível; backup automático aguarda uploads Telegram ativos. O código atual tem fluxo de Downloader separado, porém a versão instalada observada anteriormente (12.1.21) diverge da fonte local. O log é histórico, não confirma estado atual nem prova início do Downloader. Nenhum comando foi enviado à produção. T2.1, smoke test controlado e gate de release seguem pendentes."
     },
     {
       "id": "server-production-baseline-resample-2026-10-18-0942",

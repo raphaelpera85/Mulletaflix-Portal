@@ -1540,14 +1540,18 @@ test('Nebula log separates the intentional streaming-only mount from transfer mo
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
     assert.match(event.evidence, /Modo Somente Streaming/);
-    assert.match(event.evidence, /feeder, fila e workers de upload estão desativados/);
-    assert.match(event.evidence, /streamOnly: true/);
-    assert.match(event.evidence, /streamOnly:false/);
-    assert.match(event.evidence, /não contém marcador de start\/readiness\/scan do Downloader STRM/);
-    assert.match(event.evidence, /tenta o Downloader STRM separadamente, mesmo que Envio falhe/);
-    assert.match(event.evidence, /runtime instalado 12\.1\.21 diverge dessa fonte/);
-    assert.match(event.evidence, /não prova se o downloader atual foi tentado nem que o motor atual falhou/);
+    assert.match(event.evidence, /workers de upload desativados/);
+    assert.match(event.evidence, /start\/readiness\/scan do Downloader STRM/);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /repetidamente que outra montagem de N: já está ativa/);
+    assert.match(event.evidence, /não identifica o processo dono/);
+    assert.match(event.evidence, /Cleanup está configurado/);
+    assert.match(event.evidence, /não há resultado de varredura\/remoção no log/);
+    assert.match(event.evidence, /backup automático aguarda uploads Telegram ativos/);
+    assert.match(event.evidence, /versão instalada observada anteriormente \(12\.1\.21\) diverge da fonte local/);
+    assert.match(event.evidence, /O log é histórico/);
     assert.match(event.evidence, /Nenhum comando foi enviado à produção/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.equal(statusData.tracks.find(track => track.id === 'server').status, 'in_progress');
 });
 
