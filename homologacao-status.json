@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T03:23:03-03:00",
+  "generatedAt": "2026-10-18T03:29:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2996,8 +2996,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T03:10:00-03:00",
-      "updatedAt": "2026-10-18T03:22:00-03:00",
-      "evidence": "O log de 16–17/10 mostra main.py em Somente Streaming e falha de bind FTP 127.0.0.1:2121, sem readiness/scan STRM, fila ou transferência. Rechecagem read-only: /System/Info/Public HTTP 200, servidor 12.1.21; python.exe PID 6080, iniciado em 16/10 21:16, escuta FTP 2121 e HTTP 2123; PID pai 19764 ausente. Processo preservado para não interromper streams. Fonte 12.1.24 tenta StartDownloaderAsync independentemente do Envio. Testes nesta sessão: startup C# 39/39 e Python 3.10 17/17. Nenhum POST, instalação/restart, acesso Mongo/Telegram ou download real; T2.1 e homologação permanecem abertos."
+      "updatedAt": "2026-10-18T03:29:00-03:00",
+      "evidence": "O log de 16–17/10 mostra main.py em Somente Streaming e falha de bind FTP 127.0.0.1:2121, sem chamada POST /NebulaFtp/Actions/StartDownloader, readiness/scan STRM, fila ou transferência. A interface fonte chama o endpoint correto e verifica retorno true. Rechecagem read-only às 03:29: /System/Info/Public HTTP 200, servidor 12.1.21; python.exe PID 6080, iniciado em 16/10 21:16, escuta FTP 2121 e HTTP 2123. Fonte 12.1.24 tenta StartDownloaderAsync independentemente do Envio. Testes repetidos: startup C# 39/39 e Python 3.10 17/17. Nenhum POST, instalação/restart, acesso Mongo/Telegram ou download real; produção não homologada e T2.1 permanece aberto."
     },
     {
       "id": "server-nebula-orphaned-worker-2026-10-18-0254",
