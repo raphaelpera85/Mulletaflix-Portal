@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T08:57:00-03:00",
+  "generatedAt": "2026-10-18T09:07:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2996,6 +2996,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-strm-scan-readiness-2026-10-18-0907",
+      "title": "Nebula: downloader só confirma prontidão quando o scan começa",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Testes .NET Release e NebulaPython 3.10",
+      "location": "NebulaFtpManager.StartDownloaderAsync; STRM-SCAN-STARTED",
+      "scope": "Evitar sucesso falso do start quando o processo inicia, mas falha ao validar o índice Mongo antes de iniciar a varredura.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T09:00:00-03:00",
+      "updatedAt": "2026-10-18T09:07:00-03:00",
+      "evidence": "A fonte antes aceitava STRM-WORKER-READY, emitido antes da validação do índice Mongo, como conclusão do start. Agora somente STRM-SCAN-STARTED confirma prontidão; os eventos WORKER-READY e WORKER-MONGO-READY seguem disponíveis para progresso. Testes NebulaDownloaderStartupTests Release 30/30 e test_strm_downloader.py com Python 3.10 17/17. Um conjunto C# de startup/mount passou 60/60 antes desta alteração, mas não foi repetido integralmente depois. Nenhum Mongo/Telegram real, download, instalação ou restart foi testado. Log de 16–17/10 é histórico; colisão FTP 2121/worker instalado e transferência real continuam pendentes. Sem release; T2.1 continua em homologação."
+    },
     {
       "id": "server-nebula-live-runtime-promotion-2026-10-18-0827",
       "title": "Nebula: startup usa runtime vivo para promover streaming a transferência",

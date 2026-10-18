@@ -875,6 +875,19 @@ test('portal records latest Nebula scanner and readiness fixes without claiming 
     assert.match(event.evidence, /Release, instalação e primeiro download real continuam pendentes/);
 });
 
+test('portal records scan-only downloader readiness and keeps production validation open', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-strm-scan-readiness-2026-10-18-0907');
+
+    assert.ok(event, 'portal should publish the scan-readiness correction');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /somente STRM-SCAN-STARTED confirma prontidão/);
+    assert.match(event.evidence, /30\/30/);
+    assert.match(event.evidence, /17\/17/);
+    assert.match(event.evidence, /Nenhum Mongo\/Telegram real, download, instalação ou restart foi testado/);
+});
+
 test('portal records the completed isolated stage validation without claiming a release or production download', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-download-stage-lock-validation-2026-10-17-0753');
 
