@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T14:53:00-03:00",
+  "generatedAt": "2026-10-18T15:24:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-introskipper-changeditems-ef-span-2026-10-18-1524",
+      "title": "Intro Skipper: exceção EF no passe ChangedItems corrigida na fonte",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Correção de parâmetro em consulta EF e regressão MariaDB",
+      "location": "AnalysisScheduler → BaseItemAnalyzerTask → IntroSkipperDatabase.ResetItemsForReanalysisAsync",
+      "scope": "Corrigir a falha EF Core ReadOnlySpan<AnalysisMode> relatada no STRM de A Era de Miyu, validar filtro seletivo por modo e documentar o limite de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T14:53:00-03:00",
+      "updatedAt": "2026-10-18T15:24:00-03:00",
+      "evidence": "Causa confirmada na fonte: ResetItemsForReanalysisAsync capturava AnalysisMode[] em expressões EF; o Contains podia ser interpretado como MemoryExtensions.Contains(ReadOnlySpan<T>) e falhava ao avaliar o parâmetro. As duas consultas agora usam IReadOnlySet<AnalysisMode>. A regressão MariaDB foi recompilada e a suíte completa IntroSkipper.Integration.Tests passou 38/38 (0 ignorados), com MariaDB descartável em loopback. Caso cobre reset seletivo Credits, reset Introduction, preservação da anotação manual e do segmento automático correspondente, remoção dos marcadores analisados somente do modo selecionado e preservação de outro item. Revisão adversarial final: sem achados. Avisos Chromaprint sem pontos são independentes. A pesquisa pelo padrão anterior modeArray.Contains( encontrou zero usos. Não houve instalação/restart, alteração de banco produtivo, teste visual nem reprodução real do episódio; versão do plugin em produção não verificada. Nenhum release criado; gates globais e validação pós-release permanecem abertos."
+    },
     {
       "id": "server-image-metadata-flow-audit-2026-10-18-1404",
       "title": "Capas: preservação de imagem principal e falhas reportadas na fonte",

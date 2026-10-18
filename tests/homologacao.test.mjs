@@ -6,6 +6,26 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('Intro Skipper EF regression is published as source-validated and production-pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-introskipper-changeditems-ef-span-2026-10-18-1524');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, []);
+    assert.match(event.evidence, /suíte completa IntroSkipper\.Integration\.Tests passou 38\/38/);
+    assert.match(event.evidence, /Revisão adversarial final: sem achados/);
+    assert.match(event.evidence, /versão do plugin em produção não verificada/);
+    assert.match(event.evidence, /Nenhum release criado/);
+});
+
+test('homologation timeline displays the newly published Intro Skipper event', async () => {
+    const dashboard = createDashboard();
+    await settleDashboard();
+
+    assert.match(dashboard.getElement('event-list').innerHTML, /Intro Skipper: exceção EF no passe ChangedItems corrigida na fonte/);
+});
+
 test('image metadata audit records source correction without claiming production root cause', () => {
     const event = statusData.events.find(item => item.id === 'server-image-metadata-flow-audit-2026-10-18-1404');
 
