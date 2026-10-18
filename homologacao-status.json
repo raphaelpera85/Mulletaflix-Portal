@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T10:03:06-03:00",
+  "generatedAt": "2026-10-18T10:20:14-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
   },
   "coverage": {
-    "completed": 328,
+    "completed": 329,
     "pending": 65,
-    "total": 397,
+    "total": 398,
     "definition": "Checklists de funcionalidades do roadmap (cada checkbox conta como um item); tarefas com evento ativo identificado aparecem como em execução.",
     "inProgress": 4
   },
@@ -245,6 +245,13 @@
     },
     {
       "id": "T0.1.4",
+      "name": "Reamostragem read-only em 18/10/2026: duas baterias sequenciais de 15 GETs a `/System/Info/Public`; snapshots adicionais e timeout isolado, sem carga representativa",
+      "area": "Servidor",
+      "status": "completed",
+      "source": "roadmap"
+    },
+    {
+      "id": "T0.1.5",
       "name": "Repetir sob carga representativa e incluir métricas autenticadas de duração/volume Nebula, footprint dos dados, Linux e amostra temporal suficiente",
       "area": "Servidor",
       "status": "pending",
@@ -6769,6 +6776,21 @@
       "startedAt": "2026-10-18T10:00:00-03:00",
       "updatedAt": "2026-10-18T10:03:06-03:00",
       "evidence": "Na fonte, o manager aguardava [STRM-SCAN-STARTED], emitido depois da descoberta das raízes e títulos monitorados; essa enumeração podia exceder o timeout de startup de 60 segundos e encerrar um worker ainda válido. Agora [STRM-WORKER-MONGO-READY], emitido somente após refresh_cache bem-sucedido, confirma prontidão antes da descoberta; [STRM-SCAN-STARTED] continua como progresso da varredura. Testes Release focados: C# 30/30 e Python 3.10 test_strm_downloader.py 17/17. Consulta local read-only confirmou runtime instalado 12.1.21; as portas 2121 e 2123 estão no mesmo processo Python. Runtime instalado é anterior à fonte candidata; o log histórico não prova causa atual nem transferência. Nenhuma instalação, reinicialização ou transferência produtiva ocorreu. T2.1, smoke test real e gates globais de release seguem pendentes."
+    },
+    {
+      "id": "server-nebula-download-orphan-stream-worker-audit-2026-10-18-1016",
+      "title": "Nebula: runtime Python antigo ocupa portas; log não confirma start do Downloader STRM",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Processos/portas e health HTTP local, versão pública e log recebido; testes focados da fonte",
+      "location": "Instância MulletaFlix 12.1.21; FTP 2121; HTTP 2123; Downloader STRM",
+      "scope": "Reconciliar o log anexado com o runtime atualmente ativo, sem interromper reprodução nem iniciar varredura/download amplo.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T10:10:00-03:00",
+      "updatedAt": "2026-10-18T10:16:36-03:00",
+      "evidence": "O log histórico registra runtime explicitamente em Somente Streaming (fila e workers desativados), depois WinError 10048 ao abrir 127.0.0.1:2121 e tentativas de mount repetidas; não contém marcador STRM de start/readiness/scan nem transferência. Verificação read-only atual: /System/Info/Public HTTP 200, versão instalada 12.1.21; health local da porta 2123 retorna status ready. O processo Python que mantém 2121/2123 iniciou em 16/10, antes do servidor atual iniciado em 17/10, e seu processo pai já não existe: forte evidência de worker órfão, ainda que possa estar servindo playback. Nenhuma ação de parada foi feita para não interromper reprodução. Testes da fonte: NebulaDownloaderStartupTests Release 30/30 e test_strm_downloader.py Python 3.10 17/17. Não há evidência de chamada da ação StartDownloader neste log; o download real e a transição produtiva continuam sem homologação. A liberação das portas depende de janela segura para encerrar o worker antigo; a correção local não está instalada (12.1.21). T2.1 e gate de release permanecem abertos."
     }
   ]
 }

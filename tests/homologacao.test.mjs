@@ -1464,9 +1464,9 @@ test('GetAvatar user visibility source regression is complete while production a
     assert.ok(rollback);
     assert.equal(rollback.status, 'completed');
     assert.match(rollback.name, /12\/12/);
-    assert.equal(statusData.coverage.completed, 328);
+    assert.equal(statusData.coverage.completed, 329);
     assert.equal(statusData.coverage.pending, 65);
-    assert.equal(statusData.coverage.total, 397);
+    assert.equal(statusData.coverage.total, 398);
     assert.ok(Date.parse(statusData.generatedAt) >= Date.parse('2026-10-18T07:11:36-03:00'));
 });
 
@@ -1564,6 +1564,26 @@ test('Nebula log separates the intentional streaming-only mount from transfer mo
     assert.match(event.evidence, /Nenhum comando foi enviado à produção/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.equal(statusData.tracks.find(track => track.id === 'server').status, 'in_progress');
+});
+
+test('server roadmap coverage includes the 18 October baseline resample and current Nebula incident evidence', () => {
+    const resample = statusData.features.find(item => item.id === 'T0.1.4');
+    const remainingBaseline = statusData.features.find(item => item.id === 'T0.1.5');
+    const incident = statusData.events.find(item => item.id === 'server-nebula-download-orphan-stream-worker-audit-2026-10-18-1016');
+
+    assert.equal(resample.status, 'completed');
+    assert.match(resample.name, /Reamostragem read-only em 18\/10\/2026/);
+    assert.equal(remainingBaseline.status, 'pending');
+    assert.ok(incident);
+    assert.equal(incident.status, 'in_progress');
+    assert.deepEqual(incident.featureIds, ['T2.1']);
+    assert.match(incident.evidence, /worker órfão/);
+    assert.match(incident.evidence, /não contém marcador STRM/);
+    assert.match(incident.evidence, /Nenhuma ação de parada foi feita/);
+    assert.equal(statusData.coverage.completed, 329);
+    assert.equal(statusData.coverage.pending, 65);
+    assert.equal(statusData.coverage.total, 398);
+    assert.equal(statusData.coverage.completed + statusData.coverage.pending + statusData.coverage.inProgress, statusData.coverage.total);
 });
 
 test('server baseline publishes short live samples without claiming T0.1 complete', () => {
