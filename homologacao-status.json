@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T03:29:00-03:00",
+  "generatedAt": "2026-10-18T03:40:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6393,6 +6393,21 @@
       "startedAt": "2026-10-17T21:46:00-03:00",
       "updatedAt": "2026-10-17T21:51:00-03:00",
       "evidence": "O anexo registra worker em Somente Streaming, modo que desativa feeder/fila/workers de upload. Mais tarde uma tentativa de Envio completo não consegue bindar 127.0.0.1:2121 (WinError 10048), seguida por retries de mount. O trecho não contém [STRM-WORKER-READY], [STRM-SCAN-STARTED], título em download ou transferência e não identifica o PID do listener; portanto não comprova que o Downloader foi acionado nem qual processo ocupa a porta. A fonte atual tenta StartDownloaderAsync independentemente do resultado do Envio e aguarda readiness. Testes focados Release NebulaHostedServiceConfigurationTests + NebulaDownloaderStartupTests passaram 39/39. Nenhum worker, processo, serviço, mount, configuração ou instalação de produção foi alterado. Runtime e transferência real permanecem sem homologação; release e smoke test pendentes."
+    },
+    {
+      "id": "server-nebula-downloader-disabled-config-check-2026-10-18-0340",
+      "title": "Nebula: autostart do Downloader ignorado porque o serviço está desabilitado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Logs locais de produção, estado read-only da interface e fonte do servidor",
+      "location": "NebulaHostedService startup; configuração NebulaFTP; ação StartDownloader",
+      "scope": "Identificar por que o Downloader STRM permanece parado, sem iniciar varredura ou transferências em massa.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T03:32:00-03:00",
+      "updatedAt": "2026-10-18T03:40:00-03:00",
+      "evidence": "Fato: o log da produção 12.1.21 registra às 20:35:46 de 17/10 `[NEBULA-STARTUP] NebulaFTP está desabilitado na configuração`; a tela administrativa consultada em modo somente leitura mostra Envio/Downloader parados, `Aguardando início do Downloader` e contexto Mongo não inicializado. As duas chamadas POST StartDownloader do log (00:24 e 19:51 de 17/10) antecedem o início do processo atual às 20:35; não comprovam tentativa após esse reinício. MonitorPaths `D:\\midias` e pastas stage existem no host, mas isso não valida acesso pela conta do serviço. MongoDB Windows Service aparece Running, o que não equivale a ping bem-sucedido. Log anexado também tem WinError 10048 no FTP 2121, mas sem marcador do processo STRM. Conclusão: o pipeline global foi deliberadamente omitido no startup por Enabled=false; uma ação manual atual não foi executada nem confirmada. Nenhuma configuração, processo, serviço, banco, Telegram, arquivo de mídia ou download foi alterado. Homologação pendente até o operador habilitar o serviço ou autorizar uma inicialização controlada, que poderá varrer e baixar itens de toda a pasta monitorada."
     }
   ]
 }

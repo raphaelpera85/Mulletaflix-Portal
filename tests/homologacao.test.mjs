@@ -1282,6 +1282,19 @@ test('Nebula downloader startup log recheck stays in progress without claiming p
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula Downloader: log não comprova chamada do worker STRM/);
 });
 
+test('Nebula downloader disabled startup remains pending and does not imply manual start or production success', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-downloader-disabled-config-check-2026-10-18-0340');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /NebulaFTP está desabilitado na configuração/);
+    assert.match(event.evidence, /POST StartDownloader.*antecedem o início do processo atual/);
+    assert.match(event.evidence, /uma ação manual atual não foi executada nem confirmada/);
+    assert.match(event.evidence, /poderá varrer e baixar itens de toda a pasta monitorada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
