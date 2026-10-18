@@ -1773,10 +1773,12 @@ test('Nebula downloader audit records duplicate log, focused tests, and producti
 
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
-    assert.equal(event.updatedAt, '2026-10-18T13:06:00-03:00');
+    assert.equal(event.updatedAt, '2026-10-18T13:14:00-03:00');
     assert.match(event.evidence, /54\.444 bytes, 516 linhas/);
     assert.match(event.evidence, /C# .*54\/54/);
     assert.match(event.evidence, /Python 3\.10 .*3\/3/);
+    assert.match(event.evidence, /NebulaPython 592\/592/);
+    assert.match(event.evidence, /Implementations 1\.498 aprovados\/63 ignorados\/0 falhas/);
     assert.match(event.evidence, /MulletaFlixServer ausente/);
     assert.match(event.evidence, /release seguem abertas/);
     assert.equal(server.status, 'in_progress');
