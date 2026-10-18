@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T07:55:57-03:00",
+  "generatedAt": "2026-10-18T08:02:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6587,6 +6587,21 @@
       "startedAt": "2026-10-18T07:37:18-03:00",
       "updatedAt": "2026-10-18T07:55:57-03:00",
       "evidence": "SaveAvatarAsync agora valida o plugin/configuração antes da gravação e reverte a entrada recém-adicionada e remove o arquivo parcial se a gravação da configuração falhar; erro secundário de limpeza não substitui a exceção original. Teste Release AvatarControllerUserAvatarAuthorizationTests: 12/12 e suíte completa Jellyfin.Api.Tests: 730/730, sem ignorados/falhas. A regressão injeta IOException no serializer, preserva avatar/catálogo anterior e confirma ausência do arquivo novo em diretório temporário. Busca por caminhos equivalentes de gravação no plugin encontrou somente SaveAvatarAsync; instalação, uso com dados reais e produção não foram testados. Sem release; gates globais continuam abertos."
+    },
+    {
+      "id": "server-nebula-pause-conflicting-mount-retries-2026-10-18-0802",
+      "title": "Nebula pausa retries quando outro helper possui o lock de montagem",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula e testes C# Nebula",
+      "location": "NebulaFtpManager.MountDriveNAsync; mount_drive_n.py; lock global de N:",
+      "scope": "Eliminar o ciclo de tentativas de mount a cada três segundos quando outro helper já possui o lock, sem interferir no processo proprietário.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T08:02:00-03:00",
+      "updatedAt": "2026-10-18T08:02:00-03:00",
+      "evidence": "O log histórico de 17/10 mostra retries repetidos em que outro helper já possuía o lock global; o código 3 era considerado retryável e causava novas tentativas automáticas. A fonte agora pausa o retry para código 3 e deixa falhas reais retryáveis. C# Release recompilado NebulaMountRuntimeHealthTests 7/7; conjunto NebulaMount 18/18; git diff --check passou. Não houve ação produtiva, encerramento de processo, mount, instalação ou transferência. O processo proprietário e o estado atual do FTP 2121 continuam desconhecidos; produção, download real e release permanecem pendentes."
     }
   ]
 }

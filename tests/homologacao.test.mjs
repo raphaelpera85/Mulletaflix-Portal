@@ -1411,6 +1411,20 @@ test('GetAvatar user visibility source regression is complete while production a
     assert.ok(Date.parse(statusData.generatedAt) >= Date.parse('2026-10-18T07:11:36-03:00'));
 });
 
+test('Nebula pauses mount retries when another helper owns the lock and leaves production gate open', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-pause-conflicting-mount-retries-2026-10-18-0802');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /código 3 era considerado retryável/);
+    assert.match(event.evidence, /NebulaMountRuntimeHealthTests 7\/7/);
+    assert.match(event.evidence, /NebulaMount 18\/18/);
+    assert.match(event.evidence, /não houve ação produtiva/i);
+    assert.match(event.evidence, /produção, download real e release permanecem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
