@@ -88,6 +88,18 @@ test('publishes the latest Nebula startup finding without marking T2.1 complete'
     assert.match(event.evidence, /sem download real/i);
 });
 
+test('publishes complete Mongo-backed CI selection without claiming integration passed', () => {
+    const event = statusData.events.find(item => item.id === 'server-ci-mongo-category-filter-2026-10-18-1138');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T0.3']);
+    assert.match(event.evidence, /Category=RequiresMongo/);
+    assert.match(event.evidence, /24 casos/);
+    assert.match(event.evidence, /ficaram ignorados/);
+    assert.match(event.evidence, /CI remoto/);
+});
+
 test('records downloader readiness after Mongo and before potentially slow library discovery', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-mongo-ready-before-library-discovery-2026-10-18-1003');
 
@@ -438,7 +450,7 @@ test('server audit publishes the complete local suite and preserves the remote C
 
     const dashboard = createDashboard();
     await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /bloqueio externo do CI remoto/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /bloqueio externo do CI remoto|seleção completa dos testes RequiresMongo/);
 });
 
 test('portal records the current deterministic server suite without claiming integration or production validation', async () => {
