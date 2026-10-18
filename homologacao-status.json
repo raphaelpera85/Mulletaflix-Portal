@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T21:46:00-03:00",
+  "generatedAt": "2026-10-17T21:51:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 63,
         "failed": 0,
         "percent": 98.7,
-        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; stage Windows completo validado. O lock global cobre o pipeline inteiro. Investigação atual reproduziu ModuleNotFoundError porque a instalação 12.1.21 não contém tools/mongo_admission.py, importado por main.py; fonte e stage incluem o módulo. Dois scripts de integridade/build passaram. NSIS está disponível, mas não foi gerado instalador: asset 12.1.22 já existe e tag v12.1.22 contém VersionPrefix 12.1.21. Nenhuma instalação/restart, worker ou download real ocorreu. GitHub CLI sem autenticação; nova versão/tag, release e homologação formal pendentes. Homologação formal continua aberta."
+        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; stage Windows completo validado. O lock global cobre o pipeline inteiro. Investigação atual reproduziu ModuleNotFoundError porque a instalação 12.1.21 não contém tools/mongo_admission.py, importado por main.py; fonte e stage incluem o módulo. Dois scripts de integridade/build passaram. NSIS está disponível, mas não foi gerado instalador: asset 12.1.22 já existe e tag v12.1.22 contém VersionPrefix 12.1.21. Nenhuma instalação/restart, worker ou download real ocorreu. GitHub CLI sem autenticação; nova versão/tag, release e homologação formal pendentes. Rechecagem do log 17/10: modo Somente Streaming desativa fila/feeder; tentativa posterior falha no bind FTP 2121 (WinError 10048), sem marcador do Downloader/transferência. Testes focados de startup nesta sessão 39/39; fonte validada, runtime e download real não homologados. Homologação formal continua aberta."
       }
     },
     {
@@ -6220,6 +6220,21 @@
       "startedAt": "2026-10-17T21:01:00-03:00",
       "updatedAt": "2026-10-17T21:46:00-03:00",
       "evidence": "A auditoria anterior registrou web 418/418 em 75 arquivos (4 workers), Python Nebula 591/591, API .NET 717/717, Providers 790/790 em execução focal, Server 73/1 ignorado, Server Integration 3/140 ignorados, build:check, Branding focado 2/2 e Nebula filtrada 677/24 ignorados. A suíte .NET completa da solução abortou em testhost, sem falha de asserção identificada. Reexecução isolada de Jellyfin.Server.Implementations.Tests concluiu 1.477 aprovados, 63 ignorados, 0 falhas, total 1.540 (1m21s). Nova tentativa serial da solução aprovou Common 31, MediaEncoding 71, Naming 681, API 717, Implementations 1.477/63 ignorados, Controller 63, XbmcMetadata 39, Model 684, Networking 124, Server 73/1 ignorado, Server Integration 3/140 ignorados e IntroSkipper Integration 14/23 ignorados. O testhost não mostrou progresso ao iniciar Providers por mais de um minuto; a execução foi cancelada manualmente, sem asserção falha. Isso não é aprovação agregada. Log registra WinError 10048 em 127.0.0.1:2121 e outro helper segurando o lock de mount N:, sem identificação do processo nem confirmação de transferência. Nenhum estado de produção foi alterado. Homologação real, transferência, instalação limpa, testes opt-in externos e CI multiplataforma continuam pendentes; sem release nesta etapa."
+    },
+    {
+      "id": "server-nebula-latest-log-download-recheck-2026-10-17-2151",
+      "title": "Nebula: log mostra Somente Streaming e colisão; Downloader sem confirmação",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional fornecido pelo operador e testes focados da fonte",
+      "location": "NebulaHostedService.StartComponentsAsync; StartDownloaderAsync; FTP 2121; mount N:",
+      "scope": "Distinguir o modo streaming da fila de download e validar o comportamento independente de startup sem tocar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-17T21:46:00-03:00",
+      "updatedAt": "2026-10-17T21:51:00-03:00",
+      "evidence": "O anexo registra worker em Somente Streaming, modo que desativa feeder/fila/workers de upload. Mais tarde uma tentativa de Envio completo não consegue bindar 127.0.0.1:2121 (WinError 10048), seguida por retries de mount. O trecho não contém [STRM-WORKER-READY], [STRM-SCAN-STARTED], título em download ou transferência e não identifica o PID do listener; portanto não comprova que o Downloader foi acionado nem qual processo ocupa a porta. A fonte atual tenta StartDownloaderAsync independentemente do resultado do Envio e aguarda readiness. Testes focados Release NebulaHostedServiceConfigurationTests + NebulaDownloaderStartupTests passaram 39/39. Nenhum worker, processo, serviço, mount, configuração ou instalação de produção foi alterado. Runtime e transferência real permanecem sem homologação; release e smoke test pendentes."
     }
   ]
 }
