@@ -1406,7 +1406,7 @@ test('GetAvatar user visibility source regression is complete while production a
     assert.equal(rollback.status, 'completed');
     assert.match(rollback.name, /12\/12/);
     assert.equal(statusData.coverage.completed, 328);
-    assert.equal(statusData.coverage.pending, 62);
+    assert.equal(statusData.coverage.pending, 65);
     assert.equal(statusData.coverage.total, 397);
     assert.ok(Date.parse(statusData.generatedAt) >= Date.parse('2026-10-18T07:11:36-03:00'));
 });
@@ -1422,6 +1422,23 @@ test('Nebula pauses mount retries when another helper owns the lock and leaves p
     assert.match(event.evidence, /NebulaMount 18\/18/);
     assert.match(event.evidence, /não houve ação produtiva/i);
     assert.match(event.evidence, /produção, download real e release permanecem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('Nebula Supabase admission audit reports evidence limits without claiming a stale lease', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-supabase-admission-audit-2026-10-18-0812');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T4.2']);
+    assert.match(event.evidence, /592\/592/);
+    assert.match(event.evidence, /Três testes C# Mongo compilaram e foram ignorados/);
+    assert.match(event.evidence, /não identifica proprietário ou expiração da lease/);
+    assert.match(server.testAudit.label, /592\/592/);
+    assert.match(server.testAudit.label, /Homologação formal continua aberta/);
+    assert.equal(statusData.coverage.pending, 65);
+    assert.equal(statusData.coverage.inProgress, 4);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 

@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T08:02:00-03:00",
+  "generatedAt": "2026-10-18T08:16:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
   },
   "coverage": {
     "completed": 328,
-    "pending": 62,
+    "pending": 65,
     "total": 397,
     "definition": "Checklists de funcionalidades do roadmap (cada checkbox conta como um item); tarefas com evento ativo identificado aparecem como em execução.",
-    "inProgress": 7
+    "inProgress": 4
   },
   "tracks": [
     {
@@ -33,7 +33,7 @@
         "skipped": 64,
         "failed": 0,
         "percent": 98.7,
-        "label": "Gate determinístico da solução .NET Release (FullyQualifiedName!~Integration): 4.977 aprovados, 64 ignorados, 0 falhas (5.041 total). NebulaPython completo: 592/592. Projetos Integration/live foram excluídos; Server Integration e IntroSkipper Integration não tiveram testes correspondentes ao filtro, portanto não são considerados aprovados. Provedores foi validado apenas com filtro; uma execução sem filtro, que inclui testes externos, foi interrompida sem resultado. Sem CI remoto, instalação, operação ou smoke test de produção nesta rodada; homologação formal continua aberta."
+        "label": "Gate determinístico da solução .NET Release (FullyQualifiedName!~Integration): 4.977 aprovados, 64 ignorados, 0 falhas (5.041 total). NebulaPython completo revalidado em 18/10: 592/592. Três testes C# de admissão Mongo compilaram, mas foram ignorados porque o Mongo isolado 127.0.0.1:27099 não estava disponível. O log histórico não comprova lease órfã; integração C#/Python, CI remoto, instalação, operação e smoke test continuam pendentes. Homologação formal continua aberta."
       }
     },
     {
@@ -6602,6 +6602,21 @@
       "startedAt": "2026-10-18T08:02:00-03:00",
       "updatedAt": "2026-10-18T08:02:00-03:00",
       "evidence": "O log histórico de 17/10 mostra retries repetidos em que outro helper já possuía o lock global; o código 3 era considerado retryável e causava novas tentativas automáticas. A fonte agora pausa o retry para código 3 e deixa falhas reais retryáveis. C# Release recompilado NebulaMountRuntimeHealthTests 7/7; conjunto NebulaMount 18/18; git diff --check passou. Não houve ação produtiva, encerramento de processo, mount, instalação ou transferência. O processo proprietário e o estado atual do FTP 2121 continuam desconhecidos; produção, download real e release permanecem pendentes."
+    },
+    {
+      "id": "server-nebula-supabase-admission-audit-2026-10-18-0812",
+      "title": "Nebula/Supabase: admissão auditada, lease órfã não comprovada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.2"],
+      "local": "NebulaPython 3.10 e testes C# de admissão Mongo",
+      "location": "NebulaSupabaseSyncService; NebulaMongoContext; mongo_admission.py",
+      "scope": "Auditar adiamentos recorrentes do backup sem consultar banco de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T08:12:00-03:00",
+      "updatedAt": "2026-10-18T08:12:00-03:00",
+      "evidence": "Anexo duplicado da execução histórica de 16–17/10; cadência de 30 s pode coincidir com heartbeat e não identifica proprietário ou expiração da lease. NebulaPython completo: 592/592. Três testes C# Mongo compilaram e foram ignorados por ausência de Mongo descartável em 127.0.0.1:27099. Nenhum banco de produção, Supabase ou Telegram foi acessado; nenhum runtime alterado. Integração C#/Python no mesmo Mongo e transferência real permanecem pendentes."
     }
   ]
 }
