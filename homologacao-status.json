@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T04:44:21-03:00",
+  "generatedAt": "2026-10-18T05:04:20-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6468,6 +6468,36 @@
       "startedAt": "2026-10-18T04:29:00-03:00",
       "updatedAt": "2026-10-18T04:44:00-03:00",
       "evidence": "Causa confirmada na fonte: a promoção só encerrava o runtime antigo para a engine C#; no caminho Python o worker stream-only permanecia ativo e o worker novo falhava ao vincular 127.0.0.1:2121 (WinError 10048). Corrigido para parar o runtime anterior antes da promoção e adicionado teste da condição de transição. C# Nebula startup/hosted/mount Release passou 49/49; Python ciclo de vida/health/mount passou 16/16; diff check aprovado. A primeira coleta Python falhou por PYTHONPATH ausente e passou na repetição correta. GET read-only confirma produção 12.1.21; listeners atuais foram preservados. Sem instalação, restart ou download real; fonte corrigida, homologação produtiva e release pendentes."
+    },
+    {
+      "id": "server-getavatar-visibility-audit-2026-10-18-0459",
+      "title": "Auditoria: visibilidade do avatar customizado ainda precisa de validação HTTP",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T6.1"],
+      "local": "Inspeção estática de controllers e testes HTTP focados",
+      "location": "MulletaFlix.Plugin.GetAvatar/Controllers/AvatarController.cs; Jellyfin.Api/Controllers/ImageController.cs",
+      "scope": "Registrar diferença de autorização em GET /GetAvatar/UserAvatar/{userId} e definir a matriz de compatibilidade antes de alterar o contrato.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T04:44:00-03:00",
+      "updatedAt": "2026-10-18T04:59:51-03:00",
+      "evidence": "Inspeção estática: a rota customizada declara AllowAnonymous e busca o mapeamento por GUID sem validar existência/visibilidade do usuário. A política de ImageController considera flags IsHidden/IsDisabled, setup, dispositivo/rede, dono, administrador e API key. Busca no frontend fonte não encontrou consumo da rota, mas isso não exclui clientes externos. Testes Release de ProtectedApiSurfacesHttpTests, NebulaAuthorizationHttpTests, GetAvatarAdminAuthorizationTests e BrandingControllerPrivacyTests: 30/30 aprovados; nenhum cobre UserAvatar. Não houve chamada HTTP à rota, teste com avatar real ou alteração de produção. Achado é potencial, não exploração confirmada. Próximo gate: compatibilidade e matriz HTTP isolada, depois correção compartilhando a política."
+    },
+    {
+      "id": "server-nebula-download-log-recheck-2026-10-18-0504",
+      "title": "Nebula: rechecagem do log e validação local de startup/download",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional de 16–17/10, fonte C#/Python e testes focados",
+      "location": "NebulaHostedService; NebulaFtpManager; runtime Python; mount N:",
+      "scope": "Verificar se o Downloader STRM inicia após falha do Envio e revalidar correções de promoção e montagem.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T04:59:51-03:00",
+      "updatedAt": "2026-10-18T05:04:20-03:00",
+      "evidence": "Log anexado (516 linhas, execuções de 16–17/10) mostra WinError 10048 ao vincular FTP 127.0.0.1:2121 e repetidas respostas do helper de mount indicando outra tentativa já ativa. Não contém marcadores STRM de worker, scan, fila ou transferência e não comprova início do Downloader. Fonte local atual tenta iniciar Downloader independentemente do resultado do Envio e encerra runtime Python stream-only durante promoção. Testes Release C# Nebula startup/hosted/queue: 43 aprovados, 18 ignorados por pré-requisitos externos, 0 falhas; Python 3.10 lifecycle/mount: 9/9. Nenhum teste de produção ou download real; nenhum serviço, worker, configuração ou mount alterado. Instalação e smoke test controlado seguem pendentes."
     }
   ]
 }
