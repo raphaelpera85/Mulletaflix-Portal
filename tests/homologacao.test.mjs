@@ -1670,3 +1670,20 @@ test('public homologation data contains no absolute Windows user-profile paths',
     visit(statusData);
     assert.deepEqual(matchingFields, []);
 });
+
+test('Nebula log validation distinguishes source tests from production download homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-log-validation-2026-10-18-1044');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /592\/592/);
+    assert.match(event.evidence, /47\/47/);
+    assert.match(event.evidence, /1\.496 aprovados, 63 ignorados, 0 falhas/);
+    assert.match(event.evidence, /não comprova falha da ação separada de download/);
+    assert.match(event.evidence, /não houve transferência real/);
+    assert.match(event.evidence, /release permanecem abertas/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

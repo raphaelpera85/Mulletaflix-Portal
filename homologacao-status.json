@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T10:33:00-03:00",
+  "generatedAt": "2026-10-18T10:44:04-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6821,6 +6821,21 @@
       "startedAt": "2026-10-18T10:27:00-03:00",
       "updatedAt": "2026-10-18T10:33:00-03:00",
       "evidence": "A nova leitura do log anexado confirma: em 16/10 o runtime foi iniciado em Somente Streaming, que desativa feeder, fila e workers; em 17/10 duas inicializações do modo Envio aparecem e o bind de 127.0.0.1:2121 falha com WinError 10048, seguido de retries do mount. Nenhum marcador StartDownloader, STRM-WORKER-READY, STRM-SCAN-STARTED, item enfileirado ou transferência consta no trecho. Checagem local read-only em 18/10: GET /System/Info/Public recusou conexão em 127.0.0.1:8096; Python PID 6080 mantém 2121 e 2123 em LISTEN desde 16/10, pai PID 19764 já não está presente. Isso é compatível com worker antigo/órfão, mas ele pode servir streams; não foi encerrado. C# Release (NebulaDownloaderStartupTests, NebulaHostedServiceConfigurationTests e NebulaMountRuntimeHealthTests): 54/54 aprovados. Python tests não executaram: pytest ausente no Python 3.14 disponível. Sem API disponível e sem autorização segura para parar o listener, a ação/download produtivo permanece pendente; nenhum restart ou transferência foi feito. T2.1 e gate de release permanecem abertos."
+    },
+    {
+      "id": "server-nebula-log-validation-2026-10-18-1044",
+      "title": "Nebula: validação ampliada passa; log não comprova chamada do Downloader",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log de 16–17/10, testes Release da fonte e estrutura do fluxo",
+      "location": "Nebula streaming/envio, FTP 2121 e Downloader STRM",
+      "scope": "Atualizar evidência de homologação após repetir testes no ambiente Python correto e executar a suíte .NET Release, sem iniciar varredura ou transferência ampla.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T10:36:00-03:00",
+      "updatedAt": "2026-10-18T10:44:04-03:00",
+      "evidence": "O log histórico confirma que em 16/10 o runtime iniciou em Somente Streaming, desativando feeder/fila/workers; em 17/10 o modo Envio falhou ao vincular 127.0.0.1:2121 (WinError 10048) e houve retries do mount. O trecho não contém chamada StartDownloader, readiness/scan STRM, item enfileirado ou transferência; não comprova falha da ação separada de download. Validação local da fonte: NebulaPython Python 3.10 592/592; testes C# NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests Release 47/47; suíte .NET Release da solução com filtro FullyQualifiedName!~Integration terminou exit 0; Jellyfin.Server.Implementations.Tests reportou 1.496 aprovados, 63 ignorados, 0 falhas. A primeira execução pytest na raiz falhou apenas na resolução de imports; repetida no diretório Tools/NebulaPython passou. Nenhum processo, serviço, configuração, mount, banco ou mídia produtiva foi alterado; não houve transferência real. Homologação operacional T2.1 e release permanecem abertas até runtime atualizado e smoke de um item com readiness, scan e transferência observados."
     }
   ]
 }
