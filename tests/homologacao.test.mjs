@@ -16,6 +16,9 @@ test('Intro Skipper EF regression is published as source-validated and productio
     assert.match(event.evidence, /suíte completa IntroSkipper\.Integration\.Tests passou 38\/38/);
     assert.match(event.evidence, /Revisão adversarial final: sem achados/);
     assert.match(event.evidence, /versão do plugin em produção não verificada/);
+    assert.match(event.evidence, /Revalidação nesta sessão: solução recompilada Release e suíte completa IntroSkipper\.Integration\.Tests passou 38\/38, 0 ignorados/);
+    assert.match(event.evidence, /MariaDB descartável 11\.4\.4 em 127\.0\.0\.1:33681/);
+    assert.match(event.evidence, /o log não informa versão e não confirma a causa operacional/);
     assert.match(event.evidence, /Nenhum release criado/);
 });
 
