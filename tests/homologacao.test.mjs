@@ -1551,6 +1551,22 @@ test('Nebula log separates the intentional streaming-only mount from transfer mo
     assert.equal(statusData.tracks.find(track => track.id === 'server').status, 'in_progress');
 });
 
+test('server baseline publishes short live samples without claiming T0.1 complete', () => {
+    const event = statusData.events.find(item => item.id === 'server-production-baseline-resample-2026-10-18-0942');
+    const feature = statusData.features.find(item => item.id === 'T0.1');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T0.1']);
+    assert.match(event.evidence, /Duas baterias de 15 GETs/);
+    assert.match(event.evidence, /p95 nearest-rank\/max 785,36 ms/);
+    assert.match(event.evidence, /excedeu timeout de 5 s/);
+    assert.match(event.evidence, /Baselines? T0\.1 segue parcial/);
+    assert.equal(feature.status, 'in_progress');
+    assert.equal(statusData.coverage.pending, 65);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;

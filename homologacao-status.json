@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T09:36:31-03:00",
+  "generatedAt": "2026-10-18T09:42:43-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6724,6 +6724,21 @@
       "startedAt": "2026-10-18T09:33:02-03:00",
       "updatedAt": "2026-10-18T09:36:31-03:00",
       "evidence": "O log histórico anexado (16/10) mostra MountDriveN inicializando o runtime em Modo Somente Streaming. Em seguida o worker registra explicitamente que feeder, fila e workers de upload estão desativados, e lista apenas as pastas de stage F:\\NebulaStage e E:\\NebulaStage; não há confirmação de fila/transferência. O anexo também não contém marcador de start/readiness/scan do Downloader STRM. A fonte confirma que a montagem automática chama StartEnvioAsync(streamOnly: true), enquanto o comando administrativo Iniciar Envio chama streamOnly:false. No código atual, NebulaHostedService tenta o Downloader STRM separadamente, mesmo que Envio falhe; mas runtime instalado 12.1.21 diverge dessa fonte. Assim, o log antigo confirma streaming-only naquela execução e não prova se o downloader atual foi tentado nem que o motor atual falhou. Nenhum comando foi enviado à produção. Próximo passo é validar runtime compatível e download controlado em ambiente seguro; T2.1 e release seguem pendentes."
+    },
+    {
+      "id": "server-production-baseline-resample-2026-10-18-0942",
+      "title": "Baseline: nova amostra read-only mostra picos de latência e memória atual",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T0.1"],
+      "local": "Servidor local instalado; somente GET público e leitura de métricas do processo",
+      "location": "GET /System/Info/Public e processo do servidor",
+      "scope": "Repetir baseline em execução real sem concorrência e registrar limites estatísticos e de cobertura.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T09:36:00-03:00",
+      "updatedAt": "2026-10-18T09:42:43-03:00",
+      "evidence": "Duas baterias de 15 GETs sequenciais a /System/Info/Public responderam 15/15 HTTP 200. Bateria A: p50 4,39 ms e p95 nearest-rank/max 785,36 ms; B: p50 10,64 ms e p95 nearest-rank/max 366,86 ms. N=15 faz p95 nearest-rank coincidir com o máximo, então cauda não é estimativa estável. Snapshot do processo: working set 2.452,9 MiB, private bytes 2.578,5 MiB e uptime aproximado 13,1 h. Uma chamada isolada excedeu timeout de 5 s; próxima chamada recebeu HTTP 200 em 946 ms. Causa não determinada. Somente leituras; sem restart/configuração/carga concorrente. Baseline T0.1 segue parcial: falta endpoint autenticado, janela/carga representativa, disco, duração/volume Nebula e Linux."
     }
   ]
 }
