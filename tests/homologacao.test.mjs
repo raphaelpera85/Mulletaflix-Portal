@@ -1271,10 +1271,12 @@ test('Nebula downloader startup log recheck stays in progress without claiming p
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.deepEqual(event.featureIds, ['T2.1']);
-    assert.match(event.evidence, /PID 6080/);
-    assert.match(event.evidence, /39\/39/);
-    assert.match(event.evidence, /17\/17/);
-    assert.match(event.evidence, /Nenhum POST, instalação\/restart.*ou download real/);
+    assert.match(event.evidence, /Enabled=false/);
+    assert.match(event.evidence, /autostart pulado/);
+    assert.match(event.evidence, /rota manual StartDownloaderAsync, que não foi acionada/);
+    assert.match(event.evidence, /C# Debug focados 51\/51/);
+    assert.match(event.evidence, /Python 3\.10 lifecycle\/downloader 23\/23/);
+    assert.match(event.evidence, /T2\.1 segue pendente até teste manual autorizado e transferência real/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
