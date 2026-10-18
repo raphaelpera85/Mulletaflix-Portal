@@ -2990,7 +2990,7 @@
       "featureIds": [
         "T2.1"
       ],
-      "local": "Análise do log anexado e testes locais Release",
+      "local": "Leitura da configuração e da rota manual; testes locais Debug/Python 3.10",
       "location": "NebulaHostedService; NebulaFtpManager; strm_downloader.py",
       "scope": "Distinguir o processo de streaming do Downloader STRM e revalidar o caminho de inicialização no código-fonte.",
       "status": "in_progress",
