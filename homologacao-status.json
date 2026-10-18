@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T21:51:00-03:00",
+  "generatedAt": "2026-10-18T02:25:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 63,
         "failed": 0,
         "percent": 98.7,
-        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; stage Windows completo validado. O lock global cobre o pipeline inteiro. Investigação atual reproduziu ModuleNotFoundError porque a instalação 12.1.21 não contém tools/mongo_admission.py, importado por main.py; fonte e stage incluem o módulo. Dois scripts de integridade/build passaram. NSIS está disponível, mas não foi gerado instalador: asset 12.1.22 já existe e tag v12.1.22 contém VersionPrefix 12.1.21. Nenhuma instalação/restart, worker ou download real ocorreu. GitHub CLI sem autenticação; nova versão/tag, release e homologação formal pendentes. Rechecagem do log 17/10: modo Somente Streaming desativa fila/feeder; tentativa posterior falha no bind FTP 2121 (WinError 10048), sem marcador do Downloader/transferência. Testes focados de startup nesta sessão 39/39; fonte validada, runtime e download real não homologados. Homologação formal continua aberta."
+        "label": "Suíte da solução em Release não-Integration anterior: 4.919 aprovados, 63 ignorados, 0 falhas (4.982 total). Revalidação 17/10: NebulaPython 586/586; NebulaDownloaderStartupTests 9/9; Jellyfin.Server.Implementations.Tests 1.458 aprovados, 62 ignorados, 0 falhas; testes do empacotador 4/4; stage Windows completo validado. O lock global cobre o pipeline inteiro. Investigação atual reproduziu ModuleNotFoundError porque a instalação 12.1.21 não contém tools/mongo_admission.py, importado por main.py; fonte e stage incluem o módulo. Dois scripts de integridade/build passaram. NSIS está disponível, mas não foi gerado instalador: asset 12.1.22 já existe e tag v12.1.22 contém VersionPrefix 12.1.21. Nenhuma instalação/restart, worker ou download real ocorreu. GitHub CLI sem autenticação; nova versão/tag, release e homologação formal pendentes. Rechecagem de 18/10: endpoint local ainda reporta produção 12.1.21; Python Nebula 592/592 e testes C# focados de startup 39/39; WinError 10048 segue sem PID dono identificado e sem confirmação do Downloader/transferência. Homologação formal continua aberta."
       }
     },
     {
@@ -2940,6 +2940,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-download-runtime-check-2026-10-18-0225",
+      "title": "Nebula: produção segue 12.1.21; porta FTP impede validar o download",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional anexado, endpoint local somente leitura e testes focados da fonte",
+      "location": "NebulaHostedService; NebulaFtpManager; FTP 2121; readiness HTTP 2123",
+      "scope": "Revalidar a colisão FTP/readiness, confirmar versão executada e ampliar cobertura do comportamento de falha sem tocar na produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T02:19:00-03:00",
+      "updatedAt": "2026-10-18T02:25:00-03:00",
+      "evidence": "O endpoint local /System/Info/Public respondeu HTTP 200 e informa produção 12.1.21; a validação de PID no /health existe na fonte atual, mas não está comprovada instalada. No log, a mensagem Runtime Python pronto na porta 2123 precede por segundos a inicialização de bots e a falha WinError 10048 ao abrir 127.0.0.1:2121; isso é compatível com readiness antigo aceitando outro processo, mas o PID dono do listener não foi identificado. Não há marcador [STRM-WORKER-READY], título em download ou transferência no trecho. Regressão adicionada: bind FTP ocupado deve retornar falha, parar bots e impedir início HTTP. Python Nebula 592/592; C# NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests Release 39/39. Nenhum worker, processo, serviço, mount, configuração ou instalação de produção foi alterado. Release, implantação e primeiro download real permanecem pendentes."
+    },
     {
       "id": "server-nebula-mount-duplicate-result-fix-2026-10-17-2024",
       "title": "Nebula: helper distingue unidade pronta de montagem concorrente",

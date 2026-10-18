@@ -1192,6 +1192,25 @@ test('Nebula downloader starts independently while automatic N drive retry stays
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula production recheck publishes the stale runtime, port collision, and local test evidence', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-runtime-check-2026-10-18-0225');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /HTTP 200.*produção 12\.1\.21/);
+    assert.match(event.evidence, /readiness antigo aceitando outro processo/);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /Python Nebula 592\/592/);
+    assert.match(event.evidence, /Release 39\/39/);
+    assert.match(event.evidence, /primeiro download real permanecem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /produção segue 12\.1\.21; porta FTP impede validar o download/);
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;
