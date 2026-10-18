@@ -1324,6 +1324,22 @@ test('Nebula autosave correction remains partial until a real STRM download is v
     assert.match(event.title, /autosave preserva Enabled/);
 });
 
+test('Nebula download startup log remains partial until runtime transfer is verified', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-download-start-runtime-log-2026-10-18-0427');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.deepEqual(event.featureIds, ['T2.1']);
+    assert.match(event.evidence, /Somente Streaming, que desativa feeder, fila e workers de upload/);
+    assert.match(event.evidence, /WinError 10048/);
+    assert.match(event.evidence, /startup\/configuração\/mount C# 45\/45/);
+    assert.match(event.evidence, /ciclo de vida\/mount Python 9\/9/);
+    assert.match(event.evidence, /suíte NebulaPython completa 592\/592/);
+    assert.match(event.evidence, /execução global inconclusiva, não aprovada/);
+    assert.match(event.evidence, /Nenhum serviço\/processo\/mount\/configuração.*nenhuma transferência real/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('public homologation data contains no absolute Windows user-profile paths', () => {
     const matchingFields = [];
     const userProfilePath = /[A-Za-z]:\\Users\\/i;

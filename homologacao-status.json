@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T04:03:00-03:00",
+  "generatedAt": "2026-10-18T04:29:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -6438,6 +6438,21 @@
       "startedAt": "2026-10-18T03:52:00-03:00",
       "updatedAt": "2026-10-18T04:03:00-03:00",
       "evidence": "Corrigido o painel: autosaves preservam o Enabled persistido; somente salvar explicitamente usa o checkbox e passa pela confirmação. Testes: JavaScript 4/4, helper de mount Python 3.10 3/3, testes C# focados Release 39/39; node --check aprovado. A tentativa Python 3.12 foi omitida porque esse runtime não está instalado. O log do operador é de 16–17/10: modo Somente Streaming, conflito de bind FTP 127.0.0.1:2121 (WinError 10048) e retries do helper antigo; não há readiness/scan STRM, item de fila ou transferência. A fonte atual distingue concorrência de mount com código 3, mas o runtime atualmente instalado não foi comparado nesta sessão. Nenhuma configuração, serviço, processo, mídia, instalação ou download de produção foi alterado. Produção 12.1.21 não foi homologada e nenhuma release foi criada; T2.1 permanece em andamento."
+    },
+    {
+      "id": "server-nebula-download-start-runtime-log-2026-10-18-0427",
+      "title": "Nebula: log confirma modo streaming, colisão de porta e Downloader sem readiness",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Log operacional anexado, código-fonte e regressões locais",
+      "location": "NebulaHostedService; NebulaFtpManager; worker STRM; FTP 2121 e mount N:",
+      "scope": "Validar a hipótese do Downloader não iniciado e separar evidência do modo streaming, conflito FTP e montagem sem homologar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-18T04:03:00-03:00",
+      "updatedAt": "2026-10-18T04:29:00-03:00",
+      "evidence": "O log de 16–17/10 registra `main.py` em Somente Streaming, que desativa feeder, fila e workers de upload. Uma inicialização posterior em modo Envio falha ao vincular `127.0.0.1:2121` (WinError 10048); as tentativas seguintes encontram outro helper de montagem, e código 0 do helper antigo não comprova que N: esteja pronto. Não aparecem `[STRM-WORKER-READY]`, `[STRM-SCAN-STARTED]`, item em fila ou transferência. A fonte atual inicia o Downloader em processo separado mesmo se Envio falhar, espera readiness do processo recém-criado e distingue concorrência do mount (código 3); isso não prova que a instalação antiga esteja corrigida. Testes direcionados Release: startup/configuração/mount C# 45/45; ciclo de vida/mount Python 9/9; suíte NebulaPython completa 592/592. A solução .NET serial chegou a Providers após testes de projetos anteriores, mas ficou mais de cinco minutos sem progresso e foi cancelada sem falha de asserção observada; execução global inconclusiva, não aprovada. Nenhum serviço/processo/mount/configuração, instalação, banco, Telegram ou mídia de produção foi alterado e nenhuma transferência real foi feita. Homologação de runtime/download e release permanecem pendentes."
     }
   ]
 }
