@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T06:50:15-03:00",
+  "generatedAt": "2026-10-18T07:04:20-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -2996,8 +2996,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-18T03:10:00-03:00",
-      "updatedAt": "2026-10-18T06:50:15-03:00",
-      "evidence": "O log de 16–17/10 mostra main.py em Somente Streaming e falha de bind FTP 127.0.0.1:2121, sem chamada POST /NebulaFtp/Actions/StartDownloader, readiness/scan STRM, fila ou transferência. A interface fonte chama o endpoint correto e verifica retorno true. Rechecagem read-only anterior às 03:29: /System/Info/Public HTTP 200, servidor 12.1.21; python.exe PID 6080, iniciado em 16/10 21:16, escuta FTP 2121 e HTTP 2123. Fonte 12.1.24 tenta StartDownloaderAsync independentemente do Envio. Nesta revalidação, config NebulaFTP.xml Enabled=false; uma raiz MonitorPaths configurada e existente; startup confirma autostart pulado. O flag explica somente autostart, não a rota manual StartDownloaderAsync, que não foi acionada. Snapshot atual sem listeners 2121/2123. Testes desta rodada: C# Debug focados 51/51 e Python 3.10 lifecycle/downloader 23/23. Nenhum serviço, processo, config, mount, instalação, mídia ou download de produção alterado; T2.1 segue pendente até teste manual autorizado e transferência real."
+      "updatedAt": "2026-10-18T07:04:20-03:00",
+      "evidence": "O log de 16–17/10 mostra main.py em Somente Streaming e falha de bind FTP 127.0.0.1:2121, sem chamada POST /NebulaFtp/Actions/StartDownloader, readiness/scan STRM, fila ou transferência. A interface fonte chama o endpoint correto e verifica retorno true. Rechecagem read-only anterior às 03:29: /System/Info/Public HTTP 200, servidor 12.1.21; python.exe PID 6080, iniciado em 16/10 21:16, escuta FTP 2121 e HTTP 2123. Fonte 12.1.24 tenta StartDownloaderAsync independentemente do Envio. Config atual: Enabled=false e uma raiz MonitorPaths existente; o log de startup confirma autostart pulado. Inspeção da rota confirma que StartDownloader não testa Enabled, mas encaminha ao manager. O worker recebe todas as raízes MonitorPaths por --sources e executa com --watch; a ação pode indexar e monitorar a biblioteca inteira e não serve para smoke test de um título. Mongo pode ser inicializado/restaurado do Supabase. Nenhuma chamada manual ou operação de produção foi feita. Snapshot sem listeners 2121/2123. Testes desta rodada: C# Debug focados 51/51 e Python 3.10 lifecycle/downloader 23/23; portal 82/82. T2.1 segue pendente até teste em ambiente isolado ou autorização explícita para produção e transferência real."
     },
     {
       "id": "server-nebula-orphaned-worker-2026-10-18-0254",
