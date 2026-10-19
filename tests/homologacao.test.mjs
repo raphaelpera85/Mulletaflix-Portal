@@ -6,6 +6,26 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('cross-area server audit publishes focused verification and unresolved release blockers', async () => {
+    const event = statusData.events.find(item => item.id === 'server-cross-area-audit-getavatar-web-2026-10-19-1132');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /branch\/tag v12\.1\.24 não tem objeto Release/);
+    assert.match(event.evidence, /billing antes dos steps/);
+    assert.match(event.evidence, /MetadataServiceTests\|ItemImageProviderRefreshTests 44\/44 Release/);
+    assert.match(event.evidence, /AvatarControllerUserAvatarAuthorizationTests 19\/19 Release/);
+    assert.match(event.evidence, /Vitest 418\/418 em 75 arquivos/);
+    assert.match(event.evidence, /rollback XML do GetAvatar grava fora do lock privado/);
+    assert.match(event.evidence, /concorrência abrangente e teste EF real de ImageInfo pendentes/);
+    assert.match(event.evidence, /Nenhuma produção ou mídia real foi alterada/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Auditoria do servidor: atualização, capas, GetAvatar e web/);
+});
+
 test('update center recheck publishes the branch and GitHub Release distinction with current assets', async () => {
     const event = statusData.events.find(item => item.id === 'server-update-center-branch-release-recheck-2026-10-19-1036');
 
