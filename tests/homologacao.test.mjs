@@ -2045,8 +2045,11 @@ test('cross-stack server validation records Python and web results without claim
     assert.match(event.evidence, /UpdateInfoController consulta a coleção pública de Releases do GitHub e só aceita pacote \.zip/);
     assert.match(event.evidence, /API confirma latest v12\.1\.21 e tag v12\.1\.24 retorna HTTP 404/);
     assert.match(event.evidence, /branch\/tag não aciona o atualizador/);
-    assert.match(event.evidence, /Mongo de teste 127\.0\.0\.1:27099 não está acessível/);
-    assert.match(event.evidence, /CI remoto, integrações descartáveis, runtime e smoke test permanecem pendentes; Release permanece pendente até cumprir esses gates/);
+    assert.match(event.evidence, /Category=RequiresMongo` passou 24\/24.*127\.0\.0\.1:27099/);
+    assert.match(event.evidence, /IntroSkipper\.Integration\.Tests` MariaDB passou 39\/39.*127\.0\.0\.1:33099/);
+    assert.match(event.evidence, /UserManager\.GetFirstUser\(\).*39\/39 passaram/);
+    assert.match(event.evidence, /Mongo 27017 e MariaDB 3306 não foram acessadas/);
+    assert.match(event.evidence, /CI remoto, integração Server end-to-end, runtime e smoke test permanecem pendentes; Release permanece pendente até cumprir esses gates/);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
