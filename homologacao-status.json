@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T20:26:00-03:00",
+  "generatedAt": "2026-10-19T20:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7601,6 +7601,21 @@
       "startedAt": "2026-10-19T20:14:00-03:00",
       "updatedAt": "2026-10-19T20:26:00-03:00",
       "evidence": "IUserManager.AcquireProfileImageUpdateLockAsync(Guid) implementado em UserManager com AsyncKeyedLocker<Guid>. GetAvatar (seleção, remoção e reparo obsoleto) e ImageController (upload/exclusão) adquirem o mesmo lease por usuário; a API relê e reautoriza o usuário dentro do lock. API focal: 40/40; UserManagerAuthenticationLockTests: 9/9, incluindo serialização do mesmo usuário e independência entre usuários; Jellyfin.Api.Tests: 742/742; Jellyfin.Server.Implementations.Tests: 1.508 aprovados, 64 ignorados, 0 falhas; build Release GetAvatar: 0 avisos/0 erros. Limites: sem HTTP concorrente integrado, MariaDB, runtime instalado, produção ou GitHub Release; nenhuma release criada."
+    },
+    {
+      "id": "server-native-profile-image-preserve-on-upload-failure-2026-10-19-2042",
+      "title": "Upload nativo de perfil preserva a imagem anterior em falhas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "ImageControllerUserImageAuthorizationTests e Jellyfin.Api.Tests Release",
+      "location": "Jellyfin.Api/Controllers/ImageController.cs; tests/Jellyfin.Api.Tests/Controllers/ImageControllerUserImageAuthorizationTests.cs",
+      "scope": "Evitar que falha ao gravar/substituir a foto de perfil deixe o usuário sem a imagem existente.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-19T20:31:00-03:00",
+      "updatedAt": "2026-10-19T20:42:00-03:00",
+      "evidence": "Regressão RED reproduzida: a implementação anterior removia o vínculo antigo antes do SaveImage. Agora grava em caminho exclusivo antes da troca, restaura a referência antiga se a persistência falhar e só remove arquivos antigos contidos na pasta do usuário. Três testes focais Release passaram; Jellyfin.Api.Tests completa: 744/744, 0 falhas/ignorados. Limites: controller/provider simulados; sem HTTP integrado, EF relacional/MariaDB, cliente real, runtime instalado ou produção. O nome de arquivo exclusivo substitui o perfil canônico e compatibilidade de clientes ainda precisa ser verificada. Nenhuma release do servidor criada."
     }
   ]
 }

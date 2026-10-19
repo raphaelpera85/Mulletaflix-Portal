@@ -2576,3 +2576,22 @@ test('portal publishes the shared per-user profile image lock across GetAvatar a
     assert.match(timeline, /GetAvatar e API nativa: lock compartilhado de perfil por usuário/);
     assert.ok(timeline.indexOf('lock compartilhado de perfil por usuário') < timeline.indexOf('GetAvatar: serialização de seleção'));
 });
+
+test('native profile image upload durability evidence is published with integration limits', async () => {
+    const event = statusData.events.find(item => item.id === 'server-native-profile-image-preserve-on-upload-failure-2026-10-19-2042');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /Regressão RED reproduzida/);
+    assert.match(event.evidence, /Três testes focais Release passaram/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests completa: 744\/744/);
+    assert.match(event.evidence, /sem HTTP integrado, EF relacional\/MariaDB/);
+    assert.match(event.evidence, /compatibilidade de clientes ainda precisa ser verificada/);
+    assert.match(event.evidence, /Nenhuma release do servidor criada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Upload nativo de perfil preserva a imagem anterior em falhas/);
+});
