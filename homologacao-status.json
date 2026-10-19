@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T15:35:17-03:00",
+  "generatedAt": "2026-10-19T15:46:37-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
       },
       "testAudit": {
-        "passed": 5012,
-        "total": 5076,
-        "skipped": 64,
+        "passed": 5044,
+        "total": 5109,
+        "skipped": 65,
         "failed": 0,
         "percent": 98.7,
-      "label": "Regressão da solution .NET Release em 19/10, filtro FullyQualifiedName!~Integration: última execução registrada em TRX por projeto: 5.044 aprovados, 64 ignorados e 0 falhas (5.108 total); filtro exclui integrações. Agregado histórico: 5.012 aprovados, 64 ignorados e 0 falhas; os agregados vêm de execuções diferentes e não devem ser somados. Em rodada separada, Jellyfin.Server.Integration.Tests com MariaDB descartável passou 144/144, 0 ignorados/falhas. Revalidação complementar: NebulaPython 3.10: 598/598; web 418/418, typecheck, build de produção e verificação dos artefatos passaram (1.927 arquivos; bundle inicial 294,3 KB gzip, abaixo do limite 420 KB). casos Mongo ignorados não validam integração. CI remota, Mongo atual, instalação, smoke test e Release continuam pendentes. Homologação formal continua aberta."
+      "label": "Regressão da solution .NET Release em 19/10, filtro FullyQualifiedName!~Integration: última execução em TRX por projeto: 5.044 aprovados, 65 não executados e 0 falhas (5.109 total); filtro exclui integrações. Agregado histórico: 5.012 aprovados, 64 ignorados e 0 falhas; execuções distintas, não somar. Em rodada separada, Jellyfin.Server.Integration.Tests com MariaDB descartável passou 144/144. Revalidação complementar: NebulaPython 3.10: 598/598; web 418/418, typecheck/build/artefatos passaram. Teste novo da collation da tabela Users compilou, mas foi NotExecuted sem MariaDB de teste; compatibilidade case-sensitive Linux ainda não validada; casos Mongo ignorados não validam integração. CI remota, Mongo atual, instalação, smoke e Release seguem pendentes. Homologação formal continua aberta."
       }
     },
     {
@@ -3012,11 +3012,11 @@
       "local": "MulletaFlix Server — checkout local",
       "location": "MulletaFlix.Server.Implementations/Users/UserManager.cs e testes MariaDB de UserManager/Billing",
       "scope": "Fazer a unicidade de usuário distinguir codepoints Unicode diferentes sem perder a normalização de caixa feita pelo servidor; atualizar schemas existentes com segurança.",
-      "status": "completed",
+      "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T15:12:00-03:00",
-      "updatedAt": "2026-10-19T15:35:17-03:00",
-      "evidence": "A collation utf8mb4_unicode_ci considerava NOÑO e NONO iguais. UserManager agora define e migra condicionalmente Username e NormalizedUsername para utf8mb4_bin; ToUpperInvariant continua no código. Testes focais UserManagerNormalizedUsernameTests e BillingDatabaseTests: 30/30 aprovados em Release contra MariaDB 11.4.4 descartável em 127.0.0.1:33099. Regressão ampla Release da solution, filtro FullyQualifiedName!~Integration: 5.044 aprovados, 64 ignorados e 0 falhas em 5.108; os 30 testes MariaDB e os 24 testes Mongo foram ignorados sem fixtures nesta rodada. A suite de integração foi excluída pelo filtro. MariaDB descartável foi encerrada e porta 33099 não tem listener; pasta temporária permaneceu no TEMP após tentativa de remoção recusada. Runtime/produção, CI remota e Release do servidor não foram validados; homologação global segue in_progress."
+      "updatedAt": "2026-10-19T15:46:37-03:00",
+      "evidence": "utf8mb4_unicode_ci considerava NOÑO e NONO iguais. UserManager define e migra condicionalmente Username e NormalizedUsername para utf8mb4_bin; ToUpperInvariant continua na aplicação. A revisão do mapeamento EF/migrations encontrou a tabela canônica `Users` (U maiúsculo), enquanto o bootstrap cru usava `users`; isso pode criar tabela distinta em Linux com lower_case_table_names=0. O bootstrap foi alinhado a `Users` em CREATE, FKs, consulta a information_schema e ALTER. O novo teste EnsureSchemaCreated_UsesEfMappedUsersTableWithBinaryUsernameCollations confirma a tabela e as duas collations, mas ficou NotExecuted por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING. A regressão Release da solution, filtro FullyQualifiedName!~Integration, terminou com 5.044 aprovados, 65 NotExecuted, 0 falhas em 5.109 casos/17 TRX. Os 30 testes focais aprovados anteriormente foram executados em MariaDB Windows e não validam nomes case-sensitive Linux; 31 testes focais agora necessitam reexecução em MariaDB Linux lower_case_table_names=0. Não há MariaDB Linux/WSL disponível aqui. Runtime/produção, CI remota e Release não foram validados; homologação global segue in_progress."
     },
     {
       "id": "server-dotnet-skipped-tests-audit-2026-10-19-1457",

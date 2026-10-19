@@ -655,9 +655,9 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
-    assert.equal(audit.passed, 5012);
-    assert.equal(audit.total, 5076);
-    assert.equal(audit.skipped, 64);
+    assert.equal(audit.passed, 5044);
+    assert.equal(audit.total, 5109);
+    assert.equal(audit.skipped, 65);
     assert.equal(audit.failed, 0);
 
 });
@@ -701,7 +701,7 @@ test('server audit preserves the remote CI blocker and displays the latest Mongo
     const mongoEvent = statusData.events.find(item => item.id === 'server-ci-mongo-category-filter-2026-10-18-1138');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /5\.012 aprovados, 64 ignorados e 0 falhas/);
+    assert.match(server.testAudit.label, /5\.044 aprovados, 65 não executados e 0 falhas/);
     assert.match(server.testAudit.label, /[Hh]omologação formal continua aberta/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
@@ -727,9 +727,9 @@ test('portal records the current deterministic server suite without claiming int
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.equal(server.testAudit.passed, 5012);
-    assert.equal(server.testAudit.total, 5076);
-    assert.equal(server.testAudit.skipped, 64);
+    assert.equal(server.testAudit.passed, 5044);
+    assert.equal(server.testAudit.total, 5109);
+    assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /FullyQualifiedName!~Integration/);
     assert.match(event.evidence, /NebulaPython.*592\/592/);
@@ -754,8 +754,8 @@ test('portal records the orphaned Nebula worker and avoids claiming a production
     assert.match(event.evidence, /não expõe PID/);
     assert.match(event.evidence, /não foi encerrado/);
     assert.match(event.evidence, /passou 1\/1/);
-    assert.equal(server.testAudit.passed, 5012);
-    assert.equal(server.testAudit.total, 5076);
+    assert.equal(server.testAudit.passed, 5044);
+    assert.equal(server.testAudit.total, 5109);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard({ ...statusData, events: [event] });
@@ -938,8 +938,8 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /sem host GitHub autenticado/);
     assert.match(event.evidence, /Nenhum worker ou transferência real/);
     assert.match(event.evidence, /não ativa em produção/);
-    assert.equal(server.testAudit.passed, 5012);
-    assert.equal(server.testAudit.total, 5076);
+    assert.equal(server.testAudit.passed, 5044);
+    assert.equal(server.testAudit.total, 5109);
 
     const dashboard = createDashboard();
     await settleDashboard();
@@ -1810,9 +1810,9 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.match(event.evidence, /EnvioStartupException_DoesNotPreventDownloaderFromStarting foi reexecutado e passou 1\/1/);
     assert.match(event.evidence, /Portal independente passou 87\/87/);
     assert.match(event.evidence, /CI remoto, revisão instalada, download real e release não foram executados/);
-    assert.equal(server.testAudit.passed, 5012);
-    assert.equal(server.testAudit.total, 5076);
-    assert.equal(server.testAudit.skipped, 64);
+    assert.equal(server.testAudit.passed, 5044);
+    assert.equal(server.testAudit.total, 5109);
+    assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /NebulaPython 3\.10: 598\/598/);
     assert.match(server.testAudit.label, /casos Mongo ignorados não validam integração/);
@@ -2025,9 +2025,9 @@ test('latest .NET solution regression publishes exact counts without claiming in
     assert.match(event.evidence, /filtro exclui casos com Integration/);
     assert.match(event.evidence, /Portal Node 120\/120/);
     assert.match(event.evidence, /CI remoto, integrações reais.*Release permanecem pendentes/);
-    assert.equal(server.testAudit.passed, 5012);
-    assert.equal(server.testAudit.total, 5076);
-    assert.equal(server.testAudit.skipped, 64);
+    assert.equal(server.testAudit.passed, 5044);
+    assert.equal(server.testAudit.total, 5109);
+    assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
@@ -2177,7 +2177,7 @@ test('Nebula downloader audit records duplicate log, focused tests, and producti
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
-test('portal publishes MariaDB username collation fix without closing server homologation', async () => {
+test('portal keeps MariaDB username collation in progress until case-sensitive Linux validation', async () => {
     const dashboard = createDashboard();
     await settleDashboard();
 
@@ -2185,13 +2185,17 @@ test('portal publishes MariaDB username collation fix without closing server hom
     const event = statusData.events.find(item => item.id === 'server-username-binary-collation-2026-10-19');
 
     assert.ok(event);
-    assert.equal(event.status, 'completed');
+    assert.equal(event.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(event.evidence, /utf8mb4_bin/);
-    assert.match(event.evidence, /30\/30 aprovados/);
-    assert.match(event.evidence, /5\.044 aprovados, 64 ignorados e 0 falhas em 5\.108/);
-    assert.match(event.evidence, /suite de integração foi excluída pelo filtro/);
-    assert.match(event.evidence, /Runtime\/produção, CI remota e Release do servidor não foram validados/);
+    assert.match(event.evidence, /tabela canônica `Users`/);
+    assert.match(event.evidence, /EnsureSchemaCreated_UsesEfMappedUsersTableWithBinaryUsernameCollations/);
+    assert.match(event.evidence, /ficou NotExecuted por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
+    assert.match(event.evidence, /MariaDB Linux lower_case_table_names=0/);
+    assert.match(event.evidence, /5\.044 aprovados, 65 NotExecuted, 0 falhas em 5\.109/);
+    assert.match(event.evidence, /Runtime\/produção, CI remota e Release não foram validados/);
+    assert.match(event.evidence, /filtro FullyQualifiedName!~Integration/);
+    assert.match(event.evidence, /Runtime\/produção, CI remota e Release não foram validados/);
     assert.equal(server.status, 'in_progress');
     assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: usernames distintos respeitam acentos no MariaDB/);
 });
