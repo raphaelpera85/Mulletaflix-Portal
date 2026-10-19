@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T09:45:00-03:00",
+  "generatedAt": "2026-10-19T10:01:46-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-supabase-nebula-files-keyset-2026-10-19-0959",
+      "title": "Supabase: restore do catálogo Nebula por cursor",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.2", "T4.3"],
+      "local": "NebulaSupabaseSyncService e testes de restore Supabase",
+      "location": "Restore do catálogo nebula_files em páginas limitadas por chave id",
+      "scope": "Substituir offset suscetível a deslocamento por keyset streaming; preservar consumo limitado de memória e explicitar parcialidade/retry.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T09:53:49-03:00",
+      "updatedAt": "2026-10-19T10:01:46-03:00",
+      "evidence": "O restore de nebula_files não usa mais offset: schema declara id TEXT PRIMARY KEY; leitura ordenada por id usa limit=100 e filtro id=gt.<último id>, com quoting/percent-encoding PostgREST e memória limitada por lote. Testes Release focados: 59 aprovados, 2 ignorados, 0 falhas (61 total). Os ignorados são casos Mongo opt-in sem fixture/serviço. Regressões cobrem páginas curtas, caracteres reservados, cursor repetido e HTTP 500 depois de um lote persistido. Lotes anteriores permanecem aplicados se uma página posterior falha; BulkUpsertRawDocsAsync permite retry idempotente por _id, mas não há atomicidade nem snapshot entre requisições. Nenhum Supabase remoto, restore Mongo real, produção, instalação ou GitHub Release foi executado. Homologação global permanece in_progress."
+    },
     {
       "id": "server-supabase-keyset-pagination-2026-10-19-0935",
       "title": "Supabase: restore e reconciliação paginados por cursor",

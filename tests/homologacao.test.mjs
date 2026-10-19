@@ -23,6 +23,24 @@ test('Supabase keyset pagination audit is published with Mongo and snapshot gate
     assert.match(dashboard.getElement('event-list').innerHTML, /Supabase: restore e reconciliação paginados por cursor/);
 });
 
+test('Nebula file restore keyset is published with partial-retry and Mongo limits explicit', async () => {
+    const event = statusData.events.find(item => item.id === 'server-supabase-nebula-files-keyset-2026-10-19-0959');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /nebula_files.*id TEXT PRIMARY KEY/);
+    assert.match(event.evidence, /id=gt\.<último id>/);
+    assert.match(event.evidence, /59 aprovados, 2 ignorados, 0 falhas/);
+    assert.match(event.evidence, /Lotes anteriores permanecem aplicados/);
+    assert.match(event.evidence, /BulkUpsertRawDocsAsync permite retry idempotente/);
+    assert.match(event.evidence, /Nenhum Supabase remoto, restore Mongo real/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Supabase: restore do catálogo Nebula por cursor/);
+});
+
 test('avatar concurrency and legacy FTP restore audit remains honest about Mongo gate', async () => {
     const event = statusData.events.find(item => item.id === 'server-avatar-concurrency-legacy-ftp-restore-2026-10-19-0901');
 
