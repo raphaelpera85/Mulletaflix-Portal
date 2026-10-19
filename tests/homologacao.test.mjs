@@ -6,6 +6,22 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('Mongo restore integration result is published with CI and remote-service limits explicit', async () => {
+    const event = statusData.events.find(item => item.id === 'server-supabase-mongo-restore-2026-10-19-1017');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /24 aprovados, 0 ignorados e 0 falhas/);
+    assert.match(event.evidence, /MongoDB local isolado 8\.3\.7/);
+    assert.match(event.evidence, /chamadas HTTP do Supabase foram simuladas/);
+    assert.match(event.evidence, /CI do projeto usa MongoDB 7\.0/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Supabase: restore Mongo validado em instância isolada/);
+});
+
 test('Supabase keyset pagination audit is published with Mongo and snapshot gates explicit', async () => {
     const event = statusData.events.find(item => item.id === 'server-supabase-keyset-pagination-2026-10-19-0935');
 

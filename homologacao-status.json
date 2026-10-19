@@ -3004,6 +3004,21 @@
   ],
   "events": [
     {
+      "id": "server-supabase-mongo-restore-2026-10-19-1017",
+      "title": "Supabase: restore Mongo validado em instância isolada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.2", "T4.3"],
+      "local": "Testes de integração C# com MongoDB isolado",
+      "location": "Restore paginado de catálogo, usuários FTP, usuários MulletaFlix e tokens de bots",
+      "scope": "Executar a categoria RequiresMongo em banco descartável local, sem acessar dados remotos ou de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T10:14:30-03:00",
+      "updatedAt": "2026-10-19T10:17:15-03:00",
+      "evidence": "A execução Release de Jellyfin.Server.Implementations.Tests com filtro Category=RequiresMongo terminou com 24 aprovados, 0 ignorados e 0 falhas (24 total), usando MongoDB local isolado 8.3.7 em loopback e bases de teste com nomes aleatórios; cobriu restore/paginação e preservação de ACLs FTP legadas, além da substituição de tokens por slot. A instância isolada foi encerrada após o teste. As chamadas HTTP do Supabase foram simuladas: não houve acesso ao Supabase remoto, restore de dados reais, produção, instalação ou GitHub Release. O CI do projeto usa MongoDB 7.0 e ainda precisa confirmar compatibilidade; não há garantia de snapshot transacional entre páginas. Homologação global permanece in_progress."
+    },
+    {
       "id": "server-supabase-nebula-files-keyset-2026-10-19-0959",
       "title": "Supabase: restore do catálogo Nebula por cursor",
       "agent": "Codex",
