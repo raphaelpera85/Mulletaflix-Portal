@@ -2339,7 +2339,9 @@ test('portal publishes branch-coverage evidence with its fixture and production 
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /test_feed_ftp_strm\.py passou 85\/85 com --cov-branch/);
-    assert.match(event.evidence, /492 branches, 102 parciais/);
+    assert.match(event.evidence, /suíte completa passou 636\/636 em 133,42 s/);
+    assert.match(event.evidence, /14\.357 statements, 1\.318 ausentes; 2\.744 branches, 497 parciais/);
+    assert.match(event.evidence, /492 branches, 101 parciais/);
     assert.match(event.evidence, /MongoClient segue simulado/);
     assert.match(event.evidence, /sem pacote ou Release/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
