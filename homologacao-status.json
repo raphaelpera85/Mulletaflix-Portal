@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T19:57:16-03:00",
+  "generatedAt": "2026-10-19T19:59:11-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7554,8 +7554,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-19T19:55:00-03:00",
-      "updatedAt": "2026-10-19T19:57:16-03:00",
-      "evidence": "`node --test tools/release/tests/*.test.mjs` passou 19/19, zero skips/falhas. Inclui contratos para job MariaDB Linux (11.4, lower_case_table_names/collation), Mongo CI 7.0, scripts de empacotamento e segurança do token DuckDNS. Isso verifica seleção/configuração declarada, mas não executa o GitHub Actions, MariaDB Linux, scripts externos completos ou instalação real. WSL não instalado e serviço/CLI MariaDB ausentes; nenhum serviço foi instalado ou iniciado. Execução remota, runtime instalado e smoke playback/download permanecem pendentes."
+      "updatedAt": "2026-10-19T19:59:11-03:00",
+      "evidence": "`node --test tools/release/tests/*.test.mjs` passou 19/19, zero skips/falhas. Inclui contratos para job MariaDB Linux (11.4, lower_case_table_names/collation), Mongo CI 7.0, scripts de empacotamento e segurança do token DuckDNS. Isso verifica seleção/configuração declarada, mas não executa o GitHub Actions, MariaDB Linux, scripts externos completos ou instalação real. Consulta atual do GitHub: último run visível, `39212993752` (`Release v12.1.24`), terminou `failure`; job de validação `runner_id=0`, sem steps, e os dois jobs de build/publicação foram skipped. Portanto não houve execução de testes ou release nesse run; a causa não foi inferida. WSL não instalado e serviço/CLI MariaDB ausentes; nenhum serviço foi instalado ou iniciado. Execução remota, runtime instalado e smoke playback/download permanecem pendentes."
     }
   ]
 }

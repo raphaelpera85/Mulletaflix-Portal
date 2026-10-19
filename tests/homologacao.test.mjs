@@ -439,6 +439,8 @@ test('portal publishes local CI packaging contract results without claiming remo
     assert.match(event.evidence, /19\/19, zero skips\/falhas/);
     assert.match(event.evidence, /job MariaDB Linux.*Mongo CI 7\.0/);
     assert.match(event.evidence, /não executa o GitHub Actions/);
+    assert.match(event.evidence, /39212993752.*runner_id=0.*sem steps.*dois jobs.*skipped/);
+    assert.match(event.evidence, /a causa não foi inferida/);
     assert.match(event.evidence, /WSL não instalado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
