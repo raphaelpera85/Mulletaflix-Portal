@@ -2288,7 +2288,9 @@ test('portal publishes the Nebula first-STRM integration test and its real-servi
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /Suíte focal test_strm_downloader\.py: 18\/18/);
-    assert.match(event.evidence, /599 passed in 99\.10s, 0 falhas\/skip reportados/);
+    assert.match(event.evidence, /suíte completa do Nebula Python: 599 passed/);
+    assert.match(event.evidence, /comando exato do CI com cobertura: 599 passed in 150\.85s, cobertura global 90%/);
+    assert.match(event.evidence, /tools\/strm_downloader\.py 80%, tools\/feed_ftp\.py 72%, main\.py 75%, ftp\/pathio\.py 82%/);
     assert.match(event.evidence, /worker-ready, índice pronto, mongo-ready, scan, dedupe, download, queue registration/);
     assert.match(event.evidence, /Não comprova Mongo\/HTTP reais, throughput, instalação ou produção/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));

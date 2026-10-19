@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T17:05:39-03:00",
+  "generatedAt": "2026-10-19T17:10:14-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3015,8 +3015,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T16:58:00-03:00",
-      "updatedAt": "2026-10-19T17:05:39-03:00",
-      "evidence": "Novo teste integrado manteve run_downloader, descoberta de categorias/títulos, varredura real do filesystem e process_strm_item; Mongo, HTTP, seleção de stage e sleep foram controlados por doubles. Ordem verificada: worker-ready, índice pronto, mongo-ready, scan, dedupe, download, queue registration. Confirmou stage existente, .strm removido somente após registro bem-sucedido e estatística 1 enfileirada/0 falhas. Suíte focal test_strm_downloader.py: 18/18; suíte completa do Nebula Python, py -3.10 -m pytest tests -q: 599 passed in 99.10s, 0 falhas/skip reportados. Não comprova Mongo/HTTP reais, throughput, instalação ou produção; CI Python 3.10 e smoke controlado permanecem pendentes. Nenhuma produção alterada."
+      "updatedAt": "2026-10-19T17:10:14-03:00",
+      "evidence": "Novo teste integrado manteve run_downloader, descoberta de categorias/títulos, varredura real do filesystem e process_strm_item; Mongo, HTTP, seleção de stage e sleep foram controlados por doubles. Ordem verificada: worker-ready, índice pronto, mongo-ready, scan, dedupe, download, queue registration. Confirmou stage existente, .strm removido somente após registro bem-sucedido e estatística 1 enfileirada/0 falhas. Suíte focal test_strm_downloader.py: 18/18; suíte completa do Nebula Python: 599 passed; comando exato do CI com cobertura: 599 passed in 150.85s, cobertura global 90%; tools/strm_downloader.py 80%, tools/feed_ftp.py 72%, main.py 75%, ftp/pathio.py 82%. Não comprova Mongo/HTTP reais, throughput, instalação ou produção; análise dos ramos não cobertos, CI remoto e smoke controlado permanecem pendentes. Nenhuma produção alterada."
     },
     {
       "id": "server-live-tv-capability-producer-2026-10-19-1647",
