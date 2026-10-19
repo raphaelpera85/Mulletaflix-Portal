@@ -2331,3 +2331,16 @@ test('portal publishes completed-destination fallback edge coverage without clai
     assert.match(event.evidence, /Somente testes foram alterados, sem pacote\/Release/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal publishes branch-coverage evidence with its fixture and production limitations', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-completed-destination-branch-coverage-2026-10-19-1800');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /test_feed_ftp_strm\.py passou 85\/85 com --cov-branch/);
+    assert.match(event.evidence, /492 branches, 102 parciais/);
+    assert.match(event.evidence, /MongoClient segue simulado/);
+    assert.match(event.evidence, /sem pacote ou Release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

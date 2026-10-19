@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T17:55:00-03:00",
+  "generatedAt": "2026-10-19T18:00:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7391,6 +7391,21 @@
       "startedAt": "2026-10-19T17:47:00-03:00",
       "updatedAt": "2026-10-19T17:55:00-03:00",
       "evidence": "Adicionados nove casos em test_feed_ftp_strm.py para caminho sem Mongo, hits de nome/stem no índice, resolução de episódio via nome STRM original, fallback de identidade de filme pelo stem, Path.resolve com erro, URL malformada, exceção inesperada Mongo e raiz de mongo_parent_for. Python 3.10: teste focal passou 82/82; suíte completa NebulaPython passou 633/633 em 131,51 s. tools/feed_ftp.py passou de 78% para 79%; cobertura do conjunto completo permaneceu 91% (14.334 statements, 1.318 ausentes). MongoClient é simulado; Mongo real, Telegram, runtime instalado e mídia real não foram exercitados. Somente testes foram alterados, sem pacote/Release; homologação geral e testes de integração permanecem in_progress."
+    },
+    {
+      "id": "server-nebula-completed-destination-branch-coverage-2026-10-19-1800",
+      "title": "Nebula: cobertura por branches dos fallbacks de mídia concluída",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "NebulaPython 3.10; pytest focal com coverage de branches",
+      "location": "Tools/NebulaPython/tools/feed_ftp.py → is_completed_destination",
+      "scope": "Adicionar casos de identidade de episódio no destino, miss no índice e carregamento sob demanda das identidades Mongo.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T17:56:00-03:00",
+      "updatedAt": "2026-10-19T18:00:00-03:00",
+      "evidence": "NebulaPython test_feed_ftp_strm.py passou 85/85 com --cov-branch. tools/feed_ftp.py ficou em 75% combinando statements e branches (1.192 statements, 253 ausentes; 492 branches, 102 parciais). Três casos adicionais cobrem episódio reconhecido pelo destino, miss no índice sem consultar Mongo e carregamento sob demanda de identidades quando cache não é fornecido. Uma primeira tentativa falhou por fixture sem método find; a fixture foi corrigida e a repetição passou. Isso é cobertura focal, não suíte completa nem cobertura isolada das funções. MongoClient segue simulado; não houve teste com banco, runtime, mídia ou produção reais. Só testes foram alterados; sem pacote ou Release. Homologação do servidor permanece in_progress."
     }
   ]
 }
