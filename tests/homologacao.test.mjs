@@ -2218,3 +2218,17 @@ test('portal reports Windows packaging CI as locally verified but remotely pendi
     assert.match(event.evidence, /v12\.1\.24 não tem objeto Release \(404\)/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal distinguishes Live TV capability TestServer evidence from production playback', () => {
+    const event = statusData.events.find(item => item.id === 'server-live-tv-capability-http-validation-2026-10-19-1631');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /Reexecução focal Release: 10\/10 aprovados/);
+    assert.match(event.evidence, /TestServer transmite bytes para capability ativa/);
+    assert.match(event.evidence, /Cache-Control no-store/);
+    assert.match(event.evidence, /rejeita timer IDs\/capabilities malformadas ou inativas com 404/);
+    assert.match(event.evidence, /geração de capability pelo gravador real, transcoding\/playback e instalação continuam pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

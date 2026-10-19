@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T16:27:00-03:00",
+  "generatedAt": "2026-10-19T16:31:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7301,6 +7301,21 @@
       "startedAt": "2026-10-19T16:24:00-03:00",
       "updatedAt": "2026-10-19T16:27:00-03:00",
       "evidence": "Contrato atualizado: node --test dos contratos Mongo, MariaDB e empacotamento passou 3/3. Assert-StageIntegrity.Tests.ps1, RcloneBootstrap.Tests.ps1, StageBackup.Tests.ps1 e StageBuildOptions.Tests.ps1 passaram 4/4 em PowerShell local; YAML parseado pelo pacote yaml e git diff --check limpo. O runner Windows remoto ainda não executou. GitHub Releases API continua latest v12.1.21; tag v12.1.24 não tem objeto Release (404), então branch/tag não aparecem como atualização instalável. Nenhuma Release, instalação ou produção alterada."
+    },
+    {
+      "id": "server-live-tv-capability-http-validation-2026-10-19-1631",
+      "title": "Live TV: capability de gravação validada no pipeline HTTP isolado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Jellyfin.Api.Tests Release; TestServer e testes de redação dos tokens nos logs",
+      "location": "GET /LiveTv/LiveRecordings/{streamId}/stream",
+      "scope": "Validar o contrato HTTP com fixtures isoladas sem afirmar reprodução real, instalação ou produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T16:31:00-03:00",
+      "updatedAt": "2026-10-19T16:31:00-03:00",
+      "evidence": "Reexecução focal Release: 10/10 aprovados, 0 ignorados/falhas. TestServer transmite bytes para capability ativa, retorna Cache-Control no-store, e rejeita timer IDs/capabilities malformadas ou inativas com 404. RequestPathLogRedactor, ExceptionMiddleware, IPBasedAccessValidationMiddleware e ResponseTimeMiddleware verificam redação da capability nos logs. Fixtures usam manager simulado e arquivo temporário; geração de capability pelo gravador real, transcoding/playback e instalação continuam pendentes. Nenhum serviço ou produção foi alterado."
     }
   ]
 }
