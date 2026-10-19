@@ -2301,3 +2301,18 @@ test('portal publishes the Nebula first-STRM integration test and its real-servi
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: teste do worker pronto até o primeiro STRM enfileirado/);
     assert.equal(statusData.events[0].id, event.id);
 });
+
+test('portal reports full Nebula completed-destination fallback coverage with Mongo limits', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-completed-destination-fallback-tests-2026-10-19-1746');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /test_feed_ftp_strm\.py passou 73\/73/);
+    assert.match(event.evidence, /suíte NebulaPython passou 624\/624 em 127,25 s/);
+    assert.match(event.evidence, /91% \(14\.281 statements, 1\.330 ausentes\)/);
+    assert.match(event.evidence, /tools\/feed_ftp\.py 78%/);
+    assert.match(event.evidence, /MongoClient é simulado/);
+    assert.match(event.evidence, /sem pacote ou Release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

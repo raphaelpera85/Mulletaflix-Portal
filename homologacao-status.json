@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T17:38:31-03:00",
+  "generatedAt": "2026-10-19T17:46:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7361,6 +7361,21 @@
       "startedAt": "2026-10-19T16:31:00-03:00",
       "updatedAt": "2026-10-19T16:31:00-03:00",
       "evidence": "Reexecução focal Release: 10/10 aprovados, 0 ignorados/falhas. TestServer transmite bytes para capability ativa, retorna Cache-Control no-store, e rejeita timer IDs/capabilities malformadas ou inativas com 404. RequestPathLogRedactor, ExceptionMiddleware, IPBasedAccessValidationMiddleware e ResponseTimeMiddleware verificam redação da capability nos logs. Fixtures usam manager simulado e arquivo temporário; geração de capability pelo gravador real, transcoding/playback e instalação continuam pendentes. Nenhum serviço ou produção foi alterado."
+    },
+    {
+      "id": "server-nebula-completed-destination-fallback-tests-2026-10-19-1746",
+      "title": "Nebula: fallback Mongo de destinos concluídos coberto sem índice em cache",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "NebulaPython 3.10; pytest focal e suíte completa com cobertura",
+      "location": "Tools/NebulaPython/tools/feed_ftp.py → is_completed_destination",
+      "scope": "Cobrir consultas Mongo diretas quando não há índice de mídias concluídas em cache, incluindo identidade, erro e fechamento do cliente.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T17:39:00-03:00",
+      "updatedAt": "2026-10-19T17:46:00-03:00",
+      "evidence": "Adicionados casos unitários para correspondência por nome exato/stem, identidade de filme e episódio, não correspondência, falha de consulta e fechamento do cliente. A primeira tentativa revelou somente expectativa de teste divergente: o contrato normaliza parent para minúsculas; corrigida sem mudança na produção. Python 3.10: test_feed_ftp_strm.py passou 73/73; suíte NebulaPython passou 624/624 em 127,25 s. Cobertura medida no conjunto inteiro: 91% (14.281 statements, 1.330 ausentes); tools/feed_ftp.py 78%. Cobertura global inclui arquivos de teste e não é percentual isolado de código de produção. MongoClient é simulado; Mongo real, Telegram, runtime instalado e mídia real não foram exercitados. Só testes foram alterados; sem pacote ou Release. Homologação global e gates de instalação/CI/transferência real permanecem in_progress."
     }
   ]
 }
