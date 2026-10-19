@@ -2188,8 +2188,10 @@ test('portal publishes MariaDB username collation fix without closing server hom
     assert.equal(event.status, 'completed');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(event.evidence, /utf8mb4_bin/);
-    assert.match(event.evidence, /passaram 30\/30/);
-    assert.match(event.evidence, /runtime\/produção.*não foram validados/);
+    assert.match(event.evidence, /30\/30 aprovados/);
+    assert.match(event.evidence, /5\.044 aprovados, 64 ignorados e 0 falhas em 5\.108/);
+    assert.match(event.evidence, /suite de integração foi excluída pelo filtro/);
+    assert.match(event.evidence, /Runtime\/produção, CI remota e Release do servidor não foram validados/);
     assert.equal(server.status, 'in_progress');
     assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: usernames distintos respeitam acentos no MariaDB/);
 });

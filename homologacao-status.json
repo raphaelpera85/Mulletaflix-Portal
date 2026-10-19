@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T15:19:55-03:00",
+  "generatedAt": "2026-10-19T15:35:17-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3015,8 +3015,8 @@
       "status": "completed",
       "progressPercent": null,
       "startedAt": "2026-10-19T15:12:00-03:00",
-      "updatedAt": "2026-10-19T15:19:55-03:00",
-      "evidence": "A collation utf8mb4_unicode_ci considerava NOÑO e NONO iguais. UserManager agora define e migra condicionalmente Username e NormalizedUsername para utf8mb4_bin; a normalização ToUpperInvariant continua no código. UserManagerNormalizedUsernameTests e BillingDatabaseTests passaram 30/30 em Release contra MariaDB 11.4.4 descartável em 127.0.0.1:33099, sem skips/falhas. Processo encerrado e porta 33099 sem listener; a pasta temporária ficou no TEMP porque a política recusou a limpeza. A suíte ampla ainda precisa ser reexecutada; runtime/produção, release e CI remota não foram validados. Homologação global do servidor continua in_progress."
+      "updatedAt": "2026-10-19T15:35:17-03:00",
+      "evidence": "A collation utf8mb4_unicode_ci considerava NOÑO e NONO iguais. UserManager agora define e migra condicionalmente Username e NormalizedUsername para utf8mb4_bin; ToUpperInvariant continua no código. Testes focais UserManagerNormalizedUsernameTests e BillingDatabaseTests: 30/30 aprovados em Release contra MariaDB 11.4.4 descartável em 127.0.0.1:33099. Regressão ampla Release da solution, filtro FullyQualifiedName!~Integration: 5.044 aprovados, 64 ignorados e 0 falhas em 5.108; os 30 testes MariaDB e os 24 testes Mongo foram ignorados sem fixtures nesta rodada. A suite de integração foi excluída pelo filtro. MariaDB descartável foi encerrada e porta 33099 não tem listener; pasta temporária permaneceu no TEMP após tentativa de remoção recusada. Runtime/produção, CI remota e Release do servidor não foram validados; homologação global segue in_progress."
     },
     {
       "id": "server-dotnet-skipped-tests-audit-2026-10-19-1457",
