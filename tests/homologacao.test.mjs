@@ -6,6 +6,20 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('Nebula CLI Mongo database fallback is recorded with local test limits', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-mongo-database-cli-fallback-2026-10-19-1817');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /58\/58/);
+    assert.match(event.evidence, /646\/646 em 137,47 s/);
+    assert.match(event.evidence, /strm_downloader\.py 77% e supabase_sync\.py 89%/);
+    assert.match(event.evidence, /não foram acessados/);
+    assert.match(event.evidence, /CI remota e smoke instalado continuam pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('update center runtime recheck records focused test result and unavailable local endpoint', () => {
     const event = statusData.events.find(item => item.id === 'server-update-center-endpoint-runtime-recheck-2026-10-19-1226');
 
