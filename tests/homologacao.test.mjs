@@ -2232,3 +2232,16 @@ test('portal distinguishes Live TV capability TestServer evidence from productio
     assert.match(event.evidence, /geração de capability pelo gravador real, transcoding\/playback e instalação continuam pendentes/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal publishes deterministic Live TV capability fuzz evidence and remaining gates', () => {
+    const event = statusData.events.find(item => item.id === 'server-live-tv-capability-fuzz-2026-10-19-1636');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /suíte focal Release passou 10\/10/);
+    assert.match(event.evidence, /256 tokens URL-safe não emitidos/);
+    assert.match(event.evidence, /todos retornaram HTTP 404/);
+    assert.match(event.evidence, /gravador real, transcoding\/playback, instalação ou produção; esses gates seguem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
