@@ -2032,7 +2032,7 @@ test('latest .NET solution regression publishes exact counts without claiming in
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
-test('cross-stack server validation records Python and web results without claiming integration or release', () => {
+test('cross-stack server validation records full MariaDB-backed HTTP integration results without claiming production acceptance or release', () => {
     const event = statusData.events.find(item => item.id === 'server-cross-stack-validation-2026-10-19-1239');
     const server = statusData.tracks.find(item => item.id === 'server');
 
@@ -2048,11 +2048,14 @@ test('cross-stack server validation records Python and web results without claim
     assert.match(event.evidence, /Category=RequiresMongo` passou 24\/24.*127\.0\.0\.1:27099/);
     assert.match(event.evidence, /IntroSkipper\.Integration\.Tests` MariaDB passou 39\/39.*127\.0\.0\.1:33099/);
     assert.match(event.evidence, /UserManager\.GetFirstUser\(\).*39\/39 passaram/);
-    assert.match(event.evidence, /GetDashboardConfigurationPage_GetAvatar_HasDashboardPageWrapper` passou 1\/1.*MariaDB descartável 127\.0\.0\.1:33099/);
+    assert.match(event.evidence, /GetDashboardConfigurationPage_GetAvatar_HasDashboardPageWrapper` passou 1\/1.*MariaDB descartável/);
     assert.match(event.evidence, /host\/usuário\/senha herdados deliberadamente inválidos/);
     assert.match(event.evidence, /MulletaFlixApplicationFactory` agora aplica e restaura host, porta, schema, usuário e senha/);
     assert.match(event.evidence, /Build focal Release: 0 avisos\/0 erros/);
     assert.match(event.evidence, /Mongo 27017 e MariaDB 3306 não foram acessadas/);
+    assert.match(event.evidence, /Jellyfin\.Server\.Integration\.Tests` completa passou 140\/143: 140 aprovados, 3 ignorados.*0 falhas.*MariaDB 11\.4\.4 descartável em loopback 127\.0\.0\.1:33099/);
+    assert.match(event.evidence, /runner encerrou o processo e a porta foi confirmada fechada/);
+    assert.match(event.evidence, /diretórios scratch temporários desta execução foram deixados no TEMP local/);
     assert.match(event.evidence, /CI remoto, integração Server end-to-end, runtime e smoke test permanecem pendentes; Release permanece pendente até cumprir esses gates/);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
