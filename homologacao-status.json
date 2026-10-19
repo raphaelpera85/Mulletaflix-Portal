@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T15:24:00-03:00",
+  "generatedAt": "2026-10-19T03:10:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 64,
         "failed": 0,
         "percent": 98.7,
-        "label": "Revalidação local em 18/10: solução .NET Release 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), com FullyQualifiedName!~Integration; Server.Implementations: 1.499/1.562, 63 ignorados. NebulaPython 3.10: 598/598. Projetos de integração estão excluídos; casos Mongo ignorados não validam integração. Esta rodada não testou frontend, CI remota, instalação ou runtime, nem observou chamada do Downloader/transferência real. Homologação formal continua aberta."
+      "label": "Revalidação local em 19/10: NebulaPlaybackCacheTests Release 59/59 aprovados, repetindo os cenários de cache e recuperação T3.6. Última suíte ampla documentada em 18/10: .NET 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), filtro FullyQualifiedName!~Integration; casos Mongo ignorados não validam integração; NebulaPython 3.10: 598/598. A repetição ampla desta sessão não produziu resultado observável e não foi contada. Integrações Mongo, CI remota, instalação e transferência real continuam pendentes. Homologação formal continua aberta."
       }
     },
     {
@@ -6985,7 +6985,22 @@
       "progressPercent": null,
       "startedAt": "2026-10-18T11:53:00-03:00",
       "updatedAt": "2026-10-18T13:42:00-03:00",
-      "evidence": "O anexo histórico (16–17/10) mostra Somente Streaming, colisão FTP 2121 e lock de mount ocupado, mas não registra chamada StartDownloader, readiness, scan, item de fila ou transferência. Revalidação 13:06: anexo idêntico à amostra de 17/10 (54.444 bytes, 516 linhas, SHA-256 68137C7A9B1846B15486441DC8435AF944874B4FEDB13DAD4EABFEDDD1188079). Suíte anterior: .NET solution 1.498/63 Implementation, Server 73/1, API 730, Providers 777; Python 592/592. Nesta alteração: Implementations Release 1.499 aprovados/63 ignorados/0 falhas e NebulaPython 595/595. Revalidação focal em 18/10: NebulaPlaybackCacheTests Release 59/59; test_main_lifecycle.py 12/12; suíte NebulaPython 598/598. A revisão encontrou fallback stream_service.py sem heartbeat; agora usa watchdog compartilhado, cancela o loop HTTP e tasks quando o lease desaparece, preservando comportamento sem lease. Integrações Mongo não validadas. Reauditoria read-only: MulletaFlix.exe product version 12.1.21 e nssm existem, mas MulletaFlixServer continua ausente; API 8096 indisponível. PID Python 6080 mantém listeners 2121 e 2123 desde 16/10 21:16:16; PID pai 19764 não existe. Snapshot atualizado mostra 37 conexões TCP estabelecidas (5 com Mongo local, 28 conexões HTTPS remotas e 2 sockets locais entre cliente/worker), portanto o processo pode estar atendendo atividade real; não foi encerrado e não deve ser classificado como inativo. Isso não prova que Downloader esteja operando. O log registra STREAM_ONLY desabilitando fila/workers e tentativa full falhando no bind FTP 2121 com WinError 10048. Fonte de main.py e fallback stream_service.py usam heartbeat TCP local autenticado no lease de cache; worker verifica a cada 5 s e encerra após três falhas seguidas. Revisão independente via cavecrew indisponível por limite de agentes. Test-CleanInstaller.ps1 não foi executado, pois altera serviço global e requer VM isolada. GitHub CLI sem autenticação; CI remoto indisponível. Nenhuma alteração operacional foi feita. Release, instalação candidata, Mongo, Downloader no runtime e transferência real seguem pendentes."
+      "evidence": "O anexo histórico (16–17/10) mostra Somente Streaming, colisão FTP 2121 e lock de mount ocupado, mas não registra chamada StartDownloader, readiness, scan, item de fila ou transferência. Revalidação 13:06: anexo idêntico à amostra de 17/10 (54.444 bytes, 516 linhas, SHA-256 68137C7A9B1846B15486441DC8435AF944874B4FEDB13DAD4EABFEDDD1188079). Suíte anterior: .NET solution 1.498/63 Implementation, Server 73/1, API 730, Providers 777; Python 592/592. Nesta alteração: Implementations Release 1.499 aprovados/63 ignorados/0 falhas e NebulaPython 595/595. Revalidação focal em 18/10: NebulaPlaybackCacheTests Release 59/59; test_main_lifecycle.py 12/12; suíte NebulaPython 598/598. Em 19/10, NebulaPlaybackCacheTests Release foi repetido com 59/59 aprovados. A revisão encontrou fallback stream_service.py sem heartbeat; agora usa watchdog compartilhado, cancela o loop HTTP e tasks quando o lease desaparece, preservando comportamento sem lease. Integrações Mongo não validadas. Reauditoria read-only: MulletaFlix.exe product version 12.1.21 e nssm existem, mas MulletaFlixServer continua ausente; API 8096 indisponível. PID Python 6080 mantém listeners 2121 e 2123 desde 16/10 21:16:16; PID pai 19764 não existe. Snapshot atualizado mostra 37 conexões TCP estabelecidas (5 com Mongo local, 28 conexões HTTPS remotas e 2 sockets locais entre cliente/worker), portanto o processo pode estar atendendo atividade real; não foi encerrado e não deve ser classificado como inativo. Isso não prova que Downloader esteja operando. O log registra STREAM_ONLY desabilitando fila/workers e tentativa full falhando no bind FTP 2121 com WinError 10048. Fonte de main.py e fallback stream_service.py usam heartbeat TCP local autenticado no lease de cache; worker verifica a cada 5 s e encerra após três falhas seguidas. Revisão independente via cavecrew indisponível nesta sessão: o subagente atingiu limite de uso. Test-CleanInstaller.ps1 não foi executado, pois altera serviço global e requer VM isolada. GitHub CLI sem autenticação; CI remoto indisponível. Nenhuma alteração operacional foi feita. Release, instalação candidata, Mongo, Downloader no runtime e transferência real seguem pendentes."
+    },
+    {
+      "id": "server-nebula-cache-recovery-release-gate-2026-10-19-0310",
+      "title": "Cache Nebula: recuperação revalidada; release de correção segue bloqueada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T3.6", "T9.5.2", "T9.5.5", "T9.5.6"],
+      "local": "NebulaPlaybackCacheTests em Release; conferência do workflow e estado Git",
+      "location": "Cache de playback, recuperação de chunks e gates da release 12.1.24",
+      "scope": "Revalidar recuperação T3.6 e verificar se existe base comprovada para publicar a release de correção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T03:00:00-03:00",
+      "updatedAt": "2026-10-19T03:10:00-03:00",
+      "evidence": "dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter FullyQualifiedName~NebulaPlaybackCacheTests --verbosity minimal terminou com exit 0: 59 aprovados, 0 ignorados, 0 falhas. Cobertura já existente inclui transporte interrompido/resposta curta, mudança de caminho, recuperação/reuso após recriar o cache e falha de gravação .partial com retry; isso não comprova disco físico cheio nem reinicialização completa do host. A repetição ampla iniciada antes não deixou resultado final observável e não foi contada. O candidato 12.1.24 permanece sem publicação; o checkout do servidor está sujo com alterações não commitadas, GitHub CLI não está autenticado e transferência real/CI ainda não foram validadas. Release não criada."
     }
   ]
 }
