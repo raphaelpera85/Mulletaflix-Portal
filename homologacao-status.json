@@ -3004,6 +3004,21 @@
   ],
   "events": [
     {
+      "id": "server-supabase-keyset-pagination-2026-10-19-0935",
+      "title": "Supabase: restore e reconciliação paginados por cursor",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.2", "T4.3"],
+      "local": "NebulaSupabaseSyncService.FetchSupabaseRowsPagedAsync e testes focados",
+      "location": "Leitura de nebula_users, mulletaflix_users e nebula_bot_tokens",
+      "scope": "Recuperar páginas além do teto efetivo do PostgREST e evitar deslocamento de offset por inserções/remoções anteriores ao cursor, sem declarar snapshot transacional nem restore Mongo homologado.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T09:20:00-03:00",
+      "updatedAt": "2026-10-19T09:36:00-03:00",
+      "evidence": "Leitores de usuários FTP, usuários MulletaFlix e tokens agora usam limit=100, chave única ordenada e filtro gt pela última chave recebida; a leitura continua até página vazia mesmo quando o servidor retorna menos que o limite. Testes Release focados: 55 aprovados, 2 ignorados por fixture/serviço Mongo ausente, 0 falhas (57 total); cobrem páginas curtas, cursor, erro HTTP em página posterior e contratos de restore. Revisão independente encontrou e levou à remoção do risco de deslocamento por offset nessas tabelas; não encontrou outros defeitos confirmados no escopo. Offset de nebula_files e snapshot consistente entre requisições continuam pendentes. Testes não acessaram Supabase remoto e não validam integração Mongo. Nenhuma instalação, produção, backup/restauração remota ou GitHub Release foi feita. Homologação global permanece in_progress."
+    },
+    {
       "id": "server-avatar-concurrency-legacy-ftp-restore-2026-10-19-0901",
       "title": "Auditoria: serialização GetAvatar e preservação de ACL no restore FTP legado",
       "agent": "Codex",

@@ -6,6 +6,22 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('Supabase keyset pagination audit is published with Mongo and snapshot gates explicit', async () => {
+    const event = statusData.events.find(item => item.id === 'server-supabase-keyset-pagination-2026-10-19-0935');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /limit=100, chave única ordenada e filtro gt/);
+    assert.match(event.evidence, /55 aprovados, 2 ignorados.*0 falhas/);
+    assert.match(event.evidence, /Offset de nebula_files e snapshot consistente.*pendentes/);
+    assert.match(event.evidence, /não acessaram Supabase remoto/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Supabase: restore e reconciliação paginados por cursor/);
+});
+
 test('avatar concurrency and legacy FTP restore audit remains honest about Mongo gate', async () => {
     const event = statusData.events.find(item => item.id === 'server-avatar-concurrency-legacy-ftp-restore-2026-10-19-0901');
 
