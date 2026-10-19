@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T19:23:42-03:00",
+  "generatedAt": "2026-10-19T19:26:36-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3075,8 +3075,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-19T19:23:42-03:00",
-      "updatedAt": "2026-10-19T19:23:42-03:00",
-      "evidence": "`node --test tests/homologacao.test.mjs`: 144/144 passaram. Regressões confirmam evento mais novo antes do antigo, preservação do array recebido e renderização do evento publicado mais recente no topo; verificações de eventos históricos usam fixtures isoladas, sem pressupor que itens fora dos 50 mais recentes apareçam na lista visual. `node --check homologacao.js` e `git diff --check` passaram. Alteração limitada à apresentação e testes do portal; nenhuma fonte/runtime do servidor, release ou produção foi modificada. Publicação Git do portal será verificada separadamente; deployment hospedado não foi confirmado."
+      "updatedAt": "2026-10-19T19:26:36-03:00",
+      "evidence": "`node --test tests/homologacao.test.mjs`: 144/144 passaram. Regressões confirmam evento mais novo antes do antigo, preservação do array recebido e renderização do evento publicado mais recente no topo; verificações de eventos históricos usam fixtures isoladas, sem pressupor que itens fora dos 50 mais recentes apareçam na lista visual. `node --check homologacao.js` e `git diff --check` passaram. Alteração limitada à apresentação e testes do portal; nenhuma fonte/runtime do servidor, release ou produção foi modificada. O evento e a correção foram publicados juntos em `main`; deployment hospedado não foi confirmado."
     },
     {
       "id": "server-nebula-first-strm-end-to-end-test-2026-10-19-1701",
