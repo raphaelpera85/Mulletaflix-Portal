@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T14:39:50-03:00",
+  "generatedAt": "2026-10-19T14:49:23-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3005,18 +3005,18 @@
   "events": [
     {
       "id": "server-dotnet-regression-prefetch-cs4014-2026-10-19-1439",
-      "title": "Regressão .NET: 5.044 aprovados; tarefas Nebula pré-cache sem CS4014",
+      "title": "Regressão .NET: 5.044 aprovados; 8 tarefas Nebula pré-cache descartadas explicitamente",
       "agent": "Codex",
       "front": "server",
       "featureIds": ["T2.1", "T4.2"],
-      "local": "Solution .NET Release filtered: 5.044 aprovados, 64 ignorados, 0 falhas; NebulaPlaybackCacheTests 59/59; Implementations 1.506 aprovados, 63 ignorados, 0 falhas",
+      "local": "Solution .NET Release filtered: 5.044 aprovados, 64 ignorados, 0 falhas; NebulaPlaybackCacheTests 59/59; Implementations (rerun final): 1.506 aprovados, 63 ignorados, 0 falhas (1.569 total)",
       "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaPlaybackCacheTests.cs",
       "scope": "Reexecutar a regressão .NET local e tornar explícito o descarte das tarefas de pré-cache assíncronas nos testes, sem alterar runtime.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T14:20:00-03:00",
-      "updatedAt": "2026-10-19T14:39:50-03:00",
-      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --no-build --filter FullyQualifiedName!~Integration` produziu TRX por projeto totalizando 5.044 aprovados, 64 ignorados e 0 falhas em 5.108. Integração HTTP e IntroSkipper Integration não tiveram testes correspondentes ao filtro e não contam como aprovados nesta rodada. `NebulaPlaybackCacheTests` passou 59/59; `Jellyfin.Server.Implementations.Tests` passou 1.506, 63 skips, 0 falhas. As sete chamadas intencionais a `StartPrefetch` em `NebulaPlaybackCacheTests` agora descartam a Task explicitamente. Build Release com `-warnaserror:CS4014` terminou sem erros; avisos XML/analisador não relacionados permanecem. Mongo isolado atual, runtime instalado, smoke de produção e Release pendentes. Nenhum serviço, banco ou mídia de produção foi acessado."
+      "updatedAt": "2026-10-19T14:49:23-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --no-build --filter FullyQualifiedName!~Integration` produziu TRX por projeto totalizando 5.044 aprovados, 64 ignorados e 0 falhas em 5.108. Integração HTTP e IntroSkipper Integration não tiveram testes correspondentes ao filtro e não contam como aprovados nesta rodada. A execução final após as alterações de teste em `NebulaPlaybackCacheTests` passou `Jellyfin.Server.Implementations.Tests`: 1.506 aprovados, 63 ignorados e 0 falhas (1.569 total). As oito chamadas intencionais a `StartPrefetch` nessa classe agora descartam a Task explicitamente. Build Release com `-warnaserror:CS4014` terminou sem erros; 390 avisos de analisador/estilo/documentação XML não relacionados permanecem. Mongo isolado atual, runtime instalado, smoke de produção e Release pendentes. Nenhum serviço, banco ou mídia de produção foi acessado."
     },
     {
       "id": "server-user-library-positive-integration-tests-2026-10-19-1414",

@@ -2085,10 +2085,12 @@ test('latest .NET solution regression records filtered TRX totals and explicit N
     assert.equal(event.status, 'in_progress');
     assert.match(event.local, /5\.044 aprovados, 64 ignorados, 0 falhas/);
     assert.match(event.local, /NebulaPlaybackCacheTests 59\/59/);
-    assert.match(event.local, /Implementations 1\.506 aprovados, 63 ignorados, 0 falhas/);
+    assert.match(event.local, /Implementations \(rerun final\): 1\.506 aprovados, 63 ignorados, 0 falhas \(1\.569 total\)/);
     assert.match(event.evidence, /TRX por projeto totalizando 5\.044 aprovados, 64 ignorados e 0 falhas em 5\.108/);
     assert.match(event.evidence, /não tiveram testes correspondentes ao filtro/);
     assert.match(event.evidence, /-warnaserror:CS4014/);
+    assert.match(event.evidence, /oito chamadas intencionais a `StartPrefetch`/);
+    assert.match(event.evidence, /390 avisos de analisador\/estilo\/documentação XML não relacionados/);
     assert.match(event.evidence, /Nenhum serviço, banco ou mídia de produção foi acessado/);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
