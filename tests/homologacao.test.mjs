@@ -127,6 +127,9 @@ test('server update center explains branch versus published release and records 
     assert.match(event.evidence, /801\/802/);
     assert.match(event.evidence, /UpdateInfoControllerTests: 6\/6 aprovados/);
     assert.match(event.evidence, /39212993752/);
+    assert.match(event.evidence, /API de jobs retorna steps vazios/);
+    assert.match(event.evidence, /HTTP 403 Resource not accessible by integration/);
+    assert.match(event.evidence, /não identifica a causa da falha original/);
     assert.match(event.evidence, /Nenhuma Release binária criada/);
 
     const dashboard = createDashboard();
