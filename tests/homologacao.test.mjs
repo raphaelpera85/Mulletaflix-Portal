@@ -35,6 +35,7 @@ test('image provider fallback gate is published without claiming production vali
     assert.match(event.evidence, /ItemImageProviderTests Release passou 51\/51/);
     assert.match(event.evidence, /HTTP 502 e HttpRequestException/);
     assert.match(event.evidence, /loops singular \(Primary\) e múltiplo \(Backdrop\)/);
+    assert.match(event.evidence, /falhas parciais seguem contabilizadas porque as URLs são imagens distintas/);
     assert.match(event.evidence, /Nenhum arquivo real, ImageInfos\/ImageTags, endpoint, renderização, serviço ou produção foi homologado\/alterado/);
     assert.match(event.evidence, /v12\.1\.24 não tem GitHub Release/);
 });
