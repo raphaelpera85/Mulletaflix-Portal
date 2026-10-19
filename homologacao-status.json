@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T20:42:00-03:00",
+  "generatedAt": "2026-10-19T20:52:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7616,6 +7616,21 @@
       "startedAt": "2026-10-19T20:31:00-03:00",
       "updatedAt": "2026-10-19T20:42:00-03:00",
       "evidence": "Regressão RED reproduzida: a implementação anterior removia o vínculo antigo antes do SaveImage. Agora grava em caminho exclusivo antes da troca, restaura a referência antiga se a persistência falhar e só remove arquivos antigos contidos na pasta do usuário. Três testes focais Release passaram; Jellyfin.Api.Tests completa: 744/744, 0 falhas/ignorados. Limites: controller/provider simulados; sem HTTP integrado, EF relacional/MariaDB, cliente real, runtime instalado ou produção. O nome de arquivo exclusivo substitui o perfil canônico e compatibilidade de clientes ainda precisa ser verificada. Nenhuma release do servidor criada."
+    },
+    {
+      "id": "server-getavatar-cleanup-previous-profile-image-2026-10-19-2052",
+      "title": "GetAvatar limpa arquivo nativo anterior após substituição segura",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "AvatarControllerUserAvatarAuthorizationTests; Jellyfin.Api.Tests; Server Integration HTTP",
+      "location": "MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; tests/Jellyfin.Api.Tests/Controllers/AvatarControllerUserAvatarAuthorizationTests.cs; tests/Jellyfin.Server.Integration.Tests/Controllers/ImageControllerProfileUploadTests.cs",
+      "scope": "Evitar arquivo de perfil órfão quando GetAvatar substitui a imagem nativa do usuário.",
+      "status": "in_progress",
+      "progressPercent": 85,
+      "startedAt": "2026-10-19T20:43:00-03:00",
+      "updatedAt": "2026-10-19T20:52:00-03:00",
+      "evidence": "GetAvatar agora remove o arquivo anterior somente após persistir a nova imagem e o mapeamento, e somente dentro do diretório de configuração do usuário. A regressão passou de RED para GREEN; AvatarControllerUserAvatarAuthorizationTests 24/24 e Jellyfin.Api.Tests Release 745/745. O teste HTTP ImageControllerProfileUploadTests compilou e foi descoberto, mas ficou ignorado porque MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não está configurada; MariaDB e runtime permanecem pendentes. Sem instalação, produção ou release; manter homologação em andamento."
     }
   ]
 }
