@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T16:54:24-03:00",
+  "generatedAt": "2026-10-19T17:01:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-first-strm-end-to-end-test-2026-10-19-1701",
+      "title": "Nebula: teste do worker pronto até o primeiro STRM enfileirado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T3.2"],
+      "local": "Python 3.10; teste integrado isolado",
+      "location": "STRM Downloader: readiness → scan → download → fila Nebula",
+      "scope": "Validar a integração do worker pronto até o primeiro STRM registrado na fila, sem Mongo, rede de mídia ou produção reais.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T16:58:00-03:00",
+      "updatedAt": "2026-10-19T17:01:00-03:00",
+      "evidence": "Novo teste integrado manteve run_downloader, descoberta de categorias/títulos, varredura real do filesystem e process_strm_item; Mongo, HTTP, seleção de stage e sleep foram controlados por doubles. Ordem verificada: worker-ready, índice pronto, mongo-ready, scan, dedupe, download, queue registration. Confirmou stage existente, .strm removido somente após registro bem-sucedido e estatística 1 enfileirada/0 falhas. Suite focal py -3.10 -m pytest tests/test_strm_downloader.py -q: 18/18 aprovados. Não comprova Mongo/HTTP reais, throughput, instalação ou produção; CI Python 3.10 e smoke controlado permanecem pendentes. Nenhuma produção alterada."
+    },
     {
       "id": "server-live-tv-capability-producer-2026-10-19-1647",
       "title": "Live TV: produtor usa capability da gravação no EncoderPath",

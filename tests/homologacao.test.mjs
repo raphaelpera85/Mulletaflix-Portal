@@ -2278,3 +2278,19 @@ test('homologation timeline renders the Live TV capability producer event', asyn
     assert.ok(statusData.events.findIndex(item => item.id === 'server-live-tv-capability-producer-2026-10-19-1647')
         < statusData.events.findIndex(item => item.id === 'server-live-tv-capability-fuzz-2026-10-19-1636'));
 });
+
+test('portal publishes the Nebula first-STRM integration test and its real-service gates', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-first-strm-end-to-end-test-2026-10-19-1701');
+    const dashboard = createDashboard();
+    await settleDashboard();
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /18\/18 aprovados/);
+    assert.match(event.evidence, /worker-ready, índice pronto, mongo-ready, scan, dedupe, download, queue registration/);
+    assert.match(event.evidence, /Não comprova Mongo\/HTTP reais, throughput, instalação ou produção/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: teste do worker pronto até o primeiro STRM enfileirado/);
+    assert.equal(statusData.events[0].id, event.id);
+});
