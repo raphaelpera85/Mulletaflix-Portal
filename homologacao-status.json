@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T03:10:00-03:00",
+  "generatedAt": "2026-10-19T03:49:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 64,
         "failed": 0,
         "percent": 98.7,
-      "label": "Revalidação local em 19/10: NebulaPlaybackCacheTests Release 59/59 aprovados, repetindo os cenários de cache e recuperação T3.6. Última suíte ampla documentada em 18/10: .NET 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), filtro FullyQualifiedName!~Integration; casos Mongo ignorados não validam integração; NebulaPython 3.10: 598/598. A repetição ampla desta sessão não produziu resultado observável e não foi contada. Integrações Mongo, CI remota, instalação e transferência real continuam pendentes. Homologação formal continua aberta."
+      "label": "Revalidação local em 19/10: suíte solution .NET Release sem integrações terminou com exit 0; Jellyfin.Server.Implementations.Tests 1.499 aprovados, 63 ignorados e 0 falhas. NebulaPython 3.10: 598/598; frontend web 418/418, typecheck e build produção aprovados. A última contagem agregada completa documentada continua .NET 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), filtro FullyQualifiedName!~Integration; casos Mongo ignorados não validam integração. Pacotes Linux x64 e Windows gerados isoladamente. Mongo CI, publicação da tag/release e smoke test de instalação/transferência real continuam pendentes. Homologação formal continua aberta."
       }
     },
     {
@@ -6989,18 +6989,18 @@
     },
     {
       "id": "server-nebula-cache-recovery-release-gate-2026-10-19-0310",
-      "title": "Cache Nebula: recuperação revalidada; release de correção segue bloqueada",
+      "title": "Release 12.1.24: validações e pacotes locais concluídos; publicação pendente",
       "agent": "Codex",
       "front": "server",
       "featureIds": ["T3.6", "T9.5.2", "T9.5.5", "T9.5.6"],
-      "local": "NebulaPlaybackCacheTests em Release; conferência do workflow e estado Git",
-      "location": "Cache de playback, recuperação de chunks e gates da release 12.1.24",
-      "scope": "Revalidar recuperação T3.6 e verificar se existe base comprovada para publicar a release de correção.",
+      "local": ".NET Release, NebulaPython, frontend, builds e pacotes Windows/Linux",
+      "location": "Validação dos testes e empacotamento da release corretiva 12.1.24",
+      "scope": "Executar gates locais e preparar pacotes de correção para publicação pelo workflow GitHub.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T03:00:00-03:00",
-      "updatedAt": "2026-10-19T03:10:00-03:00",
-      "evidence": "dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter FullyQualifiedName~NebulaPlaybackCacheTests --verbosity minimal terminou com exit 0: 59 aprovados, 0 ignorados, 0 falhas. Cobertura já existente inclui transporte interrompido/resposta curta, mudança de caminho, recuperação/reuso após recriar o cache e falha de gravação .partial com retry; isso não comprova disco físico cheio nem reinicialização completa do host. A repetição ampla iniciada antes não deixou resultado final observável e não foi contada. O candidato 12.1.24 permanece sem publicação; o checkout do servidor está sujo com alterações não commitadas, GitHub CLI não está autenticado e transferência real/CI ainda não foram validadas. Release não criada."
+      "updatedAt": "2026-10-19T03:49:00-03:00",
+      "evidence": "Fluxo local executado: dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~Integration terminou exit 0; Jellyfin.Server.Implementations.Tests 1.499 aprovados/63 ignorados/0 falhas. NebulaPython 598/598; web 418/418; build:check e build:production passaram. Tarball Linux x64 SHA-256 B866280691A9C0B4028A10768852394EC860133411CC8B1BC5615744DB766067 e instalador Windows isolado SHA-256 89094CB33455E4F23A153BA3C91D4C260EA2527C0CC5ADB543142B0C83C0A7FA. O artefato Windows antigo de dist foi preservado. Docker indisponível, então os testes RequiresMongo foram ignorados; CI remota, publicação da tag/release e smoke test real continuam pendentes. Porta 8096 está sob Nginx; não houve instalação ou alteração produtiva."
     }
   ]
 }
