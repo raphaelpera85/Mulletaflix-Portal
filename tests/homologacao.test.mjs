@@ -394,11 +394,33 @@ test('portal publishes the latest local cross-language server regression audit',
     assert.match(event.evidence, /646\/646 em 100,99 s/);
     assert.match(event.evidence, /NebulaPeriodicLoopTests` passou 2\/2 e `NebulaMountRuntimeHealthTests` 7\/7/);
     assert.match(event.evidence, /não valida integrações MariaDB nem pipeline HTTP de ponta a ponta/);
-    assert.match(event.evidence, /MongoDB, MariaDB Linux, CI remota, runtime instalado/);
+    assert.match(event.evidence, /MongoDB 8\.3\.7 descartável.*não o alvo CI 7\.0/);
+    assert.match(event.evidence, /MariaDB Linux, CI remota, runtime instalado/);
     assert.equal(server.testAudit.passed, 5045);
     assert.equal(server.testAudit.total, 5110);
     assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+    const renderedEvents = dashboard.getElement('event-list').innerHTML;
+    assert.ok(renderedEvents.indexOf(event.title) >= 0);
+    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(statusData.events[0].title));
+});
+
+test('portal publishes the isolated Mongo and Nebula frontend validation without overstating CI coverage', async () => {
+    const event = statusData.events.find(item => item.id === 'server-mongo-isolated-nebula-frontend-audit-2026-10-19-1952');
+    const dashboard = createDashboard();
+    await settleDashboard();
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /MongoDB 8\.3\.7 temporário/);
+    assert.match(event.evidence, /24\/24/);
+    assert.match(event.evidence, /não o alvo CI 7\.0|MongoDB 7\.0 do CI/);
+    assert.match(event.evidence, /NebulaConfigPage\.test\.mjs.*4\/4/);
+    assert.match(event.evidence, /não é teste de browser/);
+    assert.match(event.evidence, /MariaDB Linux.*não foram testados/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(event.title) >= 0);

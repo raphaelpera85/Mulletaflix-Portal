@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T19:39:58-03:00",
+  "generatedAt": "2026-10-19T19:52:51-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7525,7 +7525,22 @@
       "progressPercent": null,
       "startedAt": "2026-10-19T19:28:00-03:00",
       "updatedAt": "2026-10-19T19:39:58-03:00",
-      "evidence": "`dotnet test MulletaFlix.sln -c Release --no-restore --filter 'FullyQualifiedName!~Integration' --logger 'trx;LogFileName=server-audit-20261019-current.trx' --verbosity quiet` terminou exit 0. Os 17 TRX somam 5.110 resultados: 5.045 aprovados, 65 ignorados e zero falhas. `Jellyfin.Server.Implementations.Tests`: 1.507 aprovados/64 ignorados; `Jellyfin.Server.Tests`: 73/1. `IntroSkipper.Integration.Tests` e `Jellyfin.Server.Integration.Tests` tiveram zero testes selecionados pelo filtro; esta execução não valida integrações MariaDB nem pipeline HTTP de ponta a ponta. Nos TRX atuais, `NebulaPeriodicLoopTests` passou 2/2 e `NebulaMountRuntimeHealthTests` 7/7. `py -3.10 -m pytest tests -q`, em `MulletaFlix-master/Tools/NebulaPython`, passou 646/646 em 100,99 s. Esta é revalidação local parcial: os 65 ignorados não contam como aprovação. MongoDB, MariaDB Linux, CI remota, runtime instalado, download/playback real e produção não foram exercitados. Nenhum código de produção, Release ou ambiente produtivo foi alterado; homologação continua in_progress."
+      "evidence": "`dotnet test MulletaFlix.sln -c Release --no-restore --filter 'FullyQualifiedName!~Integration' --logger 'trx;LogFileName=server-audit-20261019-current.trx' --verbosity quiet` terminou exit 0. Os 17 TRX somam 5.110 resultados: 5.045 aprovados, 65 ignorados e zero falhas. `Jellyfin.Server.Implementations.Tests`: 1.507 aprovados/64 ignorados; `Jellyfin.Server.Tests`: 73/1. `IntroSkipper.Integration.Tests` e `Jellyfin.Server.Integration.Tests` tiveram zero testes selecionados pelo filtro; esta execução não valida integrações MariaDB nem pipeline HTTP de ponta a ponta. Nos TRX atuais, `NebulaPeriodicLoopTests` passou 2/2 e `NebulaMountRuntimeHealthTests` 7/7. `py -3.10 -m pytest tests -q`, em `MulletaFlix-master/Tools/NebulaPython`, passou 646/646 em 100,99 s. Esta é revalidação local parcial: os 65 ignorados não contam como aprovação. A execução focal separada passou `RequiresMongo` 24/24 contra MongoDB 8.3.7 descartável (não o alvo CI 7.0) e o teste Node do frontend Nebula 4/4. MariaDB Linux, CI remota, runtime instalado, download/playback real e produção não foram exercitados. Nenhum código de produção, Release ou ambiente produtivo foi alterado; homologação continua in_progress."
+    },
+    {
+      "id": "server-mongo-isolated-nebula-frontend-audit-2026-10-19-1952",
+      "title": "Servidor: integrações Mongo isoladas e configuração frontend Nebula verificadas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "MongoDB 8.3.7 descartável + testes RequiresMongo; Node tests focais do frontend Nebula",
+      "location": "Jellyfin.Server.Implementations.Tests/Nebula; Jellyfin.Api.Tests/NebulaConfigPage.test.mjs",
+      "scope": "Executar integrações Mongo em banco descartável sem tocar serviço padrão e validar persistência das opções de configuração Nebula.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-19T19:46:05-03:00",
+      "updatedAt": "2026-10-19T19:52:51-03:00",
+      "evidence": "`dotnet test ... --filter 'Category=RequiresMongo'` passou 24/24 em 19 s contra MongoDB 8.3.7 temporário, com bind exclusivo a 127.0.0.1:27099; serviço Mongo padrão não foi tocado. Processo encerrado, porta fechada e diretório temporário removido após validar os 30 itens e a raiz de destino. `node --test tests/Jellyfin.Api.Tests/NebulaConfigPage.test.mjs` passou 4/4, cobrindo persistência habilitada/desabilitada, checkbox ausente e salvamento explícito; não é teste de browser. MongoDB 7.0 do CI, MariaDB Linux, runtime instalado, download/playback real e produção não foram testados."
     }
   ]
 }
