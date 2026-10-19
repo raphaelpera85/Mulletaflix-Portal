@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T20:01:44-03:00",
+  "generatedAt": "2026-10-19T20:26:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7571,6 +7571,36 @@
       "startedAt": "2026-10-19T20:00:00-03:00",
       "updatedAt": "2026-10-19T20:01:44-03:00",
       "evidence": "Sem `MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING`: `IntroSkipper.Integration.Tests` terminou 14 aprovados, 25 ignorados, 0 falhas (39); `Jellyfin.Server.Integration.Tests` terminou 3 aprovados, 141 ignorados, 0 falhas (144). Conexão MariaDB não configurada, então fixtures fail-closed ignoraram os casos dependentes; estes totais não constituem aprovação da integração MariaDB nem do pipeline HTTP completo. O serviço padrão não foi acessado. O primeiro projeto emitiu avisos xUnit1051 e SA1402 durante compilação. WSL não instalado; serviço/CLI MariaDB ausentes. CI remota, MariaDB Linux/case-sensitive e runtime instalado seguem pendentes."
+    },
+    {
+      "id": "server-getavatar-profile-mutation-serialization-2026-10-19-2013",
+      "title": "GetAvatar: serialização de seleção, remoção e reparo de perfil",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Testes Release do GetAvatar e suíte Jellyfin.Api.Tests",
+      "location": "MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; tests/Jellyfin.Api.Tests/Controllers/AvatarControllerUserAvatarAuthorizationTests.cs",
+      "scope": "Reproduzir e corrigir corrida entre seleção, remoção e limpeza por mapeamento obsoleto, mantendo a homologação local delimitada.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-19T20:04:00-03:00",
+      "updatedAt": "2026-10-19T20:13:00-03:00",
+      "evidence": "O teste RemoveUserAvatarAsync_WaitsForConcurrentProfileAssignment falhou antes da correção porque a remoção terminou enquanto a seleção estava suspensa; depois, os caminhos internos SetUserAvatarAsync, RemoveUserAvatarAsync e limpeza de mapeamento obsoleto compartilham UserAvatarUpdateLock. AvatarControllerUserAvatarAuthorizationTests passou 23/23 Release; Jellyfin.Api.Tests passou 741/741, sem ignorados/falhas; build Release do plugin GetAvatar passou com 0 avisos/0 erros. Limite: upload e exclusão nativos em Jellyfin.Api/Controllers/ImageController.cs não usam o semáforo do plugin e seguem como risco cross-API pendente. Concorrência testada com managers simulados e arquivos temporários; EF/MariaDB, runtime instalado, produção e GitHub Release não foram validados nem alterados."
+    },
+    {
+      "id": "server-profile-image-shared-lock-2026-10-19-2026",
+      "title": "GetAvatar e API nativa: lock compartilhado de perfil por usuário",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "GetAvatar, ImageController e UserManager",
+      "location": "MediaBrowser.Controller/Library/IUserManager.cs; Jellyfin.Server.Implementations/Users/UserManager.cs; Jellyfin.Api/Controllers/ImageController.cs; MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs",
+      "scope": "Fechar concorrência entre seleção/remoção GetAvatar e upload/exclusão nativos de imagem de perfil por meio de um lock por usuário compartilhado entre componentes.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-19T20:14:00-03:00",
+      "updatedAt": "2026-10-19T20:26:00-03:00",
+      "evidence": "IUserManager.AcquireProfileImageUpdateLockAsync(Guid) implementado em UserManager com AsyncKeyedLocker<Guid>. GetAvatar (seleção, remoção e reparo obsoleto) e ImageController (upload/exclusão) adquirem o mesmo lease por usuário; a API relê e reautoriza o usuário dentro do lock. API focal: 40/40; UserManagerAuthenticationLockTests: 9/9, incluindo serialização do mesmo usuário e independência entre usuários; Jellyfin.Api.Tests: 742/742; Jellyfin.Server.Implementations.Tests: 1.508 aprovados, 64 ignorados, 0 falhas; build Release GetAvatar: 0 avisos/0 erros. Limites: sem HTTP concorrente integrado, MariaDB, runtime instalado, produção ou GitHub Release; nenhuma release criada."
     }
   ]
 }

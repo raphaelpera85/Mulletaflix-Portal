@@ -2537,3 +2537,42 @@ test('portal distinguishes GitHub Actions runner allocation failures from test f
         assert.match(dashboard.getElement('event-list').innerHTML, /CI e release: GitHub não alocou runners/);
     });
 });
+
+test('portal shows GetAvatar concurrency fix with cross-API and runtime limits', async () => {
+    const event = statusData.events.find(item => item.id === 'server-getavatar-profile-mutation-serialization-2026-10-19-2013');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /falhou antes da correção/);
+    assert.match(event.evidence, /AvatarControllerUserAvatarAuthorizationTests passou 23\/23 Release/);
+    assert.match(event.evidence, /Jellyfin.Api.Tests passou 741\/741/);
+    assert.match(event.evidence, /ImageController\.cs não usam o semáforo/);
+    assert.match(event.evidence, /EF\/MariaDB, runtime instalado, produção e GitHub Release não foram validados/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar: serialização de seleção, remoção e reparo de perfil/);
+    assert.ok(dashboard.getElement('event-list').innerHTML.indexOf('GetAvatar: serialização de seleção') < dashboard.getElement('event-list').innerHTML.indexOf('Servidor: projetos de integração executados'));
+});
+
+test('portal publishes the shared per-user profile image lock across GetAvatar and native API', async () => {
+    const event = statusData.events.find(item => item.id === 'server-profile-image-shared-lock-2026-10-19-2026');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.match(event.scope, /lock por usuário compartilhado/);
+    assert.match(event.evidence, /API focal: 40\/40/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests: 742\/742/);
+    assert.match(event.evidence, /Jellyfin\.Server\.Implementations\.Tests: 1\.508 aprovados, 64 ignorados, 0 falhas/);
+    assert.match(event.evidence, /sem HTTP concorrente integrado, MariaDB, runtime instalado, produção ou GitHub Release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    const timeline = dashboard.getElement('event-list').innerHTML;
+    assert.match(timeline, /GetAvatar e API nativa: lock compartilhado de perfil por usuário/);
+    assert.ok(timeline.indexOf('lock compartilhado de perfil por usuário') < timeline.indexOf('GetAvatar: serialização de seleção'));
+});
