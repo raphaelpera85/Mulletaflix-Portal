@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T17:46:00-03:00",
+  "generatedAt": "2026-10-19T17:55:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7376,6 +7376,21 @@
       "startedAt": "2026-10-19T17:39:00-03:00",
       "updatedAt": "2026-10-19T17:46:00-03:00",
       "evidence": "Adicionados casos unitários para correspondência por nome exato/stem, identidade de filme e episódio, não correspondência, falha de consulta e fechamento do cliente. A primeira tentativa revelou somente expectativa de teste divergente: o contrato normaliza parent para minúsculas; corrigida sem mudança na produção. Python 3.10: test_feed_ftp_strm.py passou 73/73; suíte NebulaPython passou 624/624 em 127,25 s. Cobertura medida no conjunto inteiro: 91% (14.281 statements, 1.330 ausentes); tools/feed_ftp.py 78%. Cobertura global inclui arquivos de teste e não é percentual isolado de código de produção. MongoClient é simulado; Mongo real, Telegram, runtime instalado e mídia real não foram exercitados. Só testes foram alterados; sem pacote ou Release. Homologação global e gates de instalação/CI/transferência real permanecem in_progress."
+    },
+    {
+      "id": "server-nebula-completed-destination-fallback-edge-tests-2026-10-19-1755",
+      "title": "Nebula: fallbacks de identidade Mongo e resolução de caminhos revalidados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "NebulaPython 3.10; pytest focal e suíte completa com cobertura",
+      "location": "Tools/NebulaPython/tools/feed_ftp.py → is_completed_destination e mongo_parent_for",
+      "scope": "Cobrir indexação por nome/stem, identidade via origem STRM, URI ausente, parsing de URL, falha de Path.resolve e erros Mongo sem alterar o runtime.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T17:47:00-03:00",
+      "updatedAt": "2026-10-19T17:55:00-03:00",
+      "evidence": "Adicionados nove casos em test_feed_ftp_strm.py para caminho sem Mongo, hits de nome/stem no índice, resolução de episódio via nome STRM original, fallback de identidade de filme pelo stem, Path.resolve com erro, URL malformada, exceção inesperada Mongo e raiz de mongo_parent_for. Python 3.10: teste focal passou 82/82; suíte completa NebulaPython passou 633/633 em 131,51 s. tools/feed_ftp.py passou de 78% para 79%; cobertura do conjunto completo permaneceu 91% (14.334 statements, 1.318 ausentes). MongoClient é simulado; Mongo real, Telegram, runtime instalado e mídia real não foram exercitados. Somente testes foram alterados, sem pacote/Release; homologação geral e testes de integração permanecem in_progress."
     }
   ]
 }

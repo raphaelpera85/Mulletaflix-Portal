@@ -2316,3 +2316,18 @@ test('portal reports full Nebula completed-destination fallback coverage with Mo
     assert.match(event.evidence, /sem pacote ou Release/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal publishes completed-destination fallback edge coverage without claiming Mongo production validation', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-completed-destination-fallback-edge-tests-2026-10-19-1755');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /teste focal passou 82\/82/);
+    assert.match(event.evidence, /suíte completa NebulaPython passou 633\/633 em 131,51 s/);
+    assert.match(event.evidence, /tools\/feed_ftp\.py passou de 78% para 79%/);
+    assert.match(event.evidence, /14\.334 statements, 1\.318 ausentes/);
+    assert.match(event.evidence, /MongoClient é simulado/);
+    assert.match(event.evidence, /Somente testes foram alterados, sem pacote\/Release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
