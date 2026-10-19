@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T14:53:54-03:00",
+  "generatedAt": "2026-10-19T14:57:37-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-dotnet-skipped-tests-audit-2026-10-19-1457",
+      "title": "Auditoria dos 64 skips da regressão .NET; gates de DB isolado preservados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "TRX: 64 ignorados (30 MySQL/MariaDB isolado; 24 Mongo opt-in; 5 Unix-only; 2 benchmarks; 1 /dev/shm; 1 ACL Unix/NTFS; 1 dependência ausente)",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/TestResults/server-regression-20261019.trx; MulletaFlix-master/tests/Jellyfin.Server.Tests/TestResults/server-regression-20261019.trx",
+      "scope": "Classificar os testes ignorados da regressão ampla e definir gates reexecutáveis, sem usar bancos de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T14:54:00-03:00",
+      "updatedAt": "2026-10-19T14:57:37-03:00",
+      "evidence": "Os TRX registram 63 skips em Implementations: 30 exigem banco MySQL/MariaDB isolado e 24 exigem MULLETAFLIX_TEST_MONGODB_CONNECTION_STRING; Mongo foi passado separadamente 24/24 em Mongo 8.3.7 descartável, mas não neste run e não em Mongo 7.0. Restam 5 casos Unix-only, 2 benchmarks, um /dev/shm indisponível e um teste de ACL Unix/NTFS. Server.Tests tem um skip por ausência de Microsoft.AspNetCore.Http.Features.dll na saída. Nesta estação a variável MariaDB de teste não está definida, 33099 não tem listener, Docker/mariadbd não estão no PATH. A porta 3306 ficou intocada. A suíte Server Integration prévia 144/144 não cobre os 30 casos da assembly Implementations. Nenhum runtime, serviço, banco ou mídia foi modificado; homologação fica in_progress."
+    },
     {
       "id": "server-mongo-test-ci-and-release-gate-reconciliation-2026-10-19-1453",
       "title": "Mongo local 24/24; CI Mongo 7.0 e Release ainda bloqueados",

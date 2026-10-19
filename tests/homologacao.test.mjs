@@ -2113,6 +2113,23 @@ test('Mongo CI reconciliation separates local 8.3 coverage from pending CI 7.0 a
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('server regression skipped-test audit distinguishes database setup from platform skips', () => {
+    const event = statusData.events.find(item => item.id === 'server-dotnet-skipped-tests-audit-2026-10-19-1457');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.local, /30 MySQL\/MariaDB isolado; 24 Mongo opt-in/);
+    assert.match(event.evidence, /passado separadamente 24\/24 em Mongo 8\.3\.7/);
+    assert.match(event.evidence, /não em Mongo 7\.0/);
+    assert.match(event.evidence, /33099 não tem listener/);
+    assert.match(event.evidence, /A porta 3306 ficou intocada/);
+    assert.match(event.evidence, /não cobre os 30 casos da assembly Implementations/);
+    assert.match(event.evidence, /homologação fica in_progress/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('Nebula startup log separates successful initial backup from stale auto-sync and mount evidence', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-startup-log-analysis-2026-10-18-1129');
     const server = statusData.tracks.find(item => item.id === 'server');
