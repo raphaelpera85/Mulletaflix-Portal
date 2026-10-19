@@ -2262,7 +2262,8 @@ test('portal publishes the Live TV capability producer contract without claiming
     assert.match(event.evidence, /Teste direto do produtor 1\/1/);
     assert.match(event.evidence, /classe MediaSourceManagerTests 31\/31/);
     assert.match(event.evidence, /ActiveRecordingStreamPathResolverTests 6\/6/);
-    assert.match(event.evidence, /HTTP\/middleware focal 17\/17/);
+    assert.match(event.evidence, /seleção HTTP focal 17\/17 cobrindo LiveRecordingStreamCapabilityHttpTests, RequestPathLogRedactorTests e filtros de middleware/);
+    assert.match(event.evidence, /comando\/filtro exato e um TRX dessa seleção não foram preservados/);
     assert.match(event.evidence, /54 casos únicos/);
     assert.match(event.evidence, /não contém timer ID/);
     assert.match(event.evidence, /Gravação real, transcoding\/playback, pacote instalado e produção continuam pendentes/);
@@ -2274,4 +2275,6 @@ test('homologation timeline renders the Live TV capability producer event', asyn
     await settleDashboard();
 
     assert.match(dashboard.getElement('event-list').innerHTML, /Live TV: produtor usa capability da gravação no EncoderPath/);
+    assert.ok(statusData.events.findIndex(item => item.id === 'server-live-tv-capability-producer-2026-10-19-1647')
+        < statusData.events.findIndex(item => item.id === 'server-live-tv-capability-fuzz-2026-10-19-1636'));
 });

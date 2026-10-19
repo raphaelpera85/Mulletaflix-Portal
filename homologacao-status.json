@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T16:47:49-03:00",
+  "generatedAt": "2026-10-19T16:54:24-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3015,8 +3015,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T16:42:00-03:00",
-      "updatedAt": "2026-10-19T16:47:49-03:00",
-      "evidence": "Teste direto do produtor 1/1; classe MediaSourceManagerTests 31/31; ActiveRecordingStreamPathResolverTests 6/6; HTTP/middleware focal 17/17. As suítes abrangem 54 casos únicos; o caso do produtor também foi repetido isoladamente. Zero skips/falhas. O EncoderPath contém StreamId e não contém timer ID; Path/Id da gravação permanecem preservados. Produtor, resolver e rota foram exercitados em fixtures separadas. Gravação real, transcoding/playback, pacote instalado e produção continuam pendentes; nenhuma produção foi alterada."
+      "updatedAt": "2026-10-19T16:54:24-03:00",
+      "evidence": "Teste direto do produtor 1/1; classe MediaSourceManagerTests 31/31; ActiveRecordingStreamPathResolverTests 6/6; seleção HTTP focal 17/17 cobrindo LiveRecordingStreamCapabilityHttpTests, RequestPathLogRedactorTests e filtros de middleware. O comando/filtro exato e um TRX dessa seleção não foram preservados, então sua composição detalhada não pode ser reauditada. Os totais registrados somam 54 casos únicos (31 + 6 + 17); o caso do produtor está dentro dos 31 e foi repetido isoladamente. Zero skips/falhas reportados. O EncoderPath contém StreamId e não contém timer ID; Path/Id da gravação permanecem preservados. Produtor, resolver e rota foram exercitados em fixtures separadas. Gravação real, transcoding/playback, pacote instalado e produção continuam pendentes; nenhuma produção foi alterada."
     },
     {
       "id": "server-live-tv-capability-fuzz-2026-10-19-1636",
