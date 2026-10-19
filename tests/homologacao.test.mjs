@@ -448,6 +448,25 @@ test('portal publishes local CI packaging contract results without claiming remo
     assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(statusData.events[0].title));
 });
 
+test('portal reports local integration-suite passes and skips without claiming MariaDB coverage', async () => {
+    const event = statusData.events.find(item => item.id === 'server-local-integration-projects-audit-2026-10-19-2001');
+    const dashboard = createDashboard();
+    await settleDashboard();
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /IntroSkipper\.Integration\.Tests.*14 aprovados, 25 ignorados, 0 falhas/);
+    assert.match(event.evidence, /Jellyfin\.Server\.Integration\.Tests.*3 aprovados, 141 ignorados, 0 falhas/);
+    assert.match(event.evidence, /não constituem aprovação da integração MariaDB nem do pipeline HTTP completo/);
+    assert.match(event.evidence, /serviço padrão não foi acessado/);
+    assert.match(event.evidence, /WSL não instalado/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+    const renderedEvents = dashboard.getElement('event-list').innerHTML;
+    assert.ok(renderedEvents.indexOf(event.title) >= 0);
+    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(statusData.events[0].title));
+});
+
 test('publishes the latest Nebula startup finding without marking T2.1 complete', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-live-runtime-promotion-2026-10-18-0827');
 

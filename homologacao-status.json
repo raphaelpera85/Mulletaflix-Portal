@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T19:59:11-03:00",
+  "generatedAt": "2026-10-19T20:01:44-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7555,7 +7555,22 @@
       "progressPercent": 100,
       "startedAt": "2026-10-19T19:55:00-03:00",
       "updatedAt": "2026-10-19T19:59:11-03:00",
-      "evidence": "`node --test tools/release/tests/*.test.mjs` passou 19/19, zero skips/falhas. Inclui contratos para job MariaDB Linux (11.4, lower_case_table_names/collation), Mongo CI 7.0, scripts de empacotamento e segurança do token DuckDNS. Isso verifica seleção/configuração declarada, mas não executa o GitHub Actions, MariaDB Linux, scripts externos completos ou instalação real. Consulta atual do GitHub: último run visível, `39212993752` (`Release v12.1.24`), terminou `failure`; job de validação `runner_id=0`, sem steps, e os dois jobs de build/publicação foram skipped. Portanto não houve execução de testes ou release nesse run; a causa não foi inferida. WSL não instalado e serviço/CLI MariaDB ausentes; nenhum serviço foi instalado ou iniciado. Execução remota, runtime instalado e smoke playback/download permanecem pendentes."
+      "evidence": "`node --test tools/release/tests/*.test.mjs` passou 19/19, zero skips/falhas. Inclui contratos para job MariaDB Linux (11.4, lower_case_table_names/collation), Mongo CI 7.0, scripts de empacotamento e segurança do token DuckDNS. Isso verifica seleção/configuração declarada, mas não executa o GitHub Actions, MariaDB Linux, scripts externos completos ou instalação real. Consulta atual do GitHub: último run visível, `39212993752` (`Release v12.1.24`), terminou `failure`; job de validação `runner_id=0`, sem steps, e os dois jobs de build/publicação foram skipped. Portanto não houve execução de testes ou release nesse run; a causa não foi inferida. WSL não instalado; serviço/CLI MariaDB ausentes."
+    },
+    {
+      "id": "server-local-integration-projects-audit-2026-10-19-2001",
+      "title": "Servidor: projetos de integração executados em modo fail-closed",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "IntroSkipper.Integration.Tests e Jellyfin.Server.Integration.Tests sem conexão MariaDB configurada",
+      "location": "tests/IntroSkipper.Integration.Tests; tests/Jellyfin.Server.Integration.Tests; Shared/MariaDbTestEnvironment",
+      "scope": "Executar testes de integração que não dependam de banco e confirmar o comportamento fail-closed, sem conectar ao banco padrão ou produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-19T20:00:00-03:00",
+      "updatedAt": "2026-10-19T20:01:44-03:00",
+      "evidence": "Sem `MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING`: `IntroSkipper.Integration.Tests` terminou 14 aprovados, 25 ignorados, 0 falhas (39); `Jellyfin.Server.Integration.Tests` terminou 3 aprovados, 141 ignorados, 0 falhas (144). Conexão MariaDB não configurada, então fixtures fail-closed ignoraram os casos dependentes; estes totais não constituem aprovação da integração MariaDB nem do pipeline HTTP completo. O serviço padrão não foi acessado. O primeiro projeto emitiu avisos xUnit1051 e SA1402 durante compilação. WSL não instalado; serviço/CLI MariaDB ausentes. CI remota, MariaDB Linux/case-sensitive e runtime instalado seguem pendentes."
     }
   ]
 }
