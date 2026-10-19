@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T12:12:54-03:00",
+  "generatedAt": "2026-10-19T12:18:16-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3045,8 +3045,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T10:35:00-03:00",
-      "updatedAt": "2026-10-19T11:22:17-03:00",
-      "evidence": "O screenshot apresenta 12.1.21 como versão atual e disponível. Por padrão, UpdateInfoController consulta GitHub Releases e exige asset ZIP; MulletaFlix_UPDATE_MANIFEST_URL pode substituir essa origem por manifesto personalizado. A configuração efetiva não foi inspecionada e o endpoint real /System/UpdateInfo não foi chamado, então os dados públicos são consistentes com a tela, mas não provam a origem efetiva no servidor. Reconsulta da API pública: branch codex/server-release-12.1.24 no commit f1c449f38f35bc818ca4a437ad76fa09fe6c8629; tag v12.1.24 aponta c449fedf8af4e058a1ceeacccc3cdfdb8432aaa7; GET /releases/tags/v12.1.24 retorna HTTP 404. /releases/latest continua v12.1.21, publicada em 16/10/2026, com mulletaflix-update-win-x64.zip, mulletaflix_12.1.21_linux-x64.tar.gz e mulletaflix_12.1.21_windows-x64.exe. Nenhuma Release ou instalação criada. Reconsulta em 19/10: GitHub Actions run 39212993752 falhou no job de validação sem executar steps em 3 s; a página oficial informa: 'The job was not started because your account is locked due to a billing issue.' Os jobs de pacote Linux e publicação foram ignorados. O retry anterior pela integração retornou 403. Isso é bloqueio de cobrança, não falha dos testes de código. Regularizar cobrança, fechar o lote candidato, executar CI/publicação e homologar runtime permanecem pendentes."
+      "updatedAt": "2026-10-19T12:18:16-03:00",
+      "evidence": "O screenshot apresenta 12.1.21 como versão atual e disponível. Por padrão, UpdateInfoController consulta GitHub Releases e exige asset ZIP; MulletaFlix_UPDATE_MANIFEST_URL pode substituir essa origem por manifesto personalizado. A configuração efetiva não foi inspecionada e o endpoint real /System/UpdateInfo não foi chamado, então os dados públicos são consistentes com a tela, mas não provam a origem efetiva no servidor. Reconsulta da API pública: branch codex/server-release-12.1.24 no commit f1c449f38f35bc818ca4a437ad76fa09fe6c8629; tag v12.1.24 aponta c449fedf8af4e058a1ceeacccc3cdfdb8432aaa7; GET /releases/tags/v12.1.24 retorna HTTP 404. /releases/latest continua v12.1.21, publicada em 16/10/2026, com mulletaflix-update-win-x64.zip, mulletaflix_12.1.21_linux-x64.tar.gz e mulletaflix_12.1.21_windows-x64.exe. Nenhuma Release ou instalação criada. Reconsulta em 19/10: GitHub Actions run 39212993752 falhou no job de validação sem executar steps em 3 s; a API retorna runner_id=0 e steps vazios. A página oficial informa: 'The job was not started because your account is locked due to a billing issue.' Os jobs de pacote Linux e publicação foram ignorados. Logs já indisponíveis; a tentativa de rerun pela integração retornou 403. Isso é bloqueio de cobrança do GitHub Actions, não falha dos testes de código. Regularizar cobrança, fechar o lote candidato, executar CI/publicação e homologar runtime permanecem pendentes."
     },
     {
       "id": "server-getavatar-null-mapping-rollback-2026-10-19-1033",
