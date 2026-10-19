@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T17:22:25-03:00",
+  "generatedAt": "2026-10-19T17:28:17-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3015,8 +3015,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T16:58:00-03:00",
-      "updatedAt": "2026-10-19T17:22:25-03:00",
-      "evidence": "Novo teste integrado manteve run_downloader, descoberta de categorias/títulos, varredura real do filesystem e process_strm_item; Mongo, HTTP, seleção de stage e sleep foram controlados por doubles. Ordem verificada: worker-ready, índice pronto, mongo-ready, scan, dedupe, download, queue registration. Confirmou stage existente, .strm removido somente após registro bem-sucedido e estatística 1 enfileirada/0 falhas. Testes focais: test_strm_downloader.py 18/18 e test_feed_ftp_strm.py 61/61. Suíte completa Nebula Python 3.10: 608 passed in 123.22s, zero falhas/ignorados; cobertura 90% (14.158 statements, 1.390 misses), tools/strm_downloader.py 80%, tools/feed_ftp.py 74%, main.py 75%, ftp/pathio.py 82%. Novos casos validam deduplicação de destino legado em quatro status e criação idempotente de diretórios Mongo simulados, path fora/igual à raiz, colisão concorrente e fechamento do cliente em falha. Não comprova Mongo/HTTP reais, throughput, instalação ou produção; CI remoto e smoke controlado permanecem pendentes. Nenhuma produção alterada."
+      "updatedAt": "2026-10-19T17:28:17-03:00",
+      "evidence": "Novos testes focados cobrem o worker do primeiro STRM, deduplicação de destino legado e a lease de admissão Mongo. Ordem do fluxo STRM confirmada: worker-ready, índice pronto, mongo-ready, scan, dedupe, download, queue registration. test_strm_downloader.py: 18/18; test_feed_ftp_strm.py: 61/61; test_mongo_admission.py: 4/4 com cobertura focal de tools/mongo_admission.py em 93% (antes 77%). Suíte completa Nebula Python 3.10 com cobertura: 610 passed in 145.10s, zero falhas/ignorados; cobertura global 90% (14.194 statements, 1.378 misses), tools/strm_downloader.py 80%, tools/feed_ftp.py 74%, main.py 75%, ftp/pathio.py 82%. Cenários novos verificam lease removida e erro Mongo durante heartbeat: ambos marcam lost, fazem ensure_active abortar e close tenta liberar. O Mongo permanece simulado. Não comprova Mongo/HTTP reais, throughput, instalação ou produção; CI remoto e smoke controlado permanecem pendentes. Nenhuma produção alterada."
     },
     {
       "id": "server-live-tv-capability-producer-2026-10-19-1647",
