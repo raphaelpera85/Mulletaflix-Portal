@@ -60,6 +60,21 @@ test('server update center explains branch versus published release and records 
     assert.match(dashboard.getElement('event-list').innerHTML, /Atualizador não detecta a branch 12\.1\.24/);
 });
 
+test('portal records avatar assignment rollback and its remaining validation limits', async () => {
+    const event = statusData.events.find(item => item.id === 'server-getavatar-transactional-assignment-rollback-2026-10-19-0820');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /truncamento parcial do XML/);
+    assert.match(event.evidence, /não valida o vínculo EF real/);
+    assert.match(event.evidence, /Nenhuma instalação\/produção ou GitHub Release foi feita/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar: seleção restaura perfil e configuração após falha de persistência/);
+});
+
 function createDashboard(data = statusData) {
     const elements = new Map();
     const createElement = () => ({

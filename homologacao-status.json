@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T04:22:26-03:00",
+  "generatedAt": "2026-10-19T08:25:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-getavatar-transactional-assignment-rollback-2026-10-19-0820",
+      "title": "GetAvatar: seleção restaura perfil e configuração após falha de persistência",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "AvatarService.SetUserAvatarAsync e AvatarControllerUserAvatarAuthorizationTests",
+      "location": "MulletaFlix.Plugin.GetAvatar: arquivo de perfil, ImageInfo e XML de configuração",
+      "scope": "Evitar estado parcial quando atribuição de avatar falha, incluindo escrita parcial do XML, sem alegar validação EF integrada ou produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T08:19:00-03:00",
+      "updatedAt": "2026-10-19T08:25:00-03:00",
+      "evidence": "A fonte compensa falhas restaurando o perfil anterior (ImageInfo recriado com Id zero somente após ClearProfileImageAsync completar), bytes da imagem e snapshot do XML original por arquivo temporário/rename; mapeamentos em memória também voltam ao estado anterior. AssignRandomAvatarAsync não remove mais o mapeamento antes da tentativa. Testes focados AvatarControllerUserAvatarAuthorizationTests Release passaram 15/15; cobrem falha ao limpar perfil sem update duplicado e truncamento parcial do XML com restauração dos bytes anteriores. Suíte completa Jellyfin.Api.Tests Release passou 733/733. A revisão independente encontrou riscos ainda abertos: escrita concorrente da configuração pode ser sobrescrita pelo snapshot e exceção após commit de ClearProfileImageAsync pode deixar estado ambíguo; além disso, fixture usa IUserManager simulado e não valida o vínculo EF real. Nenhuma instalação/produção ou GitHub Release foi feita; gates globais Mongo/CI e smoke test continuam abertos."
+    },
     {
       "id": "server-update-center-branch-release-diagnosis-2026-10-19-0422",
       "title": "Atualizador não detecta a branch 12.1.24: falta publicar a GitHub Release",
