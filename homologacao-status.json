@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T12:26:05-03:00",
+  "generatedAt": "2026-10-19T12:33:29-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 64,
         "failed": 0,
         "percent": 98.7,
-      "label": "Revalidação local em 19/10: suíte solution .NET Release sem integrações terminou com exit 0; Jellyfin.Server.Implementations.Tests 1.499 aprovados, 63 ignorados e 0 falhas. NebulaPython 3.10: 598/598; frontend web 418/418, typecheck e build produção aprovados. A última contagem agregada completa documentada continua .NET 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), filtro FullyQualifiedName!~Integration; casos Mongo ignorados não validam integração. Pacotes Linux x64 e Windows gerados isoladamente. Mongo CI, publicação da tag/release e smoke test de instalação/transferência real continuam pendentes. Homologação formal continua aberta."
+      "label": "Nova regressão isolada da solução .NET Release em 19/10, filtro FullyQualifiedName!~Integration: 4.971 aprovados, 63 ignorados e 0 falhas; esse filtro exclui integrações e os casos Skip não foram executados. Portal Node: 120/120. Evidência agregada anterior: Jellyfin.Server.Implementations.Tests 1.499 aprovados, 63 ignorados e 0 falhas; NebulaPython 3.10: 598/598; frontend web 418/418, typecheck e build produção aprovados. Agregado histórico documentado: 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), composto por suítes diferentes, não uma única execução. casos Mongo ignorados não validam integração. CI remoto, Mongo CI, instalação, smoke test e publicação da Release continuam pendentes. Homologação formal continua aberta."
       }
     },
     {
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-dotnet-solution-regression-2026-10-19-1233",
+      "title": "Regressão ampla da solução .NET aprovada; integrações seguem pendentes",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "dotnet test MulletaFlix.sln Release sem casos Integration; Node homologação 120/120",
+      "location": "Solução .NET do servidor e portal público de homologação",
+      "scope": "Reexecutar o gate determinístico completo disponível, atualizar os números auditáveis e manter gates de integração e produção separados.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T12:29:00-03:00",
+      "updatedAt": "2026-10-19T12:33:29-03:00",
+      "evidence": "dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~Integration --verbosity minimal terminou com exit 0: 4.971 aprovados, 63 ignorados, 0 falhas (5.034 total sob o filtro). O filtro exclui casos com Integration no nome; os skips incluem dependências de Mongo/MariaDB/OS e não contam como aprovados. Sumários: Keyframes 3; Extensions 144; Model 684; Naming 681; Controller 63; HLS 18; LiveTV 75; Networking 124; MediaEncoding 71; XbmcMetadata 39; Common 31; Providers 793; API 739; Server Implementations 1.506. Portal Node 120/120. Nenhum serviço, processo, banco, mídia ou instalação foi alterado. Endpoint local 8096 permanece indisponível na checagem anterior; CI remoto, integrações reais em ambiente descartável, smoke test e Release permanecem pendentes. Homologação formal segue aberta."
+    },
     {
       "id": "server-update-center-endpoint-runtime-recheck-2026-10-19-1226",
       "title": "Centro de Atualizações: parser aprovado; endpoint local indisponível",

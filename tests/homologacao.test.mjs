@@ -2015,6 +2015,23 @@ test('broad server validation reports local suite results without closing produc
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('latest .NET solution regression publishes exact counts without claiming integration or production validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-dotnet-solution-regression-2026-10-19-1233');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /4\.971 aprovados, 63 ignorados, 0 falhas/);
+    assert.match(event.evidence, /filtro exclui casos com Integration/);
+    assert.match(event.evidence, /Portal Node 120\/120/);
+    assert.match(event.evidence, /CI remoto, integrações reais.*Release permanecem pendentes/);
+    assert.equal(server.testAudit.passed, 5012);
+    assert.equal(server.testAudit.total, 5076);
+    assert.equal(server.testAudit.skipped, 64);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('Nebula startup log separates successful initial backup from stale auto-sync and mount evidence', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-startup-log-analysis-2026-10-18-1129');
     const server = statusData.tracks.find(item => item.id === 'server');
