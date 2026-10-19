@@ -2208,6 +2208,7 @@ test('portal reports Windows packaging CI as locally verified but remotely pendi
     assert.ok(event);
     assert.equal(server.status, 'in_progress');
     assert.equal(event.status, 'in_progress');
+    assert.match(event.scope, /ainda está somente no checkout local e não foi enviada ao Git do servidor/);
     assert.match(server.testAudit.label, /Contratos CI Mongo\/MariaDB\/empacotamento passaram 3\/3/);
     assert.match(server.testAudit.label, /quatro scripts PowerShell de empacotamento passaram localmente 4\/4/);
     assert.match(server.testAudit.label, /Runner Windows remoto/);
