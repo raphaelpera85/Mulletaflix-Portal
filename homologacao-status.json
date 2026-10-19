@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T12:58:11-03:00",
+  "generatedAt": "2026-10-19T13:14:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3005,18 +3005,18 @@
   "events": [
     {
       "id": "server-cross-stack-validation-2026-10-19-1239",
-      "title": "Nebula Python e frontend web validados; integrações e runtime pendentes",
+      "title": "Nebula, web e integrações HTTP isoladas validadas; runtime pendente",
       "agent": "Codex",
       "front": "server",
       "featureIds": ["T2.1", "T4.2"],
-      "local": "NebulaPython pytest 598/598; Vitest 418/418; typecheck, produção e artifacts/bundle budget aprovados",
+      "local": "NebulaPython 598/598; Vitest 418/418; Mongo 24/24; MariaDB 39/39; Server Integration HTTP 1/1; typecheck e build aprovados",
       "location": "MulletaFlix-master/Tools/NebulaPython e MulletaFlix-web-master",
-      "scope": "Completar a revalidação das camadas Python e frontend após o gate .NET, sem usar produção ou alegar integração completa.",
+      "scope": "Registrar os gates locais de servidor e web, incluindo um endpoint HTTP hospedado contra MariaDB descartável, sem usar produção ou alegar integração completa.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T12:37:00-03:00",
-      "updatedAt": "2026-10-19T12:58:11-03:00",
-      "evidence": "`py -3.10 -m pytest tests -q` em Tools/NebulaPython passou 598/598. `npm test -- --run` passou 418 testes em 75 arquivos; `npm run build:check`, `npm run build:production` e `npm run verify:build` passaram. Verificador aceitou 1.927 arquivos; bundle eager 294,3 KB gzip ficou abaixo do limite 420 KB. Portal Node: 122/122. Build emite avisos Vite de diretivas `use client` ignoradas e imports estático/dinâmico mistos, sem falha. A regressão da solução .NET passou 4.971/63 skips/0 falhas com FullyQualifiedName!~Integration; casos Integration ficam excluídos. Integração Mongo `Category=RequiresMongo` passou 24/24 usando `mongod` descartável em 127.0.0.1:27099; processo encerrou e a porta foi fechada. `IntroSkipper.Integration.Tests` MariaDB passou 39/39 em instância descartável 127.0.0.1:33099. A primeira execução 38/39 revelou que o fixture não inicializava as tabelas do usuário; o setup passou a chamar o fluxo real de bootstrap `UserManager.GetFirstUser()` e então 39/39 passaram. Instâncias de produção Mongo 27017 e MariaDB 3306 não foram acessadas. Diagnóstico do Centro de Atualizações: UpdateInfoController consulta a coleção pública de Releases do GitHub e só aceita pacote .zip; API confirma latest v12.1.21 e tag v12.1.24 retorna HTTP 404 por não existir Release para ela. Portanto branch/tag não aciona o atualizador; a captura mostra o estado esperado. Nenhum serviço, banco produtivo, mídia ou instalação foi alterado. CI remoto, integração Server end-to-end, runtime e smoke test permanecem pendentes; Release permanece pendente até cumprir esses gates. Homologação segue aberta."
+      "updatedAt": "2026-10-19T13:14:05-03:00",
+      "evidence": "`py -3.10 -m pytest tests -q` em Tools/NebulaPython passou 598/598. `npm test -- --run` passou 418 testes em 75 arquivos; `npm run build:check`, `npm run build:production` e `npm run verify:build` passaram. Verificador aceitou 1.927 arquivos; bundle eager 294,3 KB gzip ficou abaixo do limite 420 KB. Portal Node: 122/122. Build emite avisos Vite de diretivas `use client` ignoradas e imports estático/dinâmico mistos, sem falha. A regressão da solução .NET passou 4.971/63 skips/0 falhas com FullyQualifiedName!~Integration; casos Integration ficam excluídos. Integração Mongo `Category=RequiresMongo` passou 24/24 usando `mongod` descartável em 127.0.0.1:27099; processo encerrou e a porta foi fechada. `IntroSkipper.Integration.Tests` MariaDB passou 39/39 em instância descartável 127.0.0.1:33099 após o fixture executar `UserManager.GetFirstUser()`; assim 39/39 passaram. O teste HTTP hospedado `GetDashboardConfigurationPage_GetAvatar_HasDashboardPageWrapper` passou 1/1 em MariaDB descartável 127.0.0.1:33099, mesmo com host/usuário/senha herdados deliberadamente inválidos; `MulletaFlixApplicationFactory` agora aplica e restaura host, porta, schema, usuário e senha da conexão de teste. Build focal Release: 0 avisos/0 erros. Processo/porta/dados temporários encerrados e removidos. Instâncias de produção Mongo 27017 e MariaDB 3306 não foram acessadas. Diagnóstico do Centro de Atualizações: UpdateInfoController consulta a coleção pública de Releases do GitHub e só aceita pacote .zip; API confirma latest v12.1.21 e tag v12.1.24 retorna HTTP 404 por não existir Release para ela. Portanto branch/tag não aciona o atualizador; a captura mostra o estado esperado. Nenhum serviço, banco produtivo, mídia ou instalação foi alterado. CI remoto, integração Server end-to-end, runtime e smoke test permanecem pendentes; Release permanece pendente até cumprir esses gates. Homologação segue aberta."
     },
     {
       "id": "server-dotnet-solution-regression-2026-10-19-1233",

@@ -2048,6 +2048,10 @@ test('cross-stack server validation records Python and web results without claim
     assert.match(event.evidence, /Category=RequiresMongo` passou 24\/24.*127\.0\.0\.1:27099/);
     assert.match(event.evidence, /IntroSkipper\.Integration\.Tests` MariaDB passou 39\/39.*127\.0\.0\.1:33099/);
     assert.match(event.evidence, /UserManager\.GetFirstUser\(\).*39\/39 passaram/);
+    assert.match(event.evidence, /GetDashboardConfigurationPage_GetAvatar_HasDashboardPageWrapper` passou 1\/1.*MariaDB descartável 127\.0\.0\.1:33099/);
+    assert.match(event.evidence, /host\/usuário\/senha herdados deliberadamente inválidos/);
+    assert.match(event.evidence, /MulletaFlixApplicationFactory` agora aplica e restaura host, porta, schema, usuário e senha/);
+    assert.match(event.evidence, /Build focal Release: 0 avisos\/0 erros/);
     assert.match(event.evidence, /Mongo 27017 e MariaDB 3306 não foram acessadas/);
     assert.match(event.evidence, /CI remoto, integração Server end-to-end, runtime e smoke test permanecem pendentes; Release permanece pendente até cumprir esses gates/);
     assert.equal(server.status, 'in_progress');
