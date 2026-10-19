@@ -1801,7 +1801,7 @@ test('Nebula Supabase admission audit reports evidence limits without claiming a
     assert.match(event.evidence, /592\/592/);
     assert.match(event.evidence, /Três testes C# Mongo compilaram e foram ignorados/);
     assert.match(event.evidence, /não identifica proprietário ou expiração da lease/);
-    assert.match(server.testAudit.label, /598\/598/);
+    assert.match(server.testAudit.label, /646\/646/);
     assert.match(server.testAudit.label, /homologação formal continuam pendentes/);
     assert.equal(statusData.coverage.pending, 65);
     assert.equal(statusData.coverage.inProgress, 4);
@@ -1828,7 +1828,7 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.equal(server.testAudit.total, 5110);
     assert.equal(server.testAudit.skipped, 41);
     assert.equal(server.testAudit.failed, 0);
-    assert.match(server.testAudit.label, /NebulaPython em Python 3\.14\.7: 598\/598/);
+    assert.match(server.testAudit.label, /NebulaPython em Python 3\.10\.14: 646\/646/);
     assert.match(server.testAudit.label, /MongoDB 7\.0 do CI/);
     assert.equal(statusData.coverage.pending, 65);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
@@ -2313,8 +2313,8 @@ test('portal publishes the Nebula first-STRM integration test and its real-servi
     assert.match(event.evidence, /Não comprova Mongo\/HTTP reais, throughput, instalação ou produção/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: teste do worker pronto até o primeiro STRM enfileirado/);
-    assert.equal(statusData.events[0].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
-    assert.equal(statusData.events[1].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
+    assert.equal(statusData.events[1].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
+    assert.equal(statusData.events[2].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
 });
 
 test('portal reports full Nebula completed-destination fallback coverage with Mongo limits', async () => {
@@ -2373,11 +2373,11 @@ test('portal publishes the 24 real Mongo integration passes without equating Mon
     assert.match(event.evidence, /Não equivale ao MongoDB 7\.0 do CI/);
     assert.match(event.evidence, /Mongo em 27017 não foi acessado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
-    assert.equal(statusData.events[1].id, event.id);
+    assert.equal(statusData.events[2].id, event.id);
 });
 
 test('portal puts the latest broad .NET regression and unresolved release gates first', async () => {
-    const event = statusData.events[0];
+    const event = statusData.events[1];
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.equal(event.id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
@@ -2395,4 +2395,18 @@ test('portal puts the latest broad .NET regression and unresolved release gates 
     const dashboard = createDashboard();
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /suíte \.NET ampla e integração Mongo revalidadas/);
+});
+
+test('portal publishes the latest full Nebula Python branch-coverage rerun', () => {
+    const event = statusData.events[0];
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.equal(event.id, 'server-nebula-python-full-suite-2026-10-19-1908');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /passou 646\/646 em 98,15 s/);
+    assert.match(event.evidence, /88% \(14\.440 statements, 1\.285 misses; 2\.744 branches, 497 parciais\)/);
+    assert.match(event.evidence, /não representa isoladamente cobertura de produção/);
+    assert.match(event.evidence, /não comprovam transferência Telegram, Mongo externo, runtime instalado/);
+    assert.match(server.testAudit.label, /NebulaPython em Python 3\.10\.14: 646\/646/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });

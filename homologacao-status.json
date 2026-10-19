@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T19:00:26-03:00",
+  "generatedAt": "2026-10-19T19:10:32-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
       "skipped": 41,
         "failed": 0,
       "percent": 99.2,
-      "label": "Revalidação local de 19/10/2026: solution .NET Release (filtro FullyQualifiedName!~Integration) passou 5.069 testes e ignorou 41, 0 falhas em 5.110 resultados; integrações ficaram excluídas e ignorados não contam como aprovação. Inclui 1.531 aprovados/40 ignorados em Server.Implementations.Tests; os 24 testes RequiresMongo passaram separadamente contra MongoDB 8.3.7 descartável local. Não equivale ao MongoDB 7.0 do CI. MariaDB Linux ainda não executado: WSL não instalado e sem daemon/cliente MariaDB local. NebulaPython em Python 3.14.7: 598/598 aprovados, cobertura total medida 90%. Frontend web: 418/418 testes, TypeScript e build de produção aprovados; build gera avisos existentes de bundling. Contratos CI Mongo/MariaDB/empacotamento passaram 3/3; os quatro scripts PowerShell de empacotamento passaram localmente 4/4. Runner Windows remoto, collation Users em MariaDB Linux e CI remota seguem pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação (runner não iniciou por bloqueio de cobrança reportado pelo GitHub). Instalação, smoke test e homologação formal continuam pendentes."
+      "label": "Revalidação local de 19/10/2026: solution .NET Release (filtro FullyQualifiedName!~Integration) passou 5.069 testes e ignorou 41, 0 falhas em 5.110 resultados; integrações ficaram excluídas e ignorados não contam como aprovação. Inclui 1.531 aprovados/40 ignorados em Server.Implementations.Tests; os 24 testes RequiresMongo passaram separadamente contra MongoDB 8.3.7 descartável local. Não equivale ao MongoDB 7.0 do CI. MariaDB Linux ainda não executado: WSL não instalado e sem daemon/cliente MariaDB local. NebulaPython em Python 3.10.14: 646/646 aprovados em 98,15 s; cobertura combinada com branches 88% (14.440 statements, 1.285 misses; 2.744 branches, 497 parciais; inclui testes). Módulos: strm_downloader.py 77%, feed_ftp.py 76%, main.py 73%, ftp/pathio.py 80%, supabase_sync.py 89%. Frontend web: 418/418 testes, TypeScript e build de produção aprovados; build gera avisos existentes de bundling. Contratos CI Mongo/MariaDB/empacotamento passaram 3/3; os quatro scripts PowerShell de empacotamento passaram localmente 4/4. Runner Windows remoto, collation Users em MariaDB Linux e CI remota seguem pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação (runner não iniciou por bloqueio de cobrança reportado pelo GitHub). Instalação, smoke test e homologação formal continuam pendentes."
       }
     },
     {
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-python-full-suite-2026-10-19-1908",
+      "title": "Nebula Python: suíte completa revalidada com cobertura de branches",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Python 3.10.14, pytest-cov com branch coverage",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tests",
+      "scope": "Reexecutar a suíte completa Nebula Python e publicar apenas a evidência verificada, sem alterar runtime ou produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T19:08:00-03:00",
+      "updatedAt": "2026-10-19T19:08:52-03:00",
+      "evidence": "Comando `py -3.10 -m pytest tests --cov=. --cov-branch --cov-report=term-missing -q` passou 646/646 em 98,15 s. Cobertura combinada de módulos e testes: 88% (14.440 statements, 1.285 misses; 2.744 branches, 497 parciais); não representa isoladamente cobertura de produção. Módulos: `tools/strm_downloader.py` 77%, `tools/feed_ftp.py` 76%, `main.py` 73%, `ftp/pathio.py` 80%, `tools/supabase_sync.py` 89%. Fixtures/mocks não comprovam transferência Telegram, Mongo externo, runtime instalado, mídia real ou produção. Nenhuma configuração ou serviço foi alterado; homologação formal e gates de release continuam pendentes."
+    },
     {
       "id": "server-dotnet-broad-suite-mongo-gate-2026-10-19-1900",
       "title": "Servidor: suíte .NET ampla e integração Mongo revalidadas",
