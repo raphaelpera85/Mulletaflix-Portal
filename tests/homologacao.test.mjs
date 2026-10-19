@@ -2061,6 +2061,22 @@ test('cross-stack server validation records full MariaDB-backed HTTP integration
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('UserLibrary positive HTTP integration tests are enabled and the full suite has no skips', () => {
+    const event = statusData.events.find(item => item.id === 'server-user-library-positive-integration-tests-2026-10-19-1414');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.local, /UserLibraryControllerTests 16\/16/);
+    assert.match(event.local, /Jellyfin\.Server\.Integration\.Tests 144\/144, 0 skips e 0 falhas/);
+    assert.match(event.evidence, /MariaDB 11\.4\.4 descartável em 127\.0\.0\.1:33099/);
+    assert.match(event.evidence, /MariaDB produtivo 3306 permaneceu ativo, não consultado nem alterado/);
+    assert.match(event.evidence, /limpeza recursiva/);
+    assert.match(event.evidence, /runtime instalado, smoke produtivo e publicação de Release continuam pendentes/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('Nebula startup log separates successful initial backup from stale auto-sync and mount evidence', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-startup-log-analysis-2026-10-18-1129');
     const server = statusData.tracks.find(item => item.id === 'server');

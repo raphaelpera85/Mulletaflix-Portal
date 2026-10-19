@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T13:42:01-03:00",
+  "generatedAt": "2026-10-19T14:14:12-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 64,
         "failed": 0,
         "percent": 98.7,
-      "label": "Regressão da solution .NET Release em 19/10, filtro FullyQualifiedName!~Integration: 4.971 aprovados, 63 ignorados e 0 falhas; esse filtro exclui integrações e os casos Skip não foram executados. Revalidação complementar: NebulaPython 3.10: 598/598; web 418/418, typecheck, build de produção e verificação dos artefatos passaram (1.927 arquivos; bundle inicial 294,3 KB gzip, abaixo do limite 420 KB). Evidência agregada anterior: Jellyfin.Server.Implementations.Tests 1.499 aprovados, 63 ignorados e 0 falhas; frontend web 418/418. Agregado histórico documentado: 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), composto por suítes diferentes, não uma única execução. casos Mongo ignorados não validam integração. CI remoto, Mongo CI, instalação, smoke test e publicação da Release continuam pendentes. Homologação formal continua aberta."
+      "label": "Regressão da solution .NET Release em 19/10, filtro FullyQualifiedName!~Integration: 4.971 aprovados, 63 ignorados e 0 falhas; esse filtro exclui integrações. Execução separada da suíte HTTP Jellyfin.Server.Integration.Tests com MariaDB descartável: 144/144 aprovados, 0 ignorados/falhas. Revalidação complementar: NebulaPython 3.10: 598/598; web 418/418, typecheck, build de produção e verificação dos artefatos passaram (1.927 arquivos; bundle inicial 294,3 KB gzip, abaixo do limite 420 KB). Agregado histórico documentado: 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), composto por suítes diferentes, não uma única execução. casos Mongo ignorados não validam integração. CI remoto, Mongo CI, instalação, smoke test e publicação da Release continuam pendentes. Homologação formal continua aberta."
       }
     },
     {
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-user-library-positive-integration-tests-2026-10-19-1414",
+      "title": "UserLibrary: suíte HTTP completa aprovada; 144/144 sem skips",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "UserLibraryControllerTests 16/16; Jellyfin.Server.Integration.Tests 144/144, 0 skips e 0 falhas",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Integration.Tests/Controllers/UserLibraryControllerTests.cs",
+      "scope": "Reativar os testes positivos de item, intros, trailers locais e recursos especiais e executar a suíte HTTP completa contra MariaDB descartável, sem alegar validação de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T14:00:00-03:00",
+      "updatedAt": "2026-10-19T14:14:12-03:00",
+      "evidence": "Removidos skips genéricos de GetItem_UserIdAndItemId_Valid, GetIntros_UserIdAndItemId_Valid e LocalTrailersAndSpecialFeatures_UserIdAndItemId_Valid. `git blame` aponta os skips no commit inicial sem justificativa específica verificável. Classe focal passou 16/16. Suíte Jellyfin.Server.Integration.Tests recompilada em Release passou 144/144, 0 ignorados, 0 falhas, 17m08s contra MariaDB 11.4.4 descartável em 127.0.0.1:33099. Processo encerrou e porta fechou. MariaDB produtivo 3306 permaneceu ativo, não consultado nem alterado; Mongo 27017 não foi acessado. Pasta temporária de dados permaneceu no TEMP porque a ferramenta bloqueou a limpeza recursiva; nenhum contorno foi usado. Alteração apenas em testes, sem código runtime. CI remota, runtime instalado, smoke produtivo e publicação de Release continuam pendentes; status permanece in_progress."
+    },
     {
       "id": "server-cross-stack-validation-2026-10-19-1239",
       "title": "Suite Server Integration com MariaDB descartável: 140 aprovados; runtime pendente",
