@@ -2176,3 +2176,20 @@ test('Nebula downloader audit records duplicate log, focused tests, and producti
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal publishes MariaDB username collation fix without closing server homologation', async () => {
+    const dashboard = createDashboard();
+    await settleDashboard();
+
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-username-binary-collation-2026-10-19');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+    assert.match(event.evidence, /utf8mb4_bin/);
+    assert.match(event.evidence, /passaram 30\/30/);
+    assert.match(event.evidence, /runtime\/produção.*não foram validados/);
+    assert.equal(server.status, 'in_progress');
+    assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: usernames distintos respeitam acentos no MariaDB/);
+});

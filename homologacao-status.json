@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T14:57:37-03:00",
+  "generatedAt": "2026-10-19T15:19:55-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-username-binary-collation-2026-10-19",
+      "title": "Servidor: usernames distintos respeitam acentos no MariaDB",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "MulletaFlix Server — checkout local",
+      "location": "MulletaFlix.Server.Implementations/Users/UserManager.cs e testes MariaDB de UserManager/Billing",
+      "scope": "Fazer a unicidade de usuário distinguir codepoints Unicode diferentes sem perder a normalização de caixa feita pelo servidor; atualizar schemas existentes com segurança.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T15:12:00-03:00",
+      "updatedAt": "2026-10-19T15:19:55-03:00",
+      "evidence": "A collation utf8mb4_unicode_ci considerava NOÑO e NONO iguais. UserManager agora define e migra condicionalmente Username e NormalizedUsername para utf8mb4_bin; a normalização ToUpperInvariant continua no código. UserManagerNormalizedUsernameTests e BillingDatabaseTests passaram 30/30 em Release contra MariaDB 11.4.4 descartável em 127.0.0.1:33099, sem skips/falhas. Processo encerrado e porta 33099 sem listener; a pasta temporária ficou no TEMP porque a política recusou a limpeza. A suíte ampla ainda precisa ser reexecutada; runtime/produção, release e CI remota não foram validados. Homologação global do servidor continua in_progress."
+    },
     {
       "id": "server-dotnet-skipped-tests-audit-2026-10-19-1457",
       "title": "Auditoria dos 64 skips da regressão .NET; gates de DB isolado preservados",
