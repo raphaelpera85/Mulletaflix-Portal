@@ -6,6 +6,19 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('update center runtime recheck records focused test result and unavailable local endpoint', () => {
+    const event = statusData.events.find(item => item.id === 'server-update-center-endpoint-runtime-recheck-2026-10-19-1226');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /UpdateInfoControllerTests passou 6\/6, 0 falhas/);
+    assert.match(event.evidence, /GET read-only .*System\/Info\/Public e \/System\/UpdateInfo foram recusadas por conexão/);
+    assert.match(event.evidence, /não foi possível observar versão, configuração MulletaFlix_UPDATE_MANIFEST_URL ou resposta do endpoint/);
+    assert.match(event.evidence, /Nenhum serviço foi iniciado, Release criada ou instalação alterada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('GetAvatar persistence and UserAvatar HTTP route publish local evidence and pending runtime gates', () => {
     const event = statusData.events.find(item => item.id === 'server-getavatar-config-lock-2026-10-19-1154');
     const server = statusData.tracks.find(item => item.id === 'server');

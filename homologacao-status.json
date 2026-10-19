@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T12:18:16-03:00",
+  "generatedAt": "2026-10-19T12:26:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-update-center-endpoint-runtime-recheck-2026-10-19-1226",
+      "title": "Centro de Atualizações: parser aprovado; endpoint local indisponível",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "UpdateInfoControllerTests Release: 6/6; GET local recusado em /System/Info/Public e /System/UpdateInfo",
+      "location": "UpdateInfoController e runtime local localhost:8096",
+      "scope": "Revalidar a lógica local do Centro de Atualizações e verificar se o servidor instalado expõe o endpoint de update, sem iniciar ou modificar serviços.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T12:25:00-03:00",
+      "updatedAt": "2026-10-19T12:26:05-03:00",
+      "evidence": "dotnet test Jellyfin.Api.Tests --configuration Release --no-restore --filter FullyQualifiedName~UpdateInfoControllerTests passou 6/6, 0 falhas. Tentativas GET read-only a http://localhost:8096/System/Info/Public e /System/UpdateInfo foram recusadas por conexão, então não foi possível observar versão, configuração MulletaFlix_UPDATE_MANIFEST_URL ou resposta do endpoint no runtime neste host. A fonte UpdateInfoController usa GitHub Releases por padrão e aceita manifesto alternativo via variável de ambiente; a tela 12.1.21 permanece explicada pela Release pública mais recente, mas a origem efetiva do runtime não está comprovada. Nenhum serviço foi iniciado, Release criada ou instalação alterada. A v12.1.24 e o workflow 39212993752 continuam bloqueados pela cobrança previamente confirmada; homologação e publicação binária pendentes."
+    },
     {
       "id": "server-getavatar-config-lock-2026-10-19-1154",
       "title": "GetAvatar: persistência e rota UserAvatar validadas localmente",
