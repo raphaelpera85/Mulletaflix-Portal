@@ -26,6 +26,18 @@ test('update center recheck publishes the branch and GitHub Release distinction 
     assert.match(dashboard.getElement('event-list').innerHTML, /Centro de Atualizações: branch 12\.1\.24 não é Release publicável/);
 });
 
+test('image provider fallback gate is published without claiming production validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-image-candidate-fallback-2026-10-19-1100');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /ItemImageProviderTests Release passou 49\/49/);
+    assert.match(event.evidence, /HTTP 502 e HttpRequestException/);
+    assert.match(event.evidence, /Nenhum arquivo real, ImageInfos\/ImageTags, endpoint, renderização, serviço ou produção foi homologado\/alterado/);
+    assert.match(event.evidence, /v12\.1\.24 não tem GitHub Release/);
+});
+
 test('GetAvatar rollback keeps UserAvatars non-null after failed persistence', async () => {
     const event = statusData.events.find(item => item.id === 'server-getavatar-null-mapping-rollback-2026-10-19-1033');
 

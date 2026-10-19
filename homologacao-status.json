@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T10:44:50-03:00",
+  "generatedAt": "2026-10-19T11:00:07-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7121,6 +7121,21 @@
       "startedAt": "2026-10-19T03:00:00-03:00",
       "updatedAt": "2026-10-19T03:58:00-03:00",
       "evidence": "Fluxo local executado: solução .NET Release sem integrações terminou exit 0; Jellyfin.Server.Implementations.Tests 1.499 aprovados/63 ignorados/0 falhas. NebulaPython 598/598; web 418/418; build:check/build:production aprovados. Tarball Linux x64 SHA-256 B866280691A9C0B4028A10768852394EC860133411CC8B1BC5615744DB766067 e instalador Windows isolado SHA-256 89094CB33455E4F23A153BA3C91D4C260EA2527C0CC5ADB543142B0C83C0A7FA; o artefato Windows antigo em dist foi preservado. Branch codex/server-release-12.1.24 e tag v12.1.24 foram enviadas ao Git; commit c449fedf8af4e058a1ceeacccc3cdfdb8432aaa7. GitHub Actions run 39212993752 falhou em 3 segundos: job Validate source tag before packaging sem steps executados e os dois jobs seguintes foram skipped. Retry via GitHub App retornou 403 Resource not accessible by integration; API de Release para a tag retorna 404, portanto não há Release publicada. O motivo exato da falha atual não ficou exposto (runs anteriores documentavam bloqueio de cobrança). Docker indisponível; testes Mongo remotos não rodaram. Porta 8096 está sob Nginx; sem instalação nem smoke test produtivo."
+    },
+    {
+      "id": "server-image-candidate-fallback-2026-10-19-1100",
+      "title": "Capas: provider remoto tenta URLs alternativas após erro transitório",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T1.4", "T9.5.2"],
+      "local": "Jellyfin.Providers.Tests Release; teste de regressão HTTP 502 e falha de transporte",
+      "location": "MediaBrowser.Providers.ItemImageProvider.DownloadImage",
+      "scope": "Validar o caminho secundário de imagens, que não era coberto pelo retry de MetadataService, sem alegar instalação nem renderização em produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T10:50:00-03:00",
+      "updatedAt": "2026-10-19T11:00:00-03:00",
+      "evidence": "Antes da correção, o teste RED reproduziu que HTTP 502 e HttpRequestException impediam consultar o segundo candidato. ItemImageProviderTests Release passou 49/49; agora tenta a próxima URL e só contabiliza falha quando os candidatos se esgotam. Teste cobre fallback e falha sem alternativa. Avisos StyleCop observados são preexistentes em outros arquivos. Nenhum arquivo real, ImageInfos/ImageTags, endpoint, renderização, serviço ou produção foi homologado/alterado. Em questão separada, a tela de atualização não recebe branch/tag: `/releases/latest` permanece v12.1.21; v12.1.24 não tem GitHub Release, e a Actions run 39212993752 falhou antes dos steps. O motivo exato do workflow permanece desconhecido."
     }
   ]
 }
