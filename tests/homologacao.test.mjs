@@ -6,6 +6,27 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('avatar concurrency and legacy FTP restore audit remains honest about Mongo gate', async () => {
+    const event = statusData.events.find(item => item.id === 'server-avatar-concurrency-legacy-ftp-restore-2026-10-19-0901');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /teste focal final 18\/18/);
+    assert.match(event.evidence, /preservando ACL e metadados ausentes/);
+    assert.match(event.evidence, /598\/598/);
+    assert.match(event.evidence, /789\/789/);
+    assert.match(event.evidence, /1\.499 aprovados, 39 ignorados, 0 falhas/);
+    assert.match(event.evidence, /cinco classes RequiresMongo excluídas/);
+    assert.match(event.evidence, /porta 127\.0\.0\.1:27099 fechada/);
+    assert.match(event.evidence, /essa execução não valida integração/);
+    assert.match(event.evidence, /Nenhuma instalação, operação de restore, produção ou GitHub Release foi feita/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Auditoria: serialização GetAvatar e preservação de ACL no restore FTP legado/);
+});
+
 test('Intro Skipper EF regression is published as source-validated and production-pending', () => {
     const event = statusData.events.find(item => item.id === 'server-introskipper-changeditems-ef-span-2026-10-18-1524');
 
