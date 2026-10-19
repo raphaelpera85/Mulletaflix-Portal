@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T16:15:00-03:00",
+  "generatedAt": "2026-10-19T16:24:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 65,
         "failed": 0,
         "percent": 98.7,
-      "label": "Revalidação local de 19/10/2026: solution .NET Release (filtro FullyQualifiedName!~Integration) terminou com 5.044 aprovados, 65 não executados, 0 falhas em 5.109 resultados; integrações foram excluídas e os casos não executados não contam como aprovação. NebulaPython em Python 3.14.7: 598/598 aprovados, cobertura total medida 90%. Frontend web: 418/418 testes, TypeScript e build de produção aprovados; build gera avisos existentes de bundling. Contratos de CI MariaDB/Mongo: 2/2 aprovados. Teste de collation Users em MariaDB Linux, integrações Mongo e execução CI remota seguem pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação (runner não iniciou por bloqueio de cobrança reportado pelo GitHub). Instalação, smoke test e homologação formal continuam pendentes."
+      "label": "Revalidação local de 19/10/2026: solution .NET Release (filtro FullyQualifiedName!~Integration) terminou com 5.044 aprovados, 65 não executados, 0 falhas em 5.109 resultados; integrações foram excluídas e os casos não executados não contam como aprovação. NebulaPython em Python 3.14.7: 598/598 aprovados, cobertura total medida 90%. Frontend web: 418/418 testes, TypeScript e build de produção aprovados; build gera avisos existentes de bundling. Contratos CI Mongo/MariaDB/empacotamento passaram 3/3; os quatro scripts PowerShell de empacotamento passaram localmente 4/4. Runner Windows remoto, collation Users em MariaDB Linux, integrações Mongo e CI remota seguem pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação (runner não iniciou por bloqueio de cobrança reportado pelo GitHub). Instalação, smoke test e homologação formal continuam pendentes."
       }
     },
     {
@@ -7286,6 +7286,21 @@
       "startedAt": "2026-10-19T10:50:00-03:00",
       "updatedAt": "2026-10-19T11:07:00-03:00",
       "evidence": "Antes da correção, os testes RED reproduziram que HTTP 502 e HttpRequestException impediam consultar o segundo candidato nos loops singular (Primary) e múltiplo (Backdrop). ItemImageProviderTests Release passou 51/51; ambos os caminhos continuam após erro. Em Primary, a falha transitória não é carregada se uma capa alternativa salvar. Em Backdrop, falhas parciais seguem contabilizadas porque as URLs são imagens distintas. Teste cobre fallback e falha sem alternativa. Avisos StyleCop observados são preexistentes em outros arquivos. Nenhum arquivo real, ImageInfos/ImageTags, endpoint, renderização, serviço ou produção foi homologado/alterado. Em questão separada, a tela de atualização não recebe branch/tag: `/releases/latest` permanece v12.1.21; v12.1.24 não tem GitHub Release, e a Actions run 39212993752 falhou antes dos steps. O motivo exato do workflow permanece desconhecido."
+    },
+    {
+      "id": "server-windows-packaging-ci-tests-2026-10-19-1624",
+      "title": "CI do servidor inclui testes de integridade do pacote Windows",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "PowerShell e contratos Node locais; sintaxe YAML validada",
+      "location": ".github/workflows/ci.yml → windows-packaging-script-tests",
+      "scope": "Executar automaticamente no runner Windows os quatro testes que validam integridade, bootstrap Rclone, backup e opções do empacotamento.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T16:24:00-03:00",
+      "updatedAt": "2026-10-19T16:24:00-03:00",
+      "evidence": "Contrato atualizado: node --test dos contratos Mongo, MariaDB e empacotamento passou 3/3. Assert-StageIntegrity.Tests.ps1, RcloneBootstrap.Tests.ps1, StageBackup.Tests.ps1 e StageBuildOptions.Tests.ps1 passaram 4/4 em PowerShell local; YAML parseado pelo pacote yaml e git diff --check limpo. O runner Windows remoto ainda não executou. GitHub Releases API continua latest v12.1.21; tag v12.1.24 não tem objeto Release (404), então branch/tag não aparecem como atualização instalável. Nenhuma Release, instalação ou produção alterada."
     }
   ]
 }

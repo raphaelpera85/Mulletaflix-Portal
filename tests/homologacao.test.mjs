@@ -2200,3 +2200,20 @@ test('portal keeps MariaDB username collation in progress until case-sensitive L
     assert.equal(server.status, 'in_progress');
     assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: usernames distintos respeitam acentos no MariaDB/);
 });
+
+test('portal reports Windows packaging CI as locally verified but remotely pending', () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-windows-packaging-ci-tests-2026-10-19-1624');
+
+    assert.ok(event);
+    assert.equal(server.status, 'in_progress');
+    assert.equal(event.status, 'in_progress');
+    assert.match(server.testAudit.label, /Contratos CI Mongo\/MariaDB\/empacotamento passaram 3\/3/);
+    assert.match(server.testAudit.label, /quatro scripts PowerShell de empacotamento passaram localmente 4\/4/);
+    assert.match(server.testAudit.label, /Runner Windows remoto/);
+    assert.match(event.evidence, /node --test dos contratos Mongo, MariaDB e empacotamento passou 3\/3/);
+    assert.match(event.evidence, /passaram 4\/4 em PowerShell local/);
+    assert.match(event.evidence, /runner Windows remoto ainda não executou/);
+    assert.match(event.evidence, /v12\.1\.24 não tem objeto Release \(404\)/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
