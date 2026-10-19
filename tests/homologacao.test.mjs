@@ -20,6 +20,9 @@ test('update center recheck publishes the branch and GitHub Release distinction 
     assert.match(event.evidence, /\/releases\/latest continua v12\.1\.21/);
     assert.match(event.evidence, /mulletaflix-update-win-x64\.zip/);
     assert.match(event.evidence, /Nenhuma Release ou instalação criada/);
+    assert.match(event.evidence, /run 39212993752 falhou no job de validação sem executar steps/);
+    assert.match(event.evidence, /account is locked due to a billing issue/);
+    assert.match(event.evidence, /jobs de pacote Linux e publicação foram ignorados/);
 
     const dashboard = createDashboard();
     await settleDashboard();
