@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T16:36:00-03:00",
+  "generatedAt": "2026-10-19T16:38:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-live-tv-capability-fuzz-2026-10-19-1636",
+      "title": "Live TV: fuzz HTTP determinístico rejeita 256 capabilities não emitidas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Jellyfin.Api.Tests Release; TestServer com manager simulado",
+      "location": "GET /LiveTv/LiveRecordings/{streamId}/stream",
+      "scope": "Expandir os casos inválidos com tokens aleatórios determinísticos e manter explícitos os limites de homologação local.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T16:34:00-03:00",
+      "updatedAt": "2026-10-19T16:38:00-03:00",
+      "evidence": "A suíte focal Release passou 10/10, 0 falhas/ignorados. O TestServer enviou 256 tokens URL-safe não emitidos, reproduzíveis com semente 0x5EED; todos retornaram HTTP 404 e nenhum caminho local foi resolvido pelo manager. Casos de timer ID, zero GUID, texto inválido, traversal e tamanho extremo também permanecem cobertos. Evidência usa manager simulado e não valida geração/consumo pelo gravador real, transcoding/playback, instalação ou produção; esses gates seguem pendentes. Nenhum serviço ou produção foi alterado."
+    },
     {
       "id": "server-username-binary-collation-2026-10-19",
       "title": "Servidor: usernames distintos respeitam acentos no MariaDB",
@@ -7301,21 +7316,6 @@
       "startedAt": "2026-10-19T16:24:00-03:00",
       "updatedAt": "2026-10-19T16:27:00-03:00",
       "evidence": "Contrato atualizado: node --test dos contratos Mongo, MariaDB e empacotamento passou 3/3. Assert-StageIntegrity.Tests.ps1, RcloneBootstrap.Tests.ps1, StageBackup.Tests.ps1 e StageBuildOptions.Tests.ps1 passaram 4/4 em PowerShell local; YAML parseado pelo pacote yaml e git diff --check limpo. O runner Windows remoto ainda não executou. GitHub Releases API continua latest v12.1.21; tag v12.1.24 não tem objeto Release (404), então branch/tag não aparecem como atualização instalável. Nenhuma Release, instalação ou produção alterada."
-    },
-    {
-      "id": "server-live-tv-capability-fuzz-2026-10-19-1636",
-      "title": "Live TV: fuzz HTTP determinístico rejeita 256 capabilities não emitidas",
-      "agent": "Codex",
-      "front": "server",
-      "featureIds": [],
-      "local": "Jellyfin.Api.Tests Release; TestServer com manager simulado",
-      "location": "GET /LiveTv/LiveRecordings/{streamId}/stream",
-      "scope": "Expandir os casos inválidos com tokens aleatórios determinísticos e manter explícitos os limites de homologação local.",
-      "status": "in_progress",
-      "progressPercent": null,
-      "startedAt": "2026-10-19T16:34:00-03:00",
-      "updatedAt": "2026-10-19T16:36:00-03:00",
-      "evidence": "A suíte focal Release passou 10/10, 0 falhas/ignorados. O TestServer enviou 256 tokens URL-safe não emitidos, reproduzíveis com semente 0x5EED; todos retornaram HTTP 404 e nenhum caminho local foi resolvido pelo manager. Casos de timer ID, zero GUID, texto inválido, traversal e tamanho extremo também permanecem cobertos. Evidência usa manager simulado e não valida geração/consumo pelo gravador real, transcoding/playback, instalação ou produção; esses gates seguem pendentes. Nenhum serviço ou produção foi alterado."
     },
     {
       "id": "server-live-tv-capability-http-validation-2026-10-19-1631",

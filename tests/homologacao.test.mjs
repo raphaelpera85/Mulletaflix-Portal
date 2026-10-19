@@ -2245,3 +2245,10 @@ test('portal publishes deterministic Live TV capability fuzz evidence and remain
     assert.match(event.evidence, /gravador real, transcoding\/playback, instalação ou produção; esses gates seguem pendentes/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('homologation timeline renders deterministic Live TV capability fuzz event', async () => {
+    const dashboard = createDashboard();
+    await settleDashboard();
+
+    assert.match(dashboard.getElement('event-list').innerHTML, /Live TV: fuzz HTTP determinístico rejeita 256 capabilities não emitidas/);
+});
