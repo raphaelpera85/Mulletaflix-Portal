@@ -669,9 +669,9 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
-    assert.equal(audit.passed, 5044);
-    assert.equal(audit.total, 5109);
-    assert.equal(audit.skipped, 65);
+    assert.equal(audit.passed, 5069);
+    assert.equal(audit.total, 5110);
+    assert.equal(audit.skipped, 41);
     assert.equal(audit.failed, 0);
 
 });
@@ -715,7 +715,7 @@ test('server audit preserves the remote CI blocker and displays the latest Mongo
     const mongoEvent = statusData.events.find(item => item.id === 'server-ci-mongo-category-filter-2026-10-18-1138');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /5\.044 aprovados, 65 não executados, 0 falhas/);
+    assert.match(server.testAudit.label, /5\.069 testes e ignorou 41, 0 falhas em 5\.110 resultados/);
     assert.match(server.testAudit.label, /[Hh]omologação formal continuam pendentes/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
@@ -741,9 +741,9 @@ test('portal records the current deterministic server suite without claiming int
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.equal(server.testAudit.passed, 5044);
-    assert.equal(server.testAudit.total, 5109);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.passed, 5069);
+    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.skipped, 41);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /FullyQualifiedName!~Integration/);
     assert.match(event.evidence, /NebulaPython.*592\/592/);
@@ -768,8 +768,8 @@ test('portal records the orphaned Nebula worker and avoids claiming a production
     assert.match(event.evidence, /não expõe PID/);
     assert.match(event.evidence, /não foi encerrado/);
     assert.match(event.evidence, /passou 1\/1/);
-    assert.equal(server.testAudit.passed, 5044);
-    assert.equal(server.testAudit.total, 5109);
+    assert.equal(server.testAudit.passed, 5069);
+    assert.equal(server.testAudit.total, 5110);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard({ ...statusData, events: [event] });
@@ -952,8 +952,8 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /sem host GitHub autenticado/);
     assert.match(event.evidence, /Nenhum worker ou transferência real/);
     assert.match(event.evidence, /não ativa em produção/);
-    assert.equal(server.testAudit.passed, 5044);
-    assert.equal(server.testAudit.total, 5109);
+    assert.equal(server.testAudit.passed, 5069);
+    assert.equal(server.testAudit.total, 5110);
 
     const dashboard = createDashboard();
     await settleDashboard();
@@ -1824,9 +1824,9 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.match(event.evidence, /EnvioStartupException_DoesNotPreventDownloaderFromStarting foi reexecutado e passou 1\/1/);
     assert.match(event.evidence, /Portal independente passou 87\/87/);
     assert.match(event.evidence, /CI remoto, revisão instalada, download real e release não foram executados/);
-    assert.equal(server.testAudit.passed, 5044);
-    assert.equal(server.testAudit.total, 5109);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.passed, 5069);
+    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.skipped, 41);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /NebulaPython em Python 3\.14\.7: 598\/598/);
     assert.match(server.testAudit.label, /MongoDB 7\.0 do CI/);
@@ -2039,9 +2039,9 @@ test('latest .NET solution regression publishes exact counts without claiming in
     assert.match(event.evidence, /filtro exclui casos com Integration/);
     assert.match(event.evidence, /Portal Node 120\/120/);
     assert.match(event.evidence, /CI remoto, integrações reais.*Release permanecem pendentes/);
-    assert.equal(server.testAudit.passed, 5044);
-    assert.equal(server.testAudit.total, 5109);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.passed, 5069);
+    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.skipped, 41);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
@@ -2313,7 +2313,8 @@ test('portal publishes the Nebula first-STRM integration test and its real-servi
     assert.match(event.evidence, /Não comprova Mongo\/HTTP reais, throughput, instalação ou produção/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: teste do worker pronto até o primeiro STRM enfileirado/);
-    assert.equal(statusData.events[0].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
+    assert.equal(statusData.events[0].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
+    assert.equal(statusData.events[1].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
 });
 
 test('portal reports full Nebula completed-destination fallback coverage with Mongo limits', async () => {
@@ -2372,5 +2373,26 @@ test('portal publishes the 24 real Mongo integration passes without equating Mon
     assert.match(event.evidence, /Não equivale ao MongoDB 7\.0 do CI/);
     assert.match(event.evidence, /Mongo em 27017 não foi acessado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
-    assert.equal(statusData.events[0].id, event.id);
+    assert.equal(statusData.events[1].id, event.id);
+});
+
+test('portal puts the latest broad .NET regression and unresolved release gates first', async () => {
+    const event = statusData.events[0];
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.equal(event.id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(server.testAudit.passed, 5069);
+    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.skipped, 41);
+    assert.equal(server.testAudit.failed, 0);
+    assert.match(event.evidence, /Integration.*não tiveram casos correspondentes/);
+    assert.match(event.evidence, /24\/24 em MongoDB 8\.3\.7 descartável/);
+    assert.match(event.evidence, /MariaDB Linux\/case-sensitive não foi executado/);
+    assert.match(event.evidence, /runner_id=0, sem steps/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /suíte \.NET ampla e integração Mongo revalidadas/);
 });
