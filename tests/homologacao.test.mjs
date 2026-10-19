@@ -53,6 +53,8 @@ test('server update center explains branch versus published release and records 
     assert.match(event.evidence, /releases\/tags\/v12\.1\.24.*HTTP 404/);
     assert.match(event.evidence, /44\/44 aprovados/);
     assert.match(event.evidence, /801\/802/);
+    assert.match(event.evidence, /UpdateInfoControllerTests: 6\/6 aprovados/);
+    assert.match(event.evidence, /39212993752/);
     assert.match(event.evidence, /Nenhuma Release binária criada/);
 
     const dashboard = createDashboard();
