@@ -6,6 +6,22 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('GetAvatar configuration concurrency fix publishes local evidence and pending runtime gates', () => {
+    const event = statusData.events.find(item => item.id === 'server-getavatar-config-lock-2026-10-19-1154');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /PreservesConcurrentConfigurationWrite falhava antes da correção/);
+    assert.match(event.evidence, /AvatarControllerUserAvatarAuthorizationTests Release: 20\/20/);
+    assert.match(event.evidence, /build Release do plugin GetAvatar: 0 avisos, 0 erros/);
+    assert.match(event.evidence, /teste EF real de ImageInfo, pipeline HTTP completo de UserAvatar, instalação e produção continuam pendentes/);
+    assert.match(event.evidence, /Nenhuma Release ou instalação foi feita/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('cross-area server audit publishes focused verification and unresolved release blockers', async () => {
     const event = statusData.events.find(item => item.id === 'server-cross-area-audit-getavatar-web-2026-10-19-1132');
 
