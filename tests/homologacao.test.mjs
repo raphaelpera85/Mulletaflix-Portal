@@ -6,6 +6,40 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('update center recheck publishes the branch and GitHub Release distinction with current assets', async () => {
+    const event = statusData.events.find(item => item.id === 'server-update-center-branch-release-recheck-2026-10-19-1036');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /UpdateInfoController consulta GitHub Releases, não branches/);
+    assert.match(event.evidence, /GET \/releases\/tags\/v12\.1\.24 retorna HTTP 404/);
+    assert.match(event.evidence, /\/releases\/latest continua v12\.1\.21/);
+    assert.match(event.evidence, /mulletaflix-update-win-x64\.zip/);
+    assert.match(event.evidence, /Nenhuma Release ou instalação criada/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Centro de Atualizações: branch 12\.1\.24 não é Release publicável/);
+});
+
+test('GetAvatar rollback keeps UserAvatars non-null after failed persistence', async () => {
+    const event = statusData.events.find(item => item.id === 'server-getavatar-null-mapping-rollback-2026-10-19-1033');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /TDD reproduziu o defeito/);
+    assert.match(event.evidence, /regressão focal 1\/1 passou/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests Release filtrado FullyQualifiedName!~Integration 737\/737/);
+    assert.match(event.evidence, /0 avisos e 0 erros, eliminando CS8601/);
+    assert.match(event.evidence, /Nenhum teste EF real, instalação, produção ou Release executado/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar: rollback mantém lista de avatares válida/);
+});
+
 test('Mongo restore integration result is published with CI and remote-service limits explicit', async () => {
     const event = statusData.events.find(item => item.id === 'server-supabase-mongo-restore-2026-10-19-1017');
 
