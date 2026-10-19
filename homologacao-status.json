@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T19:52:51-03:00",
+  "generatedAt": "2026-10-19T19:57:16-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7541,6 +7541,21 @@
       "startedAt": "2026-10-19T19:46:05-03:00",
       "updatedAt": "2026-10-19T19:52:51-03:00",
       "evidence": "`dotnet test ... --filter 'Category=RequiresMongo'` passou 24/24 em 19 s contra MongoDB 8.3.7 temporário, com bind exclusivo a 127.0.0.1:27099; serviço Mongo padrão não foi tocado. Processo encerrado, porta fechada e diretório temporário removido após validar os 30 itens e a raiz de destino. `node --test tests/Jellyfin.Api.Tests/NebulaConfigPage.test.mjs` passou 4/4, cobrindo persistência habilitada/desabilitada, checkbox ausente e salvamento explícito; não é teste de browser. MongoDB 7.0 do CI, MariaDB Linux, runtime instalado, download/playback real e produção não foram testados."
+    },
+    {
+      "id": "server-ci-packaging-contracts-audit-2026-10-19-1957",
+      "title": "Servidor: contratos locais de CI e empacotamento aprovados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Node.js test runner; contratos de CI MariaDB, Mongo e empacotamento",
+      "location": "tools/release/tests/*.test.mjs; .github/workflows/ci.yml",
+      "scope": "Verificar localmente que os gates versionados apontam para as suites e configurações previstas, sem iniciar serviços ou acessar produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-19T19:55:00-03:00",
+      "updatedAt": "2026-10-19T19:57:16-03:00",
+      "evidence": "`node --test tools/release/tests/*.test.mjs` passou 19/19, zero skips/falhas. Inclui contratos para job MariaDB Linux (11.4, lower_case_table_names/collation), Mongo CI 7.0, scripts de empacotamento e segurança do token DuckDNS. Isso verifica seleção/configuração declarada, mas não executa o GitHub Actions, MariaDB Linux, scripts externos completos ou instalação real. WSL não instalado e serviço/CLI MariaDB ausentes; nenhum serviço foi instalado ou iniciado. Execução remota, runtime instalado e smoke playback/download permanecem pendentes."
     }
   ]
 }

@@ -427,6 +427,25 @@ test('portal publishes the isolated Mongo and Nebula frontend validation without
     assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(statusData.events[0].title));
 });
 
+test('portal publishes local CI packaging contract results without claiming remote jobs ran', async () => {
+    const event = statusData.events.find(item => item.id === 'server-ci-packaging-contracts-audit-2026-10-19-1957');
+    const dashboard = createDashboard();
+    await settleDashboard();
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /node --test tools\/release\/tests\/\*\.test\.mjs/);
+    assert.match(event.evidence, /19\/19, zero skips\/falhas/);
+    assert.match(event.evidence, /job MariaDB Linux.*Mongo CI 7\.0/);
+    assert.match(event.evidence, /não executa o GitHub Actions/);
+    assert.match(event.evidence, /WSL não instalado/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+    const renderedEvents = dashboard.getElement('event-list').innerHTML;
+    assert.ok(renderedEvents.indexOf(event.title) >= 0);
+    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(statusData.events[0].title));
+});
+
 test('publishes the latest Nebula startup finding without marking T2.1 complete', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-live-runtime-promotion-2026-10-18-0827');
 
