@@ -2414,9 +2414,10 @@ test('portal distinguishes GitHub Actions runner allocation failures from test f
     assert.equal(event.id, 'server-github-actions-runner-allocation-blocked-2026-10-19-1912');
     assert.equal(event.status, 'blocked');
     assert.match(event.evidence, /runner_id=0 e zero steps/);
-    assert.match(event.evidence, /11 jobs como failure antes de qualquer step/);
+    assert.match(event.evidence, /11 jobs também falharam antes de qualquer step/);
     assert.match(event.evidence, /não executaram build\/testes/);
-    assert.match(event.evidence, /causa operacional exata não foi determinada/);
+    assert.match(event.evidence, /account is locked due to a billing issue/);
+    assert.match(event.evidence, /anotação do primeiro job reporta o mesmo bloqueio de faturamento/);
     assert.match(event.evidence, /continua v12\.1\.21/);
     assert.equal(statusData.events[1].id, 'server-nebula-python-full-suite-2026-10-19-1908');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
