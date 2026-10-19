@@ -13,7 +13,8 @@ test('Supabase keyset pagination audit is published with Mongo and snapshot gate
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /limit=100, chave única ordenada e filtro gt/);
-    assert.match(event.evidence, /55 aprovados, 2 ignorados.*0 falhas/);
+    assert.match(event.evidence, /citados e percent-encoded conforme gramática PostgREST/);
+    assert.match(event.evidence, /56 aprovados, 2 ignorados.*0 falhas/);
     assert.match(event.evidence, /Offset de nebula_files e snapshot consistente.*pendentes/);
     assert.match(event.evidence, /não acessaram Supabase remoto/);
 
