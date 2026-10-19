@@ -14,6 +14,7 @@ test('cross-area server audit publishes focused verification and unresolved rele
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /branch\/tag v12\.1\.24 não tem objeto Release/);
     assert.match(event.evidence, /billing antes dos steps/);
+    assert.match(event.evidence, /UpdateInfoControllerTests 6\/6 Release/);
     assert.match(event.evidence, /MetadataServiceTests\|ItemImageProviderRefreshTests 44\/44 Release/);
     assert.match(event.evidence, /AvatarControllerUserAvatarAuthorizationTests 19\/19 Release/);
     assert.match(event.evidence, /Vitest 418\/418 em 75 arquivos/);

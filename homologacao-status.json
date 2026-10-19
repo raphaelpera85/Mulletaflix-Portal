@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T11:32:53-03:00",
+  "generatedAt": "2026-10-19T11:37:36-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3015,8 +3015,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T11:22:17-03:00",
-      "updatedAt": "2026-10-19T11:32:53-03:00",
-      "evidence": "A tela mostra 12.1.21 atual/disponível porque a GitHub Release mais recente continua v12.1.21; a branch/tag v12.1.24 não tem objeto Release (API por tag 404). O fluxo padrão exige Release com ZIP. Actions run 39212993752 foi bloqueada por billing antes dos steps; jobs de build/publicação foram ignorados. Não houve release nem instalação. Testes locais: Jellyfin.Providers.Tests focal MetadataServiceTests|ItemImageProviderRefreshTests 44/44 Release; Jellyfin.Api.Tests AvatarControllerUserAvatarAuthorizationTests 19/19 Release; web npm run build:check passou e Vitest 418/418 em 75 arquivos. Auditoria estática: rollback XML do GetAvatar grava fora do lock privado de BasePluginOfT.SaveConfiguration; outros escritores não compartilham o semáforo SetUserAvatarAsync. Risco não reproduzido como falha; concorrência abrangente e teste EF real de ImageInfo pendentes. Nenhuma produção ou mídia real foi alterada. Configuração MulletaFlix_UPDATE_MANIFEST_URL e endpoint /System/UpdateInfo efetivos não foram inspecionados. Mapa técnico conferido, sem mudança estrutural."
+      "updatedAt": "2026-10-19T11:37:36-03:00",
+      "evidence": "A tela mostra 12.1.21 atual/disponível porque a GitHub Release mais recente continua v12.1.21; a branch/tag v12.1.24 não tem objeto Release (API por tag 404). O fluxo padrão exige Release com ZIP. Actions run 39212993752 foi bloqueada por billing antes dos steps; jobs de build/publicação foram ignorados. Não houve release nem instalação. Testes locais: Jellyfin.Api.Tests UpdateInfoControllerTests 6/6 Release; Jellyfin.Providers.Tests focal MetadataServiceTests|ItemImageProviderRefreshTests 44/44 Release; Jellyfin.Api.Tests AvatarControllerUserAvatarAuthorizationTests 19/19 Release; web npm run build:check passou e Vitest 418/418 em 75 arquivos. Auditoria estática: rollback XML do GetAvatar grava fora do lock privado de BasePluginOfT.SaveConfiguration; outros escritores não compartilham o semáforo SetUserAvatarAsync. Risco não reproduzido como falha; concorrência abrangente e teste EF real de ImageInfo pendentes. Nenhuma produção ou mídia real foi alterada. Configuração MulletaFlix_UPDATE_MANIFEST_URL e endpoint /System/UpdateInfo efetivos não foram inspecionados. Mapa técnico conferido, sem mudança estrutural."
     },
     {
       "id": "server-update-center-branch-release-recheck-2026-10-19-1036",
