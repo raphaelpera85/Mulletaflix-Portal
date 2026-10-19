@@ -44,6 +44,22 @@ test('image metadata audit records source correction without claiming production
     assert.match(event.evidence, /sem release/);
 });
 
+test('server update center explains branch versus published release and records latest test gate', async () => {
+    const event = statusData.events.find(item => item.id === 'server-update-center-branch-release-diagnosis-2026-10-19-0422');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /releases\/tags\/v12\.1\.24.*HTTP 404/);
+    assert.match(event.evidence, /44\/44 aprovados/);
+    assert.match(event.evidence, /801\/802/);
+    assert.match(event.evidence, /Nenhuma Release binária criada/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Atualizador não detecta a branch 12\.1\.24/);
+});
+
 function createDashboard(data = statusData) {
     const elements = new Map();
     const createElement = () => ({

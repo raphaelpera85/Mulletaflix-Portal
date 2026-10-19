@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T03:58:00-03:00",
+  "generatedAt": "2026-10-19T04:22:26-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-update-center-branch-release-diagnosis-2026-10-19-0422",
+      "title": "Atualizador não detecta a branch 12.1.24: falta publicar a GitHub Release",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T3.6", "T9.5.2"],
+      "local": "UpdateInfoController, GitHub Releases API, branch/tag 12.1.24 e testes Providers/MetadataService",
+      "location": "Painel admin Centro de Atualizações; tag v12.1.24; workflow 39212993752",
+      "scope": "Explicar por que o Centro de Atualizações exibe 12.1.21 e registrar a validação mais recente sem alegar publicação ou instalação inexistente.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T04:10:00-03:00",
+      "updatedAt": "2026-10-19T04:22:26-03:00",
+      "evidence": "A fonte Jellyfin.Api/Controllers/UpdateInfoController.cs consulta por padrão a coleção GitHub /repos/raphaelpera85/mulletaflix-completo/releases; branches/tags não são a origem desse endpoint. A tag v12.1.24 existe, mas GET na API oficial /releases/tags/v12.1.24 respondeu HTTP 404 Not Found. A tela fornecida mostra versão atual e disponível 12.1.21. Logo, o painel não detecta a versão da branch porque ainda não há Release publicada com pacote compatível. Testes Release focados MetadataServiceTests: 44/44 aprovados. Suíte completa Jellyfin.Providers.Tests: 801/802; a única falha foi DramaFindsLiveIntegrationTests.SearchAndDetail_WorkAgainstTheRealApi, em asserção com API ao vivo, fora da correção. O workflow 39212993752 falhou antes de executar steps e retry disponível retornou 403. Nenhuma Release binária criada nem instalação feita; Mongo e smoke test de produção seguem pendentes. Homologação permanece em andamento."
+    },
     {
       "id": "server-introskipper-changeditems-ef-span-2026-10-18-1524",
       "title": "Intro Skipper: exceção EF no passe ChangedItems corrigida na fonte",
