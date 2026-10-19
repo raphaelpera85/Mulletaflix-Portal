@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T14:49:23-03:00",
+  "generatedAt": "2026-10-19T14:53:54-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-mongo-test-ci-and-release-gate-reconciliation-2026-10-19-1453",
+      "title": "Mongo local 24/24; CI Mongo 7.0 e Release ainda bloqueados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "RequiresMongo: 24/24 em MongoDB 8.3.7 descartável (execução anterior registrada); contrato de cobertura do CI: 1/1; run remoto 39212993752 não iniciou steps",
+      "location": "docs/AUDIT-EVIDENCE.md; .github/workflows/ci.yml; tools/release/tests/ci-mongo-coverage.test.mjs",
+      "scope": "Reconciliar a evidência integrada Mongo já aprovada com a versão MongoDB 7.0 do CI e o estado atual da publicação, sem acessar bancos nem runtime de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T14:50:00-03:00",
+      "updatedAt": "2026-10-19T14:53:54-03:00",
+      "evidence": "A auditoria anterior (19/10 10:17) registrou `Category=RequiresMongo` 24/24 em MongoDB 8.3.7 descartável; este resultado não valida Mongo 7.0 no GitHub Actions. `node --test tools/release/tests/ci-mongo-coverage.test.mjs` passou 1/1 e verifica que o workflow seleciona toda a categoria. Leitura REST pública confirma run 39212993752 em failure com runner_id=0 e zero steps; build Linux e release estão skipped. `/releases/latest` é v12.1.21 com assets Windows/Linux, enquanto v12.1.24 responde 404. Sem autenticação GH CLI. Nenhuma alteração em produção, rerun, instalação ou criação de release. Homologação permanece in_progress."
+    },
     {
       "id": "server-dotnet-regression-prefetch-cs4014-2026-10-19-1439",
       "title": "Regressão .NET: 5.044 aprovados; 8 tarefas Nebula pré-cache descartadas explicitamente",

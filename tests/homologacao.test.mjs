@@ -2096,6 +2096,23 @@ test('latest .NET solution regression records filtered TRX totals and explicit N
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Mongo CI reconciliation separates local 8.3 coverage from pending CI 7.0 and release', () => {
+    const event = statusData.events.find(item => item.id === 'server-mongo-test-ci-and-release-gate-reconciliation-2026-10-19-1453');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.local, /RequiresMongo: 24\/24 em MongoDB 8\.3\.7 descartável/);
+    assert.match(event.local, /contrato de cobertura do CI: 1\/1/);
+    assert.match(event.evidence, /não valida Mongo 7\.0/);
+    assert.match(event.evidence, /runner_id=0 e zero steps/);
+    assert.match(event.evidence, /v12\.1\.21/);
+    assert.match(event.evidence, /v12\.1\.24 responde 404/);
+    assert.match(event.evidence, /Homologação permanece in_progress/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('Nebula startup log separates successful initial backup from stale auto-sync and mount evidence', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-startup-log-analysis-2026-10-18-1129');
     const server = statusData.tracks.find(item => item.id === 'server');
