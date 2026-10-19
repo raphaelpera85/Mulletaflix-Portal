@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T19:16:02-03:00",
+  "generatedAt": "2026-10-19T19:23:42-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3062,6 +3062,21 @@
       "startedAt": "2026-10-19T18:36:00-03:00",
       "updatedAt": "2026-10-19T18:40:10-03:00",
       "evidence": "`dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter Category=RequiresMongo --logger 'console;verbosity=normal'`: 24/24 aprovados, 0 falhas, 22,04 s. Foram exercitados claims/leases concorrentes, prioridade persistida, recuperação de playback, restore/backup de tokens com HTTP Supabase simulado e verificação de topologia standalone. Teste usou MongoDB 8.3.7 temporário, `directConnection=true`, só loopback e bases aleatórias; Mongo em 27017 não foi acessado. PID temporário foi encerrado e porta fechada; a política do executor bloqueou remoção do diretório scratch, que permanece sem processo usando-o. Não equivale ao MongoDB 7.0 do CI. Sem alteração de runtime, produção, release ou deploy do servidor; CI, MariaDB Linux, runtime instalado e smoke real continuam pendentes."
+    },
+    {
+      "id": "portal-homologation-timeline-sort-2026-10-19-1923",
+      "title": "Portal: linha do tempo mostra homologações mais recentes primeiro",
+      "agent": "Codex",
+      "front": "portal",
+      "featureIds": [],
+      "local": "MulletFlix-Portal — testes locais Node.js",
+      "location": "homologacao.js → lista de eventos de homologação",
+      "scope": "Ordenar a linha do tempo pela data atualizada em ordem decrescente, preservando o array de origem e o limite visual existente.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-19T19:23:42-03:00",
+      "updatedAt": "2026-10-19T19:23:42-03:00",
+      "evidence": "`node --test tests/homologacao.test.mjs`: 144/144 passaram. Regressões confirmam evento mais novo antes do antigo, preservação do array recebido e renderização do evento publicado mais recente no topo; verificações de eventos históricos usam fixtures isoladas, sem pressupor que itens fora dos 50 mais recentes apareçam na lista visual. `node --check homologacao.js` e `git diff --check` passaram. Alteração limitada à apresentação e testes do portal; nenhuma fonte/runtime do servidor, release ou produção foi modificada. Publicação Git do portal será verificada separadamente; deployment hospedado não foi confirmado."
     },
     {
       "id": "server-nebula-first-strm-end-to-end-test-2026-10-19-1701",
