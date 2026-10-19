@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T18:19:42-03:00",
+  "generatedAt": "2026-10-19T18:32:13-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7421,6 +7421,21 @@
       "startedAt": "2026-10-19T18:06:00-03:00",
       "updatedAt": "2026-10-19T18:17:34-03:00",
       "evidence": "O RED reproduziu que --db-name default=ftp impedia o fallback para MONGO_DATABASE. Os parsers agora usam default=None; a variável de ambiente é aplicada e --db-name explícito mantém precedência, com ftp somente como fallback final. Testes focais test_supabase_sync.py + test_strm_downloader.py: 58/58; suíte NebulaPython Python 3.10 com --cov-branch: 646/646 em 137,47 s. Cobertura agregada 88% (inclui arquivos de teste); strm_downloader.py 77% e supabase_sync.py 89%. Busca twin não encontrou outro parser com o default incorreto. Banco, Supabase, Telegram, runtime instalado e produção não foram acessados; integrações externas foram simuladas. Sem release ou deploy do servidor. CI remota e smoke instalado continuam pendentes."
+    },
+    {
+      "id": "server-nebula-cross-language-regression-audit-2026-10-19-1832",
+      "title": "Nebula: regressão Python e C# revalidada; integração Mongo pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "NebulaPython Python 3.10 com cobertura de branches; Jellyfin.Server.Implementations.Tests Release filtrado por Nebula",
+      "location": "Tools/NebulaPython/tests e tests/Jellyfin.Server.Implementations.Tests/Nebula",
+      "scope": "Reexecutar os gates locais de regressão Nebula e atualizar o estado de homologação sem alterar runtime ou produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T18:20:00-03:00",
+      "updatedAt": "2026-10-19T18:32:13-03:00",
+      "evidence": "Revalidação neste checkout: `py -3.10 -m pytest tests --cov=. --cov-branch --cov-report=term-missing -q` passou 646/646 em 119,00 s; cobertura agregada 88% (14.440 statements, 1.285 ausentes; 2.744 branches, 497 parciais), incluindo testes. `dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter FullyQualifiedName~Nebula` passou 705/729; 24 integrações Mongo foram ignoradas; zero falhas. Build Release dos componentes encerrou sem erro. Porta descartável 127.0.0.1:27099 indisponível; `mongod`, `mongosh` e Docker não encontrados no PATH. Mongo/Supabase/Telegram reais, CI remota, runtime instalado, instalação, download/playback e produção não foram exercitados. Nenhum código runtime foi alterado e nenhuma Release foi criada. Próximo gate: configurar/executar integrações em MongoDB descartável compatível com o CI e depois smoke test instalado em janela segura."
     }
   ]
 }
