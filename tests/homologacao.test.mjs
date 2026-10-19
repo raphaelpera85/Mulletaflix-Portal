@@ -12,7 +12,10 @@ test('update center recheck publishes the branch and GitHub Release distinction 
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.match(event.evidence, /UpdateInfoController consulta GitHub Releases, não branches/);
+    assert.match(event.evidence, /Por padrão, UpdateInfoController consulta GitHub Releases/);
+    assert.match(event.evidence, /MulletaFlix_UPDATE_MANIFEST_URL pode substituir/);
+    assert.match(event.evidence, /configuração efetiva não foi inspecionada/);
+    assert.match(event.evidence, /endpoint real \/System\/UpdateInfo não foi chamado/);
     assert.match(event.evidence, /GET \/releases\/tags\/v12\.1\.24 retorna HTTP 404/);
     assert.match(event.evidence, /\/releases\/latest continua v12\.1\.21/);
     assert.match(event.evidence, /mulletaflix-update-win-x64\.zip/);
@@ -156,6 +159,10 @@ test('server update center explains branch versus published release and records 
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /Por padrão, UpdateInfoController consulta a coleção GitHub/);
+    assert.match(event.evidence, /MulletaFlix_UPDATE_MANIFEST_URL pode substituir/);
+    assert.match(event.evidence, /configuração efetiva não foi inspecionada/);
+    assert.match(event.evidence, /endpoint real \/System\/UpdateInfo não foi chamado/);
     assert.match(event.evidence, /releases\/tags\/v12\.1\.24.*HTTP 404/);
     assert.match(event.evidence, /44\/44 aprovados/);
     assert.match(event.evidence, /801\/802/);
@@ -168,7 +175,7 @@ test('server update center explains branch versus published release and records 
 
     const dashboard = createDashboard();
     await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /Atualizador não detecta a branch 12\.1\.24/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /12\.1\.24 está na branch\/tag, mas não tem GitHub Release/);
 });
 
 test('portal records avatar rollback reconciliation and its remaining validation limits', async () => {
