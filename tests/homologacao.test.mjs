@@ -6,7 +6,7 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
-test('GetAvatar configuration concurrency fix publishes local evidence and pending runtime gates', () => {
+test('GetAvatar persistence and UserAvatar HTTP route publish local evidence and pending runtime gates', () => {
     const event = statusData.events.find(item => item.id === 'server-getavatar-config-lock-2026-10-19-1154');
     const server = statusData.tracks.find(item => item.id === 'server');
 
@@ -14,11 +14,13 @@ test('GetAvatar configuration concurrency fix publishes local evidence and pendi
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /PreservesConcurrentConfigurationWrite falhava antes da correção/);
-    assert.match(event.evidence, /AvatarControllerUserAvatarAuthorizationTests Release: 20\/20/);
-    assert.match(event.evidence, /build Release do plugin GetAvatar: 0 avisos, 0 erros/);
+    assert.match(event.evidence, /AvatarControllerUserAvatarAuthorizationTests Release: 21\/21/);
+    assert.match(event.evidence, /Build Release do plugin GetAvatar: 0 avisos, 0 erros/);
     assert.match(event.evidence, /EF Core InMemory: 1\/1/);
     assert.match(event.evidence, /MariaDB foi adicionado e compilou, mas ficou ignorado/);
-    assert.match(event.evidence, /MariaDB real, pipeline HTTP completo de UserAvatar, instalação e produção continuam pendentes/);
+    assert.match(event.evidence, /UserAvatarRoute_ReturnsImageThroughHttpPipelineWithoutCaching exercitou GET \/GetAvatar\/UserAvatar/);
+    assert.match(event.evidence, /HTTP 200, image\/png, bytes do fixture, Cache-Control no-store/);
+    assert.match(event.evidence, /persistência relacional MariaDB, instalação\/cliente e produção continuam pendentes/);
     assert.match(event.evidence, /Nenhuma Release ou instalação foi feita/);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));

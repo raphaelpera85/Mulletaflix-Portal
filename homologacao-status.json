@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T12:07:15-03:00",
+  "generatedAt": "2026-10-19T12:12:54-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3005,18 +3005,18 @@
   "events": [
     {
       "id": "server-getavatar-config-lock-2026-10-19-1154",
-      "title": "GetAvatar: rollback de configuração não apaga gravação concorrente",
+      "title": "GetAvatar: persistência e rota UserAvatar validadas localmente",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Testes GetAvatar Release: autorização/concurrency 20/20; EF InMemory 1/1; MariaDB isolada pendente",
-      "location": "Plugin.GetAvatar: escritores, snapshot e rollback da configuração XML",
-      "scope": "Sincronizar os caminhos internos de persistência do GetAvatar e documentar os gates sem alegar homologação de runtime.",
+      "local": "Testes GetAvatar Release: pipeline HTTP UserAvatar 21/21; EF InMemory 1/1; MariaDB isolada pendente",
+      "location": "Plugin.GetAvatar: persistência XML/ImageInfo e rota HTTP UserAvatar",
+      "scope": "Validar concorrência/persistência do GetAvatar e cobrir a rota UserAvatar pelo TestServer sem alegar homologação de runtime.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T11:38:00-03:00",
-      "updatedAt": "2026-10-19T12:07:15-03:00",
-      "evidence": "A regressão SetUserAvatarAsync_WhenImageSaveFails_PreservesConcurrentConfigurationWrite falhava antes da correção porque o rollback do XML sobrescrevia uma configuração gravada durante a operação. Agora Plugin.SaveConfiguration/UpdateConfiguration, mutações relevantes em AvatarController/AvatarService e snapshot/rollback usam um gate privado comum; a captura do XML ocorre imediatamente antes de alterar o mapping, dentro do gate. AvatarControllerUserAvatarAuthorizationTests Release: 20/20; build Release do plugin GetAvatar: 0 avisos, 0 erros. UserProfileImagePersistenceTests Release com EF Core InMemory: 1/1, incluindo exclusão e recriação da relação ImageInfo e leitura em outro contexto. O teste equivalente MariaDB foi adicionado e compilou, mas ficou ignorado porque não há conexão loopback descartável configurada; MariaDB real, pipeline HTTP completo de UserAvatar, instalação e produção continuam pendentes. Nenhuma Release ou instalação foi feita; homologação formal segue aberta."
+      "updatedAt": "2026-10-19T12:12:54-03:00",
+      "evidence": "A regressão SetUserAvatarAsync_WhenImageSaveFails_PreservesConcurrentConfigurationWrite falhava antes da correção porque o rollback do XML sobrescrevia uma configuração gravada durante a operação. Agora Plugin.SaveConfiguration/UpdateConfiguration, mutações relevantes em AvatarController/AvatarService e snapshot/rollback usam um gate privado comum; a captura do XML ocorre imediatamente antes de alterar o mapping, dentro do gate. AvatarControllerUserAvatarAuthorizationTests Release: 21/21. O teste UserAvatarRoute_ReturnsImageThroughHttpPipelineWithoutCaching exercitou GET /GetAvatar/UserAvatar/{userId} pelo TestServer e observou HTTP 200, image/png, bytes do fixture, Cache-Control no-store e consulta do usuário uma vez. Build Release do plugin GetAvatar: 0 avisos, 0 erros. UserProfileImagePersistenceTests Release com EF Core InMemory: 1/1, incluindo exclusão e recriação da relação ImageInfo e leitura em outro contexto. O teste equivalente MariaDB foi adicionado e compilou, mas ficou ignorado porque não há conexão loopback descartável configurada; persistência relacional MariaDB, instalação/cliente e produção continuam pendentes. Nenhuma Release ou instalação foi feita; homologação formal segue aberta."
     },
     {
       "id": "server-cross-area-audit-getavatar-web-2026-10-19-1132",
