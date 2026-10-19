@@ -16,7 +16,9 @@ test('GetAvatar configuration concurrency fix publishes local evidence and pendi
     assert.match(event.evidence, /PreservesConcurrentConfigurationWrite falhava antes da correção/);
     assert.match(event.evidence, /AvatarControllerUserAvatarAuthorizationTests Release: 20\/20/);
     assert.match(event.evidence, /build Release do plugin GetAvatar: 0 avisos, 0 erros/);
-    assert.match(event.evidence, /teste EF real de ImageInfo, pipeline HTTP completo de UserAvatar, instalação e produção continuam pendentes/);
+    assert.match(event.evidence, /EF Core InMemory: 1\/1/);
+    assert.match(event.evidence, /MariaDB foi adicionado e compilou, mas ficou ignorado/);
+    assert.match(event.evidence, /MariaDB real, pipeline HTTP completo de UserAvatar, instalação e produção continuam pendentes/);
     assert.match(event.evidence, /Nenhuma Release ou instalação foi feita/);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
