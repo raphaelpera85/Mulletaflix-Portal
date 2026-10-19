@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T18:32:13-03:00",
+  "generatedAt": "2026-10-19T18:40:10-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 65,
         "failed": 0,
         "percent": 98.7,
-      "label": "Revalidação local de 19/10/2026: solution .NET Release (filtro FullyQualifiedName!~Integration) terminou com 5.044 aprovados, 65 não executados, 0 falhas em 5.109 resultados; integrações foram excluídas e os casos não executados não contam como aprovação. NebulaPython em Python 3.14.7: 598/598 aprovados, cobertura total medida 90%. Frontend web: 418/418 testes, TypeScript e build de produção aprovados; build gera avisos existentes de bundling. Contratos CI Mongo/MariaDB/empacotamento passaram 3/3; os quatro scripts PowerShell de empacotamento passaram localmente 4/4. Runner Windows remoto, collation Users em MariaDB Linux, integrações Mongo e CI remota seguem pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação (runner não iniciou por bloqueio de cobrança reportado pelo GitHub). Instalação, smoke test e homologação formal continuam pendentes."
+      "label": "Revalidação local de 19/10/2026: solution .NET Release (filtro FullyQualifiedName!~Integration) terminou com 5.044 aprovados, 65 não executados, 0 falhas em 5.109 resultados; integrações foram excluídas e os casos não executados não contam como aprovação. Depois, a categoria C# RequiresMongo passou 24/24 em MongoDB 8.3.7 descartável local; esse resultado ainda não substitui o MongoDB 7.0 do CI. NebulaPython em Python 3.14.7: 598/598 aprovados, cobertura total medida 90%. Frontend web: 418/418 testes, TypeScript e build de produção aprovados; build gera avisos existentes de bundling. Contratos CI Mongo/MariaDB/empacotamento passaram 3/3; os quatro scripts PowerShell de empacotamento passaram localmente 4/4. Runner Windows remoto, collation Users em MariaDB Linux e CI remota seguem pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação (runner não iniciou por bloqueio de cobrança reportado pelo GitHub). Instalação, smoke test e homologação formal continuam pendentes."
       }
     },
     {
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-mongo-integration-tests-2026-10-19-1840",
+      "title": "Nebula: integrações Mongo reais passaram em instância descartável",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Jellyfin.Server.Implementations.Tests Release; MongoDB 8.3.7 isolado em loopback",
+      "location": "tests/Jellyfin.Server.Implementations.Tests/Nebula/*MongoTests.cs e MongoTopologyCapabilityTests.cs",
+      "scope": "Executar a categoria RequiresMongo contra instância descartável em 127.0.0.1:27099, sem tocar o serviço Mongo existente em 27017.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T18:36:00-03:00",
+      "updatedAt": "2026-10-19T18:40:10-03:00",
+      "evidence": "`dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter Category=RequiresMongo --logger 'console;verbosity=normal'`: 24/24 aprovados, 0 falhas, 22,04 s. Foram exercitados claims/leases concorrentes, prioridade persistida, recuperação de playback, restore/backup de tokens com HTTP Supabase simulado e verificação de topologia standalone. Teste usou MongoDB 8.3.7 temporário, `directConnection=true`, só loopback e bases aleatórias; Mongo em 27017 não foi acessado. PID temporário foi encerrado e porta fechada; a política do executor bloqueou remoção do diretório scratch, que permanece sem processo usando-o. Não equivale ao MongoDB 7.0 do CI. Sem alteração de runtime, produção, release ou deploy do servidor; CI, MariaDB Linux, runtime instalado e smoke real continuam pendentes."
+    },
     {
       "id": "server-nebula-first-strm-end-to-end-test-2026-10-19-1701",
       "title": "Nebula: teste do worker pronto até o primeiro STRM enfileirado",

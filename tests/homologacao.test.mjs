@@ -1829,7 +1829,7 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /NebulaPython em Python 3\.14\.7: 598\/598/);
-    assert.match(server.testAudit.label, /integrações Mongo .* seguem pendentes/);
+    assert.match(server.testAudit.label, /MongoDB 7\.0 do CI/);
     assert.equal(statusData.coverage.pending, 65);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
@@ -2313,7 +2313,7 @@ test('portal publishes the Nebula first-STRM integration test and its real-servi
     assert.match(event.evidence, /Não comprova Mongo\/HTTP reais, throughput, instalação ou produção/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: teste do worker pronto até o primeiro STRM enfileirado/);
-    assert.equal(statusData.events[0].id, event.id);
+    assert.equal(statusData.events[0].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
 });
 
 test('portal reports full Nebula completed-destination fallback coverage with Mongo limits', async () => {
@@ -2359,4 +2359,18 @@ test('portal publishes branch-coverage evidence with its fixture and production 
     assert.match(event.evidence, /MongoClient segue simulado/);
     assert.match(event.evidence, /sem pacote ou Release/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal publishes the 24 real Mongo integration passes without equating Mongo 8.3.7 to CI 7.0', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-mongo-integration-tests-2026-10-19-1840');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /24\/24 aprovados, 0 falhas/);
+    assert.match(event.evidence, /MongoDB 8\.3\.7 temporário/);
+    assert.match(event.evidence, /Não equivale ao MongoDB 7\.0 do CI/);
+    assert.match(event.evidence, /Mongo em 27017 não foi acessado/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+    assert.equal(statusData.events[0].id, event.id);
 });
