@@ -2077,6 +2077,23 @@ test('UserLibrary positive HTTP integration tests are enabled and the full suite
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('latest .NET solution regression records filtered TRX totals and explicit Nebula prefetch tasks', () => {
+    const event = statusData.events.find(item => item.id === 'server-dotnet-regression-prefetch-cs4014-2026-10-19-1439');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.local, /5\.044 aprovados, 64 ignorados, 0 falhas/);
+    assert.match(event.local, /NebulaPlaybackCacheTests 59\/59/);
+    assert.match(event.local, /Implementations 1\.506 aprovados, 63 ignorados, 0 falhas/);
+    assert.match(event.evidence, /TRX por projeto totalizando 5\.044 aprovados, 64 ignorados e 0 falhas em 5\.108/);
+    assert.match(event.evidence, /não tiveram testes correspondentes ao filtro/);
+    assert.match(event.evidence, /-warnaserror:CS4014/);
+    assert.match(event.evidence, /Nenhum serviço, banco ou mídia de produção foi acessado/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('Nebula startup log separates successful initial backup from stale auto-sync and mount evidence', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-startup-log-analysis-2026-10-18-1129');
     const server = statusData.tracks.find(item => item.id === 'server');
