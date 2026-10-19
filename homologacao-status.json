@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T12:40:40-03:00",
+  "generatedAt": "2026-10-19T12:43:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3015,8 +3015,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T12:37:00-03:00",
-      "updatedAt": "2026-10-19T12:40:40-03:00",
-      "evidence": "`py -3.10 -m pytest tests -q` em Tools/NebulaPython passou 598/598. `npm test -- --run` passou 418 testes em 75 arquivos; `npm run build:check`, `npm run build:production` e `npm run verify:build` passaram. Verificador aceitou 1.927 arquivos; bundle eager 294,3 KB gzip ficou abaixo do limite 420 KB. Portal Node: 122/122 após atualizar este evento. Build emite avisos Vite de diretivas `use client` ignoradas e imports estático/dinâmico mistos, sem falha. A regressão da solução .NET, validada logo antes, passou 4.971/63 skips/0 falhas com FullyQualifiedName!~Integration; casos Integration ficam excluídos. Mongo de teste 127.0.0.1:27099 não está acessível; PID mongod existente foi preservado, sem tentativa de conexão a Mongo de produção. Nenhum serviço, banco, mídia ou instalação foi alterado. CI remoto, integrações descartáveis, runtime, smoke test e Release permanecem pendentes; homologação segue aberta."
+      "updatedAt": "2026-10-19T12:43:05-03:00",
+      "evidence": "`py -3.10 -m pytest tests -q` em Tools/NebulaPython passou 598/598. `npm test -- --run` passou 418 testes em 75 arquivos; `npm run build:check`, `npm run build:production` e `npm run verify:build` passaram. Verificador aceitou 1.927 arquivos; bundle eager 294,3 KB gzip ficou abaixo do limite 420 KB. Portal Node: 122/122. Build emite avisos Vite de diretivas `use client` ignoradas e imports estático/dinâmico mistos, sem falha. A regressão da solução .NET passou 4.971/63 skips/0 falhas com FullyQualifiedName!~Integration; casos Integration ficam excluídos. Diagnóstico do Centro de Atualizações: UpdateInfoController consulta a coleção pública de Releases do GitHub e só aceita pacote .zip; API confirma latest v12.1.21 e tag v12.1.24 retorna HTTP 404 por não existir Release para ela. Portanto branch/tag não aciona o atualizador; a captura mostra o estado esperado. Mongo de teste 127.0.0.1:27099 não está acessível; PID mongod existente foi preservado, sem conexão de produção. Nenhum serviço, banco, mídia ou instalação foi alterado. CI remoto, integrações descartáveis, runtime e smoke test permanecem pendentes; Release permanece pendente até cumprir esses gates. Homologação segue aberta."
     },
     {
       "id": "server-dotnet-solution-regression-2026-10-19-1233",

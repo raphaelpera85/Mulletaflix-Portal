@@ -2042,8 +2042,11 @@ test('cross-stack server validation records Python and web results without claim
     assert.match(event.evidence, /passou 418 testes em 75 arquivos/);
     assert.match(event.evidence, /1\.927 arquivos/);
     assert.match(event.evidence, /Portal Node: 122\/122/);
+    assert.match(event.evidence, /UpdateInfoController consulta a coleção pública de Releases do GitHub e só aceita pacote \.zip/);
+    assert.match(event.evidence, /API confirma latest v12\.1\.21 e tag v12\.1\.24 retorna HTTP 404/);
+    assert.match(event.evidence, /branch\/tag não aciona o atualizador/);
     assert.match(event.evidence, /Mongo de teste 127\.0\.0\.1:27099 não está acessível/);
-    assert.match(event.evidence, /CI remoto, integrações descartáveis, runtime, smoke test e Release permanecem pendentes/);
+    assert.match(event.evidence, /CI remoto, integrações descartáveis, runtime e smoke test permanecem pendentes; Release permanece pendente até cumprir esses gates/);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
