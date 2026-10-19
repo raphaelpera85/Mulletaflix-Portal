@@ -2032,6 +2032,22 @@ test('latest .NET solution regression publishes exact counts without claiming in
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('cross-stack server validation records Python and web results without claiming integration or release', () => {
+    const event = statusData.events.find(item => item.id === 'server-cross-stack-validation-2026-10-19-1239');
+    const server = statusData.tracks.find(item => item.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /NebulaPython passou 598\/598/);
+    assert.match(event.evidence, /passou 418 testes em 75 arquivos/);
+    assert.match(event.evidence, /1\.927 arquivos/);
+    assert.match(event.evidence, /Portal Node: 122\/122/);
+    assert.match(event.evidence, /Mongo de teste 127\.0\.0\.1:27099 não está acessível/);
+    assert.match(event.evidence, /CI remoto, integrações descartáveis, runtime, smoke test e Release permanecem pendentes/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('Nebula startup log separates successful initial backup from stale auto-sync and mount evidence', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-startup-log-analysis-2026-10-18-1129');
     const server = statusData.tracks.find(item => item.id === 'server');

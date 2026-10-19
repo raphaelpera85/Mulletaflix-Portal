@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T12:33:29-03:00",
+  "generatedAt": "2026-10-19T12:40:40-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 64,
         "failed": 0,
         "percent": 98.7,
-      "label": "Nova regressão isolada da solução .NET Release em 19/10, filtro FullyQualifiedName!~Integration: 4.971 aprovados, 63 ignorados e 0 falhas; esse filtro exclui integrações e os casos Skip não foram executados. Portal Node: 120/120. Evidência agregada anterior: Jellyfin.Server.Implementations.Tests 1.499 aprovados, 63 ignorados e 0 falhas; NebulaPython 3.10: 598/598; frontend web 418/418, typecheck e build produção aprovados. Agregado histórico documentado: 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), composto por suítes diferentes, não uma única execução. casos Mongo ignorados não validam integração. CI remoto, Mongo CI, instalação, smoke test e publicação da Release continuam pendentes. Homologação formal continua aberta."
+      "label": "Regressão da solution .NET Release em 19/10, filtro FullyQualifiedName!~Integration: 4.971 aprovados, 63 ignorados e 0 falhas; esse filtro exclui integrações e os casos Skip não foram executados. Revalidação complementar: NebulaPython 3.10: 598/598; web 418/418, typecheck, build de produção e verificação dos artefatos passaram (1.927 arquivos; bundle inicial 294,3 KB gzip, abaixo do limite 420 KB). Evidência agregada anterior: Jellyfin.Server.Implementations.Tests 1.499 aprovados, 63 ignorados e 0 falhas; frontend web 418/418. Agregado histórico documentado: 5.012 aprovados, 64 ignorados e 0 falhas (5.076 total), composto por suítes diferentes, não uma única execução. casos Mongo ignorados não validam integração. CI remoto, Mongo CI, instalação, smoke test e publicação da Release continuam pendentes. Homologação formal continua aberta."
       }
     },
     {
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-cross-stack-validation-2026-10-19-1239",
+      "title": "Nebula Python e frontend web validados; integrações e runtime pendentes",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "NebulaPython pytest 598/598; Vitest 418/418; typecheck, produção e artifacts/bundle budget aprovados",
+      "location": "MulletaFlix-master/Tools/NebulaPython e MulletaFlix-web-master",
+      "scope": "Completar a revalidação das camadas Python e frontend após o gate .NET, sem usar produção ou alegar integração completa.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T12:37:00-03:00",
+      "updatedAt": "2026-10-19T12:40:40-03:00",
+      "evidence": "`py -3.10 -m pytest tests -q` em Tools/NebulaPython passou 598/598. `npm test -- --run` passou 418 testes em 75 arquivos; `npm run build:check`, `npm run build:production` e `npm run verify:build` passaram. Verificador aceitou 1.927 arquivos; bundle eager 294,3 KB gzip ficou abaixo do limite 420 KB. Portal Node: 122/122 após atualizar este evento. Build emite avisos Vite de diretivas `use client` ignoradas e imports estático/dinâmico mistos, sem falha. A regressão da solução .NET, validada logo antes, passou 4.971/63 skips/0 falhas com FullyQualifiedName!~Integration; casos Integration ficam excluídos. Mongo de teste 127.0.0.1:27099 não está acessível; PID mongod existente foi preservado, sem tentativa de conexão a Mongo de produção. Nenhum serviço, banco, mídia ou instalação foi alterado. CI remoto, integrações descartáveis, runtime, smoke test e Release permanecem pendentes; homologação segue aberta."
+    },
     {
       "id": "server-dotnet-solution-regression-2026-10-19-1233",
       "title": "Regressão ampla da solução .NET aprovada; integrações seguem pendentes",
