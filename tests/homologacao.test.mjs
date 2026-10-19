@@ -701,8 +701,8 @@ test('server audit preserves the remote CI blocker and displays the latest Mongo
     const mongoEvent = statusData.events.find(item => item.id === 'server-ci-mongo-category-filter-2026-10-18-1138');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /5\.044 aprovados, 65 não executados e 0 falhas/);
-    assert.match(server.testAudit.label, /[Hh]omologação formal continua aberta/);
+    assert.match(server.testAudit.label, /5\.044 aprovados, 65 não executados, 0 falhas/);
+    assert.match(server.testAudit.label, /[Hh]omologação formal continuam pendentes/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
     assert.equal(event.status, 'blocked');
@@ -1788,7 +1788,7 @@ test('Nebula Supabase admission audit reports evidence limits without claiming a
     assert.match(event.evidence, /Três testes C# Mongo compilaram e foram ignorados/);
     assert.match(event.evidence, /não identifica proprietário ou expiração da lease/);
     assert.match(server.testAudit.label, /598\/598/);
-    assert.match(server.testAudit.label, /Homologação formal continua aberta/);
+    assert.match(server.testAudit.label, /homologação formal continuam pendentes/);
     assert.equal(statusData.coverage.pending, 65);
     assert.equal(statusData.coverage.inProgress, 4);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
@@ -1814,8 +1814,8 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.equal(server.testAudit.total, 5109);
     assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
-    assert.match(server.testAudit.label, /NebulaPython 3\.10: 598\/598/);
-    assert.match(server.testAudit.label, /casos Mongo ignorados não validam integração/);
+    assert.match(server.testAudit.label, /NebulaPython em Python 3\.14\.7: 598\/598/);
+    assert.match(server.testAudit.label, /integrações Mongo .* seguem pendentes/);
     assert.equal(statusData.coverage.pending, 65);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });

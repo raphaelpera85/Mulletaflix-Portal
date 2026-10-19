@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T16:03:00-03:00",
+  "generatedAt": "2026-10-19T16:15:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 65,
         "failed": 0,
         "percent": 98.7,
-      "label": "Regressão da solution .NET Release em 19/10, filtro FullyQualifiedName!~Integration: última execução em TRX por projeto: 5.044 aprovados, 65 não executados e 0 falhas (5.109 total); filtro exclui integrações. Agregado histórico: 5.012 aprovados, 64 ignorados e 0 falhas; execuções distintas, não somar. Em rodada separada, Jellyfin.Server.Integration.Tests com MariaDB descartável passou 144/144. Revalidação complementar: NebulaPython 3.10: 598/598; web 418/418, typecheck/build/artefatos passaram. Teste novo da collation da tabela Users compilou, mas foi NotExecuted sem MariaDB de teste; compatibilidade case-sensitive Linux ainda não validada; casos Mongo ignorados não validam integração. CI remota, Mongo atual, instalação, smoke e Release seguem pendentes. Homologação formal continua aberta."
+      "label": "Revalidação local de 19/10/2026: solution .NET Release (filtro FullyQualifiedName!~Integration) terminou com 5.044 aprovados, 65 não executados, 0 falhas em 5.109 resultados; integrações foram excluídas e os casos não executados não contam como aprovação. NebulaPython em Python 3.14.7: 598/598 aprovados, cobertura total medida 90%. Frontend web: 418/418 testes, TypeScript e build de produção aprovados; build gera avisos existentes de bundling. Contratos de CI MariaDB/Mongo: 2/2 aprovados. Teste de collation Users em MariaDB Linux, integrações Mongo e execução CI remota seguem pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação (runner não iniciou por bloqueio de cobrança reportado pelo GitHub). Instalação, smoke test e homologação formal continuam pendentes."
       }
     },
     {
