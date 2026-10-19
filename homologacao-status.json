@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T16:38:00-03:00",
+  "generatedAt": "2026-10-19T16:47:49-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-live-tv-capability-producer-2026-10-19-1647",
+      "title": "Live TV: produtor usa capability da gravação no EncoderPath",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T6.1"],
+      "local": "Release .NET; MediaSourceManager, resolver e pipeline HTTP isolados",
+      "location": "MediaSourceManager.GetRecordingStreamMediaSources → GET /LiveTv/LiveRecordings/{streamId}/stream",
+      "scope": "Verificar se o produtor da fonte aponta para a capability StreamId, sem expor timer ID na URL.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T16:42:00-03:00",
+      "updatedAt": "2026-10-19T16:47:49-03:00",
+      "evidence": "Teste direto do produtor 1/1; classe MediaSourceManagerTests 31/31; ActiveRecordingStreamPathResolverTests 6/6; HTTP/middleware focal 17/17. As suítes abrangem 54 casos únicos; o caso do produtor também foi repetido isoladamente. Zero skips/falhas. O EncoderPath contém StreamId e não contém timer ID; Path/Id da gravação permanecem preservados. Produtor, resolver e rota foram exercitados em fixtures separadas. Gravação real, transcoding/playback, pacote instalado e produção continuam pendentes; nenhuma produção foi alterada."
+    },
     {
       "id": "server-live-tv-capability-fuzz-2026-10-19-1636",
       "title": "Live TV: fuzz HTTP determinístico rejeita 256 capabilities não emitidas",
