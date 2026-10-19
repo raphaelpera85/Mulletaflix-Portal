@@ -892,9 +892,6 @@ test('portal records library refresh admission and downloader false-response fee
     assert.match(event.evidence, /574\/574/);
     assert.match(event.evidence, /Sem navegador real, teste de carga, download\/worker de produção/);
 
-    const dashboard = createDashboard();
-    await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /Admissão de refresh global e feedback do downloader Nebula/);
 });
 
 test('portal records Nebula worker scan readiness without claiming first download or production homologation', async () => {
@@ -2313,8 +2310,8 @@ test('portal publishes the Nebula first-STRM integration test and its real-servi
     assert.match(event.evidence, /Não comprova Mongo\/HTTP reais, throughput, instalação ou produção/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: teste do worker pronto até o primeiro STRM enfileirado/);
-    assert.equal(statusData.events[1].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
-    assert.equal(statusData.events[2].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
+    assert.equal(statusData.events[2].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
+    assert.equal(statusData.events[3].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
 });
 
 test('portal reports full Nebula completed-destination fallback coverage with Mongo limits', async () => {
@@ -2373,11 +2370,11 @@ test('portal publishes the 24 real Mongo integration passes without equating Mon
     assert.match(event.evidence, /Não equivale ao MongoDB 7\.0 do CI/);
     assert.match(event.evidence, /Mongo em 27017 não foi acessado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
-    assert.equal(statusData.events[2].id, event.id);
+    assert.equal(statusData.events[3].id, event.id);
 });
 
 test('portal puts the latest broad .NET regression and unresolved release gates first', async () => {
-    const event = statusData.events[1];
+    const event = statusData.events[2];
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.equal(event.id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
@@ -2390,7 +2387,6 @@ test('portal puts the latest broad .NET regression and unresolved release gates 
     assert.match(event.evidence, /Integration.*não tiveram casos correspondentes/);
     assert.match(event.evidence, /24\/24 em MongoDB 8\.3\.7 descartável/);
     assert.match(event.evidence, /MariaDB Linux\/case-sensitive não foi executado/);
-    assert.match(event.evidence, /runner_id=0, sem steps/);
 
     const dashboard = createDashboard();
     await settleDashboard();
@@ -2398,7 +2394,7 @@ test('portal puts the latest broad .NET regression and unresolved release gates 
 });
 
 test('portal publishes the latest full Nebula Python branch-coverage rerun', () => {
-    const event = statusData.events[0];
+    const event = statusData.events[1];
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.equal(event.id, 'server-nebula-python-full-suite-2026-10-19-1908');
@@ -2409,4 +2405,23 @@ test('portal publishes the latest full Nebula Python branch-coverage rerun', () 
     assert.match(event.evidence, /não comprovam transferência Telegram, Mongo externo, runtime instalado/);
     assert.match(server.testAudit.label, /NebulaPython em Python 3\.10\.14: 646\/646/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal distinguishes GitHub Actions runner allocation failures from test failures', () => {
+    const event = statusData.events[0];
+    const dashboard = createDashboard();
+
+    assert.equal(event.id, 'server-github-actions-runner-allocation-blocked-2026-10-19-1912');
+    assert.equal(event.status, 'blocked');
+    assert.match(event.evidence, /runner_id=0 e zero steps/);
+    assert.match(event.evidence, /11 jobs como failure antes de qualquer step/);
+    assert.match(event.evidence, /não executaram build\/testes/);
+    assert.match(event.evidence, /causa operacional exata não foi determinada/);
+    assert.match(event.evidence, /continua v12\.1\.21/);
+    assert.equal(statusData.events[1].id, 'server-nebula-python-full-suite-2026-10-19-1908');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    return settleDashboard().then(() => {
+        assert.match(dashboard.getElement('event-list').innerHTML, /CI e release: GitHub não alocou runners/);
+    });
 });

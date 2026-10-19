@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T19:10:32-03:00",
+  "generatedAt": "2026-10-19T19:12:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-github-actions-runner-allocation-blocked-2026-10-19-1912",
+      "title": "CI e release: GitHub não alocou runners; nenhum step executado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "GitHub Actions API — consulta de runs e jobs; nenhuma alteração remota",
+      "location": "mulletaflix-completo: CI main e Release v12.1.24",
+      "scope": "Distinguir falhas de infraestrutura do GitHub Actions de falhas nos testes e registrar o gate que impede a homologação remota.",
+      "status": "blocked",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T19:11:00-03:00",
+      "updatedAt": "2026-10-19T19:12:50-03:00",
+      "evidence": "A consulta somente leitura à API do GitHub confirmou a execução Release v12.1.24 (`39212993752`): o único job executado, `Validate source tag before packaging`, terminou failure com runner_id=0 e zero steps; build Linux e publicação foram skipped. O CI da main (`39037932557`) também retornou os 11 jobs como failure antes de qualquer step, todos com runner_id=0. Portanto, esses runs não executaram build/testes e não demonstram defeito nos testes nem aprovação do código; são bloqueio de alocação/serviço do runner. A causa operacional exata não foi determinada nesta consulta. Release pública mais recente continua v12.1.21; nenhuma nova release ou produção foi alterada. Próximo gate: resolver a disponibilidade/permissão/faturamento dos runners e executar novamente CI e release gates."
+    },
     {
       "id": "server-nebula-python-full-suite-2026-10-19-1908",
       "title": "Nebula Python: suíte completa revalidada com cobertura de branches",
