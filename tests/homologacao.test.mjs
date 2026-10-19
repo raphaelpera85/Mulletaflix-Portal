@@ -2189,6 +2189,7 @@ test('portal keeps MariaDB username collation in progress until case-sensitive L
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(event.evidence, /utf8mb4_bin/);
     assert.match(event.evidence, /tabela canônica `Users`/);
+    assert.match(event.evidence, /BINARY TABLE_NAME = BINARY 'Users'/);
     assert.match(event.evidence, /EnsureSchemaCreated_UsesEfMappedUsersTableWithBinaryUsernameCollations/);
     assert.match(event.evidence, /ficou NotExecuted por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
     assert.match(event.evidence, /MariaDB Linux lower_case_table_names=0/);
