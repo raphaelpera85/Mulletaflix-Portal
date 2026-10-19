@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T15:51:42-03:00",
+  "generatedAt": "2026-10-19T15:53:43-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3015,8 +3015,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T15:12:00-03:00",
-      "updatedAt": "2026-10-19T15:51:42-03:00",
-      "evidence": "utf8mb4_unicode_ci considerava NOÑO e NONO iguais. UserManager define e migra condicionalmente Username e NormalizedUsername para utf8mb4_bin; ToUpperInvariant continua na aplicação. A revisão do mapeamento EF/migrations encontrou a tabela canônica `Users` (U maiúsculo), enquanto o bootstrap cru usava `users`; isso pode criar tabela distinta em Linux com lower_case_table_names=0. O bootstrap foi alinhado a `Users` em CREATE, FKs, consulta a information_schema com `BINARY TABLE_NAME = BINARY 'Users'` e ALTER. A comparação binária também evita misturar metadados de uma possível tabela legada `users`. O teste EnsureSchemaCreated_UsesEfMappedUsersTableWithBinaryUsernameCollations usa a comparação binária e valida ambas as collations, mas ficou NotExecuted por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING. A regressão Release da solution, filtro FullyQualifiedName!~Integration, terminou com 5.044 aprovados, 65 NotExecuted, 0 falhas em 5.109 casos/17 TRX, antes desta última alteração SQL. Após a comparação binária, o projeto focal recompilou e os 31 testes focais ficaram NotExecuted por falta de MariaDB, 0 falhas. Os 30 testes focais aprovados anteriormente foram executados em MariaDB Windows e não validam nomes case-sensitive Linux; 31 testes focais precisam ser executados em MariaDB Linux lower_case_table_names=0. Não há MariaDB Linux/WSL disponível aqui. Runtime/produção, CI remota e Release não foram validados; homologação global segue in_progress."
+      "updatedAt": "2026-10-19T15:53:43-03:00",
+      "evidence": "utf8mb4_unicode_ci considerava NOÑO e NONO iguais. UserManager define e migra condicionalmente Username e NormalizedUsername para utf8mb4_bin; ToUpperInvariant continua na aplicação. A revisão do mapeamento EF/migrations encontrou a tabela canônica `Users` (U maiúsculo), enquanto o bootstrap cru usava `users`; isso pode criar tabela distinta em Linux com lower_case_table_names=0. O bootstrap foi alinhado a `Users` em CREATE, FKs, consulta a information_schema com `BINARY TABLE_NAME = BINARY 'Users'` e ALTER. A comparação binária também evita misturar metadados de uma possível tabela legada `users`. O teste EnsureSchemaCreated_UsesEfMappedUsersTableWithBinaryUsernameCollations usa a comparação binária e valida ambas as collations, mas ficou NotExecuted por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING. A regressão Release da solution, filtro FullyQualifiedName!~Integration, terminou com 5.044 aprovados, 65 NotExecuted, 0 falhas em 5.109 casos/17 TRX, antes desta última alteração SQL. Após a comparação binária, o build focal Release terminou com 0 avisos e 0 erros; os 31 testes focais ficaram NotExecuted por falta de MariaDB, 0 falhas. Os 30 testes focais aprovados anteriormente foram executados em MariaDB Windows e não validam nomes case-sensitive Linux; 31 testes focais precisam ser executados em MariaDB Linux lower_case_table_names=0. Não há MariaDB Linux/WSL disponível aqui. Runtime/produção, CI remota e Release não foram validados; homologação global segue in_progress."
     },
     {
       "id": "server-dotnet-skipped-tests-audit-2026-10-19-1457",

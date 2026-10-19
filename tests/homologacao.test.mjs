@@ -2193,6 +2193,7 @@ test('portal keeps MariaDB username collation in progress until case-sensitive L
     assert.match(event.evidence, /EnsureSchemaCreated_UsesEfMappedUsersTableWithBinaryUsernameCollations/);
     assert.match(event.evidence, /ficou NotExecuted por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
     assert.match(event.evidence, /MariaDB Linux lower_case_table_names=0/);
+    assert.match(event.evidence, /build focal Release terminou com 0 avisos e 0 erros/);
     assert.match(event.evidence, /5\.044 aprovados, 65 NotExecuted, 0 falhas em 5\.109/);
     assert.match(event.evidence, /Runtime\/produção, CI remota e Release não foram validados/);
     assert.match(event.evidence, /filtro FullyQualifiedName!~Integration/);
