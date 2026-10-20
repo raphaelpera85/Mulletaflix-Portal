@@ -963,7 +963,7 @@ test('portal records the current deterministic server suite without claiming int
     assert.equal(server.testAudit.total, 5334);
     assert.equal(server.testAudit.skipped, 235);
     assert.equal(server.testAudit.failed, 0);
-    assert.match(server.testAudit.label, /regressão \.NET Release inclusiva terminou exit code 0/);
+    assert.match(server.testAudit.label, /código final de saída do processo não foi recuperado/);
     assert.match(event.evidence, /NebulaPython.*592\/592/);
     assert.match(event.evidence, /não tiveram testes correspondentes ao filtro/);
     assert.match(event.evidence, /Nenhuma release de servidor criada/);
@@ -2894,6 +2894,7 @@ test('latest integration-inclusive server regression publishes exact pass and sk
     assert.equal(event.status, 'in_progress');
     assert.match(server.testAudit.label, /5\.099 aprovados, 235 NotExecuted, 0 falhas\/5\.334/);
     assert.match(event.evidence, /17 TRX.*5\.099 Passed, 235 NotExecuted, 0 Failed\/5\.334/);
+    assert.match(event.evidence, /código final de saída do processo não foi recuperado/);
     assert.match(event.evidence, /Server Integration: 3 aprovados\/142 ignorados; IntroSkipper Integration: 14\/25/);
     assert.match(event.evidence, /198 skips pedem MariaDB descartável.*24 pedem MongoDB descartável/);
     assert.match(event.evidence, /DramaFindsLiveIntegrationTests foi excluída para evitar API externa/);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T02:03:36-03:00",
+  "generatedAt": "2026-10-20T02:07:41-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 235,
         "failed": 0,
         "percent": 95.6,
-        "label": "Atualizado em 20/10: regressão .NET Release inclusiva terminou exit code 0: 17 TRX, 5.099 aprovados, 235 NotExecuted, 0 falhas/5.334; executados os projetos Integration, exceto DramaFindsLiveIntegrationTests para evitar API externa ao vivo. Dentre os ignorados, 198 exigem MariaDB opt-in e 24 MongoDB opt-in; os demais dependem de plataforma/pré-condições locais. NebulaPython 3.10: 646/646; contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. Bancos reais, Linux/macOS, CI remota, runtime instalado e smoke de mídia seguem pendentes. Homologação formal e release seguem abertas."
+        "label": "Atualizado em 20/10: regressão .NET Release inclusiva produziu 17 TRX completos: 5.099 aprovados, 235 NotExecuted, 0 falhas/5.334. O código final de saída do processo não foi recuperado após o fechamento da sessão de execução. Projetos Integration incluídos, exceto DramaFindsLiveIntegrationTests para evitar API externa ao vivo. Dentre os ignorados, 198 exigem MariaDB opt-in e 24 MongoDB opt-in; os demais dependem de plataforma/pré-condições locais. NebulaPython 3.10: 646/646; contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. Bancos reais, Linux/macOS, CI remota, runtime instalado e smoke de mídia seguem pendentes. Homologação formal e release seguem abertas."
       }
     },
     {
@@ -7869,8 +7869,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-20T01:54:47-03:00",
-      "updatedAt": "2026-10-20T02:03:36-03:00",
-      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~DramaFindsLiveIntegrationTests' --logger trx --results-directory <scratch> --verbosity quiet` terminou; 17 TRX agregados pelos resultados UnitTestResult: 5.099 Passed, 235 NotExecuted, 0 Failed/5.334. Server Integration: 3 aprovados/142 ignorados; IntroSkipper Integration: 14/25. 198 skips pedem MariaDB descartável em loopback/porta não padrão; 24 pedem MongoDB descartável; outros skips são Linux/Unix-only, benchmark ou pré-condição local. API 763/766; Server.Tests 73/74; Server.Implementations 1.508/1.572; Providers 805/805. A classe DramaFindsLiveIntegrationTests foi excluída para evitar API externa. Strings opt-in de MariaDB/Mongo foram verificadas ausentes; nenhum banco real foi acessado. Sem alterações runtime/produção, sem CI remota, macOS, smoke de mídia ou release. Homologação integrada segue aberta."
+      "updatedAt": "2026-10-20T02:07:41-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~DramaFindsLiveIntegrationTests' --logger trx --results-directory <scratch> --verbosity quiet` produziu os 17 TRX completos, agregados pelos resultados UnitTestResult: 5.099 Passed, 235 NotExecuted, 0 Failed/5.334. O código final de saída do processo não foi recuperado depois que a sessão/handle deixou de estar disponível; não inferimos esse código apenas pelos TRX. Server Integration: 3 aprovados/142 ignorados; IntroSkipper Integration: 14/25. 198 skips pedem MariaDB descartável em loopback/porta não padrão; 24 pedem MongoDB descartável; outros skips são Linux/Unix-only, benchmark ou pré-condição local. API 763/766; Server.Tests 73/74; Server.Implementations 1.508/1.572; Providers 805/805. A classe DramaFindsLiveIntegrationTests foi excluída para evitar API externa. Strings opt-in de MariaDB/Mongo foram verificadas ausentes; nenhum banco real foi acessado. Sem alterações runtime/produção, sem CI remota, macOS, smoke de mídia ou release. Homologação integrada segue aberta."
     }
   ]
 }
