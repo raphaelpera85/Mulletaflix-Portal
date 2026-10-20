@@ -53,6 +53,27 @@ test('portal records cancellation coverage for the Nebula directory refresh queu
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: testes da fila de refresh respeitam cancelamento/);
 });
 
+test('portal records cancellation coverage for the Nebula mount retry tests', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-mount-retry-test-cancellation-2026-10-20-2041');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.location, /NebulaMountRetryTests\.cs$/);
+    assert.match(event.evidence, /zero `xUnit1051`/);
+    assert.match(event.evidence, /165 localizações únicas/);
+    assert.match(event.evidence, /passou 6\/6/);
+    assert.match(event.evidence, /cinco suítes Nebula relacionadas passaram 65\/65/);
+    assert.match(event.evidence, /15 outras ocorrências em sete arquivos/);
+    assert.match(event.evidence, /Somente testes mudaram; sem instalação, runtime, produção ou release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: testes de retry de montagem respeitam cancelamento/);
+});
+
 test('portal publishes Nebula STRM test cancellation warning cleanup with remaining analyzer debt', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-strm-test-cancellation-2026-10-20-1045');
 
@@ -739,7 +760,7 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-nebula-refresh-queue-test-cancellation-2026-10-20-2032');
+    const newestEvent = statusData.events.find(event => event.id === 'server-nebula-mount-retry-test-cancellation-2026-10-20-2041');
     const dashboard = createDashboard();
     await settleDashboard();
 
@@ -747,7 +768,7 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'completed');
-    assert.match(newestEvent.evidence, /5\/5 aprovados/);
+    assert.match(newestEvent.evidence, /passou 6\/6/);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));

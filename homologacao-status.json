@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T20:32:39-03:00",
+  "generatedAt": "2026-10-20T20:42:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-mount-retry-test-cancellation-2026-10-20-2041",
+      "title": "Nebula: testes de retry de montagem respeitam cancelamento",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; Jellyfin.Server.Implementations.Tests",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaMountRetryTests.cs",
+      "scope": "Fazer as esperas assíncronas dos testes de retry canceláveis pelo runner sem alterar timeouts, verificações ou comportamento de montagem.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T20:34:00-03:00",
+      "updatedAt": "2026-10-20T20:42:06-03:00",
+      "evidence": "Rebuild Release do projeto de testes terminou exit 0, 260 avisos totais e 0 erros; zero `xUnit1051` em `NebulaMountRetryTests.cs`. Build reportou 330 registros `xUnit1051`, correspondentes a 165 localizações únicas, 10 a menos que as 175 da rodada anterior. `NebulaMountRetryTests` passou 6/6; cinco suítes Nebula relacionadas passaram 65/65. Revisão independente: nenhum problema. Busca do padrão `WaitAsync(TimeSpan.FromSeconds(5))` encontrou 15 outras ocorrências em sete arquivos; seis arquivos de testes e um ponto runtime `NebulaFtpManager.cs` ficam para auditoria separada. Somente testes mudaram; sem instalação, runtime, produção ou release do servidor."
+    },
     {
       "id": "server-nebula-refresh-queue-test-cancellation-2026-10-20-2032",
       "title": "Nebula: testes da fila de refresh respeitam cancelamento",
