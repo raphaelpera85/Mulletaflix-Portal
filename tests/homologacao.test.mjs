@@ -68,6 +68,25 @@ test('portal records the focused Nebula lifecycle, cache and Supabase regression
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: regressão focal de lifecycle, cache e backup/);
 });
 
+test('portal records complete local Nebula implementation suite and its Mongo limits', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-implementations-suite-2026-10-20-1005');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /705 aprovados, 24 ignorados, 0 falhas\/729/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests` focal passou 30\/30/);
+    assert.match(event.evidence, /24 ignorados exigem MongoDB e não executaram/);
+    assert.match(event.evidence, /não smoke de worker instalado/);
+    assert.match(event.evidence, /produção ou release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: suíte completa de implementações revalidada/);
+});
+
 test('portal keeps the latest Vercel HEAD synchronization visibly blocked', async () => {
     const event = statusData.events.find(item => item.id === 'portal-head-sync-recheck-2026-10-20-0956');
 

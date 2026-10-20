@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T09:57:54-03:00",
+  "generatedAt": "2026-10-20T10:05:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8171,6 +8171,21 @@
       "startedAt": "2026-10-20T09:55:00-03:00",
       "updatedAt": "2026-10-20T09:57:54-03:00",
       "evidence": "`origin/main` está em `26408af4546c0669d78b7d76eb0fd493fb61a2fe`; o último deployment Vercel observado é `READY` para `2f292cc4cd1ddb184cb9e303b268fb31d8a387aa`. O endpoint público HTTP 200 ainda devolve `generatedAt=2026-10-20T09:49:21-03:00` e o evento anterior em status `blocked`. Não declarar o portal live atualizado ao HEAD até aparecer deployment correspondente e o JSON público refletir a nova evidência. A consulta de configuração do projeto Vercel retorna 403; nenhum deploy manual foi iniciado."
+    },
+    {
+      "id": "server-nebula-implementations-suite-2026-10-20-1005",
+      "title": "Nebula: suíte completa de implementações revalidada; gates operacionais pendentes",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "Windows, .NET 10 Release; Jellyfin.Server.Implementations.Tests",
+      "location": "NebulaFtpManager, downloader startup, fila, cache/playback, refresh e sincronização",
+      "scope": "Executar os testes de implementação associados a Nebula sem usar Mongo/Telegram/Supabase reais nem alterar runtime ou produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T10:03:00-03:00",
+      "updatedAt": "2026-10-20T10:04:02-03:00",
+      "evidence": "`dotnet test tests\\Jellyfin.Server.Implementations.Tests\\Jellyfin.Server.Implementations.Tests.csproj -c Release --no-restore --filter \\\"FullyQualifiedName~Nebula\\\" --verbosity minimal` passou com exit 0: 705 aprovados, 24 ignorados, 0 falhas/729. `NebulaDownloaderStartupTests` focal passou 30/30. Os 24 ignorados exigem MongoDB e não executaram. Resultado local Windows, não smoke de worker instalado, indexação real STRM, transferência Telegram, montagem N:, playback, CI Linux, produção ou release."
     }
   ]
 }
