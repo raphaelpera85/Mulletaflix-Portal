@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T06:39:19-03:00",
+  "generatedAt": "2026-10-20T06:47:59-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7916,6 +7916,21 @@
       "startedAt": "2026-10-20T02:24:00-03:00",
       "updatedAt": "2026-10-20T06:19:05-03:00",
       "evidence": "MariaDB 11.4.4 foi inicializado em instâncias temporárias exclusivas, sem defaults, bind `127.0.0.1` e porta `33099`. A instância de produção permaneceu no PID 20736/porta 3306, sem conexão dos testes; todas as instâncias descartáveis foram encerradas e a porta 33099 ficou fechada. Inventário `dotnet test --list-tests` confirmou 145 casos em `Jellyfin.Server.Integration.Tests`; agregação por nome de teste nos TRX focais confirmou 145/145 aprovados, 0 ignorados e 0 falhas. A tentativa integral do assembly foi cancelada após 78 aprovados em 17m03s; filtros focalizados posteriores cobriram todos os nomes restantes, sem lacunas. Em outros grupos opt-in MariaDB: `IntroSkipper.Integration.Tests` passou 39/39; `UserManagerNormalizedUsernameTests|BillingDatabaseTests` passou 30/31, com um único skip que exige `@@lower_case_table_names=0` e filesystem Linux case-sensitive. Assim, 197 dos 198 casos MariaDB opt-in identificados no snapshot amplo foram aprovados; falta executar em Linux o caso de casing. Os TRX permaneceram em `%TEMP%`. Warnings SA1402 e xUnit1051 de compilação anteriores continuam sem triagem. O snapshot amplo .NET permanece 5.099/5.334, com código de saída não recuperado. Não valida CI remota, MongoDB 7.0, runtime/instalação, produção ou reprodução de mídia real. Nenhuma mudança de código/runtime, produção ou release."
+    },
+    {
+      "id": "server-audit-rerun-release-gate-2026-10-20-0647",
+      "title": "Servidor: revalidação local verde; CI/release ainda bloqueadas externamente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Reexecução da regressão .NET, Nebula Python e contratos Node; rechecagem dos gates públicos de CI e release",
+      "location": "MulletaFlix-master/MulletaFlix.sln; MulletaFlix-master/Tools/NebulaPython; tools/release/tests; GitHub Actions runs 441 e 39212993752",
+      "scope": "Atualizar evidência de homologação do servidor a partir do checkout local corrente e investigar o gate público da release sem alterar código runtime, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T06:42:00-03:00",
+      "updatedAt": "2026-10-20T06:47:59-03:00",
+      "evidence": "No checkout local `main` HEAD `f5c96a3bd92283d7f8c88766a3f816f336052ef8`, com 79 entradas de trabalho preexistentes preservadas e seis commits à frente do `origin/main` `17d766ac554bd2093f1201be1d0969212bcf3a9c`, a reexecução `dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~Integration&FullyQualifiedName!~DramaFindsLiveIntegrationTests' --logger trx` terminou exit 0: 5.070 Passed, 68 NotExecuted, 0 Failed/5.138 em 17 TRX. Os 68 permanecem skips/pré-condições, não aprovações; classificação já registrada no evento 06:37. `py -3.10 -m pytest tests -q` passou 646/646 e `node --test tools/release/tests/*.test.mjs` passou 19/19. A leitura pública da API confirma run Release v12.1.24 `39212993752`: validação de source tag em failure, sem steps; build Linux e publicação skipped. O download de logs retorna `BlobNotFound`, portanto não se atribui falha ao código da validação. O evento público anterior `server-github-actions-runner-allocation-blocked-2026-10-19-1912` registra runner_id=0 e annotation oficial de bloqueio de faturamento para esse run e para o CI main; run 441 no SHA remoto `17d766ac` continua failure sem steps. `mongod` 7.0 não está no PATH e a variável de conexão de teste não está configurada; execução local equivalente a esse serviço Mongo/Ubuntu não ocorreu. Nenhum runtime, produção, banco, instalação, mídia ou release foi alterado. Mapa técnico revisado e sem mudança estrutural; homologação formal continua aberta."
     }
   ]
 }

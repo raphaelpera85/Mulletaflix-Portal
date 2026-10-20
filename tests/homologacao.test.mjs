@@ -2976,3 +2976,26 @@ test('isolated MariaDB revalidation reports complete HTTP coverage and Linux-onl
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB isolado: Server Integration 145\/145; teste Linux case-sensitive pendente/);
 });
+
+test('server audit rerun distinguishes local green tests from the externally blocked release gate', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-audit-rerun-release-gate-2026-10-20-0647');
+
+    assert.ok(event);
+    assert.equal(server.status, 'in_progress');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /5\.070 Passed, 68 NotExecuted, 0 Failed\/5\.138/);
+    assert.match(event.evidence, /`py -3\.10 -m pytest tests -q` passou 646\/646/);
+    assert.match(event.evidence, /`node --test tools\/release\/tests\/\*\.test\.mjs` passou 19\/19/);
+    assert.match(event.evidence, /Release v12\.1\.24 `39212993752`.*sem steps; build Linux e publicação skipped/);
+    assert.match(event.evidence, /annotation oficial de bloqueio de faturamento/);
+    assert.match(event.evidence, /Nenhum runtime, produção, banco, instalação, mídia ou release foi alterado/);
+    assert.match(event.evidence, /homologação formal continua aberta/i);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: revalidação local verde; CI\/release ainda bloqueadas externamente/);
+});
