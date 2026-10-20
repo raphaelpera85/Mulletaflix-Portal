@@ -442,8 +442,8 @@ test('portal publishes the latest local cross-language server regression audit',
     assert.match(event.evidence, /não valida integrações MariaDB nem pipeline HTTP de ponta a ponta/);
     assert.match(event.evidence, /MongoDB 8\.3\.7 descartável.*não o alvo CI 7\.0/);
     assert.match(event.evidence, /MariaDB Linux, CI remota, runtime instalado/);
-    assert.equal(server.testAudit.passed, 5045);
-    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.passed, 5060);
+    assert.equal(server.testAudit.total, 5125);
     assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
@@ -826,8 +826,8 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /releases\/tag\/v12\.1\.21/);
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
-    assert.equal(audit.passed, 5045);
-    assert.equal(audit.total, 5110);
+    assert.equal(audit.passed, 5060);
+    assert.equal(audit.total, 5125);
     assert.equal(audit.skipped, 65);
     assert.equal(audit.failed, 0);
 
@@ -898,8 +898,8 @@ test('portal records the current deterministic server suite without claiming int
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.equal(server.testAudit.passed, 5045);
-    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.passed, 5060);
+    assert.equal(server.testAudit.total, 5125);
     assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /FullyQualifiedName!~Integration/);
@@ -925,8 +925,8 @@ test('portal records the orphaned Nebula worker and avoids claiming a production
     assert.match(event.evidence, /não expõe PID/);
     assert.match(event.evidence, /não foi encerrado/);
     assert.match(event.evidence, /passou 1\/1/);
-    assert.equal(server.testAudit.passed, 5045);
-    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.passed, 5060);
+    assert.equal(server.testAudit.total, 5125);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard({ ...statusData, events: [event] });
@@ -1106,8 +1106,8 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /sem host GitHub autenticado/);
     assert.match(event.evidence, /Nenhum worker ou transferência real/);
     assert.match(event.evidence, /não ativa em produção/);
-    assert.equal(server.testAudit.passed, 5045);
-    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.passed, 5060);
+    assert.equal(server.testAudit.total, 5125);
 
     const dashboard = createDashboard({ ...statusData, events: [event] });
     await settleDashboard();
@@ -1978,8 +1978,8 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.match(event.evidence, /EnvioStartupException_DoesNotPreventDownloaderFromStarting foi reexecutado e passou 1\/1/);
     assert.match(event.evidence, /Portal independente passou 87\/87/);
     assert.match(event.evidence, /CI remoto, revisão instalada, download real e release não foram executados/);
-    assert.equal(server.testAudit.passed, 5045);
-    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.passed, 5060);
+    assert.equal(server.testAudit.total, 5125);
     assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /NebulaPython em Python 3\.10\.14: 646\/646/);
@@ -2193,8 +2193,8 @@ test('latest .NET solution regression publishes exact counts without claiming in
     assert.match(event.evidence, /filtro exclui casos com Integration/);
     assert.match(event.evidence, /Portal Node 120\/120/);
     assert.match(event.evidence, /CI remoto, integrações reais.*Release permanecem pendentes/);
-    assert.equal(server.testAudit.passed, 5045);
-    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.passed, 5060);
+    assert.equal(server.testAudit.total, 5125);
     assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
@@ -2537,8 +2537,8 @@ test('portal puts the latest broad .NET regression and unresolved release gates 
     assert.equal(event.id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.equal(server.testAudit.passed, 5045);
-    assert.equal(server.testAudit.total, 5110);
+    assert.equal(server.testAudit.passed, 5060);
+    assert.equal(server.testAudit.total, 5125);
     assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
     assert.match(event.evidence, /Integration.*não tiveram casos correspondentes/);
@@ -2736,19 +2736,19 @@ test('Windows installer data ACL hardening is reported without claiming installa
     assert.match(dashboard.getElement('event-list').innerHTML, /Instalador Windows restringe ACL ao diretório de dados escolhido/);
 });
 
-test('server suite revalidation records exact project results and keeps global homologation open', async () => {
+test('server suite revalidation records the full solution gate and keeps global homologation open', async () => {
     const server = statusData.tracks.find(track => track.id === 'server');
     const event = statusData.events.find(item => item.id === 'server-main-suite-revalidation-2026-10-19-2246');
 
     assert.ok(event);
     assert.equal(server.status, 'in_progress');
     assert.equal(event.status, 'in_progress');
-    assert.match(event.evidence, /Jellyfin\.Api\.Tests Release 753\/753/);
-    assert.match(event.evidence, /Implementations\.Tests Release 1\.508 aprovados, 64 ignorados, 0 falhas/);
-    assert.match(event.evidence, /Jellyfin\.Providers\.Tests Release 806\/806/);
-    assert.match(event.evidence, /NebulaPython com Python 3\.10 646\/646/);
-    assert.match(event.evidence, /não são uma execução integral da solução/);
-    assert.match(event.evidence, /Nenhuma release foi criada/);
+    assert.match(event.evidence, /dotnet test MulletaFlix\.sln.*5\.060 aprovados, 65 ignorados, 0 falhas \(5\.125\)/);
+    assert.match(event.evidence, /Implementations\.Tests 1\.508 aprovados\/64 ignorados/);
+    assert.match(event.evidence, /Providers 793 no gate filtrado/);
+    assert.match(event.evidence, /NebulaPython Python 3\.10 separado 646\/646/);
+    assert.match(event.evidence, /zero testes selecionados/);
+    assert.match(event.evidence, /Nenhuma release criada/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
