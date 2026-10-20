@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T02:31:23-03:00",
+  "generatedAt": "2026-10-20T06:19:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7889,18 +7889,18 @@
     },
     {
       "id": "server-mariadb-optin-revalidation-2026-10-20-0231",
-      "title": "MariaDB isolado: 70 testes passaram; Linux case-sensitive ainda pendente",
+      "title": "MariaDB isolado: Server Integration 145/145; teste Linux case-sensitive pendente",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Testes C# MariaDB opt-in e upload HTTP em MariaDB descartável",
-      "location": "MulletaFlix-master/tests/Shared/MariaDbTestEnvironment.cs; MulletaFlix-master/tests/IntroSkipper.Integration.Tests; MulletaFlix-master/tests/Jellyfin.Server.Integration.Tests/Controllers/ImageControllerProfileUploadTests.cs; MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Users",
-      "scope": "Executar os subconjuntos MariaDB opt-in em 11.4.4 numa instância temporária loopback, sem tocar na instância de produção, e registrar com precisão o teste Linux-only que não pode ser validado no Windows.",
+      "local": "Cobertura completa dos testes HTTP Server Integration e casos MariaDB opt-in em instâncias descartáveis",
+      "location": "MulletaFlix-master/tests/Shared/MariaDbTestEnvironment.cs; MulletaFlix-master/tests/IntroSkipper.Integration.Tests; MulletaFlix-master/tests/Jellyfin.Server.Integration.Tests; MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Users",
+      "scope": "Homologar todos os testes HTTP Server Integration e os subconjuntos MariaDB opt-in em MariaDB 11.4.4 temporário, sem tocar na instância de produção, e manter explícita a única condição Linux case-sensitive pendente.",
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-20T02:24:00-03:00",
-      "updatedAt": "2026-10-20T02:31:23-03:00",
-      "evidence": "MariaDB 11.4.4 inicializado em dois diretórios de dados temporários exclusivos, com configuração padrão desativada, bind `127.0.0.1` e porta `33099`. A instância real do servidor continuou no PID 20736/porta 3306; ela não foi conectada nem modificada. Cada daemon temporário foi encerrado, 33099 foi confirmada fechada e os TRX foram preservados em diretórios `%TEMP%`. O filtro alinhado ao CI `FullyQualifiedName~UserManagerNormalizedUsernameTests|FullyQualifiedName~BillingDatabaseTests` passou com exit 0: 30 aprovados, 1 ignorado, 0 falhas/31. O único skip consulta `@@lower_case_table_names=0` e requer filesystem Linux case-sensitive; Windows não valida essa condição. `IntroSkipper.Integration.Tests` passou 39/39, exit 0. `ImageControllerProfileUploadTests` via HTTP/MariaDB passou 1/1, exit 0. Os 70 casos aprovados são esses três relatórios separados, não a suíte completa. Build IntroSkipper emitiu warnings SA1402 e xUnit1051 não corrigidos nesta rodada. Não valida job Linux, todas as 198 ocorrências MariaDB opt-in, CI remota, runtime, instalação, produção ou mídia real. O snapshot amplo anterior permanece 5.099/5.334 com exit code desconhecido. Nenhuma mudança runtime ou release."
+      "updatedAt": "2026-10-20T06:19:05-03:00",
+      "evidence": "MariaDB 11.4.4 foi inicializado em instâncias temporárias exclusivas, sem defaults, bind `127.0.0.1` e porta `33099`. A instância de produção permaneceu no PID 20736/porta 3306, sem conexão dos testes; todas as instâncias descartáveis foram encerradas e a porta 33099 ficou fechada. Inventário `dotnet test --list-tests` confirmou 145 casos em `Jellyfin.Server.Integration.Tests`; agregação por nome de teste nos TRX focais confirmou 145/145 aprovados, 0 ignorados e 0 falhas. A tentativa integral do assembly foi cancelada após 78 aprovados em 17m03s; filtros focalizados posteriores cobriram todos os nomes restantes, sem lacunas. Em outros grupos opt-in MariaDB: `IntroSkipper.Integration.Tests` passou 39/39; `UserManagerNormalizedUsernameTests|BillingDatabaseTests` passou 30/31, com um único skip que exige `@@lower_case_table_names=0` e filesystem Linux case-sensitive. Assim, 197 dos 198 casos MariaDB opt-in identificados no snapshot amplo foram aprovados; falta executar em Linux o caso de casing. Os TRX permaneceram em `%TEMP%`. Warnings SA1402 e xUnit1051 de compilação anteriores continuam sem triagem. O snapshot amplo .NET permanece 5.099/5.334, com código de saída não recuperado. Não valida CI remota, MongoDB 7.0, runtime/instalação, produção ou reprodução de mídia real. Nenhuma mudança de código/runtime, produção ou release."
     }
   ]
 }

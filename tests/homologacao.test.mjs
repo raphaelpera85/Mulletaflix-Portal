@@ -2929,7 +2929,7 @@ test('isolated Mongo opt-in revalidation is published without claiming CI or pro
     assert.match(dashboard.getElement('event-list').innerHTML, /Mongo opt-in: 24\/24 passaram em instância descartável/);
 });
 
-test('isolated MariaDB revalidation keeps the Linux-only and full-suite limits visible', async () => {
+test('isolated MariaDB revalidation reports complete HTTP coverage and Linux-only limit', async () => {
     const server = statusData.tracks.find(track => track.id === 'server');
     const event = statusData.events.find(item => item.id === 'server-mariadb-optin-revalidation-2026-10-20-0231');
 
@@ -2938,19 +2938,19 @@ test('isolated MariaDB revalidation keeps the Linux-only and full-suite limits v
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /MariaDB 11\.4\.4.*127\.0\.0\.1.*33099/);
-    assert.match(event.evidence, /PID 20736\/porta 3306.*não foi conectada nem modificada/);
-    assert.match(event.evidence, /30 aprovados, 1 ignorado, 0 falhas\/31/);
-    assert.match(event.evidence, /@@lower_case_table_names=0.*Windows não valida essa condição/);
-    assert.match(event.evidence, /IntroSkipper\.Integration\.Tests` passou 39\/39/);
-    assert.match(event.evidence, /ImageControllerProfileUploadTests` via HTTP\/MariaDB passou 1\/1/);
-    assert.match(event.evidence, /70 casos aprovados são esses três relatórios separados, não a suíte completa/);
-    assert.match(event.evidence, /todas as 198 ocorrências MariaDB opt-in/);
-    assert.match(event.evidence, /snapshot amplo anterior permanece 5\.099\/5\.334 com exit code desconhecido/);
+    assert.match(event.evidence, /instância de produção permaneceu no PID 20736\/porta 3306, sem conexão dos testes/);
+    assert.match(event.evidence, /`UserManagerNormalizedUsernameTests\|BillingDatabaseTests` passou 30\/31, com um único skip que exige `@@lower_case_table_names=0` e filesystem Linux case-sensitive/);
+    assert.match(event.evidence, /Inventário `dotnet test --list-tests` confirmou 145 casos em `Jellyfin\.Server\.Integration\.Tests`; agregação por nome de teste nos TRX focais confirmou 145\/145 aprovados, 0 ignorados e 0 falhas/);
+    assert.match(event.evidence, /tentativa integral do assembly foi cancelada após 78 aprovados em 17m03s; filtros focalizados posteriores cobriram todos os nomes restantes/);
+    assert.match(event.evidence, /`IntroSkipper\.Integration\.Tests` passou 39\/39/);
+    assert.match(event.evidence, /`UserManagerNormalizedUsernameTests\|BillingDatabaseTests` passou 30\/31/);
+    assert.match(event.evidence, /197 dos 198 casos MariaDB opt-in identificados.*falta executar em Linux o caso de casing/);
+    assert.match(event.evidence, /snapshot amplo \.NET permanece 5\.099\/5\.334, com código de saída não recuperado/);
     assert.equal(server.testAudit.passed, 5099);
     assert.equal(server.testAudit.total, 5334);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
     await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB isolado: 70 testes passaram; Linux case-sensitive ainda pendente/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB isolado: Server Integration 145\/145; teste Linux case-sensitive pendente/);
 });
