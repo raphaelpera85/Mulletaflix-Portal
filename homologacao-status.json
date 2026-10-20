@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T21:42:02-03:00",
+  "generatedAt": "2026-10-19T21:51:18-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7661,6 +7661,21 @@
       "startedAt": "2026-10-19T21:31:00-03:00",
       "updatedAt": "2026-10-19T21:42:02-03:00",
       "evidence": "RED observado: SetUserAvatarAsync_WhenSaveFails_DoesNotRestoreExternalProfileFileSnapshot esperava bytes concorrentes [91, 92, 93], mas recebeu [1, 2, 3] regravados pelo rollback. Após limitar snapshots com FileSystemHelper.IsPathWithinRoot, AvatarControllerUserAvatarAuthorizationTests passou 28/28 e Jellyfin.Api.Tests Release passou 753/753, sem ignorados ou falhas. Testes usam mocks e arquivos temporários; não validam MariaDB/HTTP integrado, runtime instalado ou produção. TOCTOU entre validação do caminho e operações de arquivo permanece pendente. Nenhuma release foi criada nesta rodada."
+    },
+    {
+      "id": "server-profile-image-delete-handle-design-2026-10-19-2151",
+      "title": "Fotos de perfil: pesquisa confirma primitivas, mas TOCTOU segue aberto",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Documentação Microsoft Win32 e Linux man-pages; inspeção do código atual",
+      "location": "MulletaFlix-master/MediaBrowser.Controller/IO/FileSystemHelper.cs; ImageController; AvatarService",
+      "scope": "Investigar mecanismo seguro de exclusão ancorada a handle/descritor e registrar limites antes de alterar o runtime.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T21:43:00-03:00",
+      "updatedAt": "2026-10-19T21:51:18-03:00",
+      "evidence": "Fontes primárias confirmam `openat`/`unlinkat` relativos a descritor no Linux e `CreateFileW(FILE_FLAG_OPEN_REPARSE_POINT)`/`SetFileInformationByHandle` para abrir e excluir o objeto final no Windows. A pesquisa não prova proteção dos ancestrais contra rename concorrente nem ACL adequada; `O_NOFOLLOW` precisa ser aplicado componente a componente. Nenhum código runtime ou teste foi alterado/executado. TOCTOU continua aberto. Próximas provas: handles de todos os ancestrais, ACL/compartilhamento, testes de rename/junction/symlink concorrente em Windows e Linux, e política macOS. Sem MariaDB integrado, runtime instalado, produção ou nova release."
     }
   ]
 }

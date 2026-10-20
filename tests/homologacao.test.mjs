@@ -2658,3 +2658,19 @@ test('external profile snapshot rollback fix publishes RED/GREEN API evidence an
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar: rollback não regrava arquivo de perfil externo/);
 });
+
+test('profile-image handle research stays in progress and does not claim TOCTOU closure', async () => {
+    const event = statusData.events.find(item => item.id === 'server-profile-image-delete-handle-design-2026-10-19-2151');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /não prova proteção dos ancestrais contra rename concorrente/);
+    assert.match(event.evidence, /TOCTOU continua aberto/);
+    assert.match(event.evidence, /testes de rename\/junction\/symlink concorrente em Windows e Linux/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Fotos de perfil: pesquisa confirma primitivas, mas TOCTOU segue aberto/);
+});
