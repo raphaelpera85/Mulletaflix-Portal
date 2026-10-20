@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T22:35:21-03:00",
+  "generatedAt": "2026-10-19T22:46:14-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7721,6 +7721,21 @@
       "startedAt": "2026-10-19T22:02:00-03:00",
       "updatedAt": "2026-10-19T22:35:21-03:00",
       "evidence": "Alteração local da configuração do instalador limita icacls à raiz de dados (sem /T), remove ACLs Allow herdadas e explícitas de BUILTIN Users, Everyone e Authenticated Users, e mantém Administrators, SYSTEM e identidades suportadas de serviço. Diretórios de volume/compartilhamento e a pasta escolhida se for reparse point são recusados. Teste de fixture temporário comprovou remoção das grants herdadas/explicit root conhecidas, herança normal para descendentes e sentinel externo intacto; Assert-StageIntegrity, RcloneBootstrap, ServiceDataAcl, StageBackup e StageBuildOptions passaram; contrato CI de empacotamento 1/1 passou. O primeiro build NSIS falhou por uma flag de comparação inválida; após trocar por lstrcmpiW, build NSIS Release local compilou com sucesso e gerou MulletaFlix 12.1.24 (403,74 MB), em diretório isolado, sem copiar para dist. O smoke de instalação limpa não foi executado: a sessão atual não tem token administrativo e os diretórios padrão de ProgramFiles/ProgramData já existem, portanto não alterei a instalação local. ACL efetiva em descendentes com ACL protegida, runtime e produção não foram validados; grupos amplos diferentes e alterações concorrentes da árvore exigem inspeção. Nenhuma release foi criada; homologação permanece aberta."
+    },
+    {
+      "id": "server-main-suite-revalidation-2026-10-19-2246",
+      "title": "Revalidação local das suítes principais do servidor",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Jellyfin.Api.Tests, Jellyfin.Server.Implementations.Tests, Jellyfin.Providers.Tests e NebulaPython",
+      "location": "MulletaFlix-master/tests; MulletaFlix-master/Tools/NebulaPython/tests",
+      "scope": "Reexecutar as suítes Release mais relevantes após as mudanças atuais e registrar separadamente aprovações e cenários ignorados.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T22:40:00-03:00",
+      "updatedAt": "2026-10-19T22:46:14-03:00",
+      "evidence": "Execuções locais: Jellyfin.Api.Tests Release 753/753 aprovados, 0 ignorados, 0 falhas; Jellyfin.Server.Implementations.Tests Release 1.508 aprovados, 64 ignorados, 0 falhas em 1.572; Jellyfin.Providers.Tests Release 806/806 aprovados, 0 ignorados, 0 falhas; NebulaPython com Python 3.10 646/646 aprovados. Os testes foram executados em projetos separados; não são uma execução integral da solução. Os 64 ignorados incluem cenários opt-in de Mongo/MariaDB e testes dependentes de OS/ambiente, que seguem pendentes. Não houve teste HTTP/MariaDB integrado, runner GitHub, runtime instalado, smoke produtivo ou download real nesta rodada. Nenhuma release foi criada; homologação global permanece aberta."
     }
   ]
 }

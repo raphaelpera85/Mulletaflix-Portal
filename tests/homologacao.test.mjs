@@ -262,11 +262,13 @@ test('Intro Skipper EF regression is published as source-validated and productio
     assert.match(event.evidence, /Nenhum release criado/);
 });
 
-test('homologation timeline displays the newly published Intro Skipper event', async () => {
+test('homologation timeline keeps the newest event visible and retains older Intro Skipper evidence', async () => {
+    const introEvent = statusData.events.find(item => item.id === 'server-introskipper-changeditems-ef-span-2026-10-18-1524');
     const dashboard = createDashboard();
     await settleDashboard();
 
-    assert.match(dashboard.getElement('event-list').innerHTML, /Intro Skipper: exceção EF no passe ChangedItems corrigida na fonte/);
+    assert.ok(introEvent, 'older Intro Skipper evidence remains in the source history');
+    assert.match(dashboard.getElement('event-list').innerHTML, /Revalidação local das suítes principais do servidor/);
 });
 
 test('image metadata audit records source correction without claiming production root cause', () => {
@@ -2732,4 +2734,24 @@ test('Windows installer data ACL hardening is reported without claiming installa
     const dashboard = createDashboard();
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Instalador Windows restringe ACL ao diretório de dados escolhido/);
+});
+
+test('server suite revalidation records exact project results and keeps global homologation open', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-main-suite-revalidation-2026-10-19-2246');
+
+    assert.ok(event);
+    assert.equal(server.status, 'in_progress');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests Release 753\/753/);
+    assert.match(event.evidence, /Implementations\.Tests Release 1\.508 aprovados, 64 ignorados, 0 falhas/);
+    assert.match(event.evidence, /Jellyfin\.Providers\.Tests Release 806\/806/);
+    assert.match(event.evidence, /NebulaPython com Python 3\.10 646\/646/);
+    assert.match(event.evidence, /não são uma execução integral da solução/);
+    assert.match(event.evidence, /Nenhuma release foi criada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Revalidação local das suítes principais do servidor/);
 });
