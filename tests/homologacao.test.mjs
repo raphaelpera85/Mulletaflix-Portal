@@ -2928,3 +2928,29 @@ test('isolated Mongo opt-in revalidation is published without claiming CI or pro
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Mongo opt-in: 24\/24 passaram em instância descartável/);
 });
+
+test('isolated MariaDB revalidation keeps the Linux-only and full-suite limits visible', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-mariadb-optin-revalidation-2026-10-20-0231');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /MariaDB 11\.4\.4.*127\.0\.0\.1.*33099/);
+    assert.match(event.evidence, /PID 20736\/porta 3306.*não foi conectada nem modificada/);
+    assert.match(event.evidence, /30 aprovados, 1 ignorado, 0 falhas\/31/);
+    assert.match(event.evidence, /@@lower_case_table_names=0.*Windows não valida essa condição/);
+    assert.match(event.evidence, /IntroSkipper\.Integration\.Tests` passou 39\/39/);
+    assert.match(event.evidence, /ImageControllerProfileUploadTests` via HTTP\/MariaDB passou 1\/1/);
+    assert.match(event.evidence, /70 casos aprovados são esses três relatórios separados, não a suíte completa/);
+    assert.match(event.evidence, /todas as 198 ocorrências MariaDB opt-in/);
+    assert.match(event.evidence, /snapshot amplo anterior permanece 5\.099\/5\.334 com exit code desconhecido/);
+    assert.equal(server.testAudit.passed, 5099);
+    assert.equal(server.testAudit.total, 5334);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB isolado: 70 testes passaram; Linux case-sensitive ainda pendente/);
+});

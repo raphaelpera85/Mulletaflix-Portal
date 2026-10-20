@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T02:21:12-03:00",
+  "generatedAt": "2026-10-20T02:31:23-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7886,6 +7886,21 @@
       "startedAt": "2026-10-20T02:17:30-03:00",
       "updatedAt": "2026-10-20T02:21:12-03:00",
       "evidence": "`dotnet test MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter 'Category=RequiresMongo' --logger trx --results-directory <scratch> --verbosity quiet` concluiu com exit code 0: 24 aprovados, 0 NotExecuted, 0 falhas. O daemon MongoDB 8.3.7 usou `dbPath` temporário exclusivo, bind `127.0.0.1` e porta `27099`; a conexão de teste é fixada pelo helper a esse alvo e os testes criam nomes de banco aleatórios. O serviço padrão do servidor na porta 27017 não foi tocado. O processo descartável foi encerrado e a porta 27099 ficou fechada; remoção do diretório temporário de dados foi bloqueada pela política do executor e esse diretório permanece. Não valida MongoDB 7.0 do CI, Actions remoto, produção ou runtime. A execução ampla anterior continua com snapshot próprio 5.099/5.334 e exit code desconhecido; os 24 aprovados são suplemento, não alteração retroativa dos TRX amplos. Nenhuma mudança de código runtime ou release."
+    },
+    {
+      "id": "server-mariadb-optin-revalidation-2026-10-20-0231",
+      "title": "MariaDB isolado: 70 testes passaram; Linux case-sensitive ainda pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Testes C# MariaDB opt-in e upload HTTP em MariaDB descartável",
+      "location": "MulletaFlix-master/tests/Shared/MariaDbTestEnvironment.cs; MulletaFlix-master/tests/IntroSkipper.Integration.Tests; MulletaFlix-master/tests/Jellyfin.Server.Integration.Tests/Controllers/ImageControllerProfileUploadTests.cs; MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Users",
+      "scope": "Executar os subconjuntos MariaDB opt-in em 11.4.4 numa instância temporária loopback, sem tocar na instância de produção, e registrar com precisão o teste Linux-only que não pode ser validado no Windows.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T02:24:00-03:00",
+      "updatedAt": "2026-10-20T02:31:23-03:00",
+      "evidence": "MariaDB 11.4.4 inicializado em dois diretórios de dados temporários exclusivos, com configuração padrão desativada, bind `127.0.0.1` e porta `33099`. A instância real do servidor continuou no PID 20736/porta 3306; ela não foi conectada nem modificada. Cada daemon temporário foi encerrado, 33099 foi confirmada fechada e os TRX foram preservados em diretórios `%TEMP%`. O filtro alinhado ao CI `FullyQualifiedName~UserManagerNormalizedUsernameTests|FullyQualifiedName~BillingDatabaseTests` passou com exit 0: 30 aprovados, 1 ignorado, 0 falhas/31. O único skip consulta `@@lower_case_table_names=0` e requer filesystem Linux case-sensitive; Windows não valida essa condição. `IntroSkipper.Integration.Tests` passou 39/39, exit 0. `ImageControllerProfileUploadTests` via HTTP/MariaDB passou 1/1, exit 0. Os 70 casos aprovados são esses três relatórios separados, não a suíte completa. Build IntroSkipper emitiu warnings SA1402 e xUnit1051 não corrigidos nesta rodada. Não valida job Linux, todas as 198 ocorrências MariaDB opt-in, CI remota, runtime, instalação, produção ou mídia real. O snapshot amplo anterior permanece 5.099/5.334 com exit code desconhecido. Nenhuma mudança runtime ou release."
     }
   ]
 }
