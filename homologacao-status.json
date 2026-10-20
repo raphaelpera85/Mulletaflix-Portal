@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T01:23:43-03:00",
+  "generatedAt": "2026-10-20T01:32:13-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7826,6 +7826,21 @@
       "startedAt": "2026-10-20T00:30:00-03:00",
       "updatedAt": "2026-10-20T01:23:43-03:00",
       "evidence": "`AvatarFileStore` mantém o handle do diretório raiz: leitura retorna stream aberto; criação relativa é exclusiva; Windows usa NtCreateFile/SetFileInformationByHandle. Linux requer STATX_MODE e raiz pertencente ao UID efetivo sem escrita de grupo/outros; leitura valida inode por O_PATH|O_NOFOLLOW e abre dados por /proc/self/fd. `DeleteAvatar` persiste catálogo/mapeamentos antes da remoção e restaura estado em falha simulada de serializer. Build API Release win-x64 passou. Testes focados GetAvatar/AvatarFileStore: 38 aprovados, 3 testes Linux ignorados, 0 falhas/41. Agregação dos 17 TRX: 5.070 Passed, 68 NotExecuted, 0 Failed/5.138; código de saída do processo amplo não foi recuperado. Os dois projetos Integration não selecionaram casos. Linux não disponível; ABI/libc, procfs, arquivos especiais, HTTP/MariaDB/Mongo reais, instalação, runtime e produção não foram validados. A exclusão ainda tem janela entre última revalidação da identidade e unlinkat por nome para processo de mesmo UID efetivo com acesso à pasta; macOS não suportado. Sem release/alteração de produção."
+    },
+    {
+      "id": "server-image-provider-suite-revalidation-2026-10-20-0132",
+      "title": "Imagens: Providers 805/805; validação com mídia real pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "MetadataServiceTests + ItemImageProviderTests e suíte Jellyfin.Providers.Tests Release",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/MetadataService.cs; MulletaFlix-master/MediaBrowser.Providers/Manager/ItemImageProvider.cs; MulletaFlix-master/docs/image-metadata-flow-audit.md",
+      "scope": "Revalidar regressões de fallback/salvamento de capas e publicar o limite entre testes locais e homologação com mídia real.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T01:27:00-03:00",
+      "updatedAt": "2026-10-20T01:32:13-03:00",
+      "evidence": "Release focal MetadataServiceTests|ItemImageProviderTests: 95 aprovados, 0 ignorados/falhas. Suíte Jellyfin.Providers.Tests excluindo DramaFindsLiveIntegrationTests: 805 aprovados, 0 ignorados/falhas em 3m27s. A classe excluída depende de API externa ao vivo; não se declara suíte integral nem dependência externa homologada. Não houve alteração runtime/instalação/produção e nenhum item ou arquivo de imagem real foi acessado. Testes unitários não provam gravação física, ImageInfos/ImageTags, endpoint HTTP ou renderização. Refresh isolado com mídia autorizada continua pendente; sem release."
     }
   ]
 }

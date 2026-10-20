@@ -6,6 +6,23 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
+test('image provider suite and real-media validation limit are published', async () => {
+    const event = statusData.events.find(item => item.id === 'server-image-provider-suite-revalidation-2026-10-20-0132');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /MetadataServiceTests\|ItemImageProviderTests: 95 aprovados/);
+    assert.match(event.evidence, /Jellyfin\.Providers\.Tests excluindo DramaFindsLiveIntegrationTests: 805 aprovados/);
+    assert.match(event.evidence, /A classe excluída depende de API externa ao vivo/);
+    assert.match(event.evidence, /não provam gravação física, ImageInfos\/ImageTags, endpoint HTTP ou renderização/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Imagens: Providers 805\/805; validação com mídia real pendente/);
+});
+
 test('portal publishes GetAvatar handle-relative file operations and current server suite evidence', async () => {
     const event = statusData.events.find(item => item.id === 'server-getavatar-handle-relative-persistence-2026-10-20-0055');
     const server = statusData.tracks.find(track => track.id === 'server');
