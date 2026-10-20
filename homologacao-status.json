@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T00:18:35-03:00",
+  "generatedAt": "2026-10-20T00:55:42-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
       },
       "testAudit": {
-        "passed": 5064,
-        "total": 5129,
+        "passed": 5070,
+        "total": 5135,
         "skipped": 65,
         "failed": 0,
       "percent": 98.7,
-      "label": "Revalidação local, 19/10/2026 23:58: solução .NET Release (FullyQualifiedName!~Integration) passou 5.064, ignorou 65, 0 falhas em 5.129 resultados agregados dos 17 TRX; Server.Implementations 1.508/64 ignorados, Server.Tests 73/1 ignorado, Jellyfin.Api.Tests 757/757 e Providers 793/793. Quatro regressões de containment GetAvatar passaram, incluindo duas para symlink no arquivo final; a API completa passou 757/757. NebulaPython com Python 3.10 passou 646/646. Dois projetos Integration não selecionaram testes pelo filtro; HTTP/MariaDB integrado, Mongo opt-in, CI remota, runtime instalado, instalação/smoke e download/playback em produção permanecem pendentes. Avisos XML/StyleCop/analyzers não impediram exit code 0. Homologação formal segue aberta; nenhuma release foi criada. Histórico anterior preservado nos eventos abaixo."
+        "label": "Histórico 19/10: solução .NET Release (FullyQualifiedName!~Integration) passou 5.064, ignorou 65, 0 falhas em 5.129 resultados; NebulaPython com Python 3.10 passou 646/646. Atualização 20/10: .NET Release passou 5.070, ignorou 65, 0 falhas em 5.135 resultados de 17 TRX. GetAvatar/AvatarFileStore focal 38/38; Jellyfin.Api.Tests 763/763; Server.Implementations 1.508 aprovados/64 ignorados; Providers 793/793. Os dois projetos Integration não selecionaram casos pelo filtro. NebulaPython não foi reexecutado nesta sessão. CI remota, instalação/runtime, MariaDB/Mongo reais e smoke download/playback não foram validados. A exclusão Linux ainda tem risco de troca concorrente do nome entre statx e unlinkat; macOS não suportado. Avisos de build não impediram exit code 0. Homologação formal segue aberta; nenhuma release criada."
       }
     },
     {
@@ -7811,6 +7811,21 @@
       "startedAt": "2026-10-20T00:15:00-03:00",
       "updatedAt": "2026-10-20T00:18:35-03:00",
       "evidence": "dotnet test MulletaFlix-master/tests/Jellyfin.Api.Tests/Jellyfin.Api.Tests.csproj -c Release --no-restore --filter FullyQualifiedName~AvatarControllerUserAvatarAuthorizationTests passou 32/32, sem ignorados ou falhas. O ambiente Windows desta sessão não tem WSL instalado; não houve validação Linux/macOS. A suíte não injeta rename/symlink concorrente e não prova fechamento de TOCTOU: abertura/exclusão por path continua sendo risco conhecido. Nenhum código runtime foi alterado, instalado ou publicado; release e homologação formal permanecem abertas."
+    },
+    {
+      "id": "server-getavatar-handle-relative-persistence-2026-10-20-0055",
+      "title": "GetAvatar usa handles relativos; corrida de delete Linux segue pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Testes Release GetAvatar/AvatarFileStore e suíte ampla .NET no Windows",
+      "location": "MulletaFlix.Plugin.GetAvatar.Services.AvatarFileStore; AvatarService.DeleteAvatar; AvatarController",
+      "scope": "Remover reabertura de caminhos de avatar depois da validação e preservar o catálogo se a gravação XML falhar.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T00:30:00-03:00",
+      "updatedAt": "2026-10-20T00:55:42-03:00",
+      "evidence": "`AvatarFileStore` mantém o handle do diretório raiz: leitura retorna stream aberto; criação relativa é exclusiva; Windows usa NtCreateFile/SetFileInformationByHandle e Linux usa openat/statx/unlinkat. `DeleteAvatar` persiste catálogo/mapeamentos antes da remoção do arquivo e restaura estado em falha simulada de serializer. Testes focados GetAvatar/AvatarFileStore: 38/38; solução .NET Release com filtro FullyQualifiedName!~Integration: 5.070 aprovados, 65 ignorados, zero falhas/5.135 em 17 TRX. Os dois projetos de Integration não selecionaram casos. Linux/macOS, HTTP/MariaDB/Mongo reais, instalação, runtime e produção não foram validados. Existe corrida residual Linux se o nome for substituído entre statx e unlinkat; não declarar TOCTOU totalmente resolvido. Sem release/alteração de produção."
     }
   ]
 }
