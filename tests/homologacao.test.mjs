@@ -5,6 +5,25 @@ import vm from 'node:vm';
 
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
+const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
+
+test('portal publishes current GitHub Actions billing blocker separately from test outcomes', async () => {
+    const event = statusData.events.find(item => item.id === 'server-github-actions-billing-runner-blocker-recheck-2026-10-20-0922');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'blocked');
+    assert.match(event.evidence, /CI run 441/);
+    assert.match(event.evidence, /Release v12\.1\.24/);
+    assert.match(event.evidence, /The job was not started because your account is locked due to a billing issue/);
+    assert.match(event.evidence, /não validou nem refutou o código\/testes/);
+    assert.match(event.evidence, /proprietário da conta precisa resolver a pendência de cobrança/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /CI remoto: bloqueio de cobrança impede validar o código/);
+});
 
 test('portal publishes the Nebula dependency drift guard and remaining gates', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-hashed-lock-2026-10-20-0804');
@@ -512,19 +531,18 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-nebula-venv-guard-revalidation-2026-10-20-0903');
+    const newestEvent = statusData.events.find(event => event.id === 'server-github-actions-billing-runner-blocker-recheck-2026-10-20-0922');
     const dashboard = createDashboard();
     await settleDashboard();
 
     assert.ok(newestEvent);
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
-    assert.equal(newestEvent.status, 'in_progress');
-    assert.deepEqual(newestEvent.featureIds, ['T2.1', 'T4.2']);
-    assert.match(newestEvent.evidence, /660\/660/);
-    assert.match(newestEvent.evidence, /Linux nativo, CI remota/);
+    assert.equal(newestEvent.status, 'blocked');
+    assert.match(newestEvent.evidence, /CI run 441/);
+    assert.match(newestEvent.evidence, /billing issue/);
     assert.equal(statusData.events[0].id, newestEvent.id);
-    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(statusData.events[1].title));
+    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
 test('portal publishes the latest local cross-language server regression audit', async () => {
@@ -549,7 +567,7 @@ test('portal publishes the latest local cross-language server regression audit',
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(event.title) >= 0);
-    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(statusData.events[1].title));
+    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
 test('portal publishes the isolated Mongo and Nebula frontend validation without overstating CI coverage', async () => {
@@ -570,7 +588,7 @@ test('portal publishes the isolated Mongo and Nebula frontend validation without
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(event.title) >= 0);
-    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(statusData.events[1].title));
+    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
 test('portal publishes local CI packaging contract results without claiming remote jobs ran', async () => {
@@ -591,7 +609,7 @@ test('portal publishes local CI packaging contract results without claiming remo
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(event.title) >= 0);
-    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(statusData.events[1].title));
+    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
 test('portal reports local integration-suite passes and skips without claiming MariaDB coverage', async () => {
@@ -610,7 +628,7 @@ test('portal reports local integration-suite passes and skips without claiming M
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(event.title) >= 0);
-    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(statusData.events[1].title));
+    assert.ok(renderedEvents.indexOf(event.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
 test('publishes the latest Nebula startup finding without marking T2.1 complete', () => {
@@ -2570,8 +2588,8 @@ test('portal publishes the Nebula first-STRM integration test and its real-servi
     assert.match(event.evidence, /Não comprova Mongo\/HTTP reais, throughput, instalação ou produção/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: teste do worker pronto até o primeiro STRM enfileirado/);
-    assert.equal(statusData.events[3].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
-    assert.equal(statusData.events[4].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
+    assert.equal(statusData.events[4].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
+    assert.equal(statusData.events[5].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
 });
 
 test('portal reports full Nebula completed-destination fallback coverage with Mongo limits', async () => {
@@ -2630,11 +2648,11 @@ test('portal publishes the 24 real Mongo integration passes without equating Mon
     assert.match(event.evidence, /Não equivale ao MongoDB 7\.0 do CI/);
     assert.match(event.evidence, /Mongo em 27017 não foi acessado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
-    assert.equal(statusData.events[4].id, event.id);
+    assert.equal(statusData.events[5].id, event.id);
 });
 
 test('portal puts the latest broad .NET regression and unresolved release gates first', async () => {
-    const event = statusData.events[3];
+    const event = statusData.events[4];
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.equal(event.id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
@@ -2654,7 +2672,7 @@ test('portal puts the latest broad .NET regression and unresolved release gates 
 });
 
 test('portal publishes the latest full Nebula Python branch-coverage rerun', () => {
-    const event = statusData.events[2];
+    const event = statusData.events[3];
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.equal(event.id, 'server-nebula-python-full-suite-2026-10-19-1908');
@@ -2668,7 +2686,7 @@ test('portal publishes the latest full Nebula Python branch-coverage rerun', () 
 });
 
 test('portal distinguishes GitHub Actions runner allocation failures from test failures', () => {
-    const event = statusData.events[1];
+    const event = statusData.events[2];
     const dashboard = createDashboard();
 
     assert.equal(event.id, 'server-github-actions-runner-allocation-blocked-2026-10-19-1912');
@@ -2679,11 +2697,11 @@ test('portal distinguishes GitHub Actions runner allocation failures from test f
     assert.match(event.evidence, /account is locked due to a billing issue/);
     assert.match(event.evidence, /anotação do primeiro job reporta o mesmo bloqueio de faturamento/);
     assert.match(event.evidence, /continua v12\.1\.21/);
-    assert.equal(statusData.events[2].id, 'server-nebula-python-full-suite-2026-10-19-1908');
+    assert.equal(statusData.events[3].id, 'server-nebula-python-full-suite-2026-10-19-1908');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     return settleDashboard().then(() => {
-        assert.match(dashboard.getElement('event-list').innerHTML, /CI e release: GitHub não alocou runners/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /CI e release: GitHub não alocou runners; nenhum step executado/);
     });
 });
 
