@@ -2674,3 +2674,22 @@ test('profile-image handle research stays in progress and does not claim TOCTOU 
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Fotos de perfil: pesquisa confirma primitivas, mas TOCTOU segue aberto/);
 });
+
+test('profile directory permission audit distinguishes package policy from production evidence', async () => {
+    const event = statusData.events.find(item => item.id === 'server-profile-directory-permissions-audit-2026-10-19-2156');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /Directory.CreateDirectory sem ACL\/modo explícitos/);
+    assert.match(event.evidence, /Debian aplica jellyfin:adm\/0750 condicional/);
+    assert.match(event.evidence, /não ACL efetiva de produção/);
+    assert.match(event.evidence, /Release passaram 6\/6/);
+    assert.match(event.evidence, /não cobrem ACL ou rename concorrente/);
+    assert.match(event.evidence, /TOCTOU continua aberto/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Fotos de perfil: diretórios dependem de ACL herdada, produção ainda não verificada/);
+});

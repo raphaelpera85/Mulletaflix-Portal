@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T21:51:18-03:00",
+  "generatedAt": "2026-10-19T21:56:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7676,6 +7676,21 @@
       "startedAt": "2026-10-19T21:43:00-03:00",
       "updatedAt": "2026-10-19T21:51:18-03:00",
       "evidence": "Fontes primárias confirmam `openat`/`unlinkat` relativos a descritor no Linux e `CreateFileW(FILE_FLAG_OPEN_REPARSE_POINT)`/`SetFileInformationByHandle` para abrir e excluir o objeto final no Windows. A pesquisa não prova proteção dos ancestrais contra rename concorrente nem ACL adequada; `O_NOFOLLOW` precisa ser aplicado componente a componente. Nenhum código runtime ou teste foi alterado/executado. TOCTOU continua aberto. Próximas provas: handles de todos os ancestrais, ACL/compartilhamento, testes de rename/junction/symlink concorrente em Windows e Linux, e política macOS. Sem MariaDB integrado, runtime instalado, produção ou nova release."
+    },
+    {
+      "id": "server-profile-directory-permissions-audit-2026-10-19-2156",
+      "title": "Fotos de perfil: diretórios dependem de ACL herdada, produção ainda não verificada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Inspeção runtime/instaladores; FileSystemHelperPathSafetyTests e ImageControllerDeleteUserImageTests Release",
+      "location": "MulletaFlix-master/Jellyfin.Api/Controllers/ImageController.cs; MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; MulletaFlix-packaging-master/debian/jellyfin-server.postinst; MulletaFlix-packaging-master/MulletaFlix-ux-custom/nsis/mulletaflix.nsi",
+      "scope": "Auditar se permissões da árvore de perfil sustentam a validação de caminho antes de excluir fotos.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T21:52:00-03:00",
+      "updatedAt": "2026-10-19T21:56:00-03:00",
+      "evidence": "As rotas runtime usam Directory.CreateDirectory sem ACL/modo explícitos; proteção herda da raiz. Debian aplica jellyfin:adm/0750 condicional na raiz config. Windows concede Modify a NetworkService/SYSTEM/LocalService e mantém herança, sem provar que ACEs herdados/config customizada negam escrita aos demais. Isso é evidência do pacote, não ACL efetiva de produção. Os testes de containment/exclusão Release passaram 6/6, mas não cobrem ACL ou rename concorrente. .NET oferece overloads DirectorySecurity/UnixFileMode; hardening precisa tratar novas pastas e upgrades existentes. TOCTOU continua aberto; instalação limpa, produção, runtime e release não foram validados."
     }
   ]
 }
