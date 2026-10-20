@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T20:52:00-03:00",
+  "generatedAt": "2026-10-19T21:05:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7629,8 +7629,8 @@
       "status": "in_progress",
       "progressPercent": 85,
       "startedAt": "2026-10-19T20:43:00-03:00",
-      "updatedAt": "2026-10-19T20:52:00-03:00",
-      "evidence": "GetAvatar agora remove o arquivo anterior somente após persistir a nova imagem e o mapeamento, e somente dentro do diretório de configuração do usuário. A regressão passou de RED para GREEN; AvatarControllerUserAvatarAuthorizationTests 24/24 e Jellyfin.Api.Tests Release 745/745. O teste HTTP ImageControllerProfileUploadTests compilou e foi descoberto, mas ficou ignorado porque MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não está configurada; MariaDB e runtime permanecem pendentes. Sem instalação, produção ou release; manter homologação em andamento."
+      "updatedAt": "2026-10-19T21:05:00-03:00",
+      "evidence": "Revisão adversarial achou casing diferente no Windows que podia apagar o arquivo ativo e containment lexical que aceitava reparse points. Corrigido com FileSystemHelper.PathsEqual (semântica de case do host) e IsPathWithinRoot (containment relativo que rejeita symlinks/junctions), usado por ImageController e GetAvatar. Testes cobrem symlink estável, sibling prefix, semântica case, rollback do arquivo antigo e caminho case-only no Windows. Focal Release 45/45; Jellyfin.Api.Tests 749/749. Server Integration 3 aprovados, 142 ignorados (145 total), sem MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING. Limite remanescente: TOCTOU entre checagem de reparse point e exclusão caso processo com permissão de escrita altere a pasta do usuário. MariaDB, ACL/handle-safe delete, runtime e produção seguem pendentes. Sem release; manter homologação in_progress."
     }
   ]
 }

@@ -6,15 +6,19 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
-test('GetAvatar profile cleanup reports passing local tests and pending MariaDB gate', async () => {
+test('profile cleanup hardening reports path-safety fixes and pending MariaDB gate', async () => {
     const event = statusData.events.find(item => item.id === 'server-getavatar-cleanup-previous-profile-image-2026-10-19-2052');
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.match(event.evidence, /AvatarControllerUserAvatarAuthorizationTests 24\/24/);
-    assert.match(event.evidence, /Jellyfin\.Api\.Tests Release 745\/745/);
-    assert.match(event.evidence, /ficou ignorado porque MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
-    assert.match(event.evidence, /Sem instalação, produção ou release/);
+    assert.match(event.evidence, /FileSystemHelper\.PathsEqual/);
+    assert.match(event.evidence, /IsPathWithinRoot/);
+    assert.match(event.evidence, /Focal Release 45\/45/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests 749\/749/);
+    assert.match(event.evidence, /Server Integration 3 aprovados, 142 ignorados/);
+    assert.match(event.evidence, /TOCTOU entre checagem de reparse point e exclusão/);
+    assert.match(event.evidence, /manter homologação in_progress/);
+    assert.match(event.evidence, /Sem release; manter homologação in_progress/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
