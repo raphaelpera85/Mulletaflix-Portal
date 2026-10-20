@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T19:58:36-03:00",
+  "generatedAt": "2026-10-20T20:06:03-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-supabase-test-cancellation-2026-10-20-2006",
+      "title": "Nebula: testes de sincronização Supabase respeitam cancelamento",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; Jellyfin.Server.Implementations.Tests",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaSupabaseSyncTests.cs",
+      "scope": "Propagar o token de cancelamento do runner em operações async e esperas dos testes de sincronização Supabase, sem alterar runtime nem a contagem ampla de testes.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T20:00:00-03:00",
+      "updatedAt": "2026-10-20T20:06:03-03:00",
+      "evidence": "Rebuild Release do projeto `Jellyfin.Server.Implementations.Tests` terminou com exit 0, zero erros e zero avisos `xUnit1051` em `NebulaSupabaseSyncTests.cs` (29 localizações únicas removidas). A suíte focal `FullyQualifiedName~NebulaSupabaseSyncTests` passou 50/50, sem ignorados/falhas. É uma rodada focal suplementar; o snapshot amplo do servidor não foi alterado nem recontado. Sem mudança runtime, instalação, produção ou release; homologação operacional ainda não foi demonstrada."
+    },
     {
       "id": "server-nebula-cache-cancellation-tests-2026-10-20-1947",
       "title": "Nebula: testes STRM e cache respeitam cancelamento",
