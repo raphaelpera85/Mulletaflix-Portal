@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T07:29:48-03:00",
+  "generatedAt": "2026-10-20T07:45:44-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 235,
         "failed": 0,
         "percent": 95.6,
-        "label": "Atualizado em 20/10: regressão .NET Release inclusiva produziu 17 TRX completos: 5.099 aprovados, 235 NotExecuted, 0 falhas/5.334. O código final de saída do processo não foi recuperado após o fechamento da sessão de execução. Projetos Integration incluídos, exceto DramaFindsLiveIntegrationTests para evitar API externa ao vivo. Dentre os ignorados, 198 exigem MariaDB opt-in e 24 MongoDB opt-in; os demais dependem de plataforma/pré-condições locais. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado; esses casos continuam registrados como NotExecuted no snapshot da execução ampla. A versão MongoDB 7.0 do CI ainda não foi validada. NebulaPython 3.10: 646/646; contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. Em rodadas MariaDB focais, 197/198 casos opt-in passaram em Windows; nesta sessão Users/Billing passou 30/31. O único pendente requer Linux com @@lower_case_table_names=0; os casos focais continuam NotExecuted no snapshot amplo. CI remota, Linux/macOS no geral, runtime instalado e smoke de mídia seguem pendentes. Homologação formal e release seguem abertas."
+        "label": "Atualizado em 20/10: regressão .NET Release inclusiva produziu 17 TRX completos: 5.099 aprovados, 235 NotExecuted, 0 falhas/5.334. O código final de saída do processo não foi recuperado após o fechamento da sessão de execução. Projetos Integration incluídos, exceto DramaFindsLiveIntegrationTests para evitar API externa ao vivo. Dentre os ignorados, 198 exigem MariaDB opt-in e 24 MongoDB opt-in; os demais dependem de plataforma/pré-condições locais. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado; esses casos continuam registrados como NotExecuted no snapshot da execução ampla. A versão MongoDB 7.0 do CI ainda não foi validada. NebulaPython 3.10: 647/647; auditoria OSV do manifesto resolveu 62 dependências sem advisories conhecidos (cryptography 50.0.2); isso não verifica runtime instalado nem produção. Contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. Em rodadas MariaDB focais, 197/198 casos opt-in passaram em Windows; nesta sessão Users/Billing passou 30/31. O único pendente requer Linux com @@lower_case_table_names=0; os casos focais continuam NotExecuted no snapshot amplo. CI remota, Linux/macOS no geral, runtime instalado e smoke de mídia seguem pendentes. Homologação formal e release seguem abertas."
       }
     },
     {
@@ -8006,6 +8006,21 @@
       "startedAt": "2026-10-20T06:42:00-03:00",
       "updatedAt": "2026-10-20T06:47:59-03:00",
       "evidence": "No checkout local `main` HEAD `f5c96a3bd92283d7f8c88766a3f816f336052ef8`, com 79 entradas de trabalho preexistentes preservadas e seis commits à frente do `origin/main` `17d766ac554bd2093f1201be1d0969212bcf3a9c`, a reexecução `dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~Integration&FullyQualifiedName!~DramaFindsLiveIntegrationTests' --logger trx` terminou exit 0: 5.070 Passed, 68 NotExecuted, 0 Failed/5.138 em 17 TRX. Os 68 permanecem skips/pré-condições, não aprovações; classificação já registrada no evento 06:37. `py -3.10 -m pytest tests -q` passou 646/646 e `node --test tools/release/tests/*.test.mjs` passou 19/19. A leitura pública da API confirma run Release v12.1.24 `39212993752`: validação de source tag em failure, sem steps; build Linux e publicação skipped. O download de logs retorna `BlobNotFound`, portanto não se atribui falha ao código da validação. O evento público anterior `server-github-actions-runner-allocation-blocked-2026-10-19-1912` registra runner_id=0 e annotation oficial de bloqueio de faturamento para esse run e para o CI main; run 441 no SHA remoto `17d766ac` continua failure sem steps. `mongod` 7.0 não está no PATH e a variável de conexão de teste não está configurada; execução local equivalente a esse serviço Mongo/Ubuntu não ocorreu. Nenhum runtime, produção, banco, instalação, mídia ou release foi alterado. Mapa técnico revisado e sem mudança estrutural; homologação formal continua aberta."
+    },
+    {
+      "id": "server-nebula-cryptography-security-audit-2026-10-20-0743",
+      "title": "Nebula: correção de cryptography validada contra OSV",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Python 3.10.11; pip-audit contra OSV; ambiente uv isolado",
+      "location": "MulletaFlix-master/Tools/NebulaPython/requirements.txt e tests/test_check_deps.py",
+      "scope": "Remover do manifesto Nebula a faixa de cryptography afetada por advisories e validar resolução, testes e limites da evidência sem alterar runtime instalado, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T07:32:00-03:00",
+      "updatedAt": "2026-10-20T07:45:44-03:00",
+      "evidence": "A faixa anterior `cryptography>=43,<46` permitia versões afetadas por advisories publicados; foi alterada para `cryptography>=50.0.2,<51` e coberta por regressão. `pip-audit` com serviço OSV resolveu 62 dependências dos manifestos runtime/teste e não encontrou advisories conhecidos; a resolução selecionou cryptography 50.0.2. Testes focais: 17/17; suíte Nebula: 647/647 tanto no Python local quanto no ambiente uv isolado Python 3.10.11 com cryptography 50.0.2. Isto audita a resolução dos manifestos, não uma instalação produtiva: o Python global local ainda tinha 45.0.7, nenhum runtime/serviço de produção foi inspecionado ou atualizado e nenhuma instalação, release ou deploy do servidor foi executado. A documentação existente menciona requirements.in e requirements.lock, mas esses arquivos não estão presentes; instalação reprodutível e verificação version-aware no startup permanecem pendentes. Homologação formal e release seguem abertas."
     }
   ]
 }
