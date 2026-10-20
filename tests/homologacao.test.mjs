@@ -3077,3 +3077,28 @@ test('server audit publishes MariaDB user and billing focused rerun without chan
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB usuários\/cobrança 30\/31/);
 });
+
+test('server audit classifies every residual NotExecuted without reclassifying the broad snapshot', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-audit-residual-skips-2026-10-20-0729');
+
+    assert.ok(event);
+    assert.equal(server.testAudit.passed, 5099);
+    assert.equal(server.testAudit.total, 5334);
+    assert.equal(server.testAudit.skipped, 235);
+    assert.equal(server.testAudit.failed, 0);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /17 TRX confirmou 5\.071 Passed, 67 NotExecuted e 0 Failed\/5\.138/);
+    assert.match(event.evidence, /31 MariaDB opt-in, 24 MongoDB opt-in, 10 testes de plataforma\/filesystem e 2 benchmarks/);
+    assert.match(event.evidence, /MariaDB 30\/31.*MongoDB 24\/24; não alteram os NotExecuted do snapshot amplo/);
+    assert.match(event.evidence, /3 `AvatarFileStoreTests` Linux, 1 teste Unix de permissões e 6 `ManagedFileSystemTests`/);
+    assert.match(event.evidence, /`wsl\.exe --status` confirmou WSL não instalado/);
+    assert.match(event.evidence, /CI `39037932557` e Release `39212993752` com jobs failure e zero steps executados/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /67 NotExecuted classificados; Linux e benchmarks seguem sem execução/);
+});

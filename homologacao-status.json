@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T07:23:58-03:00",
+  "generatedAt": "2026-10-20T07:29:48-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7961,6 +7961,21 @@
       "startedAt": "2026-10-20T06:50:00-03:00",
       "updatedAt": "2026-10-20T07:00:37-03:00",
       "evidence": "A distribuição oficial MongoDB Community 7.0.45 para Windows ZIP foi baixada em diretório descartável; SHA-256 `7E3A435FA86E36E8CA4F2618FB41DE06D75C28009C63725A20F9BADD36EEC6F6` conferiu com o arquivo oficial `.sha256`. `mongod` foi limitado a `127.0.0.1:27099`, com datadir exclusivo; a URI opt-in apontou somente a esse loopback. `dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter 'Category=RequiresMongo'` passou 24/24, 0 falhas e 0 skips (exit 0). O daemon foi encerrado; PID e listener de 27099 não existem. A recontagem XML dos 17 TRX confirmou os 68 NotExecuted como 31 MariaDB opt-in, 24 Mongo opt-in, 10 plataforma/filesystem, 2 benchmarks e 1 pré-condição de assembly ausente; classificação anterior 8 + 5 foi corrigida. Os 24 resultados do snapshot completo continuam registrados como NotExecuted, pois o opt-in foi uma rodada focal separada e não se somam contagens sobrepostas. Linux ainda não foi executado: `wsl.exe` existe, mas informa subsistema não instalado; Docker e Podman ausentes. A limpeza do scratch temporário `mflx-mongo70-audit-20261020` no disco D: foi bloqueada pela política do executor após tentativas explícitas; MongoDB está parado e o diretório temporário permanece para remoção manual. CI pública segue sem execução recuperável por bloqueio de runner registrado no evento anterior; sem runtime, instalação, produção ou release alterados."
+    },
+    {
+      "id": "server-audit-residual-skips-2026-10-20-0729",
+      "title": "Servidor: 67 NotExecuted classificados; Linux e benchmarks seguem sem execução",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Recontagem literal dos 17 TRX Release e inspeção dos motivos dos skips de plataforma e benchmarks",
+      "location": "MulletaFlix-master/MulletaFlix.sln; MulletaFlix-master/tests; MulletaFlix-master/docs/testing-mariadb.md; GitHub Actions CI 39037932557 e Release 39212993752",
+      "scope": "Classificar os casos NotExecuted sem confundir execuções focais com a regressão ampla e determinar os gates Linux/remotos que continuam pendentes.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T07:26:00-03:00",
+      "updatedAt": "2026-10-20T07:29:48-03:00",
+      "evidence": "A recontagem com `System.IO.File.ReadAllText` dos 17 TRX confirmou 5.071 Passed, 67 NotExecuted e 0 Failed/5.138. Partição exata: 31 MariaDB opt-in, 24 MongoDB opt-in, 10 testes de plataforma/filesystem e 2 benchmarks. Execuções focais separadas: MariaDB 30/31 (um exige Linux) e MongoDB 24/24; não alteram os NotExecuted do snapshot amplo. Os 10 de plataforma incluem 3 `AvatarFileStoreTests` Linux, 1 teste Unix de permissões e 6 `ManagedFileSystemTests` dependentes de symlink, caminhos Unix ou `/dev/shm`. Os 2 métodos `QueryPerformanceBenchmark` estão marcados `[Fact(Skip = \"Benchmark\")]`. `wsl.exe --status` confirmou WSL não instalado; Docker/Podman não estão disponíveis. A API GitHub confirmou CI `39037932557` e Release `39212993752` com jobs failure e zero steps executados; o bloqueio de runner/billing é documentado no evento anterior. Linux, CI executável, runtime instalado, produção e playback real seguem pendentes; nenhuma release foi criada. Mapa técnico conferido, sem mudança estrutural."
     },
     {
       "id": "server-mariadb-user-billing-rerun-2026-10-20-0723",
