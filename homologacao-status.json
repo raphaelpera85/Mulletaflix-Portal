@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T08:53:23-03:00",
+  "generatedAt": "2026-10-20T09:07:11-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-venv-guard-revalidation-2026-10-20-0903",
+      "title": "Nebula: guard fail-closed e contratos de empacotamento revalidados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "Windows PowerShell, venv Nebula Python 3.10 e Node.js",
+      "location": "Tools/NebulaPython/tools/check_deps.py; install-python-if-missing.ps1; contratos de packaging",
+      "scope": "Revalidar proteção contra reparo de Python global e corrigir contrato estático desatualizado, sem instalar ou alterar o runtime do produto.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T09:00:00-03:00",
+      "updatedAt": "2026-10-20T09:07:11-03:00",
+      "evidence": "Suíte Nebula completa em venv isolada: 660/660. Contratos Node de packaging: 4/4 após corrigir asserção que esperava a chamada do guard junto ao reparo com lock; o código protege os caminhos com e sem lock antes de ambos. Harness Assert-StageIntegrity passou; parser PowerShell do helper passou. A primeira execução Node falhou pelo matcher antigo; uma primeira chamada do harness PowerShell apontou caminho sem a pasta tests e não executou, depois a chamada correta passou. O helper Windows completo, NSIS, instalação limpa, Linux nativo, CI remota, runtime/produção e download/playback real permanecem sem validação. Nenhum serviço, banco, runtime ou produção foi alterado; sem release do servidor."
+    },
     {
       "id": "server-github-actions-runner-allocation-blocked-2026-10-19-1912",
       "title": "CI e release: GitHub não alocou runners; nenhum step executado",
