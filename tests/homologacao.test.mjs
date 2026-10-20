@@ -49,6 +49,42 @@ test('portal records when GitHub homologation updates have not reached Vercel pr
     assert.match(dashboard.getElement('event-list').innerHTML, /Portal: commits de homologação no Git ainda não chegaram à produção/);
 });
 
+test('portal records the focused Nebula lifecycle, cache and Supabase regression result', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-focused-regression-2026-10-20-0956');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /137 aprovados, 2 ignorados, 0 falhas\/139/);
+    assert.match(event.evidence, /NebulaSupabaseRestoreMongoTests/);
+    assert.match(event.evidence, /NebulaConfigPage\.test\.mjs`: 4\/4/);
+    assert.match(event.evidence, /Nenhum banco externo/);
+    assert.match(event.evidence, /produção ou release foi exercitado/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: regressão focal de lifecycle, cache e backup/);
+});
+
+test('portal keeps the latest Vercel HEAD synchronization visibly blocked', async () => {
+    const event = statusData.events.find(item => item.id === 'portal-head-sync-recheck-2026-10-20-0956');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'blocked');
+    assert.match(event.evidence, /origin\/main.*26408af4546c0669d78b7d76eb0fd493fb61a2fe/);
+    assert.match(event.evidence, /deployment Vercel observado é `READY` para `2f292cc4cd1ddb184cb9e303b268fb31d8a387aa`/);
+    assert.match(event.evidence, /endpoint público HTTP 200 ainda devolve/);
+    assert.match(event.evidence, /nenhum deploy manual foi iniciado/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Portal: HEAD do Git ainda não refletido na Vercel/);
+});
+
 test('portal publishes the Nebula dependency drift guard and remaining gates', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-hashed-lock-2026-10-20-0804');
 

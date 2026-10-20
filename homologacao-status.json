@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T09:51:02-03:00",
+  "generatedAt": "2026-10-20T09:57:54-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8140,7 +8140,37 @@
       "progressPercent": 100,
       "startedAt": "2026-10-20T09:48:00-03:00",
       "updatedAt": "2026-10-20T09:51:02-03:00",
-      "evidence": "A primeira reconsulta encontrou o domínio público no snapshot `generatedAt=2026-10-20T09:31:29-03:00` e sem deployment Vercel para `origin/main` em `7a8733a6fb7f939592506d4c4b91fdfd7c7a21ac`. Depois que o evento foi enviado ao Git, a API Vercel confirmou produção `READY` `dpl_BVW6TPbGPqqDVgb4tprqSHTSDvz9` vinculada ao commit `2f292cc4cd1ddb184cb9e303b268fb31d8a387aa`; consulta com cache-bust ao domínio público respondeu HTTP 200, `generatedAt=2026-10-20T09:49:21-03:00` e contém este evento. O disparo Git→Vercel foi confirmado sem deploy manual. A leitura das configurações do projeto Vercel retornou 403, mas isso não impediu o deploy automático. A nova atualização do status será publicada pelo mesmo fluxo Git. Nenhum código/runtime/produção do servidor foi alterado."
+      "evidence": "A primeira reconsulta encontrou o domínio público no snapshot `generatedAt=2026-10-20T09:31:29-03:00` e sem deployment Vercel para `origin/main` em `7a8733a6fb7f939592506d4c4b91fdfd7c7a21ac`. Depois que o evento foi enviado ao Git, a API Vercel confirmou produção `READY` `dpl_BVW6TPbGPqqDVgb4tprqSHTSDvz9` vinculada ao commit `2f292cc4cd1ddb184cb9e303b268fb31d8a387aa`; consulta com cache-bust ao domínio público respondeu HTTP 200, `generatedAt=2026-10-20T09:49:21-03:00` e contém este evento. O disparo Git→Vercel foi confirmado sem deploy manual. O commit posterior `26408af4546c0669d78b7d76eb0fd493fb61a2fe` foi enviado a `main`, mas não há deployment para esse HEAD; o endpoint público continua no snapshot anterior e mostra o evento como `blocked`. A sincronização do estado mais recente permanece pendente. A leitura das configurações do projeto Vercel retornou 403. Nenhum código/runtime/produção do servidor foi alterado."
+    },
+    {
+      "id": "server-nebula-focused-regression-2026-10-20-0956",
+      "title": "Nebula: regressão focal de lifecycle, cache e backup",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "Windows, .NET 10 Release; Jellyfin.Server.Implementations.Tests e Node.js",
+      "location": "Nebula periodic loop, mount runtime health, cleanup, playback cache, Supabase sync/restore e config page",
+      "scope": "Reexecutar regressões dos componentes Nebula alterados no checkout, sem conectar Mongo/MariaDB/Telegram/Supabase reais nem tocar produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T09:53:00-03:00",
+      "updatedAt": "2026-10-20T09:56:08-03:00",
+      "evidence": "`dotnet test tests\\Jellyfin.Server.Implementations.Tests\\Jellyfin.Server.Implementations.Tests.csproj -c Release --no-restore --filter \"FullyQualifiedName~NebulaPeriodicLoopTests|FullyQualifiedName~NebulaMountRuntimeHealthTests|FullyQualifiedName~NebulaCleanupLifecycleTests|FullyQualifiedName~NebulaPlaybackCacheTests|FullyQualifiedName~NebulaSupabaseSyncTests|FullyQualifiedName~NebulaSupabaseRestoreMongoTests|FullyQualifiedName~NebulaSupabaseFileRestoreTests\" --verbosity minimal`: 137 aprovados, 2 ignorados, 0 falhas/139; os dois ignorados são testes explicitamente Mongo-backed (`NebulaSupabaseRestoreMongoTests`). `node --test tests\\Jellyfin.Api.Tests\\NebulaConfigPage.test.mjs`: 4/4. Nenhum banco externo, runtime instalado, montagem N:, Telegram, Supabase, produção ou release foi exercitado; trata-se de regressão local, não homologação operacional."
+    },
+    {
+      "id": "portal-head-sync-recheck-2026-10-20-0956",
+      "title": "Portal: HEAD do Git ainda não refletido na Vercel",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "GitHub origin/main, API read-only de deployments e endpoint JSON público",
+      "location": "Mulletaflix-Portal/homologacao-status.json",
+      "scope": "Manter explícito que a homologação enviada ao Git pode divergir do conteúdo público enquanto o deployment do HEAD não for confirmado.",
+      "status": "blocked",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T09:55:00-03:00",
+      "updatedAt": "2026-10-20T09:57:54-03:00",
+      "evidence": "`origin/main` está em `26408af4546c0669d78b7d76eb0fd493fb61a2fe`; o último deployment Vercel observado é `READY` para `2f292cc4cd1ddb184cb9e303b268fb31d8a387aa`. O endpoint público HTTP 200 ainda devolve `generatedAt=2026-10-20T09:49:21-03:00` e o evento anterior em status `blocked`. Não declarar o portal live atualizado ao HEAD até aparecer deployment correspondente e o JSON público refletir a nova evidência. A consulta de configuração do projeto Vercel retorna 403; nenhum deploy manual foi iniciado."
     }
   ]
 }
