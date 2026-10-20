@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T00:12:21-03:00",
+  "generatedAt": "2026-10-20T00:18:35-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7796,6 +7796,21 @@
       "startedAt": "2026-10-20T00:00:00-03:00",
       "updatedAt": "2026-10-20T00:05:30-03:00",
       "evidence": "Inspeção encontrou validação por pathname seguida de File.Exists/File.OpenRead em dois endpoints e File.Delete no fluxo de exclusão; SetUserAvatarCoreAsync também reabre o caminho validado. Regressões existentes cobrem symlink/containment estável, não concorrência. dotnet test da classe AvatarControllerUserAvatarAuthorizationTests em Release: 32 aprovados, 0 ignorados/falhas. O mecanismo handle-relative multiplataforma e testes concorrentes ainda não foram implementados. A documentação Microsoft sobre FILE_FLAG_OPEN_REPARSE_POINT trata o objeto final no Windows, não resolve ancestrais nem implementação Linux/macOS. Nenhuma mudança runtime ou release; homologação permanece aberta."
+    },
+    {
+      "id": "server-avatar-toctou-test-recheck-2026-10-20-0018",
+      "title": "GetAvatar: regressões focadas revalidadas; mitigação TOCTOU segue pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "AvatarControllerUserAvatarAuthorizationTests em Release no Windows/.NET 10",
+      "location": "MulletaFlix-master/tests/Jellyfin.Api.Tests/Controllers/AvatarControllerUserAvatarAuthorizationTests.cs; MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs",
+      "scope": "Revalidar os testes de containment, autorização e exclusão do GetAvatar no estado atual do checkout; registrar explicitamente o que essa suíte não cobre.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T00:15:00-03:00",
+      "updatedAt": "2026-10-20T00:18:35-03:00",
+      "evidence": "dotnet test MulletaFlix-master/tests/Jellyfin.Api.Tests/Jellyfin.Api.Tests.csproj -c Release --no-restore --filter FullyQualifiedName~AvatarControllerUserAvatarAuthorizationTests passou 32/32, sem ignorados ou falhas. O ambiente Windows desta sessão não tem WSL instalado; não houve validação Linux/macOS. A suíte não injeta rename/symlink concorrente e não prova fechamento de TOCTOU: abertura/exclusão por path continua sendo risco conhecido. Nenhum código runtime foi alterado, instalado ou publicado; release e homologação formal permanecem abertas."
     }
   ]
 }

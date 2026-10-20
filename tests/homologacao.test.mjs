@@ -2796,3 +2796,20 @@ test('GetAvatar handle-relative design research publishes cross-platform constra
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar: estratégia multiplataforma de acesso relativo a handles definida/);
 });
+
+test('GetAvatar focused authorization suite recheck does not claim TOCTOU mitigation', async () => {
+    const event = statusData.events.find(item => item.id === 'server-avatar-toctou-test-recheck-2026-10-20-0018');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /passou 32\/32, sem ignorados ou falhas/);
+    assert.match(event.evidence, /não tem WSL instalado/);
+    assert.match(event.evidence, /não prova fechamento de TOCTOU/);
+    assert.match(event.evidence, /release e homologação formal permanecem abertas/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar: regressões focadas revalidadas; mitigação TOCTOU segue pendente/);
+});
