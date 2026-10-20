@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T19:49:52-03:00",
+  "generatedAt": "2026-10-20T19:55:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3005,17 +3005,17 @@
   "events": [
     {
       "id": "server-nebula-cache-cancellation-tests-2026-10-20-1947",
-      "title": "Nebula: testes de lease e heartbeat do cache respeitam cancelamento",
+      "title": "Nebula: testes STRM e cache respeitam cancelamento",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
       "local": "Windows, .NET 10 Release; Jellyfin.Server.Implementations.Tests",
-      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaPlaybackCacheTests.cs",
-      "scope": "Passar o token de cancelamento do runner às conexões TCP e leituras/escritas assíncronas dos testes de lease e heartbeat do cache.",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaPlaybackCacheTests.cs; MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaStrmGeneratorTests.cs",
+      "scope": "Passar o token de cancelamento do runner às operações assíncronas nos testes do gerador STRM e do cache Nebula.",
       "status": "completed",
       "progressPercent": 100,
-      "updatedAt": "2026-10-20T19:49:52-03:00",
-      "evidence": "NebulaPlaybackCacheTests passou 59/59 e, junto com NebulaStrmGeneratorTests, 61/61; 0 ignorados/falhas. Build Release do projeto de testes: 388 avisos, 0 erros. Sete locais xUnit1051 das operações TCP/lease/heartbeat foram corrigidos; 54 outros locais xUnit1051 permanecem neste arquivo. Nenhum código runtime, instalação, produção ou release foi alterado."
+      "updatedAt": "2026-10-20T19:55:50-03:00",
+      "evidence": "Rebuild Release do projeto de testes terminou com exit 0. NebulaPlaybackCacheTests + NebulaStrmGeneratorTests passaram 61/61, sem ignorados/falhas. Os 54 avisos xUnit1051 remanescentes no arquivo do cache foram eliminados; agora o arquivo tem zero avisos xUnit1051. A dívida de analisadores nos demais testes do projeto permanece. Nenhum código runtime, instalação, produção ou release foi alterado."
     },
     {
       "id": "server-nebula-strm-test-cancellation-2026-10-20-1045",

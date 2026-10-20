@@ -27,23 +27,24 @@ test('portal publishes Nebula STRM test cancellation warning cleanup with remain
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: cancelamento responsivo nos testes do gerador STRM/);
 });
 
-test('portal publishes Nebula playback-cache cancellation test result and remaining warning debt', async () => {
+test('portal publishes Nebula playback-cache cancellation test result and remaining project warning debt', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-cache-cancellation-tests-2026-10-20-1947');
 
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.evidence, /NebulaPlaybackCacheTests passou 59\/59 e, junto com NebulaStrmGeneratorTests, 61\/61/);
-    assert.match(event.evidence, /Build Release do projeto de testes: 388 avisos, 0 erros/);
-    assert.match(event.evidence, /Sete locais xUnit1051/);
-    assert.match(event.evidence, /54 outros locais xUnit1051 permanecem neste arquivo/);
+    assert.match(event.evidence, /Rebuild Release do projeto de testes terminou com exit 0/);
+    assert.match(event.evidence, /NebulaPlaybackCacheTests \+ NebulaStrmGeneratorTests passaram 61\/61/);
+    assert.match(event.evidence, /54 avisos xUnit1051 remanescentes no arquivo do cache foram eliminados/);
+    assert.match(event.evidence, /zero avisos xUnit1051/);
+    assert.match(event.evidence, /dívida de analisadores nos demais testes do projeto permanece/);
     assert.match(event.evidence, /Nenhum código runtime, instalação, produção ou release foi alterado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
     await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: testes de lease e heartbeat do cache respeitam cancelamento/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: testes STRM e cache respeitam cancelamento/);
 });
 
 test('portal publishes current GitHub Actions billing blocker separately from test outcomes', async () => {
@@ -681,7 +682,7 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'completed');
-    assert.match(newestEvent.evidence, /NebulaPlaybackCacheTests passou 59\/59/);
+    assert.match(newestEvent.evidence, /NebulaPlaybackCacheTests \+ NebulaStrmGeneratorTests passaram 61\/61/);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
