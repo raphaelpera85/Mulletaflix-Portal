@@ -2713,3 +2713,21 @@ test('live profile ACL audit distinguishes active runtime from a separate writab
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Fotos de perfil: runtime 12\.1\.21 sem escrita geral, capability SID e árvore paralela pendentes/);
 });
+
+test('Windows installer data ACL hardening is reported without claiming installation or production validation', async () => {
+    const event = statusData.events.find(item => item.id === 'server-installer-service-data-acl-2026-10-19-2219');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /limita icacls à raiz de dados \(sem \/T\)/);
+    assert.match(event.evidence, /BUILTIN Users, Everyone e Authenticated Users/);
+    assert.match(event.evidence, /compilação NSIS Release está em execução/);
+    assert.match(event.evidence, /Smoke\/instalação limpa, ACL efetiva em descendentes com ACL protegida/);
+    assert.match(event.evidence, /Nenhuma release foi criada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Instalador Windows restringe ACL ao diretório de dados escolhido/);
+});

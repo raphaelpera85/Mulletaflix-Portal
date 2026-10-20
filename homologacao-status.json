@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T22:02:00-03:00",
+  "generatedAt": "2026-10-19T22:19:39-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7706,6 +7706,21 @@
       "startedAt": "2026-10-19T21:57:00-03:00",
       "updatedAt": "2026-10-19T22:02:00-03:00",
       "evidence": "O MulletaFlix 12.1.21 ativo roda interativamente com datadir sob LocalAppData e tem 29 pastas de perfil. Nas ACLs examinadas não há escrita para BUILTIN Users/Everyone; há um SID local órfão somente leitura e um Capability SID não resolvido com FullControl herdado em objetos diretório. A chave local de cache da capability não estava presente. Microsoft recomenda não apagar Capability SIDs sem análise. Outra árvore sob ProgramData tem Users:Write, mas não corresponde ao datadir do processo ativo; conteúdo não foi lido nem alterado. O runtime compartilha a identidade interativa com outros processos; ACL observada não fecha TOCTOU. Testes focais Release: 6/6. Sem alteração de ACL/produção, sem teste de rename concorrente e sem release; homologação segue aberta."
+    },
+    {
+      "id": "server-installer-service-data-acl-2026-10-19-2219",
+      "title": "Instalador Windows restringe ACL ao diretório de dados escolhido",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "ServiceDataAcl.Tests.ps1; testes de empacotamento; compilação NSIS Release",
+      "location": "MulletaFlix-packaging-master/MulletaFlix-ux-custom/nsis/mulletaflix.nsi; MulletaFlix-packaging-master/scripts/Test-CleanInstaller.ps1; MulletaFlix-packaging-master/scripts/tests/ServiceDataAcl.Tests.ps1",
+      "scope": "Evitar que a configuração ACL do serviço Windows propague permissões de escrita amplas ou percorra toda a árvore de dados; rejeitar raiz de volume/compartilhamento e diretório de dados selecionado que seja reparse point.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T22:02:00-03:00",
+      "updatedAt": "2026-10-19T22:19:39-03:00",
+      "evidence": "Alteração local da configuração do instalador limita icacls à raiz de dados (sem /T), remove ACLs Allow herdadas e explícitas de BUILTIN Users, Everyone e Authenticated Users, e mantém Administrators, SYSTEM e identidades suportadas de serviço. Diretórios de volume/compartilhamento e a pasta escolhida se for reparse point são recusados. Teste de fixture temporário comprovou remoção das grants herdadas/explicit root conhecidas, herança normal para descendentes e sentinel externo intacto; testes Assert-StageIntegrity, RcloneBootstrap, StageBackup, StageBuildOptions e contrato CI de empacotamento passaram. A compilação NSIS Release está em execução, sem instalar nem copiar para assets de release. Smoke/instalação limpa, ACL efetiva em descendentes com ACL protegida, runtime e produção não foram validados; grupos amplos diferentes e mudanças concorrentes da árvore exigem inspeção. Nenhuma release foi criada; homologação permanece aberta."
     }
   ]
 }
