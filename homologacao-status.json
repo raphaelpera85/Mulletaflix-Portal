@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T01:32:13-03:00",
+  "generatedAt": "2026-10-20T01:51:09-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 68,
         "failed": 0,
       "percent": 98.7,
-        "label": "Histórico 19/10: solução .NET Release (FullyQualifiedName!~Integration) passou 5.064, ignorou 65, 0 falhas em 5.129 resultados; NebulaPython com Python 3.10 passou 646/646. Atualização 20/10: agregação dos 17 TRX registra .NET Release 5.070 Passed, 68 NotExecuted, zero falhas/5.138; código de saída do processo amplo não foi recuperado. GetAvatar/AvatarFileStore focal Windows win-x64: 38 aprovados, 3 testes Linux ignorados, 0 falhas/41. Jellyfin.Api.Tests 763 aprovados/3 ignorados; Server.Implementations 1.508 aprovados/64 ignorados; Providers 793/793. Os dois projetos Integration não selecionaram casos pelo filtro. Build API win-x64 passou; build no-RID --no-restore --no-incremental falhou ao resolver MimeTypes gerado. Linux não disponível (WSL/Docker/Podman ausentes); procfs/ABI, MariaDB/Mongo reais, instalação/runtime e smoke download/playback não foram validados. Existe janela entre revalidação statx e unlinkat por nome para ator com mesmo UID efetivo e acesso à pasta; macOS não suportado. Homologação formal segue aberta; nenhuma release criada."
+        "label": "Atualizado em 20/10: suíte .NET Release terminou com exit code 0; 17 TRX, 5.070 aprovados, 68 NotExecuted/ignorados, 0 falhas/5.138. Os dois projetos Integration tiveram zero casos selecionados pelo filtro. NebulaPython 3.10: 646/646; contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. Linux, MariaDB/Mongo reais, CI remota, runtime instalado e smoke de mídia continuam pendentes. Homologação formal e release seguem abertas."
       }
     },
     {
@@ -7841,6 +7841,21 @@
       "startedAt": "2026-10-20T01:27:00-03:00",
       "updatedAt": "2026-10-20T01:32:13-03:00",
       "evidence": "Release focal MetadataServiceTests|ItemImageProviderTests: 95 aprovados, 0 ignorados/falhas. Suíte Jellyfin.Providers.Tests excluindo DramaFindsLiveIntegrationTests: 805 aprovados, 0 ignorados/falhas em 3m27s. A classe excluída depende de API externa ao vivo; não se declara suíte integral nem dependência externa homologada. Não houve alteração runtime/instalação/produção e nenhum item ou arquivo de imagem real foi acessado. Testes unitários não provam gravação física, ImageInfos/ImageTags, endpoint HTTP ou renderização. Refresh isolado com mídia autorizada continua pendente; sem release."
+    },
+    {
+      "id": "server-broad-cross-language-regression-2026-10-20-0148",
+      "title": "Servidor: regressão ampla concluída; homologação integrada pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": ".NET Release, NebulaPython 3.10, contratos Node e teste de ACL Windows",
+      "location": "MulletaFlix-master/MulletaFlix.sln; MulletaFlix-master/Tools/NebulaPython/tests; tools/release/tests; MulletaFlix-master/tests/Jellyfin.Api.Tests/NebulaConfigPage.test.mjs; portal-site/tests/homologacao.test.mjs; MulletaFlix-packaging-master/scripts/tests/ServiceDataAcl.Tests.ps1",
+      "scope": "Executar a regressão ampla do servidor no checkout atual e registrar resultados reproduzíveis no portal sem instalar, alterar produção ou criar release.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T01:35:00-03:00",
+      "updatedAt": "2026-10-20T01:51:09-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~Integration' --logger trx --results-directory <scratch>` concluiu exit code 0. Agregação validada dos 17 TRX: 5.070 Passed, 68 NotExecuted, 0 Failed/5.138. Os dois assemblies Integration tiveram zero casos selecionados pelo filtro; os 68 NotExecuted não contam como aprovados. Build emitiu avisos XML/StyleCop/analyzers. `py -3.10 -m pytest tests -q` em Tools/NebulaPython passou 646/646 em 21,76 s. Contratos Node de release passaram 19/19; teste da página Nebula 4/4; contrato `portal-site` 72/72; teste PowerShell ACL do serviço passou com fixture temporária e sentinel externo preservado. Não houve alteração de runtime, instalação, banco real, CI remota, mídia ou produção. Não foram executados MariaDB/Mongo reais, testes Linux/macOS, smoke de download/playback nem compilação NSIS (`makensis` indisponível). Homologação formal e release seguem pendentes."
     }
   ]
 }

@@ -931,8 +931,8 @@ test('server audit preserves the remote CI blocker and displays the latest Mongo
     const priorBroadSuite = statusData.events.find(item => item.id === 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /5\.064.*5\.129/);
-    assert.match(server.testAudit.label, /Homologação formal segue aberta/);
+    assert.match(server.testAudit.label, /5\.070.*5\.138/);
+    assert.match(server.testAudit.label, /Homologação formal e release seguem abertas/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
     assert.equal(event.status, 'blocked');
@@ -963,7 +963,7 @@ test('portal records the current deterministic server suite without claiming int
     assert.equal(server.testAudit.total, 5138);
     assert.equal(server.testAudit.skipped, 68);
     assert.equal(server.testAudit.failed, 0);
-    assert.match(server.testAudit.label, /FullyQualifiedName!~Integration/);
+    assert.match(server.testAudit.label, /suíte \.NET Release terminou com exit code 0/);
     assert.match(event.evidence, /NebulaPython.*592\/592/);
     assert.match(event.evidence, /não tiveram testes correspondentes ao filtro/);
     assert.match(event.evidence, /Nenhuma release de servidor criada/);
@@ -2017,7 +2017,7 @@ test('Nebula Supabase admission audit reports evidence limits without claiming a
     assert.match(event.evidence, /Três testes C# Mongo compilaram e foram ignorados/);
     assert.match(event.evidence, /não identifica proprietário ou expiração da lease/);
     assert.match(server.testAudit.label, /646\/646/);
-    assert.match(server.testAudit.label, /Homologação formal segue aberta/);
+    assert.match(server.testAudit.label, /Homologação formal e release seguem abertas/);
     assert.equal(statusData.coverage.pending, 65);
     assert.equal(statusData.coverage.inProgress, 4);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
@@ -2044,7 +2044,7 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.equal(server.testAudit.total, 5138);
     assert.equal(server.testAudit.skipped, 68);
     assert.equal(server.testAudit.failed, 0);
-    assert.match(server.testAudit.label, /NebulaPython (?:em Python 3\.10\.14:|com Python 3\.10 passou )646\/646/);
+    assert.match(server.testAudit.label, /NebulaPython (?:em Python 3\.10\.14:|com Python 3\.10 passou |3\.10: )646\/646/);
     assert.ok(mongoAudit);
     assert.match(mongoAudit.evidence, /MongoDB 7\.0 do CI/);
     assert.equal(statusData.coverage.pending, 65);
@@ -2440,7 +2440,7 @@ test('portal reports Windows packaging CI as locally verified but remotely pendi
     assert.equal(server.status, 'in_progress');
     assert.equal(event.status, 'in_progress');
     assert.match(event.scope, /ainda está somente no checkout local e não foi enviada ao Git do servidor/);
-    assert.match(server.testAudit.label, /5\.064.*5\.129/);
+    assert.match(server.testAudit.label, /5\.070.*5\.138/);
     assert.match(event.evidence, /node --test dos contratos Mongo, MariaDB e empacotamento passou 3\/3/);
     assert.match(event.evidence, /passaram 4\/4 em PowerShell local/);
     assert.match(event.evidence, /runner Windows remoto ainda não executou/);
@@ -2621,7 +2621,7 @@ test('portal publishes the latest full Nebula Python branch-coverage rerun', () 
     assert.match(event.evidence, /88% \(14\.440 statements, 1\.285 misses; 2\.744 branches, 497 parciais\)/);
     assert.match(event.evidence, /não representa isoladamente cobertura de produção/);
     assert.match(event.evidence, /não comprovam transferência Telegram, Mongo externo, runtime instalado/);
-    assert.match(server.testAudit.label, /NebulaPython (?:em Python 3\.10\.14:|com Python 3\.10 passou )646\/646/);
+    assert.match(server.testAudit.label, /NebulaPython (?:em Python 3\.10\.14:|com Python 3\.10 passou |3\.10: )646\/646/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -2850,4 +2850,29 @@ test('GetAvatar focused authorization suite recheck does not claim TOCTOU mitiga
     const dashboard = createDashboard();
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar: regressões focadas revalidadas; mitigação TOCTOU segue pendente/);
+});
+
+test('latest server-wide regression publishes exact cross-language results and leaves homologation open', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-broad-cross-language-regression-2026-10-20-0148');
+
+    assert.ok(event);
+    assert.equal(server.status, 'in_progress');
+    assert.equal(server.testAudit.passed, 5070);
+    assert.equal(server.testAudit.total, 5138);
+    assert.equal(server.testAudit.skipped, 68);
+    assert.equal(server.testAudit.failed, 0);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /concluiu exit code 0/);
+    assert.match(event.evidence, /17 TRX: 5\.070 Passed, 68 NotExecuted, 0 Failed\/5\.138/);
+    assert.match(event.evidence, /dois assemblies Integration tiveram zero casos selecionados/);
+    assert.match(event.evidence, /Tools\/NebulaPython passou 646\/646/);
+    assert.match(event.evidence, /Contratos Node de release passaram 19\/19/);
+    assert.match(event.evidence, /Não foram executados MariaDB\/Mongo reais/);
+    assert.match(event.evidence, /Homologação formal e release seguem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: regressão ampla concluída; homologação integrada pendente/);
 });
