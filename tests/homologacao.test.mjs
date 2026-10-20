@@ -3035,3 +3035,21 @@ test('server audit records framework assembly resolution without a false skip', 
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /resolução do shared framework sem falso skip/);
 });
+
+test('server audit publishes the broad regression after dependency skip correction', async () => {
+    const event = statusData.events.find(item => item.id === 'server-audit-fullsuite-dependency-skip-2026-10-20-0716');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /5\.071 Passed, 67 NotExecuted, 0 Failed\/5\.138/);
+    assert.match(event.evidence, /agregação dos 17 TRX/);
+    assert.match(event.evidence, /Os 67 restantes são dependentes de plataforma ou pré-condições e continuam skips, não aprovações/);
+    assert.match(event.evidence, /não substitui a rodada anterior inclusiva com Integration/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /suíte \.NET ampla confirma a remoção do falso skip/);
+});

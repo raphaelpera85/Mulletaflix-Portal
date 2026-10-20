@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T07:08:13-03:00",
+  "generatedAt": "2026-10-20T07:16:25-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3077,6 +3077,21 @@
       "startedAt": "2026-10-20T07:01:00-03:00",
       "updatedAt": "2026-10-20T07:08:13-03:00",
       "evidence": "Confirmado que o runtimeconfig do teste referencia Microsoft.AspNetCore.App 10.0.0 e que Microsoft.AspNetCore.Http.Features não é copy-local; a checagem por arquivo local causava falso skip. O teste foi alterado para Assembly.Load e a versão resolvida pelo runtime. A suíte focal DeprecatedDependencyResolutionTests passou 3/3, 0 skips; a suíte completa Jellyfin.Server.Tests passou 74/74, 0 skips/falhas, exit 0. O snapshot amplo anterior permanece com 1 NotExecuted nessa categoria e não foi recontado. Linux, CI remota, instalação, playback real e homologação formal seguem pendentes; sem runtime, instalação, produção ou release alterados."
+    },
+    {
+      "id": "server-audit-fullsuite-dependency-skip-2026-10-20-0716",
+      "title": "Servidor: suíte .NET ampla confirma a remoção do falso skip",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Reexecução da suíte Release da solution e agregação dos 17 TRX por resultado individual",
+      "location": "MulletaFlix-master/MulletaFlix.sln; tests/Jellyfin.Server.Tests/Dependencies/DeprecatedDependencyResolutionTests.cs; docs/AUDIT-EVIDENCE.md",
+      "scope": "Atualizar a evidência ampla após trocar a checagem copy-local pela resolução de assemblies do runtime, sem tocar produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T07:13:23-03:00",
+      "updatedAt": "2026-10-20T07:16:25-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~Integration&FullyQualifiedName!~DramaFindsLiveIntegrationTests' --logger trx` terminou exit 0; agregação dos 17 TRX por `UnitTestResult`: 5.071 Passed, 67 NotExecuted, 0 Failed/5.138. O evento de teste mostra agora os três casos de DeprecatedDependencyResolutionTests aprovados, incluindo o framework; o skip anterior desapareceu nesta rodada. Os 67 restantes são dependentes de plataforma ou pré-condições e continuam skips, não aprovações. Isso não substitui a rodada anterior inclusiva com Integration nem altera suas contagens. Logs mostraram warnings de compilação/análise existentes, sem falha. Linux, CI remota, instalação, playback real e homologação formal seguem pendentes; sem runtime, produção ou release alterados."
     },
     {
       "id": "portal-homologation-timeline-sort-2026-10-19-1923",
