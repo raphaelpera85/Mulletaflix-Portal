@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T00:55:42-03:00",
+  "generatedAt": "2026-10-20T01:23:43-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -29,11 +29,11 @@
       },
       "testAudit": {
         "passed": 5070,
-        "total": 5135,
-        "skipped": 65,
+        "total": 5138,
+        "skipped": 68,
         "failed": 0,
       "percent": 98.7,
-        "label": "Histórico 19/10: solução .NET Release (FullyQualifiedName!~Integration) passou 5.064, ignorou 65, 0 falhas em 5.129 resultados; NebulaPython com Python 3.10 passou 646/646. Atualização 20/10: .NET Release passou 5.070, ignorou 65, 0 falhas em 5.135 resultados de 17 TRX. GetAvatar/AvatarFileStore focal 38/38; Jellyfin.Api.Tests 763/763; Server.Implementations 1.508 aprovados/64 ignorados; Providers 793/793. Os dois projetos Integration não selecionaram casos pelo filtro. NebulaPython não foi reexecutado nesta sessão. CI remota, instalação/runtime, MariaDB/Mongo reais e smoke download/playback não foram validados. A exclusão Linux ainda tem risco de troca concorrente do nome entre statx e unlinkat; macOS não suportado. Avisos de build não impediram exit code 0. Homologação formal segue aberta; nenhuma release criada."
+        "label": "Histórico 19/10: solução .NET Release (FullyQualifiedName!~Integration) passou 5.064, ignorou 65, 0 falhas em 5.129 resultados; NebulaPython com Python 3.10 passou 646/646. Atualização 20/10: agregação dos 17 TRX registra .NET Release 5.070 Passed, 68 NotExecuted, zero falhas/5.138; código de saída do processo amplo não foi recuperado. GetAvatar/AvatarFileStore focal Windows win-x64: 38 aprovados, 3 testes Linux ignorados, 0 falhas/41. Jellyfin.Api.Tests 763 aprovados/3 ignorados; Server.Implementations 1.508 aprovados/64 ignorados; Providers 793/793. Os dois projetos Integration não selecionaram casos pelo filtro. Build API win-x64 passou; build no-RID --no-restore --no-incremental falhou ao resolver MimeTypes gerado. Linux não disponível (WSL/Docker/Podman ausentes); procfs/ABI, MariaDB/Mongo reais, instalação/runtime e smoke download/playback não foram validados. Existe janela entre revalidação statx e unlinkat por nome para ator com mesmo UID efetivo e acesso à pasta; macOS não suportado. Homologação formal segue aberta; nenhuma release criada."
       }
     },
     {
@@ -7814,7 +7814,7 @@
     },
     {
       "id": "server-getavatar-handle-relative-persistence-2026-10-20-0055",
-      "title": "GetAvatar usa handles relativos; corrida de delete Linux segue pendente",
+      "title": "GetAvatar usa handles relativos; gate Linux segue pendente",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
@@ -7824,8 +7824,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-20T00:30:00-03:00",
-      "updatedAt": "2026-10-20T00:55:42-03:00",
-      "evidence": "`AvatarFileStore` mantém o handle do diretório raiz: leitura retorna stream aberto; criação relativa é exclusiva; Windows usa NtCreateFile/SetFileInformationByHandle e Linux usa openat/statx/unlinkat. `DeleteAvatar` persiste catálogo/mapeamentos antes da remoção do arquivo e restaura estado em falha simulada de serializer. Testes focados GetAvatar/AvatarFileStore: 38/38; solução .NET Release com filtro FullyQualifiedName!~Integration: 5.070 aprovados, 65 ignorados, zero falhas/5.135 em 17 TRX. Os dois projetos de Integration não selecionaram casos. Linux/macOS, HTTP/MariaDB/Mongo reais, instalação, runtime e produção não foram validados. Existe corrida residual Linux se o nome for substituído entre statx e unlinkat; não declarar TOCTOU totalmente resolvido. Sem release/alteração de produção."
+      "updatedAt": "2026-10-20T01:23:43-03:00",
+      "evidence": "`AvatarFileStore` mantém o handle do diretório raiz: leitura retorna stream aberto; criação relativa é exclusiva; Windows usa NtCreateFile/SetFileInformationByHandle. Linux requer STATX_MODE e raiz pertencente ao UID efetivo sem escrita de grupo/outros; leitura valida inode por O_PATH|O_NOFOLLOW e abre dados por /proc/self/fd. `DeleteAvatar` persiste catálogo/mapeamentos antes da remoção e restaura estado em falha simulada de serializer. Build API Release win-x64 passou. Testes focados GetAvatar/AvatarFileStore: 38 aprovados, 3 testes Linux ignorados, 0 falhas/41. Agregação dos 17 TRX: 5.070 Passed, 68 NotExecuted, 0 Failed/5.138; código de saída do processo amplo não foi recuperado. Os dois projetos Integration não selecionaram casos. Linux não disponível; ABI/libc, procfs, arquivos especiais, HTTP/MariaDB/Mongo reais, instalação, runtime e produção não foram validados. A exclusão ainda tem janela entre última revalidação da identidade e unlinkat por nome para processo de mesmo UID efetivo com acesso à pasta; macOS não suportado. Sem release/alteração de produção."
     }
   ]
 }

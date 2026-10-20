@@ -6,20 +6,25 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
-test('portal publishes GetAvatar handle-relative file operations and current server suite evidence', () => {
+test('portal publishes GetAvatar handle-relative file operations and current server suite evidence', async () => {
     const event = statusData.events.find(item => item.id === 'server-getavatar-handle-relative-persistence-2026-10-20-0055');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
-    assert.match(event.evidence, /GetAvatar\/AvatarFileStore: 38\/38/);
-    assert.match(event.evidence, /5\.070 aprovados, 65 ignorados, zero falhas\/5\.135/);
-    assert.match(event.evidence, /dois projetos de Integration não selecionaram casos/);
-    assert.match(event.evidence, /corrida residual Linux.*statx e unlinkat/);
+    assert.match(event.evidence, /GetAvatar\/AvatarFileStore: 38 aprovados, 3 testes Linux ignorados, 0 falhas\/41/);
+    assert.match(event.evidence, /5\.070 Passed, 68 NotExecuted, 0 Failed\/5\.138/);
+    assert.match(event.evidence, /dois projetos Integration não selecionaram casos/);
+    assert.match(event.evidence, /janela.*unlinkat.*mesmo UID efetivo/);
+    assert.match(event.evidence, /Linux não disponível.*macOS não suportado/);
     assert.equal(server.testAudit.passed, 5070);
-    assert.equal(server.testAudit.total, 5135);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.total, 5138);
+    assert.equal(server.testAudit.skipped, 68);
     assert.equal(server.testAudit.failed, 0);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar usa handles relativos; gate Linux segue pendente/);
 });
 
 test('avatar catalog traversal guard and current server test totals are published', async () => {
@@ -33,8 +38,8 @@ test('avatar catalog traversal guard and current server test totals are publishe
     assert.match(event.evidence, /5\.064 aprovados, 65 ignorados, 0 falhas\/5\.129/);
     assert.match(event.evidence, /TOCTOU, ACL, HTTP\/MariaDB integrado/);
     assert.equal(server.testAudit.passed, 5070);
-    assert.equal(server.testAudit.total, 5135);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.total, 5138);
+    assert.equal(server.testAudit.skipped, 68);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
@@ -479,8 +484,8 @@ test('portal publishes the latest local cross-language server regression audit',
     assert.match(event.evidence, /MongoDB 8\.3\.7 descartável.*não o alvo CI 7\.0/);
     assert.match(event.evidence, /MariaDB Linux, CI remota, runtime instalado/);
     assert.equal(server.testAudit.passed, 5070);
-    assert.equal(server.testAudit.total, 5135);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.total, 5138);
+    assert.equal(server.testAudit.skipped, 68);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
@@ -863,8 +868,8 @@ test('portal publishes the completed MulletaFlix Server 12.1.21 release with val
     assert.match(event.evidence, /repetição final ficou inconclusiva/);
     assert.match(event.evidence, /não valida reprodução, upload\/download nem instalação/);
     assert.equal(audit.passed, 5070);
-    assert.equal(audit.total, 5135);
-    assert.equal(audit.skipped, 65);
+    assert.equal(audit.total, 5138);
+    assert.equal(audit.skipped, 68);
     assert.equal(audit.failed, 0);
 
 });
@@ -938,8 +943,8 @@ test('portal records the current deterministic server suite without claiming int
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.equal(server.testAudit.passed, 5070);
-    assert.equal(server.testAudit.total, 5135);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.total, 5138);
+    assert.equal(server.testAudit.skipped, 68);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /FullyQualifiedName!~Integration/);
     assert.match(event.evidence, /NebulaPython.*592\/592/);
@@ -965,7 +970,7 @@ test('portal records the orphaned Nebula worker and avoids claiming a production
     assert.match(event.evidence, /não foi encerrado/);
     assert.match(event.evidence, /passou 1\/1/);
     assert.equal(server.testAudit.passed, 5070);
-    assert.equal(server.testAudit.total, 5135);
+    assert.equal(server.testAudit.total, 5138);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard({ ...statusData, events: [event] });
@@ -1146,7 +1151,7 @@ test('portal records that the installed Nebula worker predates the validated sou
     assert.match(event.evidence, /Nenhum worker ou transferência real/);
     assert.match(event.evidence, /não ativa em produção/);
     assert.equal(server.testAudit.passed, 5070);
-    assert.equal(server.testAudit.total, 5135);
+    assert.equal(server.testAudit.total, 5138);
 
     const dashboard = createDashboard({ ...statusData, events: [event] });
     await settleDashboard();
@@ -2019,8 +2024,8 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.match(event.evidence, /Portal independente passou 87\/87/);
     assert.match(event.evidence, /CI remoto, revisão instalada, download real e release não foram executados/);
     assert.equal(server.testAudit.passed, 5070);
-    assert.equal(server.testAudit.total, 5135);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.total, 5138);
+    assert.equal(server.testAudit.skipped, 68);
     assert.equal(server.testAudit.failed, 0);
     assert.match(server.testAudit.label, /NebulaPython (?:em Python 3\.10\.14:|com Python 3\.10 passou )646\/646/);
     assert.ok(mongoAudit);
@@ -2235,8 +2240,8 @@ test('latest .NET solution regression publishes exact counts without claiming in
     assert.match(event.evidence, /Portal Node 120\/120/);
     assert.match(event.evidence, /CI remoto, integrações reais.*Release permanecem pendentes/);
     assert.equal(server.testAudit.passed, 5070);
-    assert.equal(server.testAudit.total, 5135);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.total, 5138);
+    assert.equal(server.testAudit.skipped, 68);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
@@ -2577,8 +2582,8 @@ test('portal puts the latest broad .NET regression and unresolved release gates 
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.equal(server.testAudit.passed, 5070);
-    assert.equal(server.testAudit.total, 5135);
-    assert.equal(server.testAudit.skipped, 65);
+    assert.equal(server.testAudit.total, 5138);
+    assert.equal(server.testAudit.skipped, 68);
     assert.equal(server.testAudit.failed, 0);
     assert.match(event.evidence, /Integration.*não tiveram casos correspondentes/);
     assert.match(event.evidence, /24\/24 em MongoDB 8\.3\.7 descartável/);
