@@ -1982,7 +1982,7 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.equal(server.testAudit.total, 5125);
     assert.equal(server.testAudit.skipped, 65);
     assert.equal(server.testAudit.failed, 0);
-    assert.match(server.testAudit.label, /NebulaPython em Python 3\.10\.14: 646\/646/);
+    assert.match(server.testAudit.label, /NebulaPython (?:em Python 3\.10\.14:|com Python 3\.10 passou )646\/646/);
     assert.match(server.testAudit.label, /MongoDB 7\.0 do CI/);
     assert.equal(statusData.coverage.pending, 65);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
@@ -2560,7 +2560,7 @@ test('portal publishes the latest full Nebula Python branch-coverage rerun', () 
     assert.match(event.evidence, /88% \(14\.440 statements, 1\.285 misses; 2\.744 branches, 497 parciais\)/);
     assert.match(event.evidence, /não representa isoladamente cobertura de produção/);
     assert.match(event.evidence, /não comprovam transferência Telegram, Mongo externo, runtime instalado/);
-    assert.match(server.testAudit.label, /NebulaPython em Python 3\.10\.14: 646\/646/);
+    assert.match(server.testAudit.label, /NebulaPython (?:em Python 3\.10\.14:|com Python 3\.10 passou )646\/646/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 

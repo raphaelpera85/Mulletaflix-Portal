@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T22:58:27-03:00",
+  "generatedAt": "2026-10-19T23:15:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
       "skipped": 65,
         "failed": 0,
       "percent": 98.7,
-      "label": "Resultado mais recente, 19/10/2026 22:58: solution .NET Release (FullyQualifiedName!~Integration) passou 5.060 e ignorou 65, 0 falhas em 5.125 resultados; Implementations 1.508/64; Server.Tests 73/1. Providers 793 no gate filtrado (806/806 na execução focada separada); Jellyfin.Api.Tests 753/753; NebulaPython 3.10 646/646 na execução separada. Dois projetos Integration tiveram 0 casos selecionados pelo filtro. Foram emitidos avisos XML/StyleCop/analyzers, sem impedir exit code 0. Ignorados e projetos sem casos selecionados não contam como validação integrada. HTTP/MariaDB real, Mongo opt-in, runner CI remoto, runtime instalado, instalação, smoke e download/playback de produção continuam pendentes. Homologação formal permanece aberta; nenhuma release criada nesta rodada. Histórico anterior, não correspondente a esta execução: Revalidação local de 19/10/2026: solution .NET Release (filtro FullyQualifiedName!~Integration) passou 5.069 testes e ignorou 41, 0 falhas em 5.110 resultados; integrações ficaram excluídas e ignorados não contam como aprovação. Inclui 1.531 aprovados/40 ignorados em Server.Implementations.Tests; os 24 testes RequiresMongo passaram separadamente contra MongoDB 8.3.7 descartável local. Não equivale ao MongoDB 7.0 do CI. MariaDB Linux ainda não executado: WSL não instalado e sem daemon/cliente MariaDB local. NebulaPython em Python 3.10.14: 646/646 aprovados em 98,15 s; cobertura combinada com branches 88% (14.440 statements, 1.285 misses; 2.744 branches, 497 parciais; inclui testes). Módulos: strm_downloader.py 77%, feed_ftp.py 76%, main.py 73%, ftp/pathio.py 80%, supabase_sync.py 89%. Frontend web: 418/418 testes, TypeScript e build de produção aprovados; build gera avisos existentes de bundling. Contratos CI Mongo/MariaDB/empacotamento passaram 3/3; os quatro scripts PowerShell de empacotamento passaram localmente 4/4. Runner Windows remoto, collation Users em MariaDB Linux e CI remota seguem pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação (runner não iniciou por bloqueio de cobrança reportado pelo GitHub). Instalação, smoke test e homologação formal continuam pendentes."
+      "label": "Revalidação local, 19/10/2026 23:15: solution .NET Release (FullyQualifiedName!~Integration) passou 5.060, ignorou 65, 0 falhas em 5.125 resultados agregados dos 17 TRX; Server.Implementations 1.508/64 ignorados, Server.Tests 73/1 ignorado, Jellyfin.Api.Tests 753/753, Providers 793/793 no gate filtrado. O subconjunto focal de autorização/exclusão de imagens de perfil passou 51/51 e está incluído na suíte API. NebulaPython com Python 3.10 passou 646/646 em 45,77 s. Dois projetos Integration não selecionaram testes pelo filtro; integração HTTP/MariaDB, casos Mongo opt-in, CI remota, runtime instalado, instalação/smoke e download/playback de produção permanecem pendentes. Avisos XML/StyleCop/analyzers não impediram o exit code 0. Homologação formal segue aberta; nenhuma release foi criada. Histórico detalhado de 19/10, não correspondente a esta execução: solution .NET Release (filtro FullyQualifiedName!~Integration) passou 5.069 testes e ignorou 41, 0 falhas em 5.110 resultados; integrações ficaram excluídas. Inclui 1.531 aprovados/40 ignorados em Server.Implementations.Tests; 24 testes RequiresMongo passaram contra MongoDB 8.3.7 descartável local, não equivale ao MongoDB 7.0 do CI. MariaDB Linux não foi executado. NebulaPython 646/646 em 98,15 s; cobertura combinada com branches 88%. Frontend web 418/418, TypeScript e build de produção aprovados. Contratos CI Mongo/MariaDB/empacotamento passaram 3/3; quatro scripts PowerShell de empacotamento passaram localmente 4/4. Runner Windows remoto, MariaDB Linux e CI remota pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação por bloqueio de cobrança do runner. Instalação, smoke e homologação formal continuam pendentes."
       }
     },
     {
@@ -7736,6 +7736,21 @@
       "startedAt": "2026-10-19T22:40:00-03:00",
       "updatedAt": "2026-10-19T22:58:27-03:00",
       "evidence": "Gate local integral: dotnet test MulletaFlix.sln -c Release --no-restore --filter FullyQualifiedName!~Integration concluiu exit code 0; agregação dos 17 TRX: 5.060 aprovados, 65 ignorados, 0 falhas (5.125). Implementations.Tests 1.508 aprovados/64 ignorados; Server.Tests 73/1; API 753 aprovados; Providers 793 no gate filtrado (a execução focada separada passou 806/806). Dois projetos Integration tiveram zero testes selecionados. NebulaPython Python 3.10 separado 646/646. Houve avisos XML/StyleCop/analyzers. Integração real HTTP/MariaDB, Mongo opt-in, runner remoto, runtime instalado, instalação/smoke e mídia em produção permanecem pendentes. Nenhuma release criada; homologação global aberta."
+    },
+    {
+      "id": "server-main-suite-revalidation-2026-10-19-2315",
+      "title": "Revalidação do gate integral e regressões de avatar",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Solução .NET Release, regressões focalizadas de perfil e NebulaPython 3.10",
+      "location": "MulletaFlix-master/tests; MulletaFlix-master/Tools/NebulaPython/tests; MulletaFlix-master/docs/avatar-admin-authorization.md",
+      "scope": "Reexecutar as suítes locais após as alterações atuais, confirmar a cobertura de autorização/exclusão de perfil e manter explícitos os limites da homologação.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T23:07:00-03:00",
+      "updatedAt": "2026-10-19T23:15:00-03:00",
+      "evidence": "dotnet test MulletaFlix.sln -c Release --no-restore --filter FullyQualifiedName!~Integration terminou exit code 0; 17 TRX agregados: 5.060 aprovados, 65 ignorados, 0 falhas de 5.125. Server.Implementations.Tests 1.508 aprovados/64 ignorados; Server.Tests 73/1; API 753/753; Providers 793/793 no gate filtrado. Os testes focalizados FileSystemHelperPathSafetyTests, ImageControllerDeleteUserImageTests, ImageControllerUserImageAuthorizationTests e AvatarControllerUserAvatarAuthorizationTests passaram 51/51 (subconjunto da API). NebulaPython via py -3.10 -m pytest -q passou 646/646 em 45,77 s. Os dois projetos Integration não tiveram testes selecionados; integrações HTTP/MariaDB e Mongo opt-in não foram executadas. Ainda falta teste de corrida TOCTOU, ACL efetiva em sistemas alvo, runner remoto e validação instalada/produção; não foi criada release."
     }
   ]
 }
