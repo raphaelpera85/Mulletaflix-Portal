@@ -16,7 +16,8 @@ test('portal publishes the Nebula dependency drift guard and remaining gates', a
     assert.match(event.evidence, /suíte completa isolada Python 3\.10 658\/658/);
     assert.match(event.evidence, /compara 53 pins ativos antes de importar/);
     assert.match(event.evidence, /tenta reparar pelo lock antes de probes\/imports/);
-    assert.match(event.evidence, /Não houve instalação limpa Windows, Linux nativo, CI remota executável/);
+    assert.match(event.evidence, /Instalação real hashada do lock em venv isolado Windows Python 3\.12\.14 passou/);
+    assert.match(event.evidence, /Linux nativo e CI remota executável, consulta\/alteração de produção, release ou deploy do servidor não ocorreram/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
