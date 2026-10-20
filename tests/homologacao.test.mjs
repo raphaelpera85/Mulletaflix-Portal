@@ -27,6 +27,25 @@ test('portal publishes Nebula STRM test cancellation warning cleanup with remain
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: cancelamento responsivo nos testes do gerador STRM/);
 });
 
+test('portal publishes Nebula playback-cache cancellation test result and remaining warning debt', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-cache-cancellation-tests-2026-10-20-1947');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /NebulaPlaybackCacheTests passou 59\/59/);
+    assert.match(event.evidence, /Build Release do projeto de testes: 388 avisos, 0 erros/);
+    assert.match(event.evidence, /Sete locais xUnit1051/);
+    assert.match(event.evidence, /54 outros locais xUnit1051 permanecem neste arquivo/);
+    assert.match(event.evidence, /Nenhum código runtime, instalação, produção ou release foi alterado/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: testes de lease e heartbeat do cache respeitam cancelamento/);
+});
+
 test('portal publishes current GitHub Actions billing blocker separately from test outcomes', async () => {
     const event = statusData.events.find(item => item.id === 'server-github-actions-billing-runner-blocker-recheck-2026-10-20-0922');
 
@@ -654,7 +673,7 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-nebula-strm-test-cancellation-2026-10-20-1045');
+    const newestEvent = statusData.events.find(event => event.id === 'server-nebula-cache-cancellation-tests-2026-10-20-1947');
     const dashboard = createDashboard();
     await settleDashboard();
 
@@ -662,11 +681,9 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'completed');
-    assert.match(newestEvent.evidence, /TestContext\.Current\.CancellationToken/);
+    assert.match(newestEvent.evidence, /NebulaPlaybackCacheTests passou 59\/59/);
     assert.equal(statusData.events[0].id, newestEvent.id);
-    assert.equal(statusData.events[1].id, 'server-api-avatarfilestore-rerun-2026-10-20-0942');
-    assert.ok(renderedEvents.indexOf(newestEvent.title)
-        < renderedEvents.indexOf('API do servidor: revalidação GetAvatar e armazenamento por handle'));
+    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
