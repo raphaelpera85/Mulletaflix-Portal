@@ -6,21 +6,21 @@ import vm from 'node:vm';
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 
-test('portal publishes the Nebula hashed dependency-lock evidence and remaining gates', async () => {
+test('portal publishes the Nebula dependency drift guard and remaining gates', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-hashed-lock-2026-10-20-0804');
 
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
-    assert.match(event.evidence, /`requirements\.lock` universal contém 61 distribuições e hashes/);
-    assert.match(event.evidence, /suíte Nebula passou 652\/652/);
-    assert.match(event.evidence, /não detecta versões antigas que seguem importáveis/);
-    assert.match(event.evidence, /execução de instalador Linux\/CI não ocorreu/);
+    assert.match(event.evidence, /`requirements\.lock` universal fixa 61 distribuições com hashes/);
+    assert.match(event.evidence, /suíte completa isolada Python 3\.10 657\/657/);
+    assert.match(event.evidence, /compara 53 pins ativos antes de importar/);
+    assert.match(event.evidence, /Não houve instalação limpa Windows, Linux nativo, CI remota executável/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
     await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: lock hash-checked integrado ao fluxo Windows\/Linux/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: lock hash-checked e detecção de drift validados/);
 });
 
 test('image provider suite and real-media validation limit are published', async () => {

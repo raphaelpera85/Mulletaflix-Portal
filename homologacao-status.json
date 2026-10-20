@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T08:05:24-03:00",
+  "generatedAt": "2026-10-20T08:18:42-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8024,18 +8024,18 @@
     },
     {
       "id": "server-nebula-hashed-lock-2026-10-20-0804",
-      "title": "Nebula: lock hash-checked integrado ao fluxo Windows/Linux; homologação aberta",
+      "title": "Nebula: lock hash-checked e detecção de drift validados; instalação real pendente",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Suíte Nebula com requirements.lock em uv/Python 3.10; dry-run pip Python 3.10/3.12/3.14; contratos de release e packaging",
+      "local": "Suíte Nebula isolada Python 3.10; lock-only Python 3.12/3.14; pip-audit/OSV; contratos de release e packaging",
       "location": "MulletaFlix-master/Tools/NebulaPython, MulletaFlix-packaging-master, tools/release e workflows CI/release",
-      "scope": "Criar caminho hash-checked reproduzível para o runtime Nebula em Windows e Linux, validar contrato de empacotamento e atualizar a evidência sem alterar instalação/produção nem criar release.",
+      "scope": "Fixar dependências Nebula com hashes, detectar drift de versões antes dos imports e validar reparo pelo lock sem alterar runtime global/produção nem criar release.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-20T07:46:00-03:00",
-      "updatedAt": "2026-10-20T08:05:24-03:00",
-      "evidence": "`requirements.in` contém as faixas runtime; `requirements.txt` inclui essa fonte; `requirements.lock` universal contém 61 distribuições e hashes. Instaladores Windows e Linux usam pip `--require-hashes`; o empacotamento inclui os três arquivos e verifica SHA-256 do lock staged; CI/release consome o lock. O guard segue includes -r/--requirement e instala o lock se módulo faltar/falhar import. Em ambiente uv isolado Python 3.10, cryptography 50.0.2 veio do lock e a suíte Nebula passou 652/652. Dry-runs com hashes passaram em Python 3.10, 3.12 e 3.14; pip-audit/OSV não encontrou vulnerabilidades conhecidas no snapshot. Node 5/5, teste/harness de integridade Windows, sintaxe bash e cópia local do pacote Linux passaram. A execução de instalador Linux/CI não ocorreu; o guard não detecta versões antigas que seguem importáveis; Python global permaneceu 45.0.7 e produção não foi consultada nem alterada. Nenhuma instalação, serviço, release ou deploy do servidor foi executado. Homologação formal continua aberta."
+      "updatedAt": "2026-10-20T08:18:42-03:00",
+      "evidence": "`requirements.in` contém as faixas runtime e declara `packaging` diretamente; `requirements.txt` inclui essa fonte; `requirements.lock` universal fixa 61 distribuições com hashes. Instaladores Windows/Linux usam `--require-hashes`; o pacote verifica SHA-256 staged; CI/release consome o lock. O guard compara 53 pins ativos antes de importar, evita carregar módulos antigos, repara pelo lock/hash e revalida versões/imports, falhando fechado se persistir drift. Testes do guard 27/27; suíte completa isolada Python 3.10 657/657, 53 pins e zero drift; lock-only Python 3.12/3.14 também zero drift; dry-run hash 3.10/3.12/3.14 passou. `pip-audit`/OSV não encontrou vulnerabilidades conhecidas no snapshot. Contratos Node focalizados 5/5; harness PowerShell, `bash -n` e cópia de pacote Linux passaram. O reparo pip foi simulado por testes; Python global lido anteriormente mantinha cryptography 45.0.7 ante 50.0.2 esperada e não foi alterado. Não houve instalação limpa Windows, Linux nativo, CI remota executável, consulta/alteração de produção, release ou deploy do servidor. Homologação formal segue aberta."
     }
   ]
 }
