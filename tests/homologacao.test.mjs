@@ -246,7 +246,7 @@ test('Nebula file restore keyset is published with partial-retry and Mongo limit
     assert.match(dashboard.getElement('event-list').innerHTML, /Supabase: restore do catálogo Nebula por cursor/);
 });
 
-test('avatar concurrency and legacy FTP restore audit remains honest about Mongo gate', async () => {
+test('avatar concurrency and legacy FTP restore audit remains in history as newer events arrive', async () => {
     const event = statusData.events.find(item => item.id === 'server-avatar-concurrency-legacy-ftp-restore-2026-10-19-0901');
 
     assert.ok(event);
@@ -264,7 +264,8 @@ test('avatar concurrency and legacy FTP restore audit remains honest about Mongo
 
     const dashboard = createDashboard();
     await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /Auditoria: serialização GetAvatar e preservação de ACL no restore FTP legado/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /Reauditoria GetAvatar: validação por caminho não fecha corrida TOCTOU/);
+    assert.ok(statusData.events.some(item => item.id === event.id), 'The older audit must remain in the published event history.');
 });
 
 test('Intro Skipper EF regression is published as source-validated and production-pending', () => {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T23:58:30-03:00",
+  "generatedAt": "2026-10-20T00:05:30-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7766,6 +7766,21 @@
       "startedAt": "2026-10-19T23:35:00-03:00",
       "updatedAt": "2026-10-19T23:58:30-03:00",
       "evidence": "A implementação existente FileSystemHelper.IsPathWithinRoot já rejeita componentes reparse; o teste existente cobria symlink em diretório pai. Acrescentei dois casos API para symlink no arquivo final: GetAvatarPath recusa leitura e DeleteAvatar recusa exclusão, preservando link, alvo, item de catálogo e associação; 2/2 executados (sem skip). As regressões anteriores de traversal também passaram. Busca encontrou dois pontos Path.Combine(_avatarDirectory, avatar.FileName), ambos protegidos. Jellyfin.Api.Tests passou 757/757. Gate completo .NET filtrado concluiu exit 0: 5.064 aprovados, 65 ignorados, 0 falhas/5.129 em 17 TRX; Providers 793/793, Server.Tests 73/1 ignorado, Server.Implementations 1.508/64 ignorados; dois projetos Integration selecionaram zero casos. NebulaPython Python 3.10 passou 646/646 em rodada anterior, sem mudanças Python nesta sessão. Permanecem pendentes TOCTOU, ACL, HTTP/MariaDB integrado, Mongo opt-in, CI remota e runtime/produção. Nenhuma release criada."
+    },
+    {
+      "id": "server-avatar-handle-toctou-audit-2026-10-20-0005",
+      "title": "Reauditoria GetAvatar: validação por caminho não fecha corrida TOCTOU",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Inspeção de consumidores e testes AvatarControllerUserAvatarAuthorizationTests Release",
+      "location": "MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Controllers/AvatarController.cs; MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; MulletaFlix-master/docs/avatar-admin-authorization.md",
+      "scope": "Confirmar se leitura/exclusão de avatar opera sobre o mesmo objeto verificado contra reparse points e registrar o risco concorrente real.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T00:00:00-03:00",
+      "updatedAt": "2026-10-20T00:05:30-03:00",
+      "evidence": "Inspeção encontrou validação por pathname seguida de File.Exists/File.OpenRead em dois endpoints e File.Delete no fluxo de exclusão; SetUserAvatarCoreAsync também reabre o caminho validado. Regressões existentes cobrem symlink/containment estável, não concorrência. dotnet test da classe AvatarControllerUserAvatarAuthorizationTests em Release: 32 aprovados, 0 ignorados/falhas. O mecanismo handle-relative multiplataforma e testes concorrentes ainda não foram implementados. A documentação Microsoft sobre FILE_FLAG_OPEN_REPARSE_POINT trata o objeto final no Windows, não resolve ancestrais nem implementação Linux/macOS. Nenhuma mudança runtime ou release; homologação permanece aberta."
     }
   ]
 }
