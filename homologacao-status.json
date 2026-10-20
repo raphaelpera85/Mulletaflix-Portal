@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T10:27:41-03:00",
+  "generatedAt": "2026-10-20T10:45:32-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-strm-test-cancellation-2026-10-20-1045",
+      "title": "Nebula: cancelamento responsivo nos testes do gerador STRM",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; Jellyfin.Server.Implementations.Tests",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaStrmGeneratorTests.cs",
+      "scope": "Aplicar o token de cancelamento do runner às operações assíncronas do teste sem alterar o cenário de cancelamento explícito.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T10:30:00-03:00",
+      "updatedAt": "2026-10-20T10:45:32-03:00",
+      "evidence": "As três operações assíncronas do cenário de gravação parcial agora usam `TestContext.Current.CancellationToken`; o caso separado ainda usa seu `CancellationTokenSource` explicitamente cancelado. Build Release do projeto de testes: 395 avisos, 0 erros (398 antes); `NebulaStrmGeneratorTests` passou 2/2. Inventário prévio: 303 locais únicos `xUnit1051`, 193 em Nebula; este recorte removeu três. Nenhuma classe runtime, API, dependência ou fluxo estrutural mudou. Outros avisos/analisadores continuam pendentes. Sem runtime, instalação, produção ou release alterados."
+    },
     {
       "id": "server-api-avatarfilestore-rerun-2026-10-20-0942",
       "title": "API do servidor: revalidação GetAvatar e armazenamento por handle",

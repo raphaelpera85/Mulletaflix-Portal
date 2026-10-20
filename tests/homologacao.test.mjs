@@ -7,6 +7,26 @@ const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json',
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal publishes Nebula STRM test cancellation warning cleanup with remaining analyzer debt', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-strm-test-cancellation-2026-10-20-1045');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /TestContext\.Current\.CancellationToken/);
+    assert.match(event.evidence, /NebulaStrmGeneratorTests` passou 2\/2/);
+    assert.match(event.evidence, /395 avisos, 0 erros \(398 antes\)/);
+    assert.match(event.evidence, /303 locais únicos `xUnit1051`, 193 em Nebula/);
+    assert.match(event.evidence, /Outros avisos\/analisadores continuam pendentes/);
+    assert.match(event.evidence, /Sem runtime, instalação, produção ou release alterados/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: cancelamento responsivo nos testes do gerador STRM/);
+});
+
 test('portal publishes current GitHub Actions billing blocker separately from test outcomes', async () => {
     const event = statusData.events.find(item => item.id === 'server-github-actions-billing-runner-blocker-recheck-2026-10-20-0922');
 
@@ -634,20 +654,19 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-github-actions-billing-runner-blocker-recheck-2026-10-20-0922');
+    const newestEvent = statusData.events.find(event => event.id === 'server-nebula-strm-test-cancellation-2026-10-20-1045');
     const dashboard = createDashboard();
     await settleDashboard();
 
     assert.ok(newestEvent);
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
-    assert.equal(newestEvent.status, 'blocked');
-    assert.match(newestEvent.evidence, /CI run 441/);
-    assert.match(newestEvent.evidence, /billing issue/);
-    assert.equal(statusData.events[0].id, 'server-api-avatarfilestore-rerun-2026-10-20-0942');
-    assert.equal(statusData.events[1].id, newestEvent.id);
-    assert.ok(renderedEvents.indexOf('API do servidor: revalidação GetAvatar e armazenamento por handle')
-        < renderedEvents.indexOf(newestEvent.title));
+    assert.equal(newestEvent.status, 'completed');
+    assert.match(newestEvent.evidence, /TestContext\.Current\.CancellationToken/);
+    assert.equal(statusData.events[0].id, newestEvent.id);
+    assert.equal(statusData.events[1].id, 'server-api-avatarfilestore-rerun-2026-10-20-0942');
+    assert.ok(renderedEvents.indexOf(newestEvent.title)
+        < renderedEvents.indexOf('API do servidor: revalidação GetAvatar e armazenamento por handle'));
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
@@ -2694,8 +2713,8 @@ test('portal publishes the Nebula first-STRM integration test and its real-servi
     assert.match(event.evidence, /Não comprova Mongo\/HTTP reais, throughput, instalação ou produção/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: teste do worker pronto até o primeiro STRM enfileirado/);
-    assert.equal(statusData.events[5].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
-    assert.equal(statusData.events[6].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
+    assert.ok(statusData.events.findIndex(item => item.id === 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900')
+        < statusData.events.findIndex(item => item.id === 'server-nebula-mongo-integration-tests-2026-10-19-1840'));
 });
 
 test('portal reports full Nebula completed-destination fallback coverage with Mongo limits', async () => {
@@ -2754,11 +2773,12 @@ test('portal publishes the 24 real Mongo integration passes without equating Mon
     assert.match(event.evidence, /Não equivale ao MongoDB 7\.0 do CI/);
     assert.match(event.evidence, /Mongo em 27017 não foi acessado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
-    assert.equal(statusData.events[6].id, event.id);
+    assert.ok(statusData.events.findIndex(item => item.id === event.id)
+        < statusData.events.findIndex(item => item.id === 'server-nebula-first-strm-end-to-end-test-2026-10-19-1701'));
 });
 
 test('portal puts the latest broad .NET regression and unresolved release gates first', async () => {
-    const event = statusData.events[5];
+    const event = statusData.events.find(item => item.id === 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.equal(event.id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
@@ -2778,7 +2798,7 @@ test('portal puts the latest broad .NET regression and unresolved release gates 
 });
 
 test('portal publishes the latest full Nebula Python branch-coverage rerun', () => {
-    const event = statusData.events[4];
+    const event = statusData.events.find(item => item.id === 'server-nebula-python-full-suite-2026-10-19-1908');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.equal(event.id, 'server-nebula-python-full-suite-2026-10-19-1908');
@@ -2792,7 +2812,8 @@ test('portal publishes the latest full Nebula Python branch-coverage rerun', () 
 });
 
 test('portal distinguishes GitHub Actions runner allocation failures from test failures', () => {
-    const event = statusData.events[3];
+    const event = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912');
+    const pythonEvent = statusData.events.find(item => item.id === 'server-nebula-python-full-suite-2026-10-19-1908');
     const dashboard = createDashboard();
 
     assert.equal(event.id, 'server-github-actions-runner-allocation-blocked-2026-10-19-1912');
@@ -2803,7 +2824,8 @@ test('portal distinguishes GitHub Actions runner allocation failures from test f
     assert.match(event.evidence, /account is locked due to a billing issue/);
     assert.match(event.evidence, /anotação do primeiro job reporta o mesmo bloqueio de faturamento/);
     assert.match(event.evidence, /continua v12\.1\.21/);
-    assert.equal(statusData.events[4].id, 'server-nebula-python-full-suite-2026-10-19-1908');
+    assert.ok(statusData.events.findIndex(item => item.id === event.id)
+        < statusData.events.findIndex(item => item.id === pythonEvent.id));
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     return settleDashboard().then(() => {
