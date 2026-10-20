@@ -30,6 +30,26 @@ test('profile cleanup hardening reports path-safety fixes and pending MariaDB ga
     assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar limpa arquivo nativo anterior após substituição segura/);
 });
 
+test('profile image delete containment publishes full API suite and residual TOCTOU risk', async () => {
+    const event = statusData.events.find(item => item.id === 'server-profile-image-delete-containment-2026-10-19-2129');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /DeleteUserImage recusa caminho externo/);
+    assert.match(event.evidence, /RemoveUserAvatarAsync retém arquivo externo/);
+    assert.match(event.evidence, /CleanOrphanedProfileImages ignora pasta de usuário symlinkada/);
+    assert.match(event.evidence, /30\/30 testes focados Release/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests completa 752\/752/);
+    assert.match(event.evidence, /TOCTOU permanece/);
+    assert.match(event.evidence, /Sem MariaDB integrada, runtime instalado, produção ou Release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /preservam arquivos fora da pasta do usuário/);
+});
+
 test('Nebula CLI Mongo database fallback is recorded with local test limits', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-mongo-database-cli-fallback-2026-10-19-1817');
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T21:11:00-03:00",
+  "generatedAt": "2026-10-19T21:29:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7631,6 +7631,21 @@
       "startedAt": "2026-10-19T20:43:00-03:00",
       "updatedAt": "2026-10-19T21:11:00-03:00",
       "evidence": "Revisão adversarial achou casing diferente no Windows que podia apagar o arquivo ativo e containment lexical que aceitava reparse points. Corrigido com FileSystemHelper.PathsEqual (semântica de case do host) e IsPathWithinRoot (containment relativo que rejeita symlinks/junctions), usado por ImageController e GetAvatar. Testes cobrem symlink estável, sibling prefix, semântica case, rollback do arquivo antigo e caminho case-only no Windows. Focal Release 45/45; Jellyfin.Api.Tests 749/749. Server Integration 3 aprovados, 142 ignorados (145 total), sem MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING. Investigação documental confirmou opções de exclusão por handle: CreateFileW/SetFileInformationByHandle no Windows e openat/O_NOFOLLOW/unlinkat no Linux; nenhuma foi implementada nesta etapa. TOCTOU permanece; também falta comprovar ACL/estabilidade do diretório pai e política macOS. MariaDB, implementação nativa, testes concorrentes, runtime e produção seguem pendentes. Sem release; manter homologação in_progress."
+    },
+    {
+      "id": "server-profile-image-delete-containment-2026-10-19-2129",
+      "title": "GetAvatar e API nativa preservam arquivos fora da pasta do usuário",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "ImageControllerDeleteUserImageTests; AvatarControllerUserAvatarAuthorizationTests; Jellyfin.Api.Tests Release",
+      "location": "MulletaFlix-master/Jellyfin.Api/Controllers/ImageController.cs; MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; testes de controllers",
+      "scope": "Impedir que exclusão de foto de perfil nativa, remoção GetAvatar e limpeza de órfãos apaguem arquivos fora da pasta gerenciada do usuário.",
+      "status": "in_progress",
+      "progressPercent": 90,
+      "startedAt": "2026-10-19T21:12:00-03:00",
+      "updatedAt": "2026-10-19T21:29:00-03:00",
+      "evidence": "RED/GREEN confirmado nos três fluxos: DeleteUserImage recusa caminho externo sem apagar arquivo ou limpar referência; RemoveUserAvatarAsync retém arquivo externo ao remover a associação; CleanOrphanedProfileImages ignora pasta de usuário symlinkada e escapes. 30/30 testes focados Release e Jellyfin.Api.Tests completa 752/752, zero falhas/ignorados. Dois pontos irmãos de exclusão além da ação nativa foram examinados e guardados; SetUserAvatarAsync e PostUserImage já restringiam cleanup. TOCTOU permanece entre validação por caminho e exclusão: handle/descritor, ACL e teste concorrente Windows/Linux ainda faltam; política macOS não verificada. Sem MariaDB integrada, runtime instalado, produção ou Release."
     }
   ]
 }
