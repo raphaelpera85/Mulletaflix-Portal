@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T09:31:29-03:00",
+  "generatedAt": "2026-10-20T09:35:02-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3015,8 +3015,8 @@
       "status": "blocked",
       "progressPercent": null,
       "startedAt": "2026-10-20T09:18:00-03:00",
-      "updatedAt": "2026-10-20T09:31:29-03:00",
-      "evidence": "Reconsulta read-only à API pública: CI run 441 (`39037932557`, SHA `17d766ac554bd2093f1201be1d0969212bcf3a9c`) e Release v12.1.24 (`39212993752`, SHA `c449fedf8af4e058a1ceeacccc3cdfdb8432aaa7`) aparecem como completed/failure, mas sem steps executados e sem runner atribuído. A anotação oficial do job `Validate source tag before packaging` informa: `The job was not started because your account is locked due to a billing issue.` Build Linux e publicação foram skipped; logo a execução não validou nem refutou o código/testes. Revalidação local relacionada: 22/22 contratos Node de CI/release passaram, cobrindo seleção MariaDB Linux case-sensitive, seleção completa Mongo, integridade do packaging Windows/Linux e transporte/armazenamento seguro do token DuckDNS; isso valida contratos no checkout, não executa runners ou workflows remotos. O estado repete o bloqueio já observado em 19/10. `gh` local não está autenticado; a API pública foi suficiente para confirmar a causa. O proprietário da conta precisa resolver a pendência de cobrança e então repetir os gates. A release pública continua v12.1.21. Nenhum runtime, produção ou release foi alterado nesta revalidação."
+      "updatedAt": "2026-10-20T09:35:02-03:00",
+      "evidence": "Reconsulta read-only à API pública: CI run 441 (`39037932557`, SHA `17d766ac554bd2093f1201be1d0969212bcf3a9c`) e Release v12.1.24 (`39212993752`, SHA `c449fedf8af4e058a1ceeacccc3cdfdb8432aaa7`) aparecem como completed/failure, mas sem steps executados e sem runner atribuído. A anotação oficial do job `Validate source tag before packaging` informa: `The job was not started because your account is locked due to a billing issue.` Build Linux e publicação foram skipped; logo a execução não validou nem refutou o código/testes. Revalidação local relacionada: 22/22 contratos Node de CI/release passaram, cobrindo seleção MariaDB Linux case-sensitive, seleção completa Mongo, integridade do packaging Windows/Linux e transporte/armazenamento seguro do token DuckDNS. Oito harnesses PowerShell de packaging/segurança também passaram (8/8) no Windows; uma primeira invocação do teste DuckDNS usou caminho de fixture incorreto e não executou, e a chamada corrigida passou. Isso verifica contratos e harnesses locais, não executa runners/workflows remotos, Linux nativo ou instalação elevada em VM limpa. O estado repete o bloqueio já observado em 19/10. `gh` local não está autenticado; a API pública foi suficiente para confirmar a causa. O proprietário da conta precisa resolver a pendência de cobrança e então repetir os gates. A release pública continua v12.1.21. Nenhum runtime, produção ou release foi alterado nesta revalidação."
     },
     {
       "id": "server-nebula-venv-guard-revalidation-2026-10-20-0903",
