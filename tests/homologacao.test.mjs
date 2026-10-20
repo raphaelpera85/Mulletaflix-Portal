@@ -16,7 +16,11 @@ test('profile cleanup hardening reports path-safety fixes and pending MariaDB ga
     assert.match(event.evidence, /Focal Release 45\/45/);
     assert.match(event.evidence, /Jellyfin\.Api\.Tests 749\/749/);
     assert.match(event.evidence, /Server Integration 3 aprovados, 142 ignorados/);
-    assert.match(event.evidence, /TOCTOU entre checagem de reparse point e exclusão/);
+    assert.match(event.evidence, /TOCTOU permanece/);
+    assert.match(event.evidence, /CreateFileW\/SetFileInformationByHandle no Windows/);
+    assert.match(event.evidence, /openat\/O_NOFOLLOW\/unlinkat no Linux/);
+    assert.match(event.evidence, /nenhuma foi implementada nesta etapa/);
+    assert.match(event.evidence, /política macOS/);
     assert.match(event.evidence, /manter homologação in_progress/);
     assert.match(event.evidence, /Sem release; manter homologação in_progress/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
