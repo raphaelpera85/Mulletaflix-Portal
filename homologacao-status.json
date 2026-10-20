@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T19:55:50-03:00",
+  "generatedAt": "2026-10-20T19:58:36-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3014,8 +3014,8 @@
       "scope": "Passar o token de cancelamento do runner às operações assíncronas nos testes do gerador STRM e do cache Nebula.",
       "status": "completed",
       "progressPercent": 100,
-      "updatedAt": "2026-10-20T19:55:50-03:00",
-      "evidence": "Rebuild Release do projeto de testes terminou com exit 0. NebulaPlaybackCacheTests + NebulaStrmGeneratorTests passaram 61/61, sem ignorados/falhas. Os 54 avisos xUnit1051 remanescentes no arquivo do cache foram eliminados; agora o arquivo tem zero avisos xUnit1051. A dívida de analisadores nos demais testes do projeto permanece. Nenhum código runtime, instalação, produção ou release foi alterado."
+      "updatedAt": "2026-10-20T19:58:36-03:00",
+      "evidence": "Rebuild Release do projeto de testes terminou com exit 0. NebulaPlaybackCacheTests + NebulaStrmGeneratorTests passaram 61/61, sem ignorados/falhas. O arquivo do cache tem zero avisos xUnit1051. Inventário do output: 478 registros de aviso correspondem a 239 localizações únicas xUnit1051, 129 em testes Nebula; a dívida nos demais testes permanece. Nenhum código runtime, instalação, produção ou release foi alterado."
     },
     {
       "id": "server-nebula-strm-test-cancellation-2026-10-20-1045",

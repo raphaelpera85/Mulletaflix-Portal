@@ -36,9 +36,9 @@ test('portal publishes Nebula playback-cache cancellation test result and remain
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /Rebuild Release do projeto de testes terminou com exit 0/);
     assert.match(event.evidence, /NebulaPlaybackCacheTests \+ NebulaStrmGeneratorTests passaram 61\/61/);
-    assert.match(event.evidence, /54 avisos xUnit1051 remanescentes no arquivo do cache foram eliminados/);
-    assert.match(event.evidence, /zero avisos xUnit1051/);
-    assert.match(event.evidence, /dívida de analisadores nos demais testes do projeto permanece/);
+    assert.match(event.evidence, /O arquivo do cache tem zero avisos xUnit1051/);
+    assert.match(event.evidence, /478 registros de aviso correspondem a 239 localizações únicas xUnit1051, 129 em testes Nebula/);
+    assert.match(event.evidence, /dívida nos demais testes permanece/);
     assert.match(event.evidence, /Nenhum código runtime, instalação, produção ou release foi alterado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
