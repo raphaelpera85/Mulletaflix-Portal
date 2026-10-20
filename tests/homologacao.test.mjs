@@ -17,6 +17,8 @@ test('portal publishes current GitHub Actions billing blocker separately from te
     assert.match(event.evidence, /Release v12\.1\.24/);
     assert.match(event.evidence, /The job was not started because your account is locked due to a billing issue/);
     assert.match(event.evidence, /não validou nem refutou o código\/testes/);
+    assert.match(event.evidence, /22\/22 contratos Node de CI\/release passaram/);
+    assert.match(event.evidence, /não executa runners ou workflows remotos/);
     assert.match(event.evidence, /proprietário da conta precisa resolver a pendência de cobrança/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
