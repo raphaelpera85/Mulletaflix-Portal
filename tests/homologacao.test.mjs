@@ -29,6 +29,25 @@ test('portal publishes current GitHub Actions billing blocker separately from te
     assert.match(dashboard.getElement('event-list').innerHTML, /CI remoto: bloqueio de cobrança impede validar o código/);
 });
 
+test('portal records when GitHub homologation updates have not reached Vercel production', async () => {
+    const event = statusData.events.find(item => item.id === 'portal-production-deployment-stale-2026-10-20-0949');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'blocked');
+    assert.match(event.evidence, /branch remota `main`.*7a8733a6fb7f939592506d4c4b91fdfd7c7a21ac/);
+    assert.match(event.evidence, /produção `READY` somente no commit `ee3343c9f94d82a706a8664901a216e6c8095558`/);
+    assert.match(event.evidence, /zero deployments para/);
+    assert.match(event.evidence, /domínio público retorna HTTP 200/);
+    assert.match(event.evidence, /403 para o escopo conectado/);
+    assert.match(event.evidence, /Não foi iniciado deploy manual/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Portal: commits de homologação no Git ainda não chegaram à produção/);
+});
+
 test('portal publishes the Nebula dependency drift guard and remaining gates', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-hashed-lock-2026-10-20-0804');
 
