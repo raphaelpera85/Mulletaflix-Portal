@@ -33,7 +33,7 @@ test('portal records the isolated Windows helper smoke and the harness fallback 
     assert.equal(event.status, 'completed');
     assert.match(event.evidence, /selecionou Python 3\.12\.14 do venv após restringir o PATH/);
     assert.match(event.evidence, /Lock staged e fonte tiveram SHA-256 idêntico/);
-    assert.match(event.evidence, /helper usou fallback para o Python 3\.14 global/);
+    assert.match(event.evidence, /fallback para o interpretador Python 3\.14 do host, fora de venv, com user site habilitado/);
     assert.match(event.evidence, /baseline prévio integral, os demais deltas são desconhecidos/);
     assert.match(event.evidence, /Não foi executado o NSIS completo/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
