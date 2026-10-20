@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T08:39:42-03:00",
+  "generatedAt": "2026-10-20T08:41:44-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8049,7 +8049,7 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-20T08:30:00-03:00",
-      "updatedAt": "2026-10-20T08:39:42-03:00",
+      "updatedAt": "2026-10-20T08:41:44-03:00",
       "evidence": "A cópia staged de `install-python-if-missing.ps1` selecionou Python 3.12.14 do venv após restringir o PATH do processo filho, instalou `requirements.lock` com `--require-hashes` e escreveu `python.path` somente no stage. Lock staged e fonte tiveram SHA-256 idêntico (`840CBE8E758610CC365085253082291CA8510BAE96B329C599E5D95332D418CA`); `pip check` e `tools/check_deps.py` passaram; stage temporário removido após validação da raiz e ausência de reparse points. `Assert-StageIntegrity.Tests.ps1` passou quando executado diretamente. Na primeira tentativa, o PATH não foi restringido e o helper usou fallback para o interpretador Python 3.14 do host, fora de venv, com user site habilitado; o pip hashado terminou com exit 0. Evidência anterior documentava `cryptography 45.0.7`; o user site atual tem `50.0.2`, zero drift nos 53 pins e `pip check` limpo, confirmando atualização de ao menos esse pacote. Sem baseline prévio integral, os demais deltas são desconhecidos; não houve rollback/desinstalação para evitar remover dependências preexistentes ou regredir a versão segura. Isso afetou o user site do interpretador de desenvolvimento, não uma instalação/serviço do MulletaFlix. Não foi executado o NSIS completo, branch de Python ausente, instalação de serviço, VM limpa, Linux, CI executável ou produção. Homologação formal e release seguem abertas."
     }
   ]
