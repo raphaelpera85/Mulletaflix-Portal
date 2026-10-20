@@ -34,7 +34,7 @@ test('portal publishes Nebula playback-cache cancellation test result and remain
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.evidence, /NebulaPlaybackCacheTests passou 59\/59/);
+    assert.match(event.evidence, /NebulaPlaybackCacheTests passou 59\/59 e, junto com NebulaStrmGeneratorTests, 61\/61/);
     assert.match(event.evidence, /Build Release do projeto de testes: 388 avisos, 0 erros/);
     assert.match(event.evidence, /Sete locais xUnit1051/);
     assert.match(event.evidence, /54 outros locais xUnit1051 permanecem neste arquivo/);

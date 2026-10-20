@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T19:48:44-03:00",
+  "generatedAt": "2026-10-20T19:49:52-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3014,8 +3014,8 @@
       "scope": "Passar o token de cancelamento do runner às conexões TCP e leituras/escritas assíncronas dos testes de lease e heartbeat do cache.",
       "status": "completed",
       "progressPercent": 100,
-      "updatedAt": "2026-10-20T19:48:44-03:00",
-      "evidence": "NebulaPlaybackCacheTests passou 59/59, 0 ignorados/falhas. Build Release do projeto de testes: 388 avisos, 0 erros. Sete locais xUnit1051 das operações TCP/lease/heartbeat foram corrigidos; 54 outros locais xUnit1051 permanecem neste arquivo. Nenhum código runtime, instalação, produção ou release foi alterado."
+      "updatedAt": "2026-10-20T19:49:52-03:00",
+      "evidence": "NebulaPlaybackCacheTests passou 59/59 e, junto com NebulaStrmGeneratorTests, 61/61; 0 ignorados/falhas. Build Release do projeto de testes: 388 avisos, 0 erros. Sete locais xUnit1051 das operações TCP/lease/heartbeat foram corrigidos; 54 outros locais xUnit1051 permanecem neste arquivo. Nenhum código runtime, instalação, produção ou release foi alterado."
     },
     {
       "id": "server-nebula-strm-test-cancellation-2026-10-20-1045",
