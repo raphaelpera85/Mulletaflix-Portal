@@ -17,6 +17,8 @@ test('portal records Mongo-backed Nebula queue cancellation tests and remaining 
     assert.match(event.evidence, /zero erros/);
     assert.match(event.evidence, /zero avisos `xUnit1051`/);
     assert.match(event.evidence, /24 locais corrigidos/);
+    assert.match(event.evidence, /22 operações passam `TestContext\.Current\.CancellationToken`/);
+    assert.match(event.evidence, /dois `DropDatabaseAsync` em `finally` usam `CancellationToken\.None`/);
     assert.match(event.evidence, /passou 18\/18/);
     assert.match(event.evidence, /MongoDB 8\.3\.7 descartável em `127\.0\.0\.1:27099`/);
     assert.match(event.evidence, /372 registros e 186 localizações únicas/);
