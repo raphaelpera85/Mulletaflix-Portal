@@ -2639,3 +2639,22 @@ test('native profile image upload durability evidence is published with integrat
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Upload nativo de perfil preserva a imagem anterior em falhas/);
 });
+
+test('external profile snapshot rollback fix publishes RED/GREEN API evidence and remaining limits', async () => {
+    const event = statusData.events.find(item => item.id === 'server-getavatar-external-profile-rollback-2026-10-19-2142');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /RED observado/);
+    assert.match(event.evidence, /28\/28/);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests Release passou 753\/753/);
+    assert.match(event.evidence, /TOCTOU .* permanece pendente/);
+    assert.match(event.evidence, /não validam MariaDB\/HTTP integrado, runtime instalado ou produção/);
+    assert.match(event.evidence, /Nenhuma release foi criada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar: rollback não regrava arquivo de perfil externo/);
+});

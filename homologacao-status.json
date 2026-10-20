@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T21:29:00-03:00",
+  "generatedAt": "2026-10-19T21:42:02-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7646,6 +7646,21 @@
       "startedAt": "2026-10-19T21:12:00-03:00",
       "updatedAt": "2026-10-19T21:29:00-03:00",
       "evidence": "RED/GREEN confirmado nos três fluxos: DeleteUserImage recusa caminho externo sem apagar arquivo ou limpar referência; RemoveUserAvatarAsync retém arquivo externo ao remover a associação; CleanOrphanedProfileImages ignora pasta de usuário symlinkada e escapes. 30/30 testes focados Release e Jellyfin.Api.Tests completa 752/752, zero falhas/ignorados. Dois pontos irmãos de exclusão além da ação nativa foram examinados e guardados; SetUserAvatarAsync e PostUserImage já restringiam cleanup. TOCTOU permanece entre validação por caminho e exclusão: handle/descritor, ACL e teste concorrente Windows/Linux ainda faltam; política macOS não verificada. Sem MariaDB integrada, runtime instalado, produção ou Release."
+    },
+    {
+      "id": "server-getavatar-external-profile-rollback-2026-10-19-2142",
+      "title": "GetAvatar: rollback não regrava arquivo de perfil externo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "AvatarControllerUserAvatarAuthorizationTests; Jellyfin.Api.Tests Release",
+      "location": "MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; MulletaFlix-master/tests/Jellyfin.Api.Tests/Controllers/AvatarControllerUserAvatarAuthorizationTests.cs",
+      "scope": "Impedir que o rollback da seleção de avatar regrave bytes em caminho de perfil fora da pasta de configuração do usuário.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-19T21:31:00-03:00",
+      "updatedAt": "2026-10-19T21:42:02-03:00",
+      "evidence": "RED observado: SetUserAvatarAsync_WhenSaveFails_DoesNotRestoreExternalProfileFileSnapshot esperava bytes concorrentes [91, 92, 93], mas recebeu [1, 2, 3] regravados pelo rollback. Após limitar snapshots com FileSystemHelper.IsPathWithinRoot, AvatarControllerUserAvatarAuthorizationTests passou 28/28 e Jellyfin.Api.Tests Release passou 753/753, sem ignorados ou falhas. Testes usam mocks e arquivos temporários; não validam MariaDB/HTTP integrado, runtime instalado ou produção. TOCTOU entre validação do caminho e operações de arquivo permanece pendente. Nenhuma release foi criada nesta rodada."
     }
   ]
 }
