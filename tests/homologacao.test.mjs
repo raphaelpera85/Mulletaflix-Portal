@@ -2906,3 +2906,25 @@ test('latest integration-inclusive server regression publishes exact pass and sk
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: testes inclusivos executados; bancos opt-in seguem pendentes/);
 });
+
+test('isolated Mongo opt-in revalidation is published without claiming CI or production validation', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-mongo-optin-revalidation-2026-10-20-0219');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /exit code 0: 24 aprovados, 0 NotExecuted, 0 falhas/);
+    assert.match(event.evidence, /MongoDB 8\.3\.7.*127\.0\.0\.1.*27099/);
+    assert.match(event.evidence, /serviço padrão.*27017 não foi tocado/);
+    assert.match(event.evidence, /Não valida MongoDB 7\.0 do CI/);
+    assert.match(event.evidence, /execução ampla anterior continua com snapshot próprio 5\.099\/5\.334 e exit code desconhecido/);
+    assert.match(event.evidence, /remoção do diretório temporário.*permanece/);
+    assert.match(server.testAudit.label, /Suplemento separado Category=RequiresMongo passou 24\/24/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Mongo opt-in: 24\/24 passaram em instância descartável/);
+});

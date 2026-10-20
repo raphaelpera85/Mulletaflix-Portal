@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T02:07:41-03:00",
+  "generatedAt": "2026-10-20T02:21:12-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 235,
         "failed": 0,
         "percent": 95.6,
-        "label": "Atualizado em 20/10: regressão .NET Release inclusiva produziu 17 TRX completos: 5.099 aprovados, 235 NotExecuted, 0 falhas/5.334. O código final de saída do processo não foi recuperado após o fechamento da sessão de execução. Projetos Integration incluídos, exceto DramaFindsLiveIntegrationTests para evitar API externa ao vivo. Dentre os ignorados, 198 exigem MariaDB opt-in e 24 MongoDB opt-in; os demais dependem de plataforma/pré-condições locais. NebulaPython 3.10: 646/646; contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. Bancos reais, Linux/macOS, CI remota, runtime instalado e smoke de mídia seguem pendentes. Homologação formal e release seguem abertas."
+      "label": "Atualizado em 20/10: regressão .NET Release inclusiva produziu 17 TRX completos: 5.099 aprovados, 235 NotExecuted, 0 falhas/5.334. O código final de saída do processo não foi recuperado após o fechamento da sessão de execução. Projetos Integration incluídos, exceto DramaFindsLiveIntegrationTests para evitar API externa ao vivo. Dentre os ignorados, 198 exigem MariaDB opt-in e 24 MongoDB opt-in; os demais dependem de plataforma/pré-condições locais. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado; esses casos continuam registrados como NotExecuted no snapshot da execução ampla. A versão MongoDB 7.0 do CI ainda não foi validada. NebulaPython 3.10: 646/646; contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. MariaDB, CI remota, Linux/macOS, runtime instalado e smoke de mídia seguem pendentes. Homologação formal e release seguem abertas."
       }
     },
     {
@@ -7871,6 +7871,21 @@
       "startedAt": "2026-10-20T01:54:47-03:00",
       "updatedAt": "2026-10-20T02:07:41-03:00",
       "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~DramaFindsLiveIntegrationTests' --logger trx --results-directory <scratch> --verbosity quiet` produziu os 17 TRX completos, agregados pelos resultados UnitTestResult: 5.099 Passed, 235 NotExecuted, 0 Failed/5.334. O código final de saída do processo não foi recuperado depois que a sessão/handle deixou de estar disponível; não inferimos esse código apenas pelos TRX. Server Integration: 3 aprovados/142 ignorados; IntroSkipper Integration: 14/25. 198 skips pedem MariaDB descartável em loopback/porta não padrão; 24 pedem MongoDB descartável; outros skips são Linux/Unix-only, benchmark ou pré-condição local. API 763/766; Server.Tests 73/74; Server.Implementations 1.508/1.572; Providers 805/805. A classe DramaFindsLiveIntegrationTests foi excluída para evitar API externa. Strings opt-in de MariaDB/Mongo foram verificadas ausentes; nenhum banco real foi acessado. Sem alterações runtime/produção, sem CI remota, macOS, smoke de mídia ou release. Homologação integrada segue aberta."
+    },
+    {
+      "id": "server-mongo-optin-revalidation-2026-10-20-0219",
+      "title": "Mongo opt-in: 24/24 passaram em instância descartável; versão do CI pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Testes C# Category=RequiresMongo no projeto Server.Implementations.Tests",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula",
+      "scope": "Executar os 24 testes Mongo marcados RequiresMongo em daemon isolado na porta fixa de testes, sem acessar ou alterar o serviço MongoDB existente.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T02:17:30-03:00",
+      "updatedAt": "2026-10-20T02:21:12-03:00",
+      "evidence": "`dotnet test MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter 'Category=RequiresMongo' --logger trx --results-directory <scratch> --verbosity quiet` concluiu com exit code 0: 24 aprovados, 0 NotExecuted, 0 falhas. O daemon MongoDB 8.3.7 usou `dbPath` temporário exclusivo, bind `127.0.0.1` e porta `27099`; a conexão de teste é fixada pelo helper a esse alvo e os testes criam nomes de banco aleatórios. O serviço padrão do servidor na porta 27017 não foi tocado. O processo descartável foi encerrado e a porta 27099 ficou fechada; remoção do diretório temporário de dados foi bloqueada pela política do executor e esse diretório permanece. Não valida MongoDB 7.0 do CI, Actions remoto, produção ou runtime. A execução ampla anterior continua com snapshot próprio 5.099/5.334 e exit code desconhecido; os 24 aprovados são suplemento, não alteração retroativa dos TRX amplos. Nenhuma mudança de código runtime ou release."
     }
   ]
 }
