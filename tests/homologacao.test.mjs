@@ -34,13 +34,14 @@ test('portal records when GitHub homologation updates have not reached Vercel pr
 
     assert.ok(event);
     assert.equal(event.front, 'server');
-    assert.equal(event.status, 'blocked');
-    assert.match(event.evidence, /branch remota `main`.*7a8733a6fb7f939592506d4c4b91fdfd7c7a21ac/);
-    assert.match(event.evidence, /produção `READY` somente no commit `ee3343c9f94d82a706a8664901a216e6c8095558`/);
-    assert.match(event.evidence, /zero deployments para/);
-    assert.match(event.evidence, /domínio público retorna HTTP 200/);
-    assert.match(event.evidence, /403 para o escopo conectado/);
-    assert.match(event.evidence, /Não foi iniciado deploy manual/);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /sem deployment Vercel para `origin\/main` em `7a8733a6fb7f939592506d4c4b91fdfd7c7a21ac`/);
+    assert.match(event.evidence, /produção `READY` `dpl_BVW6TPbGPqqDVgb4tprqSHTSDvz9`/);
+    assert.match(event.evidence, /commit `2f292cc4cd1ddb184cb9e303b268fb31d8a387aa`/);
+    assert.match(event.evidence, /domínio público respondeu HTTP 200/);
+    assert.match(event.evidence, /contém este evento/);
+    assert.match(event.evidence, /sem deploy manual/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
