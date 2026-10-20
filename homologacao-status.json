@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T23:15:00-03:00",
+  "generatedAt": "2026-10-19T23:47:57-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
       },
       "testAudit": {
-      "passed": 5060,
-      "total": 5125,
-      "skipped": 65,
+        "passed": 5062,
+        "total": 5127,
+        "skipped": 65,
         "failed": 0,
       "percent": 98.7,
-      "label": "Revalidação local, 19/10/2026 23:15: solution .NET Release (FullyQualifiedName!~Integration) passou 5.060, ignorou 65, 0 falhas em 5.125 resultados agregados dos 17 TRX; Server.Implementations 1.508/64 ignorados, Server.Tests 73/1 ignorado, Jellyfin.Api.Tests 753/753, Providers 793/793 no gate filtrado. O subconjunto focal de autorização/exclusão de imagens de perfil passou 51/51 e está incluído na suíte API. NebulaPython com Python 3.10 passou 646/646 em 45,77 s. Dois projetos Integration não selecionaram testes pelo filtro; integração HTTP/MariaDB, casos Mongo opt-in, CI remota, runtime instalado, instalação/smoke e download/playback de produção permanecem pendentes. Avisos XML/StyleCop/analyzers não impediram o exit code 0. Homologação formal segue aberta; nenhuma release foi criada. Histórico detalhado de 19/10, não correspondente a esta execução: solution .NET Release (filtro FullyQualifiedName!~Integration) passou 5.069 testes e ignorou 41, 0 falhas em 5.110 resultados; integrações ficaram excluídas. Inclui 1.531 aprovados/40 ignorados em Server.Implementations.Tests; 24 testes RequiresMongo passaram contra MongoDB 8.3.7 descartável local, não equivale ao MongoDB 7.0 do CI. MariaDB Linux não foi executado. NebulaPython 646/646 em 98,15 s; cobertura combinada com branches 88%. Frontend web 418/418, TypeScript e build de produção aprovados. Contratos CI Mongo/MariaDB/empacotamento passaram 3/3; quatro scripts PowerShell de empacotamento passaram localmente 4/4. Runner Windows remoto, MariaDB Linux e CI remota pendentes. Tag v12.1.24 existe, mas não há GitHub Release; run 39212993752 não gerou artefatos/publicação por bloqueio de cobrança do runner. Instalação, smoke e homologação formal continuam pendentes."
+      "label": "Revalidação local, 19/10/2026 23:47: solution .NET Release (FullyQualifiedName!~Integration) passou 5.062, ignorou 65, 0 falhas em 5.127 resultados agregados dos 17 TRX; Server.Implementations 1.508/64 ignorados, Server.Tests 73/1 ignorado, Jellyfin.Api.Tests 755/755 e Providers 793/793. Duas regressões de traversal do catálogo GetAvatar passaram 2/2 e estão incluídas na suíte API; NebulaPython com Python 3.10 passou 646/646. Dois projetos Integration não selecionaram testes pelo filtro; HTTP/MariaDB integrado, Mongo opt-in, CI remota, runtime instalado, instalação/smoke e download/playback em produção permanecem pendentes. Avisos XML/StyleCop/analyzers não impediram exit code 0. Homologação formal segue aberta; nenhuma release foi criada. Histórico anterior preservado nos eventos abaixo."
       }
     },
     {
@@ -7751,6 +7751,21 @@
       "startedAt": "2026-10-19T23:07:00-03:00",
       "updatedAt": "2026-10-19T23:15:00-03:00",
       "evidence": "dotnet test MulletaFlix.sln -c Release --no-restore --filter FullyQualifiedName!~Integration terminou exit code 0; 17 TRX agregados: 5.060 aprovados, 65 ignorados, 0 falhas de 5.125. Server.Implementations.Tests 1.508 aprovados/64 ignorados; Server.Tests 73/1; API 753/753; Providers 793/793 no gate filtrado. Os testes focalizados FileSystemHelperPathSafetyTests, ImageControllerDeleteUserImageTests, ImageControllerUserImageAuthorizationTests e AvatarControllerUserAvatarAuthorizationTests passaram 51/51 (subconjunto da API). NebulaPython via py -3.10 -m pytest -q passou 646/646 em 45,77 s. Os dois projetos Integration não tiveram testes selecionados; integrações HTTP/MariaDB e Mongo opt-in não foram executadas. Ainda falta teste de corrida TOCTOU, ACL efetiva em sistemas alvo, runner remoto e validação instalada/produção; não foi criada release."
+    },
+    {
+      "id": "server-avatar-catalog-path-containment-2026-10-19-2347",
+      "title": "GetAvatar recusa nomes de arquivo que escapam da pasta do catálogo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Solução .NET Release e NebulaPython 3.10",
+      "location": "MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; MulletaFlix-master/tests/Jellyfin.Api.Tests/Controllers/AvatarControllerUserAvatarAuthorizationTests.cs; MulletaFlix-master/docs/avatar-admin-authorization.md",
+      "scope": "Conter leitura/exclusão de AvatarInfo.FileName ao diretório do catálogo e preservar associações quando exclusão é recusada.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-19T23:35:00-03:00",
+      "updatedAt": "2026-10-19T23:47:57-03:00",
+      "evidence": "Duas regressões RED/GREEN passaram 2/2 Release: GetAvatarPath retorna null para traversal, DeleteAvatar retorna false e preserva arquivo externo, item de catálogo e associação de usuário. Busca no servidor encontrou dois pontos Path.Combine(_avatarDirectory, avatar.FileName), ambos protegidos por FileSystemHelper.IsPathWithinRoot. Jellyfin.Api.Tests passou 755/755. Gate completo .NET filtrado concluiu exit 0: 5.062 aprovados, 65 ignorados, 0 falhas/5.127 em 17 TRX; Providers 793/793, Server.Tests 73/1 ignorado, Server.Implementations 1.508/64 ignorados; dois projetos Integration selecionaram zero casos. NebulaPython Python 3.10 passou 646/646. Permanecem pendentes TOCTOU, ACL, HTTP/MariaDB integrado, Mongo opt-in, CI remota e runtime/produção. Nenhuma release criada."
     }
   ]
 }
