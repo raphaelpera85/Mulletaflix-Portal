@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T09:07:11-03:00",
+  "generatedAt": "2026-10-20T09:13:19-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8066,6 +8066,21 @@
       "startedAt": "2026-10-20T08:30:00-03:00",
       "updatedAt": "2026-10-20T08:41:44-03:00",
       "evidence": "A cópia staged de `install-python-if-missing.ps1` selecionou Python 3.12.14 do venv após restringir o PATH do processo filho, instalou `requirements.lock` com `--require-hashes` e escreveu `python.path` somente no stage. Lock staged e fonte tiveram SHA-256 idêntico (`840CBE8E758610CC365085253082291CA8510BAE96B329C599E5D95332D418CA`); `pip check` e `tools/check_deps.py` passaram; stage temporário removido após validação da raiz e ausência de reparse points. `Assert-StageIntegrity.Tests.ps1` passou quando executado diretamente. Na primeira tentativa, o PATH não foi restringido e o helper usou fallback para o interpretador Python 3.14 do host, fora de venv, com user site habilitado; o pip hashado terminou com exit 0. Evidência anterior documentava `cryptography 45.0.7`; o user site atual tem `50.0.2`, zero drift nos 53 pins e `pip check` limpo, confirmando atualização de ao menos esse pacote. Sem baseline prévio integral, os demais deltas são desconhecidos; não houve rollback/desinstalação para evitar remover dependências preexistentes ou regredir a versão segura. Isso afetou o user site do interpretador de desenvolvimento, não uma instalação/serviço do MulletaFlix. Não foi executado o NSIS completo, branch de Python ausente, instalação de serviço, VM limpa, Linux, CI executável ou produção. Homologação formal e release seguem abertas."
+    },
+    {
+      "id": "server-nebula-completed-media-refresh-revalidation-2026-10-20-0913",
+      "title": "Nebula: refresh periódico do disco N: revalidado; smoke real pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Teste focal .NET Release e inspeção da implementação Mongo/rclone",
+      "location": "NebulaFtpManager; NebulaMongoContext; NebulaCompletedMediaRefresh; NebulaDirectoryRefreshQueue",
+      "scope": "Revalidar que mídias concluídas sejam refletidas no disco N: a cada 15 minutos, sem varredura ampla de bibliotecas físicas.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T09:09:00-03:00",
+      "updatedAt": "2026-10-20T09:13:19-03:00",
+      "evidence": "A fonte agenda uma passagem imediata e ciclos a cada 15 minutos, depois que Mongo conectou, indexou e terminou eventual restauração. A consulta exige status=completed e completed_at nos últimos 30 minutos como janela sobreposta, exclui diretórios e conteúdo protegido, e o manager mantém o filtro IsCompletedTelegramMedia antes de enfileirar diretórios virtuais coalescidos. A sobreposição evita lacunas causadas por atraso do timer/processamento; não equivale a varrer arquivos físicos por 30 minutos. Teste focal Release NebulaCompletedMediaRefreshTests: 15/15, zero ignorados/falhas; compilação dos projetos do teste concluiu com warnings existentes de analisadores. Código, Mongo/Telegram reais, montagem N:, instalação, runtime, CI Linux, produção e release não foram exercitados nesta reauditoria. Smoke real e confirmação visual após refresh permanecem pendentes; sem release do servidor."
     },
     {
       "id": "server-broad-regression-suite-2026-10-20-0849",
