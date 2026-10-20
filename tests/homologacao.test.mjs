@@ -2778,3 +2778,21 @@ test('server suite revalidation records the full solution gate and keeps global 
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Revalidação local das suítes principais do servidor/);
 });
+
+test('GetAvatar handle-relative design research publishes cross-platform constraints without claiming a fix', async () => {
+    const event = statusData.events.find(item => item.id === 'server-avatar-handle-relative-strategy-2026-10-20-0012');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /NtCreateFile relativo ao RootDirectory do handle pai e OBJ_DONT_REPARSE/);
+    assert.match(event.evidence, /openat2 com RESOLVE_BENEATH\|RESOLVE_NO_SYMLINKS/);
+    assert.match(event.evidence, /validar flags XNU na versão mínima/);
+    assert.match(event.evidence, /rename concorrente/);
+    assert.match(event.evidence, /Nenhum código ou teste foi alterado\/executado nesta rodada/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /GetAvatar: estratégia multiplataforma de acesso relativo a handles definida/);
+});

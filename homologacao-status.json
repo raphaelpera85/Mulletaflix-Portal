@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T00:05:30-03:00",
+  "generatedAt": "2026-10-20T00:12:21-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7766,6 +7766,21 @@
       "startedAt": "2026-10-19T23:35:00-03:00",
       "updatedAt": "2026-10-19T23:58:30-03:00",
       "evidence": "A implementação existente FileSystemHelper.IsPathWithinRoot já rejeita componentes reparse; o teste existente cobria symlink em diretório pai. Acrescentei dois casos API para symlink no arquivo final: GetAvatarPath recusa leitura e DeleteAvatar recusa exclusão, preservando link, alvo, item de catálogo e associação; 2/2 executados (sem skip). As regressões anteriores de traversal também passaram. Busca encontrou dois pontos Path.Combine(_avatarDirectory, avatar.FileName), ambos protegidos. Jellyfin.Api.Tests passou 757/757. Gate completo .NET filtrado concluiu exit 0: 5.064 aprovados, 65 ignorados, 0 falhas/5.129 em 17 TRX; Providers 793/793, Server.Tests 73/1 ignorado, Server.Implementations 1.508/64 ignorados; dois projetos Integration selecionaram zero casos. NebulaPython Python 3.10 passou 646/646 em rodada anterior, sem mudanças Python nesta sessão. Permanecem pendentes TOCTOU, ACL, HTTP/MariaDB integrado, Mongo opt-in, CI remota e runtime/produção. Nenhuma release criada."
+    },
+    {
+      "id": "server-avatar-handle-relative-strategy-2026-10-20-0012",
+      "title": "GetAvatar: estratégia multiplataforma de acesso relativo a handles definida",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Revisão documental Win32, Linux man-pages, XNU e .NET 10; inspeção do runtime GetAvatar",
+      "location": "MulletaFlix-master/MediaBrowser.Controller/IO/FileSystemHelper.cs; MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Controllers/AvatarController.cs; MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs",
+      "scope": "Definir um desenho cross-platform que fixe diretórios por handle/descritor e não reabra paths após verificação, antes de implementar a mitigação TOCTOU.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T00:06:00-03:00",
+      "updatedAt": "2026-10-20T00:12:21-03:00",
+      "evidence": "Pesquisa documental definiu: Windows deve caminhar componente a componente com NtCreateFile relativo ao RootDirectory do handle pai e OBJ_DONT_REPARSE; Linux pode usar openat2 com RESOLVE_BENEATH|RESOLVE_NO_SYMLINKS ou caminhada openat/O_NOFOLLOW; macOS exige validar flags XNU na versão mínima. Leitura usa o handle final e exclusão unlinkat/SetFileInformationByHandle, sem reabrir pathname. Limites identificados: ABI/interoperabilidade nativa, rename concorrente, filesystem/SMB e semântica de vínculo do objeto excluído ainda requerem prova e testes nas plataformas suportadas. Nenhum código ou teste foi alterado/executado nesta rodada; status é pesquisa de desenho, não correção concluída. Fontes: https://learn.microsoft.com/en-us/windows/win32/api/winternl/nf-winternl-ntcreatefile ; https://man7.org/linux/man-pages/man2/openat2.2.html ; https://github.com/apple/darwin-xnu/blob/main/bsd/sys/fcntl.h ; https://learn.microsoft.com/en-us/dotnet/api/system.io.file.openhandle?view=net-10.0."
     },
     {
       "id": "server-avatar-handle-toctou-audit-2026-10-20-0005",
