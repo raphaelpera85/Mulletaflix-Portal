@@ -90,6 +90,27 @@ test('portal records complete local Nebula implementation suite and its Mongo li
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: suíte completa de implementações revalidada/);
 });
 
+test('portal records the full Nebula suite passing with isolated Mongo opt-in', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-full-suite-mongo-optin-2026-10-20-1018');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Category=RequiresMongo`: 24 aprovados, 0 ignorados\/falhas/);
+    assert.match(event.evidence, /FullyQualifiedName~Nebula`: 729 aprovados, 0 ignorados\/falhas/);
+    assert.match(event.evidence, /MongoDB 8\.3\.7 descartável/);
+    assert.match(event.evidence, /bind `127\.0\.0\.1:27099`/);
+    assert.match(event.evidence, /Serviço MongoDB existente permaneceu Running em 27017\/PID 4200, sem conexão/);
+    assert.match(event.evidence, /CI Linux/);
+    assert.match(event.evidence, /Pasta TEMP permanece porque o executor recusou remoção recursiva/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: suíte completa passou com Mongo isolado, zero skips/);
+});
+
 test('portal keeps the latest Vercel HEAD synchronization visibly blocked', async () => {
     const event = statusData.events.find(item => item.id === 'portal-head-sync-recheck-2026-10-20-0956');
 

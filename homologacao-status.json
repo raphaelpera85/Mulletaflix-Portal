@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T10:09:37-03:00",
+  "generatedAt": "2026-10-20T10:27:41-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8186,6 +8186,21 @@
       "startedAt": "2026-10-20T10:03:00-03:00",
       "updatedAt": "2026-10-20T10:09:37-03:00",
       "evidence": "`dotnet test tests\\Jellyfin.Server.Implementations.Tests\\Jellyfin.Server.Implementations.Tests.csproj -c Release --no-restore --filter \\\"FullyQualifiedName~Nebula\\\" --verbosity minimal` passou com exit 0: 705 aprovados, 24 ignorados, 0 falhas/729. `NebulaDownloaderStartupTests` focal passou 30/30. Os 24 ignorados exigem MongoDB e não executaram. Inspeção read-only observou serviço Windows `MongoDB` ativo com listener somente em `27017`; o harness permite apenas `127.0.0.1:27099`. Nenhuma conexão ou escrita foi feita ao serviço existente. Resultado local Windows, não smoke de worker instalado, indexação real STRM, transferência Telegram, montagem N:, playback, CI Linux, produção ou release."
+    },
+    {
+      "id": "server-nebula-full-suite-mongo-optin-2026-10-20-1018",
+      "title": "Nebula: suíte completa passou com Mongo isolado, zero skips",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "Windows, .NET 10 Release, MongoDB 8.3.7 isolado",
+      "location": "NebulaFtpManager, worker startup, filas, cache/playback, refresh, Supabase sync e testes Mongo",
+      "scope": "Executar suíte Nebula completa com opt-in Mongo, mantendo o serviço MongoDB preexistente isolado e sem tocar produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T10:12:00-03:00",
+      "updatedAt": "2026-10-20T10:27:41-03:00",
+      "evidence": "Revalidação em Windows/.NET 10 Release com MongoDB 8.3.7 descartável, processo independente, bind `127.0.0.1:27099`, `directConnection=true`, `dbPath` exclusivo em TEMP. `Category=RequiresMongo`: 24 aprovados, 0 ignorados/falhas, em 21 s. `FullyQualifiedName~Nebula`: 729 aprovados, 0 ignorados/falhas, exit 0, em 1m57s. Serviço MongoDB existente permaneceu Running em 27017/PID 4200, sem conexão. Processo isolado encerrado; 27099 sem listener. Pasta TEMP permanece porque o executor recusou remoção recursiva. Mongo 7.0/CI Linux, APIs reais Telegram/Supabase, runtime instalado, playback, produção e release não foram validados."
     }
   ]
 }
