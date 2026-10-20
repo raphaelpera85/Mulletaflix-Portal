@@ -545,7 +545,10 @@ test('homologation timeline renders the newest published status event first', as
     assert.equal(newestEvent.status, 'blocked');
     assert.match(newestEvent.evidence, /CI run 441/);
     assert.match(newestEvent.evidence, /billing issue/);
-    assert.equal(statusData.events[0].id, newestEvent.id);
+    assert.equal(statusData.events[0].id, 'server-api-avatarfilestore-rerun-2026-10-20-0942');
+    assert.equal(statusData.events[1].id, newestEvent.id);
+    assert.ok(renderedEvents.indexOf('API do servidor: revalidação GetAvatar e armazenamento por handle')
+        < renderedEvents.indexOf(newestEvent.title));
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
@@ -2592,8 +2595,8 @@ test('portal publishes the Nebula first-STRM integration test and its real-servi
     assert.match(event.evidence, /Não comprova Mongo\/HTTP reais, throughput, instalação ou produção/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: teste do worker pronto até o primeiro STRM enfileirado/);
-    assert.equal(statusData.events[4].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
-    assert.equal(statusData.events[5].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
+    assert.equal(statusData.events[5].id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
+    assert.equal(statusData.events[6].id, 'server-nebula-mongo-integration-tests-2026-10-19-1840');
 });
 
 test('portal reports full Nebula completed-destination fallback coverage with Mongo limits', async () => {
@@ -2652,11 +2655,11 @@ test('portal publishes the 24 real Mongo integration passes without equating Mon
     assert.match(event.evidence, /Não equivale ao MongoDB 7\.0 do CI/);
     assert.match(event.evidence, /Mongo em 27017 não foi acessado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
-    assert.equal(statusData.events[5].id, event.id);
+    assert.equal(statusData.events[6].id, event.id);
 });
 
 test('portal puts the latest broad .NET regression and unresolved release gates first', async () => {
-    const event = statusData.events[4];
+    const event = statusData.events[5];
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.equal(event.id, 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
@@ -2676,7 +2679,7 @@ test('portal puts the latest broad .NET regression and unresolved release gates 
 });
 
 test('portal publishes the latest full Nebula Python branch-coverage rerun', () => {
-    const event = statusData.events[3];
+    const event = statusData.events[4];
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.equal(event.id, 'server-nebula-python-full-suite-2026-10-19-1908');
@@ -2690,7 +2693,7 @@ test('portal publishes the latest full Nebula Python branch-coverage rerun', () 
 });
 
 test('portal distinguishes GitHub Actions runner allocation failures from test failures', () => {
-    const event = statusData.events[2];
+    const event = statusData.events[3];
     const dashboard = createDashboard();
 
     assert.equal(event.id, 'server-github-actions-runner-allocation-blocked-2026-10-19-1912');
@@ -2701,7 +2704,7 @@ test('portal distinguishes GitHub Actions runner allocation failures from test f
     assert.match(event.evidence, /account is locked due to a billing issue/);
     assert.match(event.evidence, /anotação do primeiro job reporta o mesmo bloqueio de faturamento/);
     assert.match(event.evidence, /continua v12\.1\.21/);
-    assert.equal(statusData.events[3].id, 'server-nebula-python-full-suite-2026-10-19-1908');
+    assert.equal(statusData.events[4].id, 'server-nebula-python-full-suite-2026-10-19-1908');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     return settleDashboard().then(() => {
@@ -3062,6 +3065,20 @@ test('server audit rerun distinguishes local green tests from the externally blo
     const dashboard = createDashboard();
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: revalidação local verde; CI\/release ainda bloqueadas externamente/);
+});
+
+test('latest API revalidation publishes GetAvatar results without claiming Linux or release validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-api-avatarfilestore-rerun-2026-10-20-0942');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /AvatarFileStore.*passou 4\/4 executáveis no Windows/);
+    assert.match(event.evidence, /763, com 3 ignorados e 0 falhas\/766/);
+    assert.match(event.evidence, /`unlinkat` ainda tem janela/);
+    assert.match(event.evidence, /runtime, instalação elevada, produção e release permanecem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
 test('server audit records MongoDB 7.0 opt-in results and exact skip correction', async () => {
