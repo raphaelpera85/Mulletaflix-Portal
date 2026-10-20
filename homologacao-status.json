@@ -8076,7 +8076,7 @@
       "local": "Teste focal .NET Release e inspeção da implementação Mongo/rclone",
       "location": "NebulaFtpManager; NebulaMongoContext; NebulaCompletedMediaRefresh; NebulaDirectoryRefreshQueue",
       "scope": "Revalidar que mídias concluídas sejam refletidas no disco N: a cada 15 minutos, sem varredura ampla de bibliotecas físicas.",
-      "status": "completed",
+      "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-20T09:09:00-03:00",
       "updatedAt": "2026-10-20T09:13:19-03:00",
