@@ -13,14 +13,15 @@ test('portal publishes the Nebula dependency drift guard and remaining gates', a
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /`requirements\.lock` universal fixa 61 distribuições com hashes/);
-    assert.match(event.evidence, /suíte completa isolada Python 3\.10 657\/657/);
+    assert.match(event.evidence, /suíte completa isolada Python 3\.10 658\/658/);
     assert.match(event.evidence, /compara 53 pins ativos antes de importar/);
+    assert.match(event.evidence, /tenta reparar pelo lock antes de probes\/imports/);
     assert.match(event.evidence, /Não houve instalação limpa Windows, Linux nativo, CI remota executável/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
     await settleDashboard();
-    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: lock hash-checked e detecção de drift validados/);
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: lock hash-checked, drift e parser ausente corrigidos/);
 });
 
 test('image provider suite and real-media validation limit are published', async () => {
