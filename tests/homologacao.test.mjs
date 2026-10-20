@@ -2693,3 +2693,23 @@ test('profile directory permission audit distinguishes package policy from produ
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Fotos de perfil: diretórios dependem de ACL herdada, produção ainda não verificada/);
 });
+
+test('live profile ACL audit distinguishes active runtime from a separate writable data tree', async () => {
+    const event = statusData.events.find(item => item.id === 'server-live-profile-acl-audit-2026-10-19-2202');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /MulletaFlix 12\.1\.21 ativo roda interativamente/);
+    assert.match(event.evidence, /29 pastas de perfil/);
+    assert.match(event.evidence, /não há escrita para BUILTIN Users\/Everyone/);
+    assert.match(event.evidence, /Capability SID não resolvido/);
+    assert.match(event.evidence, /Outra árvore sob ProgramData tem Users:Write, mas não corresponde ao datadir/);
+    assert.match(event.evidence, /não fecha TOCTOU/);
+    assert.match(event.evidence, /Testes focais Release: 6\/6/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Fotos de perfil: runtime 12\.1\.21 sem escrita geral, capability SID e árvore paralela pendentes/);
+});
