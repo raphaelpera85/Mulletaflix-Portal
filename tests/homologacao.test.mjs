@@ -3053,3 +3053,27 @@ test('server audit publishes the broad regression after dependency skip correcti
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /suíte \.NET ampla confirma a remoção do falso skip/);
 });
+
+test('server audit publishes MariaDB user and billing focused rerun without changing the broad snapshot', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-mariadb-user-billing-rerun-2026-10-20-0723');
+
+    assert.ok(event);
+    assert.equal(server.testAudit.passed, 5099);
+    assert.equal(server.testAudit.total, 5334);
+    assert.equal(server.testAudit.skipped, 235);
+    assert.equal(server.testAudit.failed, 0);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /30 aprovados, 1 NotExecuted e 0 falhas\/31/);
+    assert.match(event.evidence, /MariaDB 11\.4\.4.*bind 127\.0\.0\.1 e porta 33099/);
+    assert.match(event.evidence, /EnsureSchemaCreated_UsesEfMappedUsersTableWithBinaryUsernameCollations.*exige Linux/);
+    assert.match(event.evidence, /não alteram o snapshot amplo nem reclassificam NotExecuted nele/);
+    assert.match(server.testAudit.label, /197\/198 casos opt-in passaram em Windows/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB usuários\/cobrança 30\/31/);
+});

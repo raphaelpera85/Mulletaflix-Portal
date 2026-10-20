@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T07:16:25-03:00",
+  "generatedAt": "2026-10-20T07:23:58-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 235,
         "failed": 0,
         "percent": 95.6,
-      "label": "Atualizado em 20/10: regressão .NET Release inclusiva produziu 17 TRX completos: 5.099 aprovados, 235 NotExecuted, 0 falhas/5.334. O código final de saída do processo não foi recuperado após o fechamento da sessão de execução. Projetos Integration incluídos, exceto DramaFindsLiveIntegrationTests para evitar API externa ao vivo. Dentre os ignorados, 198 exigem MariaDB opt-in e 24 MongoDB opt-in; os demais dependem de plataforma/pré-condições locais. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado; esses casos continuam registrados como NotExecuted no snapshot da execução ampla. A versão MongoDB 7.0 do CI ainda não foi validada. NebulaPython 3.10: 646/646; contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. MariaDB, CI remota, Linux/macOS, runtime instalado e smoke de mídia seguem pendentes. Homologação formal e release seguem abertas."
+        "label": "Atualizado em 20/10: regressão .NET Release inclusiva produziu 17 TRX completos: 5.099 aprovados, 235 NotExecuted, 0 falhas/5.334. O código final de saída do processo não foi recuperado após o fechamento da sessão de execução. Projetos Integration incluídos, exceto DramaFindsLiveIntegrationTests para evitar API externa ao vivo. Dentre os ignorados, 198 exigem MariaDB opt-in e 24 MongoDB opt-in; os demais dependem de plataforma/pré-condições locais. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado; esses casos continuam registrados como NotExecuted no snapshot da execução ampla. A versão MongoDB 7.0 do CI ainda não foi validada. NebulaPython 3.10: 646/646; contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. Em rodadas MariaDB focais, 197/198 casos opt-in passaram em Windows; nesta sessão Users/Billing passou 30/31. O único pendente requer Linux com @@lower_case_table_names=0; os casos focais continuam NotExecuted no snapshot amplo. CI remota, Linux/macOS no geral, runtime instalado e smoke de mídia seguem pendentes. Homologação formal e release seguem abertas."
       }
     },
     {
@@ -7961,6 +7961,21 @@
       "startedAt": "2026-10-20T06:50:00-03:00",
       "updatedAt": "2026-10-20T07:00:37-03:00",
       "evidence": "A distribuição oficial MongoDB Community 7.0.45 para Windows ZIP foi baixada em diretório descartável; SHA-256 `7E3A435FA86E36E8CA4F2618FB41DE06D75C28009C63725A20F9BADD36EEC6F6` conferiu com o arquivo oficial `.sha256`. `mongod` foi limitado a `127.0.0.1:27099`, com datadir exclusivo; a URI opt-in apontou somente a esse loopback. `dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter 'Category=RequiresMongo'` passou 24/24, 0 falhas e 0 skips (exit 0). O daemon foi encerrado; PID e listener de 27099 não existem. A recontagem XML dos 17 TRX confirmou os 68 NotExecuted como 31 MariaDB opt-in, 24 Mongo opt-in, 10 plataforma/filesystem, 2 benchmarks e 1 pré-condição de assembly ausente; classificação anterior 8 + 5 foi corrigida. Os 24 resultados do snapshot completo continuam registrados como NotExecuted, pois o opt-in foi uma rodada focal separada e não se somam contagens sobrepostas. Linux ainda não foi executado: `wsl.exe` existe, mas informa subsistema não instalado; Docker e Podman ausentes. A limpeza do scratch temporário `mflx-mongo70-audit-20261020` no disco D: foi bloqueada pela política do executor após tentativas explícitas; MongoDB está parado e o diretório temporário permanece para remoção manual. CI pública segue sem execução recuperável por bloqueio de runner registrado no evento anterior; sem runtime, instalação, produção ou release alterados."
+    },
+    {
+      "id": "server-mariadb-user-billing-rerun-2026-10-20-0723",
+      "title": "Servidor: MariaDB usuários/cobrança 30/31; Linux case-sensitive pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Reexecução dos testes UserManagerNormalizedUsernameTests e BillingDatabaseTests contra instância MariaDB descartável",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Users; MulletaFlix-master/docs/testing-mariadb.md",
+      "scope": "Executar os testes de usuários/cobrança com MariaDB real em ambiente isolado, verificar o skip Linux e registrar evidência sem alterar produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T07:21:00-03:00",
+      "updatedAt": "2026-10-20T07:23:58-03:00",
+      "evidence": "`dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter 'FullyQualifiedName~UserManagerNormalizedUsernameTests|FullyQualifiedName~BillingDatabaseTests' --logger trx` terminou exit 0: 30 aprovados, 1 NotExecuted e 0 falhas/31. MariaDB 11.4.4 usou datadir temporário exclusivo, bind 127.0.0.1 e porta 33099; o processo de teste conectou somente a essa instância. O único skip foi `EnsureSchemaCreated_UsesEfMappedUsersTableWithBinaryUsernameCollations`, que exige Linux com `@@lower_case_table_names=0`. A instância foi encerrada e 33099 fechada; produção continuou no PID 20736/3306 e não recebeu conexão dos testes. Os números 30/31 são suplemento focal e não alteram o snapshot amplo nem reclassificam NotExecuted nele. Linux/CI, runtime instalado, produção e playback real seguem pendentes; nenhuma release foi criada. Mapa técnico conferido, sem mudança estrutural."
     },
     {
       "id": "server-audit-rerun-release-gate-2026-10-20-0647",
