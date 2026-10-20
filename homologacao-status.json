@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T22:19:39-03:00",
+  "generatedAt": "2026-10-19T22:33:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7719,8 +7719,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T22:02:00-03:00",
-      "updatedAt": "2026-10-19T22:19:39-03:00",
-      "evidence": "Alteração local da configuração do instalador limita icacls à raiz de dados (sem /T), remove ACLs Allow herdadas e explícitas de BUILTIN Users, Everyone e Authenticated Users, e mantém Administrators, SYSTEM e identidades suportadas de serviço. Diretórios de volume/compartilhamento e a pasta escolhida se for reparse point são recusados. Teste de fixture temporário comprovou remoção das grants herdadas/explicit root conhecidas, herança normal para descendentes e sentinel externo intacto; testes Assert-StageIntegrity, RcloneBootstrap, StageBackup, StageBuildOptions e contrato CI de empacotamento passaram. A compilação NSIS Release está em execução, sem instalar nem copiar para assets de release. Smoke/instalação limpa, ACL efetiva em descendentes com ACL protegida, runtime e produção não foram validados; grupos amplos diferentes e mudanças concorrentes da árvore exigem inspeção. Nenhuma release foi criada; homologação permanece aberta."
+      "updatedAt": "2026-10-19T22:33:05-03:00",
+      "evidence": "Alteração local da configuração do instalador limita icacls à raiz de dados (sem /T), remove ACLs Allow herdadas e explícitas de BUILTIN Users, Everyone e Authenticated Users, e mantém Administrators, SYSTEM e identidades suportadas de serviço. Diretórios de volume/compartilhamento e a pasta escolhida se for reparse point são recusados. Teste de fixture temporário comprovou remoção das grants herdadas/explicit root conhecidas, herança normal para descendentes e sentinel externo intacto; Assert-StageIntegrity, RcloneBootstrap, ServiceDataAcl, StageBackup e StageBuildOptions passaram; contrato CI de empacotamento 1/1 passou. O primeiro build NSIS falhou por uma flag de comparação inválida; após trocar por lstrcmpiW, build NSIS Release local compilou com sucesso e gerou MulletaFlix 12.1.24 (403,74 MB), em diretório isolado, sem copiar para dist. Nenhuma instalação foi feita. Smoke limpo, ACL efetiva em descendentes com ACL protegida, runtime e produção não foram validados; grupos amplos diferentes e alterações concorrentes da árvore exigem inspeção. Nenhuma release foi criada; homologação permanece aberta."
     }
   ]
 }

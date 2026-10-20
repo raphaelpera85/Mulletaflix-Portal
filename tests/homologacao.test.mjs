@@ -2722,8 +2722,8 @@ test('Windows installer data ACL hardening is reported without claiming installa
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /limita icacls à raiz de dados \(sem \/T\)/);
     assert.match(event.evidence, /BUILTIN Users, Everyone e Authenticated Users/);
-    assert.match(event.evidence, /compilação NSIS Release está em execução/);
-    assert.match(event.evidence, /Smoke\/instalação limpa, ACL efetiva em descendentes com ACL protegida/);
+    assert.match(event.evidence, /build NSIS Release local compilou com sucesso/);
+    assert.match(event.evidence, /Smoke limpo, ACL efetiva em descendentes com ACL protegida/);
     assert.match(event.evidence, /Nenhuma release foi criada/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
