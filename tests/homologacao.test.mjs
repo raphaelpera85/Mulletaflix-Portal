@@ -7,6 +7,28 @@ const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json',
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records Mongo-backed Nebula queue cancellation tests and remaining analyzer debt', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-queue-mongo-test-cancellation-2026-10-20-2018');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /zero erros/);
+    assert.match(event.evidence, /zero avisos `xUnit1051`/);
+    assert.match(event.evidence, /24 locais corrigidos/);
+    assert.match(event.evidence, /passou 18\/18/);
+    assert.match(event.evidence, /MongoDB 8\.3\.7 descartável em `127\.0\.0\.1:27099`/);
+    assert.match(event.evidence, /372 registros e 186 localizações únicas/);
+    assert.match(event.evidence, /MongoDB de produção não foi acessado/);
+    assert.match(event.evidence, /Sem instalação, produção, release do servidor/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: testes Mongo da fila respeitam cancelamento/);
+});
+
 test('portal publishes Nebula STRM test cancellation warning cleanup with remaining analyzer debt', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-strm-test-cancellation-2026-10-20-1045');
 
@@ -693,7 +715,7 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-nebula-supabase-test-cancellation-2026-10-20-2006');
+    const newestEvent = statusData.events.find(event => event.id === 'server-nebula-queue-mongo-test-cancellation-2026-10-20-2018');
     const dashboard = createDashboard();
     await settleDashboard();
 
@@ -701,7 +723,7 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'completed');
-    assert.match(newestEvent.evidence, /`FullyQualifiedName~NebulaSupabaseSyncTests` passou 50\/50/);
+    assert.match(newestEvent.evidence, /passou 18\/18/);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));

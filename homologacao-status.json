@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T20:06:03-03:00",
+  "generatedAt": "2026-10-20T20:20:30-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-queue-mongo-test-cancellation-2026-10-20-2018",
+      "title": "Nebula: testes Mongo da fila respeitam cancelamento",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; MongoDB 8.3.7 isolado em localhost:27099",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaQueueConcurrencyMongoTests.cs",
+      "scope": "Propagar o token de cancelamento do runner às operações assíncronas do driver Mongo, sem alterar asserções ou lógica de produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T20:08:00-03:00",
+      "updatedAt": "2026-10-20T20:18:13-03:00",
+      "evidence": "Rebuild Release completo do projeto `Jellyfin.Server.Implementations.Tests` terminou com exit 0 e zero erros; `NebulaQueueConcurrencyMongoTests.cs` ficou com zero avisos `xUnit1051` após 24 locais corrigidos. A suíte focal passou 18/18, sem ignorados/falhas, contra MongoDB 8.3.7 descartável em `127.0.0.1:27099`; o MongoDB de produção não foi acessado. Recontagem do mesmo build: 372 registros e 186 localizações únicas `xUnit1051` restantes no projeto. Asserções e lógica de produção não mudaram. O processo descartável foi parado; pasta de dados/log temporários permanece porque a política da ferramenta bloqueou sua remoção. Sem instalação, produção, release do servidor ou homologação operacional alegadas. Deployment Vercel não foi verificado."
+    },
     {
       "id": "server-nebula-supabase-test-cancellation-2026-10-20-2006",
       "title": "Nebula: testes de sincronização Supabase respeitam cancelamento",
