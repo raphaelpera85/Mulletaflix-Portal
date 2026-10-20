@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T06:47:59-03:00",
+  "generatedAt": "2026-10-20T07:00:37-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7900,7 +7900,7 @@
       "progressPercent": null,
       "startedAt": "2026-10-20T06:27:00-03:00",
       "updatedAt": "2026-10-20T06:39:19-03:00",
-      "evidence": "No checkout local `main` HEAD `f5c96a3b` (seis commits à frente do `origin/main` `17d766ac`; working tree ainda contém mudanças locais), `dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~Integration&FullyQualifiedName!~DramaFindsLiveIntegrationTests' --logger trx` concluiu com exit code 0. Agregação dos 17 TRX por `UnitTestResult`: 5.070 Passed, 68 NotExecuted, 0 Failed/5.138. Os 68 não são aprovados: 31 dependem de MariaDB opt-in, 24 de MongoDB opt-in, 8 são condições Unix/Linux/reparse/FS e 5 são benchmarks ou outros pré-requisitos locais. O filtro focado do projeto Server.Implementations em Nebula/Supabase passou 137/140, com os três casos Mongo opt-in NotExecuted. Revalidações focadas separadas: API 89/89, Providers/metadata/imagens 95/95, NebulaPython 646/646 e contratos Node de release 19/19; esses subconjuntos não devem ser somados ao resultado da solution. A última CI pública é run 441 no SHA remoto `17d766ac554bd2093f1201be1d0969212bcf3a9c`, conclusão `failure`; 11 jobs aparecem sem etapas, downloads dos logs retornaram `BlobNotFound`, portanto a causa não pode ser atribuída. Esse SHA não contém o checkout local atual. O `gh` local pede autenticação; WSL e Docker não estão instalados, impedindo validar Linux localmente. Sem banco compartilhado, runtime, produção, instalação, mídia real ou release alterados. Homologação global segue aberta."
+      "evidence": "No checkout local `main` HEAD `f5c96a3b` (seis commits à frente do `origin/main` `17d766ac`; working tree ainda contém mudanças locais), `dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~Integration&FullyQualifiedName!~DramaFindsLiveIntegrationTests' --logger trx` concluiu com exit code 0. Agregação dos 17 TRX por `UnitTestResult`: 5.070 Passed, 68 NotExecuted, 0 Failed/5.138. A recontagem dos outputs corrigiu a decomposição anterior: 31 MariaDB opt-in, 24 MongoDB opt-in, 10 plataforma/filesystem, 2 benchmarks e 1 pré-condição local. O evento de 07:00 executou os 24 casos Mongo opt-in em instância MongoDB 7.0.45 isolada; eles não permanecem pendentes por falta de servidor, embora os 68 resultados NotExecuted do snapshot original não sejam reescritos. O filtro focado do projeto Server.Implementations em Nebula/Supabase passou 137/140 antes desse opt-in. Revalidações focadas separadas: API 89/89, Providers/metadata/imagens 95/95, NebulaPython 646/646 e contratos Node de release 19/19; esses subconjuntos não devem ser somados ao resultado da solution. A última CI pública é run 441 no SHA remoto `17d766ac554bd2093f1201be1d0969212bcf3a9c`, conclusão `failure`; 11 jobs aparecem sem etapas, downloads dos logs retornaram `BlobNotFound`, portanto a causa não pode ser atribuída. Esse SHA não contém o checkout local atual. O `gh` local pede autenticação; `wsl.exe` informa que o subsistema Linux não está instalado e Docker/Podman não estão disponíveis, impedindo validar Linux localmente. Sem banco compartilhado, runtime, produção, instalação, mídia real ou release alterados. Homologação global segue aberta."
     },
     {
       "id": "server-mariadb-optin-revalidation-2026-10-20-0231",
@@ -7916,6 +7916,21 @@
       "startedAt": "2026-10-20T02:24:00-03:00",
       "updatedAt": "2026-10-20T06:19:05-03:00",
       "evidence": "MariaDB 11.4.4 foi inicializado em instâncias temporárias exclusivas, sem defaults, bind `127.0.0.1` e porta `33099`. A instância de produção permaneceu no PID 20736/porta 3306, sem conexão dos testes; todas as instâncias descartáveis foram encerradas e a porta 33099 ficou fechada. Inventário `dotnet test --list-tests` confirmou 145 casos em `Jellyfin.Server.Integration.Tests`; agregação por nome de teste nos TRX focais confirmou 145/145 aprovados, 0 ignorados e 0 falhas. A tentativa integral do assembly foi cancelada após 78 aprovados em 17m03s; filtros focalizados posteriores cobriram todos os nomes restantes, sem lacunas. Em outros grupos opt-in MariaDB: `IntroSkipper.Integration.Tests` passou 39/39; `UserManagerNormalizedUsernameTests|BillingDatabaseTests` passou 30/31, com um único skip que exige `@@lower_case_table_names=0` e filesystem Linux case-sensitive. Assim, 197 dos 198 casos MariaDB opt-in identificados no snapshot amplo foram aprovados; falta executar em Linux o caso de casing. Os TRX permaneceram em `%TEMP%`. Warnings SA1402 e xUnit1051 de compilação anteriores continuam sem triagem. O snapshot amplo .NET permanece 5.099/5.334, com código de saída não recuperado. Não valida CI remota, MongoDB 7.0, runtime/instalação, produção ou reprodução de mídia real. Nenhuma mudança de código/runtime, produção ou release."
+    },
+    {
+      "id": "server-audit-mongo70-skip-correction-2026-10-20-0700",
+      "title": "Servidor: MongoDB 7.0 opt-in 24/24; classificação de skips corrigida",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Reexecução dos testes RequiresMongo e recontagem dos motivos NotExecuted nos 17 TRX",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests; homologacao-status.json; docs/AUDIT-EVIDENCE.md",
+      "scope": "Executar os testes Mongo opt-in com a mesma major usada pela CI, corrigir a decomposição dos skips e registrar limites sem tocar produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T06:50:00-03:00",
+      "updatedAt": "2026-10-20T07:00:37-03:00",
+      "evidence": "A distribuição oficial MongoDB Community 7.0.45 para Windows ZIP foi baixada em diretório descartável; SHA-256 `7E3A435FA86E36E8CA4F2618FB41DE06D75C28009C63725A20F9BADD36EEC6F6` conferiu com o arquivo oficial `.sha256`. `mongod` foi limitado a `127.0.0.1:27099`, com datadir exclusivo; a URI opt-in apontou somente a esse loopback. `dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter 'Category=RequiresMongo'` passou 24/24, 0 falhas e 0 skips (exit 0). O daemon foi encerrado; PID e listener de 27099 não existem. A recontagem XML dos 17 TRX confirmou os 68 NotExecuted como 31 MariaDB opt-in, 24 Mongo opt-in, 10 plataforma/filesystem, 2 benchmarks e 1 pré-condição de assembly ausente; classificação anterior 8 + 5 foi corrigida. Os 24 resultados do snapshot completo continuam registrados como NotExecuted, pois o opt-in foi uma rodada focal separada e não se somam contagens sobrepostas. Linux ainda não foi executado: `wsl.exe` existe, mas informa subsistema não instalado; Docker e Podman ausentes. A limpeza do scratch temporário `mflx-mongo70-audit-20261020` no disco D: foi bloqueada pela política do executor após tentativas explícitas; MongoDB está parado e o diretório temporário permanece para remoção manual. CI pública segue sem execução recuperável por bloqueio de runner registrado no evento anterior; sem runtime, instalação, produção ou release alterados."
     },
     {
       "id": "server-audit-rerun-release-gate-2026-10-20-0647",

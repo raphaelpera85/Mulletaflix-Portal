@@ -2938,11 +2938,11 @@ test('current server regression publishes exact local counts and unresolved remo
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.match(event.evidence, /17 TRX por `UnitTestResult`: 5\.070 Passed, 68 NotExecuted, 0 Failed\/5\.138/);
-    assert.match(event.evidence, /31 dependem de MariaDB opt-in, 24 de MongoDB opt-in/);
+    assert.match(event.evidence, /31 MariaDB opt-in, 24 MongoDB opt-in, 10 plataforma\/filesystem, 2 benchmarks e 1 pré-condição local/);
     assert.match(event.evidence, /NebulaPython 646\/646 e contratos Node de release 19\/19/);
     assert.match(event.evidence, /run 441.*conclusão `failure`; 11 jobs aparecem sem etapas/);
     assert.match(event.evidence, /downloads dos logs retornaram `BlobNotFound`, portanto a causa não pode ser atribuída/);
-    assert.match(event.evidence, /WSL e Docker não estão instalados, impedindo validar Linux localmente/);
+    assert.match(event.evidence, /`wsl\.exe` informa que o subsistema Linux não está instalado e Docker\/Podman não estão disponíveis, impedindo validar Linux localmente/);
     assert.match(event.evidence, /Homologação global segue aberta/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
@@ -2998,4 +2998,23 @@ test('server audit rerun distinguishes local green tests from the externally blo
     const dashboard = createDashboard();
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: revalidação local verde; CI\/release ainda bloqueadas externamente/);
+});
+
+test('server audit records MongoDB 7.0 opt-in results and exact skip correction', async () => {
+    const event = statusData.events.find(item => item.id === 'server-audit-mongo70-skip-correction-2026-10-20-0700');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /MongoDB Community 7\.0\.45/);
+    assert.match(event.evidence, /`dotnet test .*Category=RequiresMongo'` passou 24\/24/);
+    assert.match(event.evidence, /31 MariaDB opt-in, 24 Mongo opt-in, 10 plataforma\/filesystem, 2 benchmarks e 1 pré-condição/);
+    assert.match(event.evidence, /MongoDB está parado e o diretório temporário permanece para remoção manual/);
+    assert.match(event.evidence, /sem runtime, instalação, produção ou release alterados/i);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /MongoDB 7\.0 opt-in 24\/24/);
 });
