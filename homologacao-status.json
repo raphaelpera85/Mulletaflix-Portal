@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T07:00:37-03:00",
+  "generatedAt": "2026-10-20T07:08:13-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3062,6 +3062,21 @@
       "startedAt": "2026-10-19T18:36:00-03:00",
       "updatedAt": "2026-10-19T18:40:10-03:00",
       "evidence": "`dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter Category=RequiresMongo --logger 'console;verbosity=normal'`: 24/24 aprovados, 0 falhas, 22,04 s. Foram exercitados claims/leases concorrentes, prioridade persistida, recuperação de playback, restore/backup de tokens com HTTP Supabase simulado e verificação de topologia standalone. Teste usou MongoDB 8.3.7 temporário, `directConnection=true`, só loopback e bases aleatórias; Mongo em 27017 não foi acessado. PID temporário foi encerrado e porta fechada; a política do executor bloqueou remoção do diretório scratch, que permanece sem processo usando-o. Não equivale ao MongoDB 7.0 do CI. Sem alteração de runtime, produção, release ou deploy do servidor; CI, MariaDB Linux, runtime instalado e smoke real continuam pendentes."
+    },
+    {
+      "id": "server-audit-framework-dependency-resolution-2026-10-20-0708",
+      "title": "Servidor: teste de resolução do shared framework sem falso skip",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Correção do teste de dependências para carregar assemblies via runtime e suíte Jellyfin.Server.Tests Release",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Tests/Dependencies/DeprecatedDependencyResolutionTests.cs; docs/AUDIT-EVIDENCE.md",
+      "scope": "Eliminar o falso skip de Microsoft.AspNetCore.Http.Features e validar a suíte do projeto sem alterar runtime, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T07:01:00-03:00",
+      "updatedAt": "2026-10-20T07:08:13-03:00",
+      "evidence": "Confirmado que o runtimeconfig do teste referencia Microsoft.AspNetCore.App 10.0.0 e que Microsoft.AspNetCore.Http.Features não é copy-local; a checagem por arquivo local causava falso skip. O teste foi alterado para Assembly.Load e a versão resolvida pelo runtime. A suíte focal DeprecatedDependencyResolutionTests passou 3/3, 0 skips; a suíte completa Jellyfin.Server.Tests passou 74/74, 0 skips/falhas, exit 0. O snapshot amplo anterior permanece com 1 NotExecuted nessa categoria e não foi recontado. Linux, CI remota, instalação, playback real e homologação formal seguem pendentes; sem runtime, instalação, produção ou release alterados."
     },
     {
       "id": "portal-homologation-timeline-sort-2026-10-19-1923",

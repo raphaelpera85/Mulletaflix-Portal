@@ -3018,3 +3018,20 @@ test('server audit records MongoDB 7.0 opt-in results and exact skip correction'
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /MongoDB 7\.0 opt-in 24\/24/);
 });
+
+test('server audit records framework assembly resolution without a false skip', async () => {
+    const event = statusData.events.find(item => item.id === 'server-audit-framework-dependency-resolution-2026-10-20-0708');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /DeprecatedDependencyResolutionTests passou 3\/3, 0 skips/);
+    assert.match(event.evidence, /Jellyfin\.Server\.Tests passou 74\/74, 0 skips\/falhas/);
+    assert.match(event.evidence, /Linux, CI remota, instalação, playback real e homologação formal seguem pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /resolução do shared framework sem falso skip/);
+});
