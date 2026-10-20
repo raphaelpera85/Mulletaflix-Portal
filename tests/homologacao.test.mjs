@@ -2929,6 +2929,28 @@ test('isolated Mongo opt-in revalidation is published without claiming CI or pro
     assert.match(dashboard.getElement('event-list').innerHTML, /Mongo opt-in: 24\/24 passaram em instância descartável/);
 });
 
+test('current server regression publishes exact local counts and unresolved remote CI state', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-audit-regression-ci-status-2026-10-20-0637');
+
+    assert.ok(event);
+    assert.equal(server.status, 'in_progress');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /17 TRX por `UnitTestResult`: 5\.070 Passed, 68 NotExecuted, 0 Failed\/5\.138/);
+    assert.match(event.evidence, /31 dependem de MariaDB opt-in, 24 de MongoDB opt-in/);
+    assert.match(event.evidence, /NebulaPython 646\/646 e contratos Node de release 19\/19/);
+    assert.match(event.evidence, /run 441.*conclusão `failure`; 11 jobs aparecem sem etapas/);
+    assert.match(event.evidence, /downloads dos logs retornaram `BlobNotFound`, portanto a causa não pode ser atribuída/);
+    assert.match(event.evidence, /WSL e Docker não estão instalados, impedindo validar Linux localmente/);
+    assert.match(event.evidence, /Homologação global segue aberta/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: suíte local 5\.070\/5\.138; CI remota sem diagnóstico/);
+});
+
 test('isolated MariaDB revalidation reports complete HTTP coverage and Linux-only limit', async () => {
     const server = statusData.tracks.find(track => track.id === 'server');
     const event = statusData.events.find(item => item.id === 'server-mariadb-optin-revalidation-2026-10-20-0231');

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T06:19:05-03:00",
+  "generatedAt": "2026-10-20T06:39:19-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -7886,6 +7886,21 @@
       "startedAt": "2026-10-20T02:17:30-03:00",
       "updatedAt": "2026-10-20T02:21:12-03:00",
       "evidence": "`dotnet test MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter 'Category=RequiresMongo' --logger trx --results-directory <scratch> --verbosity quiet` concluiu com exit code 0: 24 aprovados, 0 NotExecuted, 0 falhas. O daemon MongoDB 8.3.7 usou `dbPath` temporário exclusivo, bind `127.0.0.1` e porta `27099`; a conexão de teste é fixada pelo helper a esse alvo e os testes criam nomes de banco aleatórios. O serviço padrão do servidor na porta 27017 não foi tocado. O processo descartável foi encerrado e a porta 27099 ficou fechada; remoção do diretório temporário de dados foi bloqueada pela política do executor e esse diretório permanece. Não valida MongoDB 7.0 do CI, Actions remoto, produção ou runtime. A execução ampla anterior continua com snapshot próprio 5.099/5.334 e exit code desconhecido; os 24 aprovados são suplemento, não alteração retroativa dos TRX amplos. Nenhuma mudança de código runtime ou release."
+    },
+    {
+      "id": "server-audit-regression-ci-status-2026-10-20-0637",
+      "title": "Servidor: suíte local 5.070/5.138; CI remota sem diagnóstico",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Regressão .NET no checkout atual, Nebula Python, contratos Node e inspeção da última execução GitHub Actions",
+      "location": "MulletaFlix-master/MulletaFlix.sln; MulletaFlix-master/Tools/NebulaPython; tools/release/tests; GitHub Actions run 441",
+      "scope": "Revalidar o estado local atual do servidor, identificar pendências opt-in e comparar com a última execução pública da CI sem alterar runtime ou produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-20T06:27:00-03:00",
+      "updatedAt": "2026-10-20T06:39:19-03:00",
+      "evidence": "No checkout local `main` HEAD `f5c96a3b` (seis commits à frente do `origin/main` `17d766ac`; working tree ainda contém mudanças locais), `dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~Integration&FullyQualifiedName!~DramaFindsLiveIntegrationTests' --logger trx` concluiu com exit code 0. Agregação dos 17 TRX por `UnitTestResult`: 5.070 Passed, 68 NotExecuted, 0 Failed/5.138. Os 68 não são aprovados: 31 dependem de MariaDB opt-in, 24 de MongoDB opt-in, 8 são condições Unix/Linux/reparse/FS e 5 são benchmarks ou outros pré-requisitos locais. O filtro focado do projeto Server.Implementations em Nebula/Supabase passou 137/140, com os três casos Mongo opt-in NotExecuted. Revalidações focadas separadas: API 89/89, Providers/metadata/imagens 95/95, NebulaPython 646/646 e contratos Node de release 19/19; esses subconjuntos não devem ser somados ao resultado da solution. A última CI pública é run 441 no SHA remoto `17d766ac554bd2093f1201be1d0969212bcf3a9c`, conclusão `failure`; 11 jobs aparecem sem etapas, downloads dos logs retornaram `BlobNotFound`, portanto a causa não pode ser atribuída. Esse SHA não contém o checkout local atual. O `gh` local pede autenticação; WSL e Docker não estão instalados, impedindo validar Linux localmente. Sem banco compartilhado, runtime, produção, instalação, mídia real ou release alterados. Homologação global segue aberta."
     },
     {
       "id": "server-mariadb-optin-revalidation-2026-10-20-0231",
