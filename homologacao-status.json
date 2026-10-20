@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T10:05:05-03:00",
+  "generatedAt": "2026-10-20T10:09:37-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8184,8 +8184,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-20T10:03:00-03:00",
-      "updatedAt": "2026-10-20T10:04:02-03:00",
-      "evidence": "`dotnet test tests\\Jellyfin.Server.Implementations.Tests\\Jellyfin.Server.Implementations.Tests.csproj -c Release --no-restore --filter \\\"FullyQualifiedName~Nebula\\\" --verbosity minimal` passou com exit 0: 705 aprovados, 24 ignorados, 0 falhas/729. `NebulaDownloaderStartupTests` focal passou 30/30. Os 24 ignorados exigem MongoDB e não executaram. Resultado local Windows, não smoke de worker instalado, indexação real STRM, transferência Telegram, montagem N:, playback, CI Linux, produção ou release."
+      "updatedAt": "2026-10-20T10:09:37-03:00",
+      "evidence": "`dotnet test tests\\Jellyfin.Server.Implementations.Tests\\Jellyfin.Server.Implementations.Tests.csproj -c Release --no-restore --filter \\\"FullyQualifiedName~Nebula\\\" --verbosity minimal` passou com exit 0: 705 aprovados, 24 ignorados, 0 falhas/729. `NebulaDownloaderStartupTests` focal passou 30/30. Os 24 ignorados exigem MongoDB e não executaram. Inspeção read-only observou serviço Windows `MongoDB` ativo com listener somente em `27017`; o harness permite apenas `127.0.0.1:27099`. Nenhuma conexão ou escrita foi feita ao serviço existente. Resultado local Windows, não smoke de worker instalado, indexação real STRM, transferência Telegram, montagem N:, playback, CI Linux, produção ou release."
     }
   ]
 }

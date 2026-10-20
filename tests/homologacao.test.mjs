@@ -78,6 +78,9 @@ test('portal records complete local Nebula implementation suite and its Mongo li
     assert.match(event.evidence, /705 aprovados, 24 ignorados, 0 falhas\/729/);
     assert.match(event.evidence, /NebulaDownloaderStartupTests` focal passou 30\/30/);
     assert.match(event.evidence, /24 ignorados exigem MongoDB e não executaram/);
+    assert.match(event.evidence, /listener somente em `27017`/);
+    assert.match(event.evidence, /harness permite apenas `127\.0\.0\.1:27099`/);
+    assert.match(event.evidence, /Nenhuma conexão ou escrita foi feita ao serviço existente/);
     assert.match(event.evidence, /não smoke de worker instalado/);
     assert.match(event.evidence, /produção ou release/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
