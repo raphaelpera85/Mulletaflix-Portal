@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T08:28:03-03:00",
+  "generatedAt": "2026-10-20T08:39:42-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8035,7 +8035,22 @@
       "progressPercent": null,
       "startedAt": "2026-10-20T07:46:00-03:00",
       "updatedAt": "2026-10-20T08:28:03-03:00",
-      "evidence": "`requirements.in` contém as faixas runtime e declara `packaging` diretamente; `requirements.txt` inclui essa fonte; `requirements.lock` universal fixa 61 distribuições com hashes. Instaladores Windows/Linux usam `--require-hashes`; o pacote verifica SHA-256 staged; CI/release consome o lock. O guard compara 53 pins ativos antes de importar, evita carregar módulos antigos, repara pelo lock/hash e revalida versões/imports, falhando fechado se persistir drift. A revisão adversarial descobriu que falta simultânea dos parsers público e pip-vendorizado abortava cedo; agora o guard tenta reparar pelo lock antes de probes/imports, com regressão simulando essa ausência. Testes do guard 28/28; suíte completa isolada Python 3.10 658/658, 53 pins e zero drift; lock-only Python 3.12/3.14 também zero drift; dry-run hash 3.10/3.12/3.14 passou. Instalação real hashada do lock em venv isolado Windows Python 3.12.14 passou; `pip check` não encontrou dependências quebradas e o guard confirmou 53 pins, zero drift. `pip-audit`/OSV não encontrou vulnerabilidades conhecidas no snapshot. Contratos Node focalizados 5/5; harness PowerShell, `bash -n` e cópia de pacote Linux passaram. O reparo pip foi simulado por testes; Python global lido anteriormente mantinha cryptography 45.0.7 ante 50.0.2 esperada e não foi alterado. Linux nativo e CI remota executável, consulta/alteração de produção, release ou deploy do servidor não ocorreram. Homologação formal segue aberta."
+      "evidence": "`requirements.in` contém as faixas runtime e declara `packaging` diretamente; `requirements.txt` inclui essa fonte; `requirements.lock` universal fixa 61 distribuições com hashes. Instaladores Windows/Linux usam `--require-hashes`; o pacote verifica SHA-256 staged; CI/release consome o lock. O guard compara 53 pins ativos antes de importar, evita carregar módulos antigos, repara pelo lock/hash e revalida versões/imports, falhando fechado se persistir drift. A revisão adversarial descobriu que falta simultânea dos parsers público e pip-vendorizado abortava cedo; agora o guard tenta reparar pelo lock antes de probes/imports, com regressão simulando essa ausência. Testes do guard 28/28; suíte completa isolada Python 3.10 658/658, 53 pins e zero drift; lock-only Python 3.12/3.14 também zero drift; dry-run hash 3.10/3.12/3.14 passou. Instalação real hashada do lock em venv isolado Windows Python 3.12.14 passou; `pip check` não encontrou dependências quebradas e o guard confirmou 53 pins, zero drift. `pip-audit`/OSV não encontrou vulnerabilidades conhecidas no snapshot. Contratos Node focalizados 5/5; harness PowerShell, `bash -n` e cópia de pacote Linux passaram. Uma cópia staged do helper Windows selecionou Python 3.12.14 isolado com PATH restrito, instalou pelo lock com hashes, gravou `python.path` no stage e passou `pip check`/guard; o temporário foi removido. Incidente: a primeira tentativa do harness caiu no fallback do Python 3.14 global e executou o pip hashado; o estado anterior documentava `cryptography 45.0.7`, o atual tem `50.0.2` e zero drift. Ao menos essa dependência foi atualizada; sem baseline integral não se conhecem todos os deltas e não se fez rollback. Nenhuma instalação NSIS, serviço, runtime de produto ou produção foi alterada. Assert-StageIntegrity foi executado diretamente; Invoke-Pester 3.4 reportou 0 testes descobertos porque o arquivo é um harness top-level. Linux nativo, CI remota executável, smoke NSIS/serviço, produção e release do servidor não ocorreram. Homologação formal segue aberta."
+    },
+    {
+      "id": "server-nebula-windows-helper-stage-smoke-2026-10-20-0837",
+      "title": "Nebula: helper Windows passou em stage isolado; desvio do harness documentado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "PowerShell 7; cópia staged; venv descartável Python 3.12.14; guard Nebula",
+      "location": "MulletaFlix-packaging-master/install-python-if-missing.ps1; Tools/NebulaPython/requirements.lock; tools/check_deps.py",
+      "scope": "Validar o helper de instalação de dependências Windows em stage temporário com interpreter isolado e registrar limites/incidente do harness, sem instalar o servidor ou tocar no serviço.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T08:30:00-03:00",
+      "updatedAt": "2026-10-20T08:39:42-03:00",
+      "evidence": "A cópia staged de `install-python-if-missing.ps1` selecionou Python 3.12.14 do venv após restringir o PATH do processo filho, instalou `requirements.lock` com `--require-hashes` e escreveu `python.path` somente no stage. Lock staged e fonte tiveram SHA-256 idêntico (`840CBE8E758610CC365085253082291CA8510BAE96B329C599E5D95332D418CA`); `pip check` e `tools/check_deps.py` passaram; stage temporário removido após validação da raiz e ausência de reparse points. `Assert-StageIntegrity.Tests.ps1` passou quando executado diretamente. Na primeira tentativa, o PATH não foi restringido e o helper usou fallback para o Python 3.14 global do host; o pip hashado terminou com exit 0. Evidência anterior documentava `cryptography 45.0.7`; o estado atual tem `50.0.2` e zero drift nos 53 pins, confirmando atualização de ao menos esse pacote. Sem baseline prévio integral, os demais deltas são desconhecidos; não houve rollback/desinstalação para evitar remover dependências preexistentes ou regredir a versão segura. Isso afetou o interpretador global de desenvolvimento, não uma instalação/serviço do MulletaFlix. Não foi executado o NSIS completo, branch de Python ausente, instalação de serviço, VM limpa, Linux, CI executável ou produção. Homologação formal e release seguem abertas."
     }
   ]
 }

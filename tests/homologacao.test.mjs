@@ -17,12 +17,30 @@ test('portal publishes the Nebula dependency drift guard and remaining gates', a
     assert.match(event.evidence, /compara 53 pins ativos antes de importar/);
     assert.match(event.evidence, /tenta reparar pelo lock antes de probes\/imports/);
     assert.match(event.evidence, /Instalação real hashada do lock em venv isolado Windows Python 3\.12\.14 passou/);
-    assert.match(event.evidence, /Linux nativo e CI remota executável, consulta\/alteração de produção, release ou deploy do servidor não ocorreram/);
+    assert.match(event.evidence, /Linux nativo, CI remota executável, smoke NSIS\/serviço, produção e release do servidor não ocorreram/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Nebula: lock hash-checked, drift e parser ausente corrigidos/);
+});
+
+test('portal records the isolated Windows helper smoke and the harness fallback incident', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-windows-helper-stage-smoke-2026-10-20-0837');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /selecionou Python 3\.12\.14 do venv após restringir o PATH/);
+    assert.match(event.evidence, /Lock staged e fonte tiveram SHA-256 idêntico/);
+    assert.match(event.evidence, /helper usou fallback para o Python 3\.14 global/);
+    assert.match(event.evidence, /baseline prévio integral, os demais deltas são desconhecidos/);
+    assert.match(event.evidence, /Não foi executado o NSIS completo/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /helper Windows passou em stage isolado/);
 });
 
 test('image provider suite and real-media validation limit are published', async () => {
