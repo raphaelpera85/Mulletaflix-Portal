@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T23:47:57-03:00",
+  "generatedAt": "2026-10-19T23:58:30-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
       },
       "testAudit": {
-        "passed": 5062,
-        "total": 5127,
+        "passed": 5064,
+        "total": 5129,
         "skipped": 65,
         "failed": 0,
       "percent": 98.7,
-      "label": "Revalidação local, 19/10/2026 23:47: solution .NET Release (FullyQualifiedName!~Integration) passou 5.062, ignorou 65, 0 falhas em 5.127 resultados agregados dos 17 TRX; Server.Implementations 1.508/64 ignorados, Server.Tests 73/1 ignorado, Jellyfin.Api.Tests 755/755 e Providers 793/793. Duas regressões de traversal do catálogo GetAvatar passaram 2/2 e estão incluídas na suíte API; NebulaPython com Python 3.10 passou 646/646. Dois projetos Integration não selecionaram testes pelo filtro; HTTP/MariaDB integrado, Mongo opt-in, CI remota, runtime instalado, instalação/smoke e download/playback em produção permanecem pendentes. Avisos XML/StyleCop/analyzers não impediram exit code 0. Homologação formal segue aberta; nenhuma release foi criada. Histórico anterior preservado nos eventos abaixo."
+      "label": "Revalidação local, 19/10/2026 23:58: solução .NET Release (FullyQualifiedName!~Integration) passou 5.064, ignorou 65, 0 falhas em 5.129 resultados agregados dos 17 TRX; Server.Implementations 1.508/64 ignorados, Server.Tests 73/1 ignorado, Jellyfin.Api.Tests 757/757 e Providers 793/793. Quatro regressões de containment GetAvatar passaram, incluindo duas para symlink no arquivo final; a API completa passou 757/757. NebulaPython com Python 3.10 passou 646/646. Dois projetos Integration não selecionaram testes pelo filtro; HTTP/MariaDB integrado, Mongo opt-in, CI remota, runtime instalado, instalação/smoke e download/playback em produção permanecem pendentes. Avisos XML/StyleCop/analyzers não impediram exit code 0. Homologação formal segue aberta; nenhuma release foi criada. Histórico anterior preservado nos eventos abaixo."
       }
     },
     {
@@ -7754,7 +7754,7 @@
     },
     {
       "id": "server-avatar-catalog-path-containment-2026-10-19-2347",
-      "title": "GetAvatar recusa nomes de arquivo que escapam da pasta do catálogo",
+      "title": "GetAvatar rejeita traversal e symlink no arquivo final",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
@@ -7764,8 +7764,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-19T23:35:00-03:00",
-      "updatedAt": "2026-10-19T23:47:57-03:00",
-      "evidence": "Duas regressões RED/GREEN passaram 2/2 Release: GetAvatarPath retorna null para traversal, DeleteAvatar retorna false e preserva arquivo externo, item de catálogo e associação de usuário. Busca no servidor encontrou dois pontos Path.Combine(_avatarDirectory, avatar.FileName), ambos protegidos por FileSystemHelper.IsPathWithinRoot. Jellyfin.Api.Tests passou 755/755. Gate completo .NET filtrado concluiu exit 0: 5.062 aprovados, 65 ignorados, 0 falhas/5.127 em 17 TRX; Providers 793/793, Server.Tests 73/1 ignorado, Server.Implementations 1.508/64 ignorados; dois projetos Integration selecionaram zero casos. NebulaPython Python 3.10 passou 646/646. Permanecem pendentes TOCTOU, ACL, HTTP/MariaDB integrado, Mongo opt-in, CI remota e runtime/produção. Nenhuma release criada."
+      "updatedAt": "2026-10-19T23:58:30-03:00",
+      "evidence": "A implementação existente FileSystemHelper.IsPathWithinRoot já rejeita componentes reparse; o teste existente cobria symlink em diretório pai. Acrescentei dois casos API para symlink no arquivo final: GetAvatarPath recusa leitura e DeleteAvatar recusa exclusão, preservando link, alvo, item de catálogo e associação; 2/2 executados (sem skip). As regressões anteriores de traversal também passaram. Busca encontrou dois pontos Path.Combine(_avatarDirectory, avatar.FileName), ambos protegidos. Jellyfin.Api.Tests passou 757/757. Gate completo .NET filtrado concluiu exit 0: 5.064 aprovados, 65 ignorados, 0 falhas/5.129 em 17 TRX; Providers 793/793, Server.Tests 73/1 ignorado, Server.Implementations 1.508/64 ignorados; dois projetos Integration selecionaram zero casos. NebulaPython Python 3.10 passou 646/646 em rodada anterior, sem mudanças Python nesta sessão. Permanecem pendentes TOCTOU, ACL, HTTP/MariaDB integrado, Mongo opt-in, CI remota e runtime/produção. Nenhuma release criada."
     }
   ]
 }
