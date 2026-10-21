@@ -871,19 +871,23 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-backup-domain-table-implementation-2026-10-21-0744');
+    const newestEvent = statusData.events.find(event => event.id === 'server-release-gate-backup-e2e-pending-2026-10-21-0750');
+    const implementationEvent = statusData.events.find(event => event.id === 'server-backup-domain-table-implementation-2026-10-21-0744');
     const latestRelease = statusData.events.find(event => event.id === 'server-release-12-1-34-backup-storage-test-isolation-2026-10-21-0714');
     const dashboard = createDashboard();
     await settleDashboard();
 
     assert.ok(newestEvent);
+    assert.ok(implementationEvent);
     assert.ok(latestRelease);
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
-    assert.equal(newestEvent.status, 'in_progress');
-    assert.match(newestEvent.evidence, /11 tabelas/);
+    assert.equal(newestEvent.status, 'blocked');
+    assert.match(newestEvent.evidence, /MariaDB opt-in não pode rodar/);
+    assert.match(implementationEvent.evidence, /11 tabelas/);
     assert.match(latestRelease.evidence, /FullSystemBackup 40\/40/);
-    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(latestRelease.title));
+    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(implementationEvent.title));
+    assert.ok(renderedEvents.indexOf(implementationEvent.title) < renderedEvents.indexOf(latestRelease.title));
     assert.ok(renderedEvents.indexOf(latestRelease.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
