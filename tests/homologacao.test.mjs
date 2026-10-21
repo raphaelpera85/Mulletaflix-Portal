@@ -871,7 +871,7 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-backup-domain-table-coverage-audit-2026-10-21-0723');
+    const newestEvent = statusData.events.find(event => event.id === 'server-backup-domain-table-implementation-2026-10-21-0744');
     const latestRelease = statusData.events.find(event => event.id === 'server-release-12-1-34-backup-storage-test-isolation-2026-10-21-0714');
     const dashboard = createDashboard();
     await settleDashboard();

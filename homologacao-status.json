@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T07:23:47-03:00",
+  "generatedAt": "2026-10-21T07:44:45-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,24 @@
     }
   ],
   "events": [
+    {
+      "id": "server-backup-domain-table-implementation-2026-10-21-0744",
+      "title": "Backup relacional: 11 tabelas de mídia incluídas; validação ponta a ponta pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; testes e builds locais",
+      "location": "BackupService; contextos EF Movies, Series, Channels e Books",
+      "scope": "Incluir/restaurar tabelas de mídia por seus contextos proprietários e manter leitura segura de backups legados.",
+      "status": "in_progress",
+      "startedAt": "2026-10-21T07:23:47-03:00",
+      "updatedAt": "2026-10-21T07:44:45-03:00",
+      "evidence": "Backup engine 0.3.0 inclui as 11 tabelas dos contextos Movies/Series/Channels/Books além dos DbSets centrais; restore valida o conteúdo, purga e restaura cada contexto. Backups 0.2.0 continuam aceitos e não apagam os domínios ausentes do formato antigo. FullSystemBackup: 42/42; Jellyfin.Server.Implementations.Tests Release: 1.518 aprovados, 65 ignorados, 0 falhas. Builds Release do servidor e dos projetos de teste afetados passaram. Um primeiro full-suite teve 19 falhas nos testes de cache porque C: tinha menos que a reserva real de 2 GiB; fixtures agora escolhem volume elegível e os 66 testes de playback-cache/network passaram. MariaDB opt-in não executado (conexão descartável não configurada); sem teste create/restore ponta a ponta, CI remota, runtime instalado ou produção. Nenhum banco/configuração de produção acessado. Sem release: o backup integral ainda tem melhorias planejadas pendentes e homologação formal continua aberta.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
+      ]
+    },
     {
       "id": "server-backup-domain-table-coverage-audit-2026-10-21-0723",
       "title": "Auditoria do backup: 11 tabelas de mídia fora do backup integral",
