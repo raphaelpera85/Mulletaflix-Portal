@@ -3794,7 +3794,7 @@ test('portal records full solution validation and keeps the release gate blocked
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
-test('portal records the Nebula Telegram acceptance and Mongo checkpoint ambiguity as unresolved', () => {
+test('portal renders the Nebula Telegram acceptance and Mongo checkpoint ambiguity as unresolved', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-ambiguous-telegram-checkpoint-2026-10-21-1114');
 
     assert.ok(event);
@@ -3806,4 +3806,10 @@ test('portal records the Nebula Telegram acceptance and Mongo checkpoint ambigui
     assert.match(event.evidence, /Isto é risco estático, não evidência de duplicata em produção/);
     assert.match(event.evidence, /retry simples não cobre crash nem resposta perdida/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    const renderedEvents = dashboard.getElement('event-list').innerHTML;
+    assert.match(renderedEvents, /Nebula: risco de parte Telegram sem checkpoint Mongo/);
+    assert.match(renderedEvents, /Em execução/);
 });
