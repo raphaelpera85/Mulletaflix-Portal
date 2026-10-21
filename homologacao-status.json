@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T09:20:00-03:00",
+  "generatedAt": "2026-10-21T06:38:18-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3029,13 +3029,13 @@
       "local": "Windows; frontend TypeScript/Vitest; pipeline GitHub Actions após tag",
       "location": "MulletaFlix-web-master/src/components/notifications/notifications.ts",
       "scope": "Fixar ícone e badge da marca MulletaFlix nas notificações, retirar poster/asset Jellyfin do ícone e validar a release do servidor.",
-      "status": "in_progress",
-      "progressPercent": null,
-      "startedAt": "2026-10-21T08:30:00-03:00",
-      "updatedAt": "2026-10-21T09:20:00-03:00",
-      "evidence": "Validação local: teste focal 1/1; suíte web 419/419 em 76 arquivos; build:check, build:production e verify:build aprovados (1.924 arquivos; 294,3 KiB gzip). Auditoria identificou e removeu notificationicon.png legado; os demais assets de ícone usados no web, servidor e tray foram conferidos e correspondem à marca MulletaFlix. Release v12.1.33 ainda não publicada; workflow, pacotes e publicação pendentes. Cliente instalado/produção e Linux nativo não foram testados.",
-      "release": "Preparando v12.1.33; aguardando publicação após gates CI",
-      "links": []
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-21T05:30:00-03:00",
+      "updatedAt": "2026-10-21T06:38:18-03:00",
+      "evidence": "Release pública v12.1.33 não-draft publicada; tag e commit-fonte 29bb2fc0385c527e63410f2ff95a9f459c76f733. API GitHub confirmou três assets: ZIP Windows 388586528 bytes (SHA-256 BBACA4D57CCE73A0E93195FC269A1855B7A09BF6EC1564A8A5414687C3CCCD58), instalador Windows 423402326 bytes (SHA-256 2C88BEEA0FE23CF2813366CD320BEFD605507AEA30544CDEABB746DEFD8A0CA2), tar.gz Linux x64 134769809 bytes (SHA-256 01BDCCCA42E526BEABE902F70D3CDEFB2E210C73D6BA65857CD59E65041F3355). Teste foco 1/1; web 419/419 em 76 arquivos; build:check, build:production e verify:build aprovados. ZIP validado com 3353 entradas, branding atualizado e sem asset notificationicon.png. GitHub Actions não iniciou os jobs: anotação oficial informa bloqueio de cobrança da conta; suíte remota .NET/Nebula não executada. Linux foi cross-published em Windows, não testado em host Linux. Cliente atualizado, instalação/upgrade e produção não foram testados.",
+      "release": "v12.1.33 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.33 (commit 29bb2fc0385c527e63410f2ff95a9f459c76f733)",
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.33"]
     },
     {
       "id": "server-release-12-1-31-backup-semantic-validation-2026-10-21-0506",

@@ -3644,17 +3644,22 @@ test('portal records server release 12.1.32 with semantic JSON restore validatio
     assert.match(dashboard.getElement('event-list').innerHTML, /Release servidor v12\.1\.32 publicada/);
 });
 
-test('portal records the v12.1.33 notification brand fix without claiming publication or production validation', () => {
+test('portal records the published v12.1.33 notification brand fix and its billing-blocked CI limits', () => {
     const event = statusData.events.find(item => item.id === 'server-release-12-1-33-notification-branding-2026-10-21-0920');
 
     assert.ok(event);
     assert.equal(event.front, 'server');
-    assert.equal(event.status, 'in_progress');
-    assert.equal(event.progressPercent, null);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
     assert.match(event.scope, /ícone e badge da marca MulletaFlix/);
     assert.match(event.evidence, /419\/419 em 76 arquivos/);
-    assert.match(event.evidence, /notificationicon\.png legado/);
-    assert.match(event.evidence, /Release v12\.1\.33 ainda não publicada/);
-    assert.match(event.evidence, /produção e Linux nativo não foram testados/);
+    assert.match(event.evidence, /sem asset notificationicon\.png/);
+    assert.match(event.evidence, /Release pública v12\.1\.33 não-draft publicada/);
+    assert.match(event.evidence, /BBACA4D57CCE73A0E93195FC269A1855B7A09BF6EC1564A8A5414687C3CCCD58/);
+    assert.match(event.evidence, /bloqueio de cobrança da conta/);
+    assert.match(event.release, /v12\.1\.33/);
+    assert.match(event.links[0], /releases\/tag\/v12\.1\.33/);
+    assert.match(event.evidence, /suíte remota \.NET\/Nebula não executada/);
+    assert.match(event.evidence, /produção não foram testados/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
