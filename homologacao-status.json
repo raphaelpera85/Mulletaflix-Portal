@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T14:59:28-03:00",
+  "generatedAt": "2026-10-21T15:08:47-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,22 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-checkpoint-full-solution-regression-2026-10-21-1508",
+      "title": "Nebula checkpoint: regressão completa da solução passou",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; código local não publicado",
+      "location": "MulletaFlix.sln · validação ampla",
+      "scope": "Ampliar a regressão após journal de confirmação Telegram e recuperação de partes Nebula.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T15:00:52-03:00",
+      "updatedAt": "2026-10-21T15:08:47-03:00",
+      "evidence": "dotnet test MulletaFlix.sln -c Release --no-restore terminou com exit code 0 e nenhuma falha reportada. Sumários visíveis: Providers 821 aprovados/0 ignorados; Server.Implementations 1.524 aprovados/65 ignorados. A saída completa contém avisos de documentação/analisadores fora deste patch. Os opt-ins de Mongo/MariaDB não foram habilitados e nenhum teste de integração Telegram foi executado; resultado não consolida homologação formal nem autoriza release. Código da correção segue local.",
+      "links": []
+    },
     {
       "id": "server-nebula-upload-local-journal-2026-10-21-1459",
       "title": "Nebula: recuperação local de partes Telegram validada em testes",

@@ -3899,6 +3899,20 @@ test('portal reports durable Telegram acknowledgement recovery without overstati
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal reports the full solution regression without claiming formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-checkpoint-full-solution-regression-2026-10-21-1508');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /MulletaFlix\.sln -c Release --no-restore terminou com exit code 0/);
+    assert.match(event.evidence, /Providers 821 aprovados/);
+    assert.match(event.evidence, /Server\.Implementations 1\.524 aprovados\/65 ignorados/);
+    assert.match(event.evidence, /nenhum teste de integração Telegram foi executado/);
+    assert.match(event.evidence, /não consolida homologação formal nem autoriza release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal evidence for partial STRM indexing reports the latest focused Release retest', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-partial-strm-index-2026-10-21');
 
