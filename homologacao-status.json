@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T04:34:24-03:00",
+  "generatedAt": "2026-10-21T05:06:53-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,23 @@
     }
   ],
   "events": [
+    {
+      "id": "server-release-12-1-31-backup-semantic-validation-2026-10-21-0506",
+      "title": "Release servidor v12.1.31 publicada — restore rejeita backup incompleto",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release, GitHub Releases API; Linux cross-publish em Windows",
+      "location": "BackupService.RestoreBackupCoreAsync e testes FullSystemBackup",
+      "scope": "Validar a rejeição fail-closed de backup relacional incompleto, empacotar e publicar a release do servidor e registrar a homologação parcial no portal.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-21T04:20:00-03:00",
+      "updatedAt": "2026-10-21T05:06:53-03:00",
+      "evidence": "Commit servidor f30396789884391a5b7520f26ea849ef06a73b66 enviado a main e tag v12.1.31 aponta para o mesmo commit. Release pública não-draft confirmada pela API com três assets e digests: ZIP Windows 388.592.231 bytes (SHA-256 585BEA0EDD2A4136EEAEEB6A2921A46F8519A8B7246ED7D910815E6B41BCB700), instalador Windows 423.407.911 bytes (SHA-256 1F34573B194585DC1985D8ED6E06F330F1F893356D7A30502FED0E244B17DD86), tar.gz Linux x64 137.184.365 bytes (SHA-256 B51CA184B835A0408AF0BD48905946AEF3782C768F162D3094ED3D4F9804D871). FullSystemBackup 36/36; Jellyfin.Server.Implementations.Tests Release 1.512 aprovados, 65 ignorados, zero falhas. ZIP validado: 3.356 entradas, DLL/web/tray presentes e sem .coverage/.ruff_cache; tar validado com executável, instalação e web. Linux foi cross-published em Windows, não em host Linux. O build registrou 11 vulnerabilidades em dependências de desenvolvimento do frontend (1 moderada/10 altas); npm audit --omit=dev não executado nesta sessão. Backup integral continua parcial; contextos independentes, Mongo/Supabase, snapshot consistente, criptografia, restore ponta a ponta, CI remota, instalação/upgrade e produção não foram homologados. Nenhuma instalação ou alteração em produção.",
+      "release": "v12.1.31 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.31 (commit f30396789884391a5b7520f26ea849ef06a73b66)",
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.31"]
+    },
     {
       "id": "server-full-system-backup-coverage-audit-2026-10-21",
       "title": "Servidor: auditoria identifica cobertura parcial do backup integral",

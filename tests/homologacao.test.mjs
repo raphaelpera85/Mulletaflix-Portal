@@ -871,18 +871,17 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-full-system-backup-coverage-audit-2026-10-21');
+    const newestEvent = statusData.events.find(event => event.id === 'server-release-12-1-31-backup-semantic-validation-2026-10-21-0506');
     const dashboard = createDashboard();
     await settleDashboard();
 
     assert.ok(newestEvent);
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
-    assert.equal(newestEvent.status, 'in_progress');
-    assert.match(newestEvent.evidence, /FullSystemBackup 33\/33/);
-    assert.match(newestEvent.evidence, /BackupService exporta\/restaura apenas MulletaFlixDbContext/);
-    assert.match(newestEvent.evidence, /Mongo Nebula permanece externo/);
-    assert.match(newestEvent.evidence, /produção alterado\/acessado/);
+    assert.equal(newestEvent.status, 'completed');
+    assert.match(newestEvent.evidence, /FullSystemBackup 36\/36/);
+    assert.match(newestEvent.evidence, /Backup integral continua parcial/);
+    assert.match(newestEvent.evidence, /Nenhuma instalação ou alteração em produção/);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
@@ -3599,4 +3598,26 @@ test('portal records Vite security patch and keeps production risk claims scoped
     const dashboard = createDashboard();
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /advisories do Vite e auditoria npm/);
+});
+
+test('portal records server release 12.1.31 with fail-closed backup restore and honest validation limits', async () => {
+    const event = statusData.events.find(item => item.id === 'server-release-12-1-31-backup-semantic-validation-2026-10-21-0506');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /FullSystemBackup 36\/36/);
+    assert.match(event.evidence, /1\.512 aprovados, 65 ignorados, zero falhas/);
+    assert.match(event.evidence, /vulnerabilidades em dependências de desenvolvimento/);
+    assert.match(event.evidence, /Linux foi cross-published em Windows/);
+    assert.match(event.evidence, /Backup integral continua parcial/);
+    assert.match(event.evidence, /produção não foram homologados/);
+    assert.match(event.release, /v12\.1\.31/);
+    assert.match(event.links[0], /releases\/tag\/v12\.1\.31/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Release servidor v12\.1\.31 publicada/);
 });
