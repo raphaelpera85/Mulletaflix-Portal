@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T21:42:26-03:00",
+  "generatedAt": "2026-10-20T22:12:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,20 @@
     }
   ],
   "events": [
+    {
+      "id": "server-media-notification-brand-icon-2026-10-20-2204",
+      "title": "Servidor: notificações de novas mídias usam marca MulletaFlix",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Frontend Web; TypeScript/Vitest",
+      "location": "MulletaFlix-web-master/src/components/notifications/notifications.ts",
+      "scope": "Trocar o ícone Jellyfin usado como fallback das notificações pela marca MulletaFlix e auditar outros pontos de branding.",
+      "status": "in_progress",
+      "progressPercent": 90,
+      "updatedAt": "2026-10-20T22:12:00-03:00",
+      "evidence": "Busca no código ativo encontrou o PNG Jellyfin somente como fallback de icon/badge das notificações; agora usa src/assets/branding/icon.png da MulletaFlix, mantendo o poster da mídia quando disponível. Favicon/manifest, login, botão do servidor, screensaver e tray foram conferidos e já usam branding MulletaFlix. `npm run build:check` passou. A primeira suíte concorrente passou 416/418 devido a dois timeouts de 10 ms em testes de layout não relacionados; o arquivo focado passou 107/107 e a suíte completa repetida com --maxWorkers=2 passou 418/418 em 75 arquivos. A confirmação visual de uma notificação real no cliente atualizado ainda está pendente; sem build de pacote, instalação, produção ou release."
+    },
     {
       "id": "server-test-waits-runner-cancellation-2026-10-20-2142",
       "title": "Servidor: testes propagam cancelamento sem alongar timeouts",

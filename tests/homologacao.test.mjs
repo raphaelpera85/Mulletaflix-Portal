@@ -29,6 +29,21 @@ test('portal records cancellation-aware test waits and remaining analyzer debt',
     assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: testes propagam cancelamento sem alongar timeouts/);
 });
 
+test('portal documents the corrected MulletaFlix notification brand icon and remaining visual check', () => {
+    const event = statusData.events.find(item => item.id === 'server-media-notification-brand-icon-2026-10-20-2204');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, 90);
+    assert.match(event.location, /notifications\.ts/);
+    assert.match(event.evidence, /src\/assets\/branding\/icon\.png/);
+    assert.match(event.evidence, /418\/418 em 75 arquivos/);
+    assert.match(event.evidence, /confirmação visual.*pendente/);
+    assert.equal(statusData.events[0].id, event.id);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records Mongo-backed Nebula queue cancellation tests and remaining analyzer debt', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-queue-mongo-test-cancellation-2026-10-20-2018');
 
@@ -782,15 +797,15 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-test-waits-runner-cancellation-2026-10-20-2142');
+    const newestEvent = statusData.events.find(event => event.id === 'server-media-notification-brand-icon-2026-10-20-2204');
     const dashboard = createDashboard();
     await settleDashboard();
 
     assert.ok(newestEvent);
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
-    assert.equal(newestEvent.status, 'completed');
-    assert.match(newestEvent.evidence, /passaram 283\/283/);
+    assert.equal(newestEvent.status, 'in_progress');
+    assert.match(newestEvent.evidence, /418\/418 em 75 arquivos/);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
