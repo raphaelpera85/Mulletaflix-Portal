@@ -3927,3 +3927,19 @@ test('portal evidence for partial STRM indexing reports the latest focused Relea
     assert.match(event.evidence, /Sem ACL real, instalação, CI remota ou produção validadas/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal reports ambiguous Telegram recovery as in progress pending live MTProto homologation', async () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-ambiguous-telegram-reconciliation-2026-10-21-1553');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /teste focado 7\/7 e suíte Nebula 738\/738/);
+    assert.match(event.evidence, /Busca MTProto real.*homologação formal seguem pendentes/);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /reconciliação de envio após resposta Telegram perdida/);
+});

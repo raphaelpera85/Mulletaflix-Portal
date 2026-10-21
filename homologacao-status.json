@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:28:59-03:00",
+  "generatedAt": "2026-10-21T15:53:23-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-ambiguous-telegram-reconciliation-2026-10-21-1553",
+      "title": "Nebula: reconciliação de envio após resposta Telegram perdida",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "MulletaFlix Server",
+      "location": "NebulaUploadEngine, NebulaTelegramPool e journal local de checkpoints",
+      "scope": "Persistir intenção de envio e reconciliar pelo histórico MTProto antes de repetir um sendDocument ambíguo, preservando retries automáticos.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T14:30:00-03:00",
+      "updatedAt": "2026-10-21T15:53:23-03:00",
+      "evidence": "Validação local Release: teste focado 7/7 e suíte Nebula 738/738, zero falhas/ignorados, com MongoDB 8.3.7 isolado em 127.0.0.1:27099. O teste simula resposta perdida, reinicia a engine e injeta recuperação do histórico, comprovando que não ocorre um segundo POST Bot API. Busca MTProto real, canal/conta de produção, runtime instalado e homologação formal seguem pendentes; quando canal não é acessível ou a mensagem não é localizada, retry automático ainda pode duplicar. Sem release."
+    },
     {
       "id": "server-nebula-checkpoint-full-solution-regression-2026-10-21-1508",
       "title": "Nebula checkpoint: regressão completa da solução passou",
