@@ -1441,7 +1441,7 @@ test('server audit preserves the remote CI blocker and displays the latest Mongo
 
     assert.equal(server.status, 'in_progress');
     assert.match(server.testAudit.label, /5\.110.*5\.358/);
-    assert.match(server.testAudit.label, /Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12\.1\.34/);
+    assert.match(server.testAudit.label, /Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12\.1\.35/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
     assert.equal(event.status, 'blocked');
@@ -2526,7 +2526,7 @@ test('Nebula Supabase admission audit reports evidence limits without claiming a
     assert.match(event.evidence, /Três testes C# Mongo compilaram e foram ignorados/);
     assert.match(event.evidence, /não identifica proprietário ou expiração da lease/);
     assert.match(server.testAudit.label, /647\/647/);
-    assert.match(server.testAudit.label, /Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12\.1\.34/);
+    assert.match(server.testAudit.label, /Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12\.1\.35/);
     assert.equal(statusData.coverage.pending, 66);
     assert.equal(statusData.coverage.inProgress, 4);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));

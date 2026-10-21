@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T09:35:00-03:00",
+  "generatedAt": "2026-10-21T10:33:26-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 248,
         "failed": 0,
         "percent": 95.4,
-        "label": "Atualizado em 21/10: build Release sem erros; suíte .NET Release inclusiva gerou 17 TRX completos: 5.110 aprovados, 248 NotExecuted, 0 falhas/5.358; o processo terminou com exit code 0. Os ignorados incluem casos opt-in de MariaDB/MongoDB e dependências de plataforma/pré-condições; execuções focais não alteram a contagem deste snapshot. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado. NebulaPython 3.10: 647/647; OSV resolveu 62 dependências sem advisories conhecidos, sem validar runtime instalado ou produção. Contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; ACL do instalador passou. MariaDB focal: 197/198 casos opt-in passaram em Windows; um requer Linux com @@lower_case_table_names=0. CI remota, matriz Linux, runtime instalado e smoke de mídia real permanecem pendentes. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.34."
+        "label": "Atualizado em 21/10: build Release sem erros; suíte .NET Release inclusiva gerou 17 TRX completos: 5.110 aprovados, 248 NotExecuted, 0 falhas/5.358; o processo terminou com exit code 0. Os ignorados incluem casos opt-in de MariaDB/MongoDB e dependências de plataforma/pré-condições; execuções focais não alteram a contagem deste snapshot. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado. NebulaPython 3.10: 647/647; OSV resolveu 62 dependências sem advisories conhecidos, sem validar runtime instalado ou produção. Contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; ACL do instalador passou. MariaDB focal: 197/198 casos opt-in passaram em Windows; um requer Linux com @@lower_case_table_names=0. CI remota, matriz Linux, runtime instalado e smoke de mídia real permanecem pendentes. A validação específica da v12.1.35 aprovou 808/808 testes Providers sem integrações externas e 28/28 focados; esse subconjunto não altera a contagem geral acima. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35."
       }
     },
     {
@@ -85,7 +85,7 @@
         "id": "SRV-H01",
         "name": "Build Release e regressão automatizada local",
         "status": "completed",
-        "evidence": "Evidência local em 21/10/2026: build Release sem erros e suíte .NET Release com exit code 0; 17 TRX agregam 5.110 aprovados, 248 NotExecuted e 0 falhas/5.358. Casos ignorados e requisitos opt-in permanecem discriminados no roadmap. Não valida CI remota, runtime instalado ou produção."
+      "evidence": "Evidência local em 21/10/2026: build Release sem erros e suíte .NET Release com exit code 0; 17 TRX agregam 5.110 aprovados, 248 NotExecuted e 0 falhas/5.358. Casos ignorados e requisitos opt-in permanecem discriminados no roadmap. Patch v12.1.35: suíte Providers 808/808 sem integrações externas, 28/28 testes focados; builds e pacotes Windows/Linux gerados e conteúdo ZIP/TAR verificado. Não valida CI remota, API TMDb ao vivo, runtime instalado ou produção."
       },
       {
         "id": "SRV-H02",
@@ -8725,6 +8725,25 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/releases/12.1.33.md"
+      ]
+    },
+    {
+      "id": "server-tmdb-image-localization-v12-1-35-2026-10-21",
+      "title": "Servidor v12.1.35: idioma das imagens TMDb e download resiliente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows; .NET 10 Release; pacotes Windows e Linux",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb e Manager; Jellyfin.Providers.Tests; docs/releases/12.1.35.md",
+      "scope": "Priorizar idioma/região do servidor nas imagens TMDb, corrigir isolamento do cache por locale e repetir violações transitórias de acesso ao JPG de staging no Windows.",
+      "status": "completed",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T10:33:26-03:00",
+      "evidence": "Commit d51f4f38 publicado em main e release v12.1.35 criada no GitHub com instalador Windows, updater Windows e tar.gz Linux. Testes focados: 28/28; suíte Providers sem integrações externas: 808/808. Build Release Windows, frontend de produção, instalador e pacote Linux concluídos; arquivos ZIP/TAR verificados e SHA-256 registrados nas notas. Sem chamada ao TMDb ao vivo ou instalação/reinício em produção; capas já salvas exigem refresh para receber a seleção corrigida.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.35",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/d51f4f38",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/releases/12.1.35.md"
       ]
     }
   ]
