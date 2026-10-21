@@ -7,6 +7,28 @@ const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json',
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records cancellation-aware test waits and remaining analyzer debt', async () => {
+    const event = statusData.events.find(item => item.id === 'server-test-waits-runner-cancellation-2026-10-20-2142');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.location, /Jellyfin\.Api\.Tests/);
+    assert.match(event.evidence, /passaram 283\/283/);
+    assert.match(event.evidence, /passou 3\/3/);
+    assert.match(event.evidence, /330 mensagens\/165 localizações para 304\/152/);
+    assert.match(event.evidence, /12 usam `TestContext\.Current\.CancellationToken`/);
+    assert.match(event.evidence, /duas limpezas em `finally` usam `CancellationToken\.None`/);
+    assert.match(event.evidence, /Prazos de 5 s e assertions permaneceram iguais/);
+    assert.match(event.evidence, /Sem runtime, instalação, produção ou release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: testes propagam cancelamento sem alongar timeouts/);
+});
+
 test('portal records Mongo-backed Nebula queue cancellation tests and remaining analyzer debt', async () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-queue-mongo-test-cancellation-2026-10-20-2018');
 
@@ -760,7 +782,7 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-nebula-mount-retry-test-cancellation-2026-10-20-2041');
+    const newestEvent = statusData.events.find(event => event.id === 'server-test-waits-runner-cancellation-2026-10-20-2142');
     const dashboard = createDashboard();
     await settleDashboard();
 
@@ -768,7 +790,7 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'completed');
-    assert.match(newestEvent.evidence, /passou 6\/6/);
+    assert.match(newestEvent.evidence, /passaram 283\/283/);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));

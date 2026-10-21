@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T20:42:06-03:00",
+  "generatedAt": "2026-10-20T21:42:26-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,20 @@
     }
   ],
   "events": [
+    {
+      "id": "server-test-waits-runner-cancellation-2026-10-20-2142",
+      "title": "Servidor: testes propagam cancelamento sem alongar timeouts",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; Jellyfin.Server.Implementations.Tests e Jellyfin.Api.Tests",
+      "location": "Jellyfin.Server.Implementations.Tests e Jellyfin.Api.Tests/Controllers/LibraryBackgroundOperationGateTests.cs",
+      "scope": "Propagar cancelamento do runner em 14 esperas de teste, preservando prazos, assertions e cleanup.",
+      "status": "completed",
+      "progressPercent": 100,
+      "updatedAt": "2026-10-20T21:42:26-03:00",
+      "evidence": "Cinco classes de implementações passaram 283/283; `LibraryBackgroundOperationGateTests` passou 3/3. Rebuild Release final passou exit 0. O total `xUnit1051` caiu de 330 mensagens/165 localizações para 304/152. Das 14 esperas ajustadas, 12 usam `TestContext.Current.CancellationToken`; duas limpezas em `finally` usam `CancellationToken.None`. Prazos de 5 s e assertions permaneceram iguais. Revisão independente: nenhum problema. Uma ocorrência restante do padrão está em código runtime `NebulaFtpManager.cs:2914` e não foi alterada. Outros avisos/analisadores continuam pendentes; uma tentativa intermediária retornou exit 1 sem diagnóstico capturado, mas build incremental e dois rebuilds posteriores passaram. Sem runtime, instalação, produção ou release do servidor."
+    },
     {
       "id": "server-nebula-mount-retry-test-cancellation-2026-10-20-2041",
       "title": "Nebula: testes de retry de montagem respeitam cancelamento",
