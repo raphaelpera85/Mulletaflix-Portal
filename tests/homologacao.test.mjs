@@ -3691,3 +3691,19 @@ test('portal records the published v12.1.34 backup test isolation release and va
     assert.match(event.links[0], /releases\/tag\/v12\.1\.34/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records full solution validation and keeps the release gate blocked', () => {
+    const event = statusData.events.find(item => item.id === 'server-release-validation-suite-and-brand-audit-2026-10-21-0859');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'blocked');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /MulletaFlix\.sln -c Release --no-build terminou com exit 0/);
+    assert.match(event.evidence, /1\.518 aprovados, 65 ignorados/);
+    assert.match(event.evidence, /805 aprovados, 13 integrações externas ignoradas/);
+    assert.match(event.evidence, /v12\.1\.33 já registra a correção de branding/);
+    assert.match(event.evidence, /66 itens pendentes e 4 em andamento/);
+    assert.match(event.evidence, /Nenhum pacote, commit, tag ou GitHub Release do servidor foi criado/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
