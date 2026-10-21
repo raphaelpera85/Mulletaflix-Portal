@@ -3793,3 +3793,17 @@ test('portal records full solution validation and keeps the release gate blocked
     assert.match(event.evidence, /Nenhum pacote, commit, tag ou GitHub Release do servidor foi criado/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the Nebula Telegram acceptance and Mongo checkpoint ambiguity as unresolved', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-ambiguous-telegram-checkpoint-2026-10-21-1114');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /repete sendDocument após exceções de transporte/);
+    assert.match(event.evidence, /falha Mongo/);
+    assert.match(event.evidence, /Isto é risco estático, não evidência de duplicata em produção/);
+    assert.match(event.evidence, /retry simples não cobre crash nem resposta perdida/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

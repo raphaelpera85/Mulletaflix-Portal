@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T11:04:14-03:00",
+  "generatedAt": "2026-10-21T11:16:24-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8775,6 +8775,23 @@
       "updatedAt": "2026-10-21T11:04:14-03:00",
       "evidence": "Na rechecagem atual, serviço Windows MongoDB em estado Running, início Automatic, e Test-NetConnection para 127.0.0.1:27017 retornou True. Isso confirma apenas serviço e socket TCP agora; não confirma autenticação, consulta do cursor Supabase, sincronização ou conclusão do backup. Nenhum dado do banco foi lido/escrito e nenhum backup foi disparado.",
       "links": []
+    },
+    {
+      "id": "server-nebula-ambiguous-telegram-checkpoint-2026-10-21-1114",
+      "title": "Nebula: risco de parte Telegram sem checkpoint Mongo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Auditoria estática da fonte e dos testes .NET; sem banco real",
+      "location": "NebulaTelegramPool.UploadDocumentAsync, NebulaUploadEngine.ProcessFileUploadCoreAsync e NebulaMongoContext.UpdateUploadProgressAsync",
+      "scope": "Verificar a janela de falha entre aceite do arquivo pelo Telegram e persistência do checkpoint no Mongo, sem executar upload nem acessar produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T11:14:14-03:00",
+      "evidence": "A fonte repete sendDocument após exceções de transporte e só persiste tg_message_id/tg_file_id depois da resposta de sucesso. Se o Telegram aceitar e a resposta se perder, ou a escrita Mongo falhar após o aceite, a retomada pode não ter a parte persistida e reenviá-la. A auditoria não encontrou reconciliação por nome/caption antes de novo envio. Isto é risco estático, não evidência de duplicata em produção. Não há teste que injete aceite Telegram + falha Mongo; testes Mongo reais seguem opt-in e exigem instância isolada. Próximo trabalho: estado durável de envio ambíguo, reconciliação remota determinística e teste de recuperação; retry simples não cobre crash nem resposta perdida. Nenhum banco, upload, produção ou release foi executado/alterado.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
+      ]
     }
   ]
 }
