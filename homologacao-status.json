@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T18:07:54-03:00",
+  "generatedAt": "2026-10-21T18:20:34-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8958,6 +8958,24 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T18:07:54-03:00",
       "evidence": "C# e os três workers Python exigem _id, worker_id, lease_id e lease_until > now para mutações; renewal/acquire vencidos são recusados. A lease é revalidada antes de cada envio/parte e novamente após o backoff, inclusive no worker legado. Python Nebula 665/665; workers focados 19/19; py_compile aprovado. Testes .NET Release direcionados 313/313, 0 ignorados/falhas, incluindo MongoDB 8.3.7 descartável em 127.0.0.1:27099; processo encerrado e porta fechada. NebulaStreamEngineTests 69/69. dotnet format --verify-no-changes passou para implementação e testes focados; git diff --check aprovado. Sem upload real, CI remota, instalação, produção ou release; homologação formal global continua 2/7 (28,6%). Retentativas automáticas permanecem habilitadas conforme decisão do usuário; envio aceito cuja resposta/checkpoint se perca ainda pode duplicar; exactly-once não é garantido.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
+      ]
+    },
+    {
+      "id": "server-nebula-python-ambiguous-retry-audit-2026-10-21-1820",
+      "title": "Nebula: paridade de retries ambíguos no motor Python ainda pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET Release e Python 3.10 em ambiente de teste isolado",
+      "location": "NebulaFtpManager.StartPythonStreamServiceAsync, Tools/NebulaPython/main.py e testes de workers",
+      "scope": "Auditar se o motor Python configurável reconcilia aceitação Telegram sem resposta/checkpoint antes de repetir o envio, mantendo retentativas automáticas.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T18:20:34-03:00",
+      "updatedAt": "2026-10-21T18:20:34-03:00",
+      "evidence": "O motor C# passou 26/26 testes Release focados (NebulaQueueConcurrencyMongoTests + NebulaUploadCheckpointJournalTests) contra MongoDB 8.3.7 efêmero em 127.0.0.1:27099; o processo foi encerrado e a porta fechada. Testes Python 3.10 de upload paralelo/legado passaram 14/14, mas não cobrem aceite Telegram seguido de resposta perdida ou checkpoint Mongo falho. A fonte confirma que UsePythonEngine pode iniciar upload_worker_parallel e upload_small_file_worker, que usam upload_part_with_retries e repetem TimeoutError/ConnectionError; o journal/reconciliação C# não está integrado nesse caminho alternativo. Isso é uma lacuna estática, não prova de configuração ativa ou duplicata em produção. Retentativas automáticas permanecem por decisão do usuário; reconciliação antes do próximo envio é pendente. Sem alteração de código, upload real, instalação, produção ou release. Homologação formal permanece 2/7 (28,6%); testes focados não contam como aceite.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]
