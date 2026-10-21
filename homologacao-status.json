@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T11:53:08-03:00",
+  "generatedAt": "2026-10-21T12:26:36-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-backup-restore-transaction-boundary-2026-10-21-1226",
+      "title": "Restore relacional: falhas de banco protegidas; rollback MariaDB pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; checkout baseado em d51f4f38 com patch local não publicado",
+      "location": "BackupService · restore do contexto relacional central",
+      "scope": "Propagar falhas de persistência, usar transação relacional e não substituir arquivos antes do commit; validar a falha induzida em MariaDB descartável.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T12:26:36-03:00",
+      "updatedAt": "2026-10-21T12:26:36-03:00",
+      "evidence": "Patch local não publicado no checkout baseado em v12.1.35: restore de MulletaFlixDbContext usa transação e propaga falhas de Add/SaveChanges; Config, Data, Root e metadados só são copiados após commit. FullSystemBackup Release 40/40; build Jellyfin.Server Release com 0 avisos/erros. BackupRestoreMariaDbTests foi descoberto: 2 passaram e 2 foram ignorados porque MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não estava configurada; portanto a regressão nova de rollback via trigger SQL não foi exercitada contra MariaDB. A ida-e-volta básica 3/3 registrada em sessão anterior não comprova esse cenário. Filesystem não é atomicamente transacional com banco e contextos de mídia da árvore local 0.3.0 não estão incluídos neste patch. Nenhum banco/serviço de produção acessado; sem commit, pacote ou release do servidor. Homologação formal e plano de melhorias seguem abertos.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
+      ]
+    },
     {
       "id": "server-formal-homologation-matrix-consolidated-2026-10-21-0935",
       "title": "Matriz formal do servidor e distinção do checklist do roadmap publicadas",

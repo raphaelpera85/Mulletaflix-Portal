@@ -1095,6 +1095,23 @@ test('formal Android matrix separates local evidence from pending product accept
     assert.match(dashboard.getElement('android-task-checklist').textContent, /228\/275 marcados e 47 abertos/);
 });
 
+test('server restore transaction status distinguishes passing unit tests from skipped MariaDB rollback', async () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-restore-transaction-boundary-2026-10-21-1226');
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /FullSystemBackup Release 40\/40/);
+    assert.match(event.evidence, /2 passaram e 2 foram ignorados/);
+    assert.match(event.evidence, /regressão nova de rollback via trigger SQL não foi exercitada/);
+    assert.match(event.evidence, /sem commit, pacote ou release do servidor/);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    const rendered = dashboard.getElement('event-list').innerHTML;
+    assert.ok(rendered.indexOf(event.title) >= 0);
+});
+
 test('formal server homologation consolidates gates, percentage, evidence and pending production signoff', async () => {
     const dashboard = createDashboard();
     await settleDashboard();
