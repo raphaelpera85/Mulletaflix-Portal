@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:19:06-03:00",
+  "generatedAt": "2026-10-21T16:41:44-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-backup-restore-reparse-defense-2026-10-21-1641",
+      "title": "Restore do backup bloqueia symlink e junction fora da raiz configurada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1"],
+      "local": "Windows, .NET 10 Release; patch local não publicado baseado em v12.1.35",
+      "location": "BackupService.RestoreBackupCoreAsync · FileSystemRestoreTransaction",
+      "scope": "Impedir que extração de restore atravesse symlink/junction preexistente abaixo do diretório de destino e altere arquivos externos.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T16:35:00-03:00",
+      "updatedAt": "2026-10-21T16:41:44-03:00",
+      "evidence": "Validação focal em configuração Release: FullSystemBackup 44/44 e NebulaUploadCheckpointJournalTests 5/5 (49/49 combinados); regressão com symlink real passou sem alterar o arquivo externo e rollback de arquivos continuou passando. git diff --check sem erros. Raiz configurada explicitamente é confiável; reparse points descendentes são recusados. Pendentes: TOCTOU privilegiado, crash/power-loss recovery, restore positivo legado 0.2.0 em MariaDB e fencing de lease_id nas transições Nebula. Homologação formal continua 2/7 (28,6%), aceite pendente; CI remota, runtime instalado e produção não testados. O usuário confirmou preservar retries Telegram; entrega continua at-least-once e pode duplicar se a reconciliação não localizar mensagem já aceita. Nenhum release do servidor criado."
+    },
     {
       "id": "server-nebula-ambiguous-telegram-reconciliation-2026-10-21-1553",
       "title": "Nebula: reconciliação de envio após resposta Telegram perdida",

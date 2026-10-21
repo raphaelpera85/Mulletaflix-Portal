@@ -3946,3 +3946,20 @@ test('portal reports ambiguous Telegram recovery as in progress pending live MTP
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /reconciliação de envio após resposta Telegram perdida/);
 });
+
+test('portal reports backup restore reparse-point defense without closing formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-restore-reparse-defense-2026-10-21-1641');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /FullSystemBackup 44\/44/);
+    assert.match(event.evidence, /49\/49 combinados/);
+    assert.match(event.evidence, /crash\/power-loss recovery/);
+    assert.match(event.evidence, /fencing de lease_id/);
+    assert.match(event.evidence, /2\/7 \(28,6%\)/);
+    assert.match(event.evidence, /Nenhum release do servidor criado/);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
