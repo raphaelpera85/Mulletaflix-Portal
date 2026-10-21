@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T10:33:26-03:00",
+  "generatedAt": "2026-10-21T10:59:39-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8745,6 +8745,21 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/d51f4f38",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/releases/12.1.35.md"
       ]
+    },
+    {
+      "id": "server-nebula-partial-strm-index-2026-10-21",
+      "title": "Nebula: catálogo STRM sinaliza indexação parcial",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; testes automatizados locais",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula e tests/Jellyfin.Server.Implementations.Tests/Nebula",
+      "scope": "Evitar que subpastas inacessíveis desapareçam silenciosamente do catálogo de autocomplete; continuar indexando pastas acessíveis e expor estado parcial.",
+      "status": "completed",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T10:59:39-03:00",
+      "evidence": "Implementado em árvore de trabalho baseada em d51f4f38: enumeração STRM por diretório, sem IgnoreInaccessible silencioso; subpastas com falha são contabilizadas, as demais continuam e o status fica ReadyWithWarnings. Testes Nebula de catálogo/sugestões passaram 14/14 em Release. Sem ACL real, instalação, CI remota ou produção validadas; esta correção local ainda não integra uma release pública.",
+      "links": []
     }
   ]
 }
