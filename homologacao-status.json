@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T07:50:34-03:00",
+  "generatedAt": "2026-10-21T08:04:10-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8598,6 +8598,25 @@
       "evidence": "npm audit inicial: 12 vulnerabilidades somente em dev-dependencies (1 moderada, 11 altas); npm audit --omit=dev: 0. Vite 7.3.6 foi atualizado para 7.3.7 para corrigir advisories de launch-editor no Windows. Após: audit completo 11 dev (1 moderada, 10 altas), produção segue 0. Typecheck passou; Vitest 418/418 em 75 arquivos; build:production e verify:build passaram, 1.926 artefatos e orçamento inicial 294,3 KiB gzip/420 KiB. Suite .NET Release terminou exit 0; Implementations 1.509 aprovados/65 ignorados, Providers 817/817, API 763 aprovados/3 ignorados. Skips incluem Mongo/MariaDB opt-in e plataforma; não são aprovados. Pester do runtime Nebula 1/1 e contratos Node do package builder 2/2. Release GitHub v12.1.30 publicada no commit e5fa14356cf51908c84f62acfcd3515cd6d6f2c5; API confirmou 3 assets e digests: EXE 423.476.625 bytes, ZIP 388.591.700 bytes, Linux tar.gz 137.184.231 bytes. O ZIP foi verificado com DLL, frontend, tray e runtime Nebula, sem .coverage/.ruff_cache. Artefatos cross-published em Windows; Linux nativo, CI remoto, instalação/upgrade, produção e playback não foram verificados. Homologação ampla continua aberta; nenhuma instalação ou alteração em produção nesta sessão.",
       "release": "v12.1.30 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.30 (commit e5fa14356cf51908c84f62acfcd3515cd6d6f2c5)",
       "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.30"]
+    },
+    {
+      "id": "server-backup-mariadb-roundtrip-2026-10-21-0804",
+      "title": "Servidor: restore MariaDB cobre os quatro domínios de mídia; release segue bloqueada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; MariaDB 11.4.4 descartável em loopback:33099",
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs e docs/backup-coverage-audit.md",
+      "scope": "Validar backup e restauração isolados do núcleo e das 11 tabelas relacionais de mídia, sem conectar nem alterar produção.",
+      "status": "blocked",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T07:51:00-03:00",
+      "updatedAt": "2026-10-21T08:04:10-03:00",
+      "evidence": "O teste opt-in RestoreBackupAsync_RestoresCoreAndAllMediaDomainRowsOnDisposableMariaDb passou em MariaDB 11.4.4 descartável, datadir exclusivo, bind 127.0.0.1/porta 33099: 3/3 aprovados, 0 ignorados/falhas; exportou, apagou e restaurou o núcleo e Movies/MovieMetadata/MovieUserData, Series/Seasons/Episodes/SeriesUserData, Channels/Programs e Books/BookUserData, confirmando entradas ZIP e relações representativas. Porta 33099 encerrada; listener de produção 127.0.0.1:3306 (PID 20736) não foi usado. FullSystemBackup 42/42; build Release do servidor 0 avisos/erros. A suíte integral Implementations ficou sem progresso por mais de 2 min e foi cancelada, sem ser contada como aprovada; regressão anterior 1.518 aprovados/65 ignorados continua evidência separada. Release permanece bloqueada: snapshots consistentes, Mongo/Supabase, criptografia/chaves, falha intermediária/rollback/idempotência e configuração efetiva instalada seguem pendentes. Nenhum pacote, commit ou release do servidor foi criado nesta rodada; produção não acessada/alterada.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
+      ]
     }
   ]
 }

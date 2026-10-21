@@ -871,22 +871,28 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-release-gate-backup-e2e-pending-2026-10-21-0750');
+    const newestEvent = statusData.events.find(event => event.id === 'server-backup-mariadb-roundtrip-2026-10-21-0804');
+    const previousGateEvent = statusData.events.find(event => event.id === 'server-release-gate-backup-e2e-pending-2026-10-21-0750');
     const implementationEvent = statusData.events.find(event => event.id === 'server-backup-domain-table-implementation-2026-10-21-0744');
     const latestRelease = statusData.events.find(event => event.id === 'server-release-12-1-34-backup-storage-test-isolation-2026-10-21-0714');
     const dashboard = createDashboard();
     await settleDashboard();
 
     assert.ok(newestEvent);
+    assert.ok(previousGateEvent);
     assert.ok(implementationEvent);
     assert.ok(latestRelease);
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'blocked');
-    assert.match(newestEvent.evidence, /MariaDB opt-in não pode rodar/);
+    assert.match(newestEvent.evidence, /MariaDB 11\.4\.4 descartável/);
+    assert.match(newestEvent.evidence, /3\/3 aprovados/);
+    assert.match(newestEvent.evidence, /127\.0\.0\.1:3306 \(PID \d+\) não foi usado/);
+    assert.match(newestEvent.evidence, /Nenhum pacote, commit ou release do servidor foi criado/);
+    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousGateEvent.title));
     assert.match(implementationEvent.evidence, /11 tabelas/);
     assert.match(latestRelease.evidence, /FullSystemBackup 40\/40/);
-    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(implementationEvent.title));
+    assert.ok(renderedEvents.indexOf(previousGateEvent.title) < renderedEvents.indexOf(implementationEvent.title));
     assert.ok(renderedEvents.indexOf(implementationEvent.title) < renderedEvents.indexOf(latestRelease.title));
     assert.ok(renderedEvents.indexOf(latestRelease.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
