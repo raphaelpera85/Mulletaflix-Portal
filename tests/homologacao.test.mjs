@@ -810,7 +810,7 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-remote-image-byte-validation-audit-2026-10-21-0029');
+    const newestEvent = statusData.events.find(event => event.id === 'server-remote-image-decode-fix-2026-10-21-0054');
     const dashboard = createDashboard();
     await settleDashboard();
 
@@ -818,8 +818,10 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'in_progress');
-    assert.match(newestEvent.evidence, /ItemImageProvider valida status\/MIME/);
-    assert.match(newestEvent.evidence, /não foram executados testes nesta sessão/);
+    assert.match(newestEvent.evidence, /exige decodificação completa/);
+    assert.match(newestEvent.evidence, /177\/177/);
+    assert.match(newestEvent.evidence, /817\/817/);
+    assert.match(newestEvent.evidence, /teste provider\/CDN\/mídia real/);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });

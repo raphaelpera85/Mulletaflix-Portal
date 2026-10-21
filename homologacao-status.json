@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T00:30:53-03:00",
+  "generatedAt": "2026-10-21T01:21:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,22 @@
     }
   ],
   "events": [
+    {
+      "id": "server-remote-image-decode-fix-2026-10-21-0054",
+      "title": "Servidor: valida bytes de imagens antes de substituir capas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows; .NET 10 Release",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/RemoteImagePayloadValidator.cs",
+      "scope": "Validar corpos de imagem compartilhados por MetadataService e ItemImageProvider antes de persistir, sem perder fallback ou imagem anterior.",
+      "status": "in_progress",
+      "progressPercent": 90,
+      "updatedAt": "2026-10-21T01:21:06-03:00",
+      "evidence": "`RemoteImagePayloadValidator` centraliza o staging dos overloads `ProviderManager.SaveImage(BaseItem, ...)`, limita payload a 64 MiB e, com decoder compatível, exige decodificação completa e no máximo 16.777.216 pixels antes de substituir. HTTP usa ResponseHeadersRead; downloads URL limitados a 4 paralelos, decodificações a 2 e cache não retém payloads acima de 8 MiB. Gates locais: ProviderManager/imagens/MetadataService 177/177; Providers sem integração ao vivo 817/817; solução .NET sem Integration concluiu sem falhas (Implementations 1.508 aprovados/64 ignorados); Nebula Python 660/660; web 418/418 em 75 arquivos e build:check. Build Release `Jellyfin.Server` sem erros e um aviso CS0419 preexistente. Pacotes de produção Windows x64, atualizador ZIP e Linux x64 foram criados; hashes estão em `docs/releases/12.1.27.md`. Formatos sem decoder compatível e SVG ainda não têm validação de pixels. CI GitHub, teste provider/CDN/mídia real, instalação e produção permanecem pendentes; homologação formal não foi declarada.",
+      "release": "Pacotes 12.1.27 construídos; publicação GitHub/CI pendente",
+      "links": []
+    },
     {
       "id": "server-remote-image-byte-validation-audit-2026-10-21-0029",
       "title": "Servidor: auditoria de bytes corrompidos em imagens remotas",
