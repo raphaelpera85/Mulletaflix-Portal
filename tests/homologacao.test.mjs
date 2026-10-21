@@ -3998,7 +3998,8 @@ test('portal records Python Telegram retry reconciliation while formal homologat
     assert.match(event.title, /reconciliação de retries ambíguos também no motor Python/);
     assert.match(event.location, /StartPythonStreamServiceAsync/);
     assert.match(event.location, /upload_checkpoint\.py/);
-    assert.match(event.evidence, /Python 3\.10 completos passaram 670\/670/);
+    assert.match(event.evidence, /Python 3\.10: suíte completa 671\/671/);
+    assert.match(event.evidence, /confirmação fora de ordem sem duplicação/);
     assert.match(event.evidence, /resposta perdida sem segundo POST/);
     assert.match(event.evidence, /Pester de cópia de runtime passou 1\/1/);
     assert.match(event.evidence, /Ainda sem Telegram\/Mongo remotos, instalação\/runtime, CI remota ou produção/);
