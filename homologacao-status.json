@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T07:14:18-03:00",
+  "generatedAt": "2026-10-21T07:23:47-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-backup-domain-table-coverage-audit-2026-10-21-0723",
+      "title": "Auditoria do backup: 11 tabelas de mídia fora do backup integral",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Inspeção estática do código-fonte no Windows",
+      "location": "BackupService; contextos EF de Movies, Series, Channels e Books; MySqlDatabaseProvider",
+      "scope": "Reconciliar propriedade relacional definida pelo código e registrar a lacuna de cobertura sem inferir a topologia da instalação em produção.",
+      "status": "in_progress",
+      "startedAt": "2026-10-21T07:20:00-03:00",
+      "updatedAt": "2026-10-21T07:23:47-03:00",
+      "evidence": "A inspeção das sete fábricas relacionais confirma que elas recebem a mesma configuração do provider MariaDB; o provider traduz schemas para DatabaseNames.Main (padrão mulletaflix, sobrescrito por variável de ambiente), e DomainSchemaInitializer cria nesse schema 11 tabelas dos contextos Movies/Series/Channels/Books. BackupService enumera apenas os DbSets ativos de MulletaFlixDbContext + HistoryRow; os contextos centrais não enumeram as 11 tabelas de domínio. A lacuna é confirmada no caminho definido pelo código. Nenhum banco/configuração de produção foi acessado. Nenhum código de runtime foi alterado; sem release nesta etapa. Próximos gates: incluir cada contexto no formato versionado, preservar backups legados e validar create/restore integrado em banco isolado. Homologação formal permanece aberta.",
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"]
+    },
     {
       "id": "server-release-12-1-32-backup-json-validation-2026-10-21-0600",
       "title": "Release servidor v12.1.32 publicada — restore valida JSON antes de gravar",

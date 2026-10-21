@@ -871,19 +871,20 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-release-12-1-32-backup-json-validation-2026-10-21-0600');
+    const newestEvent = statusData.events.find(event => event.id === 'server-backup-domain-table-coverage-audit-2026-10-21-0723');
+    const latestRelease = statusData.events.find(event => event.id === 'server-release-12-1-34-backup-storage-test-isolation-2026-10-21-0714');
     const dashboard = createDashboard();
     await settleDashboard();
 
     assert.ok(newestEvent);
+    assert.ok(latestRelease);
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
-    assert.equal(newestEvent.status, 'completed');
-    assert.match(newestEvent.evidence, /FullSystemBackup 39\/39/);
-    assert.match(newestEvent.evidence, /Backup integral continua parcial/);
-    assert.match(newestEvent.evidence, /Nenhuma instalação ou alteração em produção/);
-    assert.equal(statusData.events[0].id, newestEvent.id);
-    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
+    assert.equal(newestEvent.status, 'in_progress');
+    assert.match(newestEvent.evidence, /11 tabelas/);
+    assert.match(latestRelease.evidence, /FullSystemBackup 40\/40/);
+    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(latestRelease.title));
+    assert.ok(renderedEvents.indexOf(latestRelease.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
 test('homologation timeline does not coerce an unknown progress percentage to zero', async () => {
