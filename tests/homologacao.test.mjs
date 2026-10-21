@@ -4023,3 +4023,21 @@ test('portal records the Mongo queue identity regression without claiming execut
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records checkpoint write-failure coverage without treating local tests as formal acceptance', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-checkpoint-failure-tests-2026-10-21-1908');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /[Tt]este focal do journal 7\/7; suíte NebulaPython completa 673\/673/);
+    assert.match(event.evidence, /Falhas injetadas em fsync\/os\.replace mantêm o checkpoint anterior recuperável/);
+    assert.match(event.evidence, /Alteração somente de testes/);
+    assert.match(event.evidence, /permanece local, não foi enviada ao repositório do servidor/);
+    assert.match(event.evidence, /Homologação formal segue 2\/7 \(28,6%\)/);
+    assert.match(event.evidence, /nenhuma release criada/);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.status, 'in_progress');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

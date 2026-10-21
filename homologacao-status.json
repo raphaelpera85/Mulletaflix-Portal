@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T18:57:50-03:00",
+  "generatedAt": "2026-10-21T19:08:58-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8997,6 +8997,20 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]
+    },
+    {
+      "id": "server-nebula-checkpoint-failure-tests-2026-10-21-1908",
+      "title": "Nebula: regressão confirma preservação do checkpoint após falha de escrita",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, Python 3.10 e ambiente de teste isolado com dependências travadas",
+      "location": "Tools/NebulaPython/upload_checkpoint.py e tests/test_upload_checkpoint_journal.py",
+      "scope": "Injetar falhas em fsync e os.replace, preservar o checkpoint válido anterior e remover temporários órfãos.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T19:08:58-03:00",
+      "evidence": "Teste focal do journal 7/7; suíte NebulaPython completa 673/673 com requirements.lock e requirements-test.txt em venv isolado. Falhas injetadas em fsync/os.replace mantêm o checkpoint anterior recuperável e limpam o temporário. A primeira coleta no Python global não executou testes por ausência de dependências runtime; nenhuma dependência foi instalada globalmente. Sem acesso a Mongo/MariaDB, Telegram, runtime instalado, CI remota ou produção. Alteração somente de testes, sem mudar runtime ou política de retries. A alteração de teste e documentação permanece local, não foi enviada ao repositório do servidor. Homologação formal segue 2/7 (28,6%), sem crédito por testes locais; nenhuma release criada."
     }
   ]
 }
