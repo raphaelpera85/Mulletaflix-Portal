@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T09:06:34-03:00",
+  "generatedAt": "2026-10-21T09:35:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -21,19 +21,19 @@
       "progressPercent": null,
       "source": "GitHub Actions e testes de integração",
       "homologation": {
-        "completed": null,
-        "total": null,
-        "percent": null,
-        "unit": "escopo formal",
-        "label": "Homologação formal não consolidada; testes parciais e bloqueios continuam em investigação."
+        "completed": 2,
+        "total": 7,
+        "percent": 28.6,
+        "unit": "gates formais igualmente ponderados",
+        "label": "2 de 7 gates com evidência local validada; 1 em andamento, 3 pendentes e 1 bloqueado. Aceite formal de produção permanece pendente."
       },
       "testAudit": {
-        "passed": 5099,
-        "total": 5334,
-        "skipped": 235,
+        "passed": 5110,
+        "total": 5358,
+        "skipped": 248,
         "failed": 0,
-        "percent": 95.6,
-        "label": "Atualizado em 20/10: regressão .NET Release inclusiva produziu 17 TRX completos: 5.099 aprovados, 235 NotExecuted, 0 falhas/5.334. O código final de saída do processo não foi recuperado após o fechamento da sessão de execução. Projetos Integration incluídos, exceto DramaFindsLiveIntegrationTests para evitar API externa ao vivo. Dentre os ignorados, 198 exigem MariaDB opt-in e 24 MongoDB opt-in; os demais dependem de plataforma/pré-condições locais. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado; esses casos continuam registrados como NotExecuted no snapshot da execução ampla. A versão MongoDB 7.0 do CI ainda não foi validada. NebulaPython 3.10: 647/647; auditoria OSV do manifesto resolveu 62 dependências sem advisories conhecidos (cryptography 50.0.2); isso não verifica runtime instalado nem produção. Contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; teste ACL do instalador passou. Em rodadas MariaDB focais, 197/198 casos opt-in passaram em Windows; nesta sessão Users/Billing passou 30/31. O único pendente requer Linux com @@lower_case_table_names=0; os casos focais continuam NotExecuted no snapshot amplo. CI remota, Linux/macOS no geral, runtime instalado e smoke de mídia seguem pendentes. Homologação formal continua aberta; release v12.1.26 publicada."
+        "percent": 95.4,
+        "label": "Atualizado em 21/10: build Release sem erros; suíte .NET Release inclusiva gerou 17 TRX completos: 5.110 aprovados, 248 NotExecuted, 0 falhas/5.358; o processo terminou com exit code 0. Os ignorados incluem casos opt-in de MariaDB/MongoDB e dependências de plataforma/pré-condições; execuções focais não alteram a contagem deste snapshot. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado. NebulaPython 3.10: 647/647; OSV resolveu 62 dependências sem advisories conhecidos, sem validar runtime instalado ou produção. Contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; ACL do instalador passou. MariaDB focal: 197/198 casos opt-in passaram em Windows; um requer Linux com @@lower_case_table_names=0. CI remota, matriz Linux, runtime instalado e smoke de mídia real permanecem pendentes. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.34."
       }
     },
     {
@@ -74,6 +74,57 @@
       "source": "GitHub Actions e roadmap"
     }
   ],
+  "serverHomologation": {
+    "source": "Roadmap tecnológico do servidor e auditoria de cobertura do backup/restauração",
+    "sourceUrl": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
+    "backupAuditUrl": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+    "scopeNote": "A matriz tem 7 gates igualmente ponderados. O percentual é gates com evidência técnica local validada ÷ 7, arredondado a uma casa decimal; estados em andamento, pendentes ou bloqueados não recebem crédito parcial. Não representa percentual de testes nem aceite de produção.",
+    "formalSignoff": "pending",
+    "areas": [
+      {
+        "id": "SRV-H01",
+        "name": "Build Release e regressão automatizada local",
+        "status": "completed",
+        "evidence": "Evidência local em 21/10/2026: build Release sem erros e suíte .NET Release com exit code 0; 17 TRX agregam 5.110 aprovados, 248 NotExecuted e 0 falhas/5.358. Casos ignorados e requisitos opt-in permanecem discriminados no roadmap. Não valida CI remota, runtime instalado ou produção."
+      },
+      {
+        "id": "SRV-H02",
+        "name": "Backup e restauração relacional em MariaDB descartável",
+        "status": "completed",
+        "evidence": "FullSystemBackup 42/42 e fluxo de criação/restauração MariaDB descartável 3/3 aprovados; execução isolada, sem conexão a banco de produção. A evidência não cobre recuperação MongoDB/Supabase nem restore operacional em instalação real."
+      },
+      {
+        "id": "SRV-H03",
+        "name": "Consistência e recuperação integral entre domínios",
+        "status": "in_progress",
+        "evidence": "A versão atual inclui tabelas relacionais de mídia, mas continuam pendentes a consistência do snapshot entre domínios, integração/recuperação MongoDB e Supabase, validação de criptografia e chaves, restore por componente, rollback e idempotência ponta a ponta. Critérios e lacunas constam na auditoria do backup/restauração."
+      },
+      {
+        "id": "SRV-H04",
+        "name": "CI remota e matriz das plataformas suportadas",
+        "status": "blocked",
+        "evidence": "GitHub Actions, workflow CI na branch main, execução 39583429252 (21/10/2026, 07:16:55–07:17:15 BRT): 13 jobs encerrados em falha, runner_id=0 e steps vazios. O job não chegou a iniciar testes; causa operacional exata não confirmada. Gate bloqueado até Actions alocar runner e executar a matriz. Linux e demais testes remotos permanecem sem validação."
+      },
+      {
+        "id": "SRV-H05",
+        "name": "Instalação, atualização e configuração em runtime instalado",
+        "status": "pending",
+        "evidence": "Não foi validada nesta homologação a instalação limpa e atualização em Windows e Linux, inicialização do serviço instalado, health/operabilidade nem a configuração ativa do servidor. Builds e testes em árvore de trabalho não contam como runtime instalado."
+      },
+      {
+        "id": "SRV-H06",
+        "name": "Fluxo E2E de mídia e Nebula em ambiente real",
+        "status": "pending",
+        "evidence": "Falta evidência E2E reproduzível em ambiente de homologação para reprodução real (incluindo áudio/imagens) e download, upload, montagem, refresh do disco, cache e recuperação/performance do Nebula. Testes de contrato não substituem o smoke operacional."
+      },
+      {
+        "id": "SRV-H07",
+        "name": "Aceite formal do servidor e da operação",
+        "status": "pending",
+        "evidence": "Aceite por responsável e validação operacional de produção não foram registrados; não houve alteração ou certificação de produção nesta consolidação. Este gate só fecha com evidência de aprovação formal após os demais critérios aplicáveis."
+      }
+    ]
+  },
   "androidHomologation": {
     "source": "MulletaFlix-android/TODO-APP.md e relatórios Gradle/JUnit locais",
     "sourceUrl": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-android/TODO-APP.md",
@@ -3003,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-formal-homologation-matrix-consolidated-2026-10-21-0935",
+      "title": "Matriz formal do servidor e distinção do checklist do roadmap publicadas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Auditoria documental do roadmap do servidor e da cobertura de backup/restauração; publicação no portal",
+      "location": "Portal · matriz formal do servidor Windows/Linux",
+      "scope": "Consolidar gates formais com estados, critérios e evidências; separar auditoria automatizada do aceite de produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-21T09:15:07-03:00",
+      "updatedAt": "2026-10-21T09:35:00-03:00",
+      "evidence": "Contrato público atualizado com 7 gates igualmente ponderados: build/testes Release locais e restore relacional MariaDB descartável concluídos (2/7, 28,6%); backup integral entre domínios em andamento; CI remota bloqueada por execução 39583429252 com runner_id=0 e nenhum step iniciado; instalação/runtime, E2E real de mídia/Nebula e aceite formal pendentes. Auditoria automatizada separada: 5.110/5.358 (95,4%; 248 NotExecuted, zero falhas). O 83% do roadmap significa apenas 331/401 checkboxes concluídos e não mede homologação, aprovação de testes ou produção. Critérios e fontes disponíveis na seção de homologação do servidor. Nenhuma instalação, configuração, banco ou release do servidor foi alterada.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
+      ]
+    },
     {
       "id": "server-release-gate-backup-e2e-pending-2026-10-21-0750",
       "title": "Release do servidor bloqueada: restore integral e melhorias planejadas pendentes",

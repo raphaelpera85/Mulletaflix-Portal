@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11131a">
+  <title>Homologação formal do servidor · MulletFlix</title>
+  <link rel="stylesheet" href="site-theme.css">
+  <style>
+    .document-page{padding-bottom:64px}.document-hero{padding:48px 0 28px}.document-section{margin:20px 0;padding:26px;border:1px solid var(--line);background:var(--surface)}.document-section h2{margin-top:0}.document-section li{margin:12px 0;color:var(--muted)}.document-section li strong{color:var(--text)}.document-section a{color:var(--red-soft)}.document-note{margin-top:24px;padding:18px;border:1px solid var(--line);background:var(--surface-2);color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="wrap"><nav class="nav" aria-label="Navegação principal"><a class="brand" href="index.html"><img src="mulletaflix-umbrella-transparent.png" alt="Símbolo MulletaFlix"><span class="mf-wordmark"><span>Mulleta</span><em>Flix</em></span></a><div class="navlinks"><a href="index.html#recursos">Recursos</a><a href="docs.html">Documentação</a><a href="downloads.html">Downloads</a><a href="updates.html">Atualizações</a><a href="homologacao.html">Homologação</a></div></nav></div></header>
+  <main class="wrap document-page">
+    <header class="document-hero">
+      <div class="eyebrow">Critérios, estados e evidências</div>
+      <h1>Homologação formal do <span>servidor</span>.</h1>
+      <p class="lead">Esta matriz acompanha evidência técnica local, integração, operação instalada e aceite formal. Ela não certifica produção.</p>
+    </header>
+    <section class="document-section">
+      <h2>Como o percentual é calculado</h2>
+      <p>O total considera sete gates de mesmo peso. A completude é o número de gates com estado <code>completed</code> dividido por sete, arredondado a uma casa decimal. Gates em andamento, pendentes ou bloqueados não recebem crédito parcial. O indicador é separado da porcentagem da auditoria automatizada.</p>
+      <p>Um gate concluído significa que existe evidência para o critério local descrito; não implica execução em produção. O aceite formal só muda para aprovado depois de registrar a validação operacional e a aprovação responsável.</p>
+    </section>
+    <section class="document-section">
+      <h2>Gates de saída</h2>
+      <ol>
+        <li><strong>Build Release e regressão automatizada local:</strong> build sem erros, execução auditável com exit code e resultados agregados; ignorados e integrações opt-in discriminados.</li>
+        <li><strong>Backup/restauração relacional isolada:</strong> testes de unidade e fluxo ponta a ponta em banco descartável, sem depender de produção.</li>
+        <li><strong>Consistência e recuperação integral:</strong> snapshot consistente entre domínios, MongoDB/Supabase, criptografia/chaves, restore por componente, rollback e idempotência.</li>
+        <li><strong>CI remota/plataformas:</strong> workflows remotos verdes e matriz dos sistemas operacionais suportados.</li>
+        <li><strong>Instalação/configuração/runtime:</strong> instalação limpa e atualização, serviço inicializado, health e configuração ativa em Windows e Linux.</li>
+        <li><strong>E2E operacional:</strong> mídia real (reprodução, áudio e imagens) e Nebula (download, upload, montagem, refresh, cache e recuperação/performance).</li>
+        <li><strong>Aceite formal:</strong> evidência operacional aprovada e registrada pelo responsável após os gates aplicáveis.</li>
+      </ol>
+    </section>
+    <section class="document-section">
+      <h2>Fontes de evidência</h2>
+      <ul>
+        <li><a href="https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md">Roadmap tecnológico do servidor e da web</a></li>
+        <li><a href="https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md">Auditoria de cobertura de backup/restauração</a></li>
+        <li><a href="homologacao-status.json">Snapshot público de status e evidências</a></li>
+      </ul>
+      <p class="document-note"><strong>Atualização:</strong> 21/10/2026. Dois gates locais concluídos (28,6%); backup integral em andamento; três gates pendentes e um bloqueado por falta de runner no CI remoto (nenhum step iniciou; causa operacional exata não confirmada). O aceite formal permanece pendente.</p>
+    </section>
+  </main>
+</body>
+</html>

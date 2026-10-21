@@ -21,6 +21,7 @@
     byId('coverage-pending').textContent = Number(coverage.pending) || 0;
     byId('coverage-in-progress').textContent = inProgress;
     byId('coverage-total').textContent = total;
+    byId('coverage-clarification').textContent = `Este percentual é a contagem literal de itens marcados no checklist do roadmap (${completed}/${total}); não mede aprovação de testes, homologação formal nem prontidão de produção. Consulte as matrizes formais abaixo.`;
     document.querySelectorAll('[data-coverage-percent]').forEach(element => { element.textContent = `${percent}%`; });
     byId('coverage-bar').style.width = `${Math.min(100, percent)}%`;
     byId('coverage-source').textContent = `${coverage.definition || 'Fonte não informada'} Atualizado em ${date(data.generatedAt)}.`;
@@ -52,7 +53,15 @@
   const renderTracks = (data, runs, releases) => {
     const latest = {};
     (runs || []).forEach(run => {
-      const key = /android|apk|mobile/i.test(`${run.name} ${run.workflow?.name || ''}`) ? 'android' : 'server';
+      const workflowName = `${run.name || ''} ${run.workflow?.name || ''}`;
+      const key = /android|apk|mobile/i.test(workflowName)
+        ? 'android'
+        : /web|portal|frontend|playwright|vite|typecheck/i.test(workflowName)
+          ? 'web'
+          : /server|servidor|nebula|\.net|mariadb|mongo|^ci\b/i.test(workflowName)
+            ? 'server'
+            : null;
+      if (!key) return;
       if (!latest[key] || new Date(run.created_at) > new Date(latest[key].created_at)) latest[key] = run;
     });
     const stable = (releases || []).filter(release => !release.draft && !release.prerelease);
@@ -94,6 +103,22 @@
       : '';
     byId('android-homologation-table').innerHTML = areas.length ? areas.map(area => `<tr><td><strong>${escapeHtml(area.name)}</strong><br><small>${escapeHtml(area.id)}</small></td><td><span class="status-chip ${statusClass(area.status)}"><i></i>${escapeHtml(labels[area.status] || area.status)}</span></td><td>${escapeHtml(area.evidence)}</td></tr>`).join('') : '<tr><td colspan="3" class="empty-cell">Nenhuma área Android registrada.</td></tr>';
   };
+  const renderServerHomologation = data => {
+    const homologation = data.serverHomologation || {};
+    const areas = Array.isArray(homologation.areas) ? homologation.areas : [];
+    const counts = areas.reduce((result, area) => {
+      result[area.status] = (result[area.status] || 0) + 1;
+      return result;
+    }, {});
+    const percent = areas.length ? Math.round(((counts.completed || 0) / areas.length) * 1000) / 10 : 0;
+    const labels = { completed: 'Evidência local validada', in_progress: 'Em andamento', pending: 'Pendente', blocked: 'Bloqueado' };
+    byId('server-homologation-percent').textContent = `${percent}%`;
+    byId('server-homologation-progress-bar').style.width = `${Math.min(100, percent)}%`;
+    byId('server-homologation-progress').setAttribute('aria-valuenow', String(percent));
+    const blocked = counts.blocked || 0;
+    byId('server-homologation-state').textContent = `${counts.completed || 0}/${areas.length} gates concluídos · ${counts.in_progress || 0} em andamento · ${counts.pending || 0} pendentes · ${blocked} ${blocked === 1 ? 'bloqueado' : 'bloqueados'} · aceite formal ${homologation.formalSignoff === 'approved' ? 'aprovado' : 'pendente'}`;
+    byId('server-homologation-table').innerHTML = areas.length ? areas.map(area => `<tr><td><strong>${escapeHtml(area.name)}</strong><br><small>${escapeHtml(area.id)}</small></td><td><span class="status-chip ${statusClass(area.status)}"><i></i>${escapeHtml(labels[area.status] || area.status)}</span></td><td>${escapeHtml(area.evidence)}</td></tr>`).join('') : '<tr><td colspan="3" class="empty-cell">Nenhum gate formal do servidor registrado.</td></tr>';
+  };
   const renderEvents = data => {
     const events = Array.isArray(data.events) ? data.events : [];
     const recentEvents = events.slice().sort((a, b) => (Date.parse(b.updatedAt || '') || 0) - (Date.parse(a.updatedAt || '') || 0));
@@ -106,7 +131,7 @@
       fetch(`${apiRoot}/releases?per_page=20`, { headers: { Accept: 'application/vnd.github+json' } }).then(response => response.ok ? response.json() : []).catch(() => [])
     ]);
     latestData = data;
-    renderCoverage(data); renderFeatures(data); renderTracks(data, runs.workflow_runs, releases); renderAndroidHomologation(data); renderEvents(data);
+    renderCoverage(data); renderFeatures(data); renderTracks(data, runs.workflow_runs, releases); renderServerHomologation(data); renderAndroidHomologation(data); renderEvents(data);
     byId('dashboard-state').textContent = 'Atualizado'; byId('dashboard-state').className = 'status-chip is-good';
   };
   byId('feature-search').addEventListener('input', () => { featurePage = 1; if (latestData) renderFeatures(latestData); });
