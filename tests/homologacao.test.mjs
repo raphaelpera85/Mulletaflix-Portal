@@ -7,6 +7,24 @@ const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json',
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal reports the incomplete full-system backup without claiming production validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-full-system-backup-coverage-audit-2026-10-21');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.location, /backup-coverage-audit\.md/);
+    assert.match(event.evidence, /23\/23/);
+    assert.match(event.evidence, /sem enumerar os demais seis contextos/);
+    assert.match(event.evidence, /seis coleções Mongo conhecidas/);
+    assert.match(event.evidence, /stats.*opcional/);
+    assert.match(event.evidence, /BotTokensCollection configurável/);
+    assert.match(event.evidence, /Nenhum código runtime, banco ou produção foi alterado\/acessado/);
+    assert.match(event.evidence, /Sem nova release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records the current public server release and confirms there is no unreleased code diff', () => {
     const event = statusData.events.find(item => item.id === 'server-release-12-1-26-revalidated-2026-10-21-0008');
 
@@ -810,7 +828,7 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-remote-image-decode-fix-2026-10-21-0054');
+    const newestEvent = statusData.events.find(event => event.id === 'server-full-system-backup-coverage-audit-2026-10-21');
     const dashboard = createDashboard();
     await settleDashboard();
 
@@ -818,12 +836,25 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'in_progress');
-    assert.match(newestEvent.evidence, /exige decodificação completa/);
-    assert.match(newestEvent.evidence, /177\/177/);
-    assert.match(newestEvent.evidence, /817\/817/);
-    assert.match(newestEvent.evidence, /teste provider\/CDN\/mídia real/i);
+    assert.match(newestEvent.evidence, /23\/23/);
+    assert.match(newestEvent.evidence, /backup\/restore de todos os stores/);
+    assert.match(newestEvent.evidence, /seis coleções Mongo conhecidas/);
+    assert.match(newestEvent.evidence, /produção foi alterado\/acessado/);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
+});
+
+test('homologation timeline does not coerce an unknown progress percentage to zero', async () => {
+    const dashboard = createDashboard();
+    await settleDashboard();
+
+    const renderedEvents = dashboard.getElement('event-list').innerHTML;
+    const eventStart = renderedEvents.indexOf('Servidor: auditoria identifica cobertura parcial do backup integral');
+    const eventEnd = renderedEvents.indexOf('</li>', eventStart);
+
+    assert.notEqual(eventStart, -1);
+    assert.notEqual(eventEnd, -1);
+    assert.doesNotMatch(renderedEvents.slice(eventStart, eventEnd), /0%/);
 });
 
 test('portal publishes the latest local cross-language server regression audit', async () => {

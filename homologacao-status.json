@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T01:24:18-03:00",
+  "generatedAt": "2026-10-21T01:39:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,23 @@
     }
   ],
   "events": [
+    {
+      "id": "server-full-system-backup-coverage-audit-2026-10-21",
+      "title": "Servidor: auditoria identifica cobertura parcial do backup integral",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows; análise estática .NET 10; teste focal Release",
+      "location": "MulletaFlix-master/docs/backup-coverage-audit.md",
+      "scope": "Documentar a cobertura real dos contextos EF, IntroSkipper e Mongo Nebula e os gates para uma correção segura do backup/restore.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T01:24:18-03:00",
+      "updatedAt": "2026-10-21T01:39:05-03:00",
+      "evidence": "A fonte de BackupService mostra exportação/restauração de MulletaFlixDbContext + HistoryRow, sem enumerar os demais seis contextos centrais nem os dois contextos IntroSkipper de schema separado. Mongo Nebula tem seis coleções Mongo conhecidas fora desse backup: files, nebula_admission, users, bot_tokens, operation_replays e stats opcional; BotTokensCollection configurável pode apontar para outra coleção. A sincronização Supabase é independente e não prova cobertura integral. Os testes focados existentes passaram 23/23, mas não verificam backup/restore de todos os stores. ZIP sem criptografia explícita; manifesto exige versão exata 0.2.0 e a restauração aplica arquivos antes de concluir o banco. Auditoria registrada em docs/backup-coverage-audit.md. Nenhum código runtime, banco ou produção foi alterado/acessado; cobertura integral e restore isolado continuam pendentes. Sem nova release por não haver delta de runtime.",
+      "release": "Sem nova release; auditoria documental, cobertura incompleta pendente",
+      "links": []
+    },
     {
       "id": "server-remote-image-decode-fix-2026-10-21-0054",
       "title": "Servidor: valida bytes de imagens antes de substituir capas",
