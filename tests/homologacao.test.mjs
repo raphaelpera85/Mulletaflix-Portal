@@ -3805,6 +3805,8 @@ test('portal renders the Nebula Telegram acceptance and Mongo checkpoint ambigui
     assert.match(event.evidence, /falha Mongo/);
     assert.match(event.evidence, /Isto é risco estático, não evidência de duplicata em produção/);
     assert.match(event.evidence, /retry simples não cobre crash nem resposta perdida/);
+    assert.match(event.evidence, /Release 1\.517 aprovados, 65 ignorados, 0 falhas/);
+    assert.match(event.evidence, /não simulam aceite Telegram seguido de falha do checkpoint/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
