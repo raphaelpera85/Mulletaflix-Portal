@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T00:19:00-03:00",
+  "generatedAt": "2026-10-21T00:30:53-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3003,6 +3003,20 @@
     }
   ],
   "events": [
+    {
+      "id": "server-remote-image-byte-validation-audit-2026-10-21-0029",
+      "title": "Servidor: auditoria de bytes corrompidos em imagens remotas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows; análise estática .NET 10",
+      "location": "MulletaFlix-master/docs/image-metadata-flow-audit.md",
+      "scope": "Auditar se imagens remotas com MIME image/* são decodificadas antes da persistência e definir cobertura segura dos fluxos de providers e metadados.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T00:30:00-03:00",
+      "evidence": "Inspeção da fonte confirmou que ItemImageProvider valida status/MIME, mas ImageSaver grava o stream sem decodificação; MetadataService.SaveRemoteResultImages usa o mesmo salvamento e também não valida os bytes. Há IImageEncoder.IsImageDecodable(path, maxPixelCount), mas NullImageEncoder retorna false para tudo e não sinaliza indisponibilidade separadamente; rejeitar todo false poderia quebrar instalações sem decoder. Nenhum runtime foi alterado e não foram executados testes nesta sessão. Próximo: desenho compartilhado transacional com resultado tri-state, limites de pixels/tamanho, fallback e preservação da arte anterior, cobrindo ambos os fluxos. Provider/CDN real, instalação e renderização visual permanecem pendentes."
+    },
     {
       "id": "server-media-notification-brand-icon-2026-10-20-2204",
       "title": "Servidor: notificações de novas mídias usam marca MulletaFlix",

@@ -54,7 +54,6 @@ test('portal documents the corrected MulletaFlix notification brand icon and rem
     assert.match(event.evidence, /src\/assets\/branding\/icon\.png/);
     assert.match(event.evidence, /418\/418 em 75 arquivos/);
     assert.match(event.evidence, /confirmação visual.*pendente/);
-    assert.equal(statusData.events[0].id, event.id);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -811,7 +810,7 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-media-notification-brand-icon-2026-10-20-2204');
+    const newestEvent = statusData.events.find(event => event.id === 'server-remote-image-byte-validation-audit-2026-10-21-0029');
     const dashboard = createDashboard();
     await settleDashboard();
 
@@ -819,9 +818,9 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'in_progress');
-    assert.match(newestEvent.evidence, /418\/418 em 75 arquivos/);
+    assert.match(newestEvent.evidence, /ItemImageProvider valida status\/MIME/);
+    assert.match(newestEvent.evidence, /não foram executados testes nesta sessão/);
     assert.equal(statusData.events[0].id, newestEvent.id);
-    assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
 
