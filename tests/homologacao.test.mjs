@@ -4009,3 +4009,17 @@ test('portal records Python Telegram retry reconciliation while formal homologat
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the Mongo queue identity regression without claiming execution or homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-queue-identity-regression-2026-10-21-1857');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /113 aprovados, 1 ignorado, 0 falhas/);
+    assert.match(event.evidence, /A regressão compilou, mas não executou/);
+    assert.match(event.evidence, /Sem release, instalação ou produção/);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

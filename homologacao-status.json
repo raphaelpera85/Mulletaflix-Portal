@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T18:43:47-03:00",
+  "generatedAt": "2026-10-21T18:57:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8977,6 +8977,24 @@
       "updatedAt": "2026-10-21T18:43:47-03:00",
       "evidence": "C# nativo previamente validado: 26/26 testes Release focados contra MongoDB 8.3.7 efêmero; processo encerrado e porta fechada. No motor Python, foi criado journal local atômico e integração nos workers paralelo e small: intenção persistida antes do POST, confirmação local antes do checkpoint Mongo e busca MTProto por UUID + marcadores exatos após resposta ambígua ou restart. Python 3.10: suíte completa 671/671, incluindo regressão que confirma que uma parte journalizada fora de ordem não é reenviada; py_compile e git diff --check passaram. Cenários simulados cobrem resposta perdida sem segundo POST, retomada após falha de checkpoint Mongo, confirmação fora de ordem sem duplicação e retry automático quando o histórico não encontra a mensagem. Pester de cópia de runtime passou 1/1 e o script de integridade aceitou o stage. Ainda sem Telegram/Mongo remotos, instalação/runtime, CI remota ou produção; busca e permissões MTProto reais não foram homologadas. Retentativas automáticas permanecem conforme decisão do usuário e duplicata residual é possível; exactly-once não é garantido. Homologação formal permanece 2/7 (28,6%), não creditada por estes testes locais. Nenhum release do servidor criado.",
       "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
+      ]
+    },
+    {
+      "id": "server-nebula-queue-identity-regression-2026-10-21-1857",
+      "title": "Nebula: regressão para preservar o ID Mongo da fila de upload",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; teste Mongo opt-in",
+      "location": "NebulaMongoContext.InsertFileDocIfAbsentAsync e NebulaQueueConcurrencyMongoTests",
+      "scope": "Cobrir preservação do _id atribuído pelo worker durante upsert, deduplicação por local_path e atualização posterior após claim da lease.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T18:57:50-03:00",
+      "evidence": "A fonte atual preserva o _id caller-assigned no $setOnInsert; foi adicionada regressão opt-in para inserir, rejeitar duplicata por local_path, reivindicar lease e atualizar progresso com o ID original. Filtro Release FullSystemBackup + NebulaStreamEngineTests + teste novo: 113 aprovados, 1 ignorado, 0 falhas. A regressão compilou, mas não executou: sem Mongo isolado/URI, mongod, Docker ou Podman disponíveis. A integração real permanece pendente; a auditoria global e homologação formal não mudam (2/7, 28,6%). Sem release, instalação ou produção.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]
     }
