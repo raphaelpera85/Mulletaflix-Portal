@@ -7,6 +7,20 @@ const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json',
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records the current public server release and confirms there is no unreleased code diff', () => {
+    const event = statusData.events.find(item => item.id === 'server-release-12-1-26-revalidated-2026-10-21-0008');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.location, /12\.1\.26\.md/);
+    assert.match(event.evidence, /v12\.1\.26 como release pública/);
+    assert.match(event.evidence, /não há correção de servidor não publicada/);
+    assert.match(event.evidence, /Homologação formal.*pendentes/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records cancellation-aware test waits and remaining analyzer debt', async () => {
     const event = statusData.events.find(item => item.id === 'server-test-waits-runner-cancellation-2026-10-20-2142');
 

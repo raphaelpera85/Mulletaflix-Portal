@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T23:57:09-03:00",
+  "generatedAt": "2026-10-21T00:08:40-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3016,6 +3016,20 @@
       "progressPercent": 90,
       "updatedAt": "2026-10-20T22:12:00-03:00",
       "evidence": "Busca no código ativo encontrou o PNG Jellyfin somente como fallback de icon/badge das notificações; agora usa src/assets/branding/icon.png da MulletaFlix, mantendo o poster da mídia quando disponível. Favicon/manifest, login, botão do servidor, screensaver e tray foram conferidos e já usam branding MulletaFlix. `npm run build:check` passou. A primeira suíte concorrente passou 416/418 devido a dois timeouts de 10 ms em testes de layout não relacionados; o arquivo focado passou 107/107 e a suíte completa repetida com --maxWorkers=2 passou 418/418 em 75 arquivos. A confirmação visual de uma notificação real no cliente atualizado ainda está pendente; sem build de pacote, instalação, produção ou release."
+    },
+    {
+      "id": "server-release-12-1-26-revalidated-2026-10-21-0008",
+      "title": "Servidor: release v12.1.26 revalidada; sem correção de código pós-release",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "GitHub API pública e checkout main do servidor",
+      "location": "docs/releases/12.1.26.md; MulletaFlix-master/Directory.Build.props",
+      "scope": "Reconciliar a solicitação de release com a main, tag e artefatos publicados do servidor.",
+      "status": "completed",
+      "progressPercent": 100,
+      "updatedAt": "2026-10-21T00:08:40-03:00",
+      "evidence": "A GitHub API confirma v12.1.26 como release pública, não draft/prerelease, com instalador Windows, ZIP de atualização e tar.gz Linux x64; tamanhos e SHA-256 coincidem com docs/releases/12.1.26.md. A tag aponta para 7e463a26cb0e4d4f3204c86aff6a0e755619322f, que já contém o código atual de Directory.Build.props (VersionPrefix 12.1.26). A única diferença de main após a tag é o commit 8f429f58, com duas alterações somente documentais em AUDIT-EVIDENCE.md e 12.1.26.md. Portanto, não há correção de servidor não publicada para gerar uma v12.1.27; uma nova versão sem alteração de código seria redundante. Testes da release já registrados: focal de imagens 97/97; Implementations 1.508 aprovados, 64 ignorados, 0 falhas; pacote Linux foi cross-publish no Windows, sem host Linux nativo. Homologação formal, runtime instalado e produção continuam pendentes."
     },
     {
       "id": "server-test-waits-runner-cancellation-2026-10-20-2142",
