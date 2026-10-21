@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T06:00:45-03:00",
+  "generatedAt": "2026-10-21T09:20:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3019,6 +3019,23 @@
       "evidence": "Release pública v12.1.32 não-draft; commit servidor 53d37e9d439e1464b8faa1f34375e27e6fe1922c enviado a main e tag v12.1.32 aponta para o mesmo commit. GitHub API confirmou três assets e digests: ZIP Windows 388.586.940 bytes (SHA-256 42DE6940B6D45FBE8DD9CF324243AACFFC149DC5C0F6B933025389161BAAF48C), instalador Windows 423.402.774 bytes (SHA-256 E54DD7606199236F4C2EDA7B1847FCBD71F353FAAA18B7808114782C8E4A5EEF), tar.gz Linux x64 137.187.232 bytes (SHA-256 C34007A6CE4879D704F89968F021BADBE93DD101BA2BB692125F1D1D135A7FE4). FullSystemBackup 39/39; Jellyfin.Server.Implementations.Tests Release 1.515 aprovados, 65 ignorados, zero falhas. O restore agora pré-valida o conteúdo JSON relacional em streaming antes de copiar os arquivos ou abrir o banco. ZIP verificado com 3.353 entradas e servidor, web, tray, Nebula, NSSM e MariaDB; tar.gz verificado com servidor, web e worker Nebula. Linux foi cross-published em Windows, não em host Linux. Restore ainda não transacional. Backup integral continua parcial. CI remota, instalação/upgrade, restore contra produção e homologação em produção não foram executados. Nenhuma instalação ou alteração em produção.",
       "release": "v12.1.32 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.32 (commit 53d37e9d439e1464b8faa1f34375e27e6fe1922c)",
       "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.32"]
+    },
+    {
+      "id": "server-release-12-1-33-notification-branding-2026-10-21-0920",
+      "title": "Servidor v12.1.33 — branding MulletaFlix em todas as notificações",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows; frontend TypeScript/Vitest; pipeline GitHub Actions após tag",
+      "location": "MulletaFlix-web-master/src/components/notifications/notifications.ts",
+      "scope": "Fixar ícone e badge da marca MulletaFlix nas notificações, retirar poster/asset Jellyfin do ícone e validar a release do servidor.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T08:30:00-03:00",
+      "updatedAt": "2026-10-21T09:20:00-03:00",
+      "evidence": "Validação local: teste focal 1/1; suíte web 419/419 em 76 arquivos; build:check, build:production e verify:build aprovados (1.924 arquivos; 294,3 KiB gzip). Auditoria identificou e removeu notificationicon.png legado; os demais assets de ícone usados no web, servidor e tray foram conferidos e correspondem à marca MulletaFlix. Release v12.1.33 ainda não publicada; workflow, pacotes e publicação pendentes. Cliente instalado/produção e Linux nativo não foram testados.",
+      "release": "Preparando v12.1.33; aguardando publicação após gates CI",
+      "links": []
     },
     {
       "id": "server-release-12-1-31-backup-semantic-validation-2026-10-21-0506",

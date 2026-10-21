@@ -3643,3 +3643,18 @@ test('portal records server release 12.1.32 with semantic JSON restore validatio
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Release servidor v12\.1\.32 publicada/);
 });
+
+test('portal records the v12.1.33 notification brand fix without claiming publication or production validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-release-12-1-33-notification-branding-2026-10-21-0920');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.scope, /ícone e badge da marca MulletaFlix/);
+    assert.match(event.evidence, /419\/419 em 76 arquivos/);
+    assert.match(event.evidence, /notificationicon\.png legado/);
+    assert.match(event.evidence, /Release v12\.1\.33 ainda não publicada/);
+    assert.match(event.evidence, /produção e Linux nativo não foram testados/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
