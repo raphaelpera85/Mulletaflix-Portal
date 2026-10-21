@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T18:00:01-03:00",
+  "generatedAt": "2026-10-21T18:07:54-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8956,8 +8956,8 @@
       "scope": "Propagar leaseId por toda mutação; exigir lease_until vigente; revalidar antes de cada envio e após backoff, preservando retries automáticos sem escrita por worker obsoleto.",
       "status": "completed",
       "progressPercent": null,
-      "updatedAt": "2026-10-21T18:00:01-03:00",
-      "evidence": "C# e os três workers Python exigem _id, worker_id, lease_id e lease_until > now para mutações; renewal/acquire vencidos são recusados. A lease é revalidada antes de cada envio/parte e novamente após o backoff, inclusive no worker legado. Python Nebula 665/665; workers focados 19/19; py_compile aprovado. Testes .NET Release direcionados 313/313, 0 ignorados/falhas, incluindo MongoDB 8.3.7 descartável em 127.0.0.1:27099; processo encerrado e porta fechada. NebulaStreamEngineTests 69/69. dotnet format da implementação C# passou; verificação do projeto de testes reporta avisos SA1201/xUnit1051, portanto não declarada limpa. git diff --check aprovado. Sem upload real, CI remota, instalação, produção ou release; homologação formal global continua 2/7 (28,6%). Retentativas automáticas permanecem habilitadas conforme decisão do usuário; envio aceito cuja resposta/checkpoint se perca ainda pode duplicar; exactly-once não é garantido.",
+      "updatedAt": "2026-10-21T18:07:54-03:00",
+      "evidence": "C# e os três workers Python exigem _id, worker_id, lease_id e lease_until > now para mutações; renewal/acquire vencidos são recusados. A lease é revalidada antes de cada envio/parte e novamente após o backoff, inclusive no worker legado. Python Nebula 665/665; workers focados 19/19; py_compile aprovado. Testes .NET Release direcionados 313/313, 0 ignorados/falhas, incluindo MongoDB 8.3.7 descartável em 127.0.0.1:27099; processo encerrado e porta fechada. NebulaStreamEngineTests 69/69. dotnet format --verify-no-changes passou para implementação e testes focados; git diff --check aprovado. Sem upload real, CI remota, instalação, produção ou release; homologação formal global continua 2/7 (28,6%). Retentativas automáticas permanecem habilitadas conforme decisão do usuário; envio aceito cuja resposta/checkpoint se perca ainda pode duplicar; exactly-once não é garantido.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]

@@ -3978,8 +3978,7 @@ test('portal records Nebula upload lease fencing without claiming production hom
     assert.match(event.evidence, /workers focados 19\/19/);
     assert.match(event.evidence, /Testes .NET Release direcionados 313\/313, 0 ignorados\/falhas/);
     assert.match(event.evidence, /NebulaStreamEngineTests 69\/69/);
-    assert.match(event.evidence, /dotnet format da implementação C# passou/);
-    assert.match(event.evidence, /projeto de testes.*SA1201\/xUnit1051/);
+    assert.match(event.evidence, /dotnet format --verify-no-changes passou para implementação e testes focados/);
     assert.match(event.evidence, /sem upload real, CI remota, instalação, produção ou release/i);
     assert.match(event.evidence, /homologação formal global continua 2\/7 \(28,6%\)/);
     assert.match(event.evidence, /Retentativas automáticas permanecem habilitadas/);
