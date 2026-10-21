@@ -3478,3 +3478,23 @@ test('server publishes the Nebula cryptography audit and does not claim producti
     assert.match(server.testAudit.label, /62 dependências sem advisories conhecidos/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records release revalidation, blocking GitHub Actions billing state', async () => {
+    const event = statusData.events.find(item => item.id === 'server-release-flow-recheck-2026-10-21-0019');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /v12\.1\.26 publicada em main/);
+    assert.match(event.evidence, /97\/97/);
+    assert.match(event.evidence, /418\/418 em 75 arquivos/);
+    assert.match(event.evidence, /conta está bloqueada por cobrança/);
+    assert.match(event.evidence, /Não há código novo sem release/);
+    assert.match(event.evidence, /nenhuma instalação ou alteração de produção foi feita/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /release v12\.1\.26 revalidada; Actions bloqueado por cobrança/);
+});

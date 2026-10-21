@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T00:08:40-03:00",
+  "generatedAt": "2026-10-21T00:19:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8362,6 +8362,21 @@
       "startedAt": "2026-10-20T23:57:09-03:00",
       "updatedAt": "2026-10-20T23:57:09-03:00",
       "evidence": "Commit servidor 7e463a26cb0e4d4f3204c86aff6a0e755619322f enviado a main. Release pública v12.1.26: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.26, com ZIP Windows (388.893.687 bytes; SHA-256 1fbbfe31fbf85945339b138fa7a1b64ef26a8d5dc4359497af4965957c70199a), instalador Windows (423.470.953 bytes; SHA-256 d3cac5acc362b7e834c3d23917061ad136eec212c26f492e28fcce87102e737a) e pacote Linux x64 (137.177.201 bytes; SHA-256 26bad83b20c719fe27114bb1670dc218108bd0e47ed9a633e4315330d173e465); API pública confirmou tag main, release publicada e os três digests. Testes focais de imagens 97/97; solução Release filtro !Integration exit 0; Server.Implementations.Tests 1.508 aprovados, 64 ignorados, 0 falhas. Os pacotes foram validados estruturalmente e o Linux foi cross-publish em Windows; não houve host Linux nativo, runtime instalado, provider/CDN real, mídia real ou teste em produção. Stage e serviço local existentes foram preservados; produção não foi instalada nem alterada. npm ci do build web reportou 12 avisos de vulnerabilidade nas dependências (1 moderada/11 altas), sem mudança de fonte web nesta correção."
+    },
+    {
+      "id": "server-release-flow-recheck-2026-10-21-0019",
+      "title": "Servidor: release v12.1.26 revalidada; Actions bloqueado por cobrança",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release, Node/Vitest, GitHub Releases API",
+      "location": "Release v12.1.26, workflow GitHub Actions e testes de imagens/web",
+      "scope": "Reexecutar validações focais e verificar se existe código de servidor não publicado que justifique uma nova release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-21T00:08:40-03:00",
+      "updatedAt": "2026-10-21T00:19:00-03:00",
+      "evidence": "A API pública confirma v12.1.26 publicada em main com ZIP Windows, instalador Windows x64 e pacote Linux x64; tamanhos conferem com docs/releases/12.1.26.md. main do servidor está limpa em 9889dbd6; após a tag 7e463a26 há apenas documentação e VersionPrefix continua 12.1.26. Testes Release ItemImageProviderRefreshTests + MetadataServiceTests + ItemImageProviderTests passaram 97/97; web Vitest passou 418/418 em 75 arquivos. O workflow público Release v12.1.26 (run 39535737236) falhou antes de executar steps; a anotação oficial informa que a conta está bloqueada por cobrança, e jobs Linux/Windows foram ignorados. Não há código novo sem release, portanto não foi criada versão redundante. CI, instalação limpa/elevada, upgrade, Linux nativo, runtime e smoke de produção permanecem pendentes; nenhuma instalação ou alteração de produção foi feita."
     }
   ]
 }
