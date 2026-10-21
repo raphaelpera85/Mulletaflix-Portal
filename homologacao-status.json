@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T14:46:35-03:00",
+  "generatedAt": "2026-10-21T14:59:28-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-upload-local-journal-2026-10-21-1459",
+      "title": "Nebula: recuperação local de partes Telegram validada em testes",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; patch local não publicado baseado em v12.1.35",
+      "location": "NebulaUploadEngine · NebulaUploadCheckpointJournal · progresso Mongo",
+      "scope": "Evitar reenviar partes cuja confirmação Telegram já foi recebida quando Mongo falha ou o servidor reinicia; manter retentativas automáticas e explicitar o limite da resposta perdida.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T14:51:47-03:00",
+      "updatedAt": "2026-10-21T14:59:28-03:00",
+      "evidence": "Journal local versionado por UUID grava respostas confirmadas antes do checkpoint Mongo; retomada valida UUID/tamanho/mtime, combina partes recuperadas e mantém o array completo em atualizações incrementais. Journal só é removido depois do status completed no Mongo. Testes NebulaUploadCheckpointJournal 4/4; suíte Nebula Release 710 aprovados, 25 ignorados opt-in, 0 falhas; build Jellyfin.Server Release 0 avisos/erros. Teste integrado com Mongo descartável, transporte Telegram isolado, instalação e produção não executados; sem release. A janela entre aceitação Telegram e gravação do journal ainda pode duplicar, porque Bot API não fornece chave de idempotência nem histórico de mensagens enviadas."
+    },
     {
       "id": "server-backup-consistent-snapshot-2026-10-21-1433",
       "title": "Backup: snapshot temporal consistente entre cinco contextos relacionais",

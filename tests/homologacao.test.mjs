@@ -3884,6 +3884,21 @@ test('portal renders the Nebula Telegram acceptance and Mongo checkpoint ambigui
     assert.match(renderedEvents, /Em execução/);
 });
 
+test('portal reports durable Telegram acknowledgement recovery without overstating exactly-once delivery', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-upload-local-journal-2026-10-21-1459');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /journal local versionado por UUID/i);
+    assert.match(event.evidence, /NebulaUploadCheckpointJournal 4\/4/);
+    assert.match(event.evidence, /710 aprovados, 25 ignorados opt-in, 0 falhas/);
+    assert.match(event.evidence, /sem release/);
+    assert.match(event.evidence, /ainda pode duplicar/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal evidence for partial STRM indexing reports the latest focused Release retest', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-partial-strm-index-2026-10-21');
 
