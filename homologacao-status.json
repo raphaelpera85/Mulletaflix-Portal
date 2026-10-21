@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T18:20:34-03:00",
+  "generatedAt": "2026-10-21T18:38:56-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8964,18 +8964,18 @@
     },
     {
       "id": "server-nebula-python-ambiguous-retry-audit-2026-10-21-1820",
-      "title": "Nebula: paridade de retries ambíguos no motor Python ainda pendente",
+      "title": "Nebula: reconciliação de retries ambíguos também no motor Python",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
       "local": "Windows, .NET Release e Python 3.10 em ambiente de teste isolado",
-      "location": "NebulaFtpManager.StartPythonStreamServiceAsync, Tools/NebulaPython/main.py e testes de workers",
-      "scope": "Auditar se o motor Python configurável reconcilia aceitação Telegram sem resposta/checkpoint antes de repetir o envio, mantendo retentativas automáticas.",
+      "location": "NebulaFtpManager.StartPythonStreamServiceAsync, Tools/NebulaPython/main.py, upload_checkpoint.py e empacotamento Windows/Linux",
+      "scope": "Implementar journal durável e reconciliação do histórico Telegram nos workers Python paralelo e small; preservar retentativas automáticas e entregar o módulo no pacote instalado.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-21T18:20:34-03:00",
-      "updatedAt": "2026-10-21T18:20:34-03:00",
-      "evidence": "O motor C# passou 26/26 testes Release focados (NebulaQueueConcurrencyMongoTests + NebulaUploadCheckpointJournalTests) contra MongoDB 8.3.7 efêmero em 127.0.0.1:27099; o processo foi encerrado e a porta fechada. Testes Python 3.10 de upload paralelo/legado passaram 14/14, mas não cobrem aceite Telegram seguido de resposta perdida ou checkpoint Mongo falho. A fonte confirma que UsePythonEngine pode iniciar upload_worker_parallel e upload_small_file_worker, que usam upload_part_with_retries e repetem TimeoutError/ConnectionError; o journal/reconciliação C# não está integrado nesse caminho alternativo. Isso é uma lacuna estática, não prova de configuração ativa ou duplicata em produção. Retentativas automáticas permanecem por decisão do usuário; reconciliação antes do próximo envio é pendente. Sem alteração de código, upload real, instalação, produção ou release. Homologação formal permanece 2/7 (28,6%); testes focados não contam como aceite.",
+      "updatedAt": "2026-10-21T18:38:56-03:00",
+      "evidence": "C# nativo previamente validado: 26/26 testes Release focados contra MongoDB 8.3.7 efêmero; processo encerrado e porta fechada. No motor Python, foi criado journal local atômico e integração nos workers paralelo e small: intenção persistida antes do POST, confirmação local antes do checkpoint Mongo e busca MTProto por UUID + marcadores exatos após resposta ambígua ou restart. Testes Python 3.10 completos passaram 670/670; py_compile e git diff --check passaram. Cenários simulados cobrem resposta perdida sem segundo POST, retomada após falha de checkpoint Mongo e retry automático quando o histórico não encontra a mensagem. Pester de cópia de runtime passou 1/1 e o script de integridade aceitou o stage. Ainda sem Telegram/Mongo remotos, instalação/runtime, CI remota ou produção; busca e permissões MTProto reais não foram homologadas. Retentativas automáticas permanecem conforme decisão do usuário e duplicata residual é possível; exactly-once não é garantido. Homologação formal permanece 2/7 (28,6%), não creditada por estes testes locais. Nenhum release do servidor criado.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]

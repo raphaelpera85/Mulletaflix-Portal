@@ -3987,7 +3987,7 @@ test('portal records Nebula upload lease fencing without claiming production hom
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
-test('portal keeps Python ambiguous Telegram retry parity open without inflating homologation', () => {
+test('portal records Python Telegram retry reconciliation while formal homologation stays open', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-python-ambiguous-retry-audit-2026-10-21-1820');
     const server = statusData.tracks.find(track => track.id === 'server');
 
@@ -3995,13 +3995,15 @@ test('portal keeps Python ambiguous Telegram retry parity open without inflating
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.equal(event.progressPercent, null);
+    assert.match(event.title, /reconciliação de retries ambíguos também no motor Python/);
     assert.match(event.location, /StartPythonStreamServiceAsync/);
-    assert.match(event.evidence, /26\/26 testes Release focados/);
-    assert.match(event.evidence, /Python 3\.10.*14\/14/);
-    assert.match(event.evidence, /não cobrem aceite Telegram seguido de resposta perdida/);
-    assert.match(event.evidence, /UsePythonEngine pode iniciar/);
-    assert.match(event.evidence, /repetem TimeoutError\/ConnectionError/);
-    assert.match(event.evidence, /Sem alteração de código, upload real, instalação, produção ou release/);
+    assert.match(event.location, /upload_checkpoint\.py/);
+    assert.match(event.evidence, /Python 3\.10 completos passaram 670\/670/);
+    assert.match(event.evidence, /resposta perdida sem segundo POST/);
+    assert.match(event.evidence, /Pester de cópia de runtime passou 1\/1/);
+    assert.match(event.evidence, /Ainda sem Telegram\/Mongo remotos, instalação\/runtime, CI remota ou produção/);
+    assert.match(event.evidence, /Retentativas automáticas permanecem/);
+    assert.match(event.evidence, /Nenhum release do servidor criado/);
     assert.match(event.evidence, /Homologação formal permanece 2\/7 \(28,6%\)/);
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
