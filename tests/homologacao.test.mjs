@@ -3934,8 +3934,11 @@ test('portal reports ambiguous Telegram recovery as in progress pending live MTP
 
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
-    assert.match(event.evidence, /teste focado 7\/7 e suíte Nebula 738\/738/);
-    assert.match(event.evidence, /Busca MTProto real.*homologação formal seguem pendentes/);
+    assert.match(event.evidence, /teste de resposta perdida\/reinício passou 1\/1/);
+    assert.match(event.evidence, /NebulaQueueConcurrencyMongoTests \+ NebulaUploadCheckpointJournalTests passaram 25\/25/);
+    assert.match(event.evidence, /removia o _id do \$setOnInsert/);
+    assert.match(event.evidence, /Retentativas automáticas mantidas/);
+    assert.match(event.evidence, /busca MTProto real.*homologação formal seguem pendentes/);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 

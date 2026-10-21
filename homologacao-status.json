@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:53:23-03:00",
+  "generatedAt": "2026-10-21T16:19:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3066,8 +3066,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-21T14:30:00-03:00",
-      "updatedAt": "2026-10-21T15:53:23-03:00",
-      "evidence": "Validação local Release: teste focado 7/7 e suíte Nebula 738/738, zero falhas/ignorados, com MongoDB 8.3.7 isolado em 127.0.0.1:27099. O teste simula resposta perdida, reinicia a engine e injeta recuperação do histórico, comprovando que não ocorre um segundo POST Bot API. Busca MTProto real, canal/conta de produção, runtime instalado e homologação formal seguem pendentes; quando canal não é acessível ou a mensagem não é localizada, retry automático ainda pode duplicar. Sem release."
+      "updatedAt": "2026-10-21T16:19:06-03:00",
+      "evidence": "Validação local Release: em MongoDB 8.3 isolado em 127.0.0.1:27099, o teste de resposta perdida/reinício passou 1/1 e NebulaQueueConcurrencyMongoTests + NebulaUploadCheckpointJournalTests passaram 25/25. A regressão revelou e corrigiu que InsertFileDocIfAbsentAsync removia o _id do $setOnInsert; Mongo criava outro ID e as transições de falha/retry não encontravam o registro do worker. A reconciliação do histórico antes de reenviar continua; busca MTProto real, canal/conta de produção, runtime instalado e homologação formal seguem pendentes. Retentativas automáticas mantidas; quando histórico/canal não permite localizar a mensagem aceita, pode haver duplicata. Sem release."
     },
     {
       "id": "server-nebula-checkpoint-full-solution-regression-2026-10-21-1508",
