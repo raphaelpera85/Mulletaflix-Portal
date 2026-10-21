@@ -1117,6 +1117,28 @@ test('server restore transaction records isolated MariaDB rollback validation wi
     assert.ok(rendered.indexOf(event.title) >= 0);
 });
 
+test('server backup records cross-context atomic rollback while keeping broader homologation open', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-cross-context-rollback-2026-10-21-1416');
+    const relationalRestore = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H02');
+    const fullRecovery = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests passou 6\/6/);
+    assert.match(event.evidence, /falhas SQL injetadas em ActivityLogs, Series e Books/);
+    assert.match(event.evidence, /Jellyfin.Server.csproj passou com 0 avisos e 0 erros/);
+    assert.match(event.evidence, /MariaDB operacional em 127\.0\.0\.1:3306 não foi acessada/);
+    assert.match(event.evidence, /Patch local sem commit\/release/);
+
+    assert.equal(relationalRestore.status, 'completed');
+    assert.match(relationalRestore.evidence, /BackupRestoreMariaDbTests 6\/6/);
+    assert.equal(fullRecovery.status, 'in_progress');
+    assert.match(fullRecovery.evidence, /consistência temporal do snapshot/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.tracks.find(track => track.id === 'server').homologation.percent, 28.6);
+});
+
 test('formal server homologation consolidates gates, percentage, evidence and pending production signoff', async () => {
     const dashboard = createDashboard();
     await settleDashboard();

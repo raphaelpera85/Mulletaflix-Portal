@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T13:09:51-03:00",
+  "generatedAt": "2026-10-21T14:20:54-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -91,13 +91,13 @@
         "id": "SRV-H02",
         "name": "Backup e restauração relacional em MariaDB descartável",
         "status": "completed",
-        "evidence": "FullSystemBackup 42/42 e fluxo de criação/restauração MariaDB descartável 3/3 aprovados; execução isolada, sem conexão a banco de produção. A evidência não cobre recuperação MongoDB/Supabase nem restore operacional em instalação real."
+        "evidence": "Regressões FullSystemBackup 42/42 e BackupRestoreMariaDbTests 6/6 contra MariaDB 11.4.4 descartável: round-trip dos cinco contextos relacionais, rollback com falhas injetadas em ActivityLogs, Series e Books (último contexto), linhas anteriores preservadas nos cinco contextos e arquivos intactos. Build Release do servidor sem avisos/erros. A instância operacional 127.0.0.1:3306 não foi acessada; a descartável 127.0.0.1:33099 foi encerrada. Não cobre MongoDB/Supabase nem restore operacional instalado."
       },
       {
         "id": "SRV-H03",
         "name": "Consistência e recuperação integral entre domínios",
         "status": "in_progress",
-        "evidence": "A versão atual inclui tabelas relacionais de mídia, mas continuam pendentes a consistência do snapshot entre domínios, integração/recuperação MongoDB e Supabase, validação de criptografia e chaves, restore por componente, rollback e idempotência ponta a ponta. Critérios e lacunas constam na auditoria do backup/restauração."
+        "evidence": "Restore relacional atômico validado em cinco contextos (central, Movies, Series, Channels e Books), com falhas injetadas em Series e Books (último contexto), preservando as linhas anteriores dos cinco contextos; BackupRestoreMariaDbTests 6/6. Permanecem pendentes a consistência temporal do snapshot entre factories, recuperação IntroSkipper/DetectionCache, MongoDB e Supabase, criptografia/chaves, rollback de filesystem e idempotência ponta a ponta. Auditoria local ainda não publicada; nenhuma alteração de produção."
       },
       {
         "id": "SRV-H04",
@@ -3054,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-backup-cross-context-rollback-2026-10-21-1416",
+      "title": "Backup: rollback relacional único validado entre cinco contextos",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; MariaDB 11.4.4 descartável em loopback; patch local não publicado baseado em v12.1.35",
+      "location": "BackupService · restauração central e domínios Movies/Series/Channels/Books",
+      "scope": "Reproduzir e corrigir perda de linhas após falha intermediária no restore, sem acessar banco ou filesystem de produção.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T14:09:03-03:00",
+      "updatedAt": "2026-10-21T14:20:54-03:00",
+      "evidence": "O teste MariaDB reproduziu que uma falha em Series após o commit central apagava linhas antigas. BackupService agora restaura os cinco contextos relacionais na mesma conexão/transação; contextos não agrupados são usados no restore e os pools normais ficam inalterados. BackupRestoreMariaDbTests passou 6/6, incluindo round-trip e falhas SQL injetadas em ActivityLogs, Series e Books (último contexto), com linhas prévias nos cinco contextos e arquivos preservados. FullSystemBackup Release passou 42/42; build Release de Jellyfin.Server.csproj passou com 0 avisos e 0 erros. Compilação de integração emitiu avisos preexistentes de analisadores. MariaDB operacional em 127.0.0.1:3306 não foi acessada; instância descartável em 127.0.0.1:33099 foi encerrada. Snapshot temporal coordenado, filesystem, IntroSkipper/DetectionCache, MongoDB/Supabase, instalação e produção continuam pendentes. Patch local sem commit/release; homologação formal do servidor permanece 2/7 gates (28,6%), aceite pendente.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
+      ]
+    },
     {
       "id": "server-backup-restore-transaction-boundary-2026-10-21-1226",
       "title": "Restore relacional: manifesto e rollback MariaDB validados em teste isolado",
