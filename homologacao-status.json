@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T03:32:15-03:00",
+  "generatedAt": "2026-10-21T04:34:24-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8462,6 +8462,23 @@
       "evidence": "Correção testada com MongoDB 8.3.7 descartável em 127.0.0.1:27099: backup/restore das coleções padrão e customizada 2/2; suíte Nebula Release 730/730; contratos Node de release 23/23; TypeScript sem erros e Vite compilou 5.097 módulos. Produzidos e inspecionados instalador Windows x64 (423.407.491 bytes; SHA-256 9051C923E3E6DEC1F9A43144CC7E6CA1E28A0C192D486ED04B7EFB889C047CA1), ZIP atualizador (388.897.141 bytes; SHA-256 11733C251CF85D201FB6FD57A16C848204A97CECA8AD314A5941E8332246C6B8) e tar.gz Linux x64 (137.183.278 bytes; SHA-256 B93546207199DEC44BEE0C81959B7635DE48B79A146DB5900C4E70038F8B3744). Release v12.1.29 publicada no GitHub. Build Linux cross-published em Windows; CI, Linux nativo, instalação/upgrade, integrações reais e produção não foram homologados. Backup integral continua parcial; nenhuma produção foi alterada.",
       "release": "v12.1.29 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.29 (commit cd8dc8821b74e139c44a3cd1f681f40144ae0bc0)",
       "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.29"]
+    },
+    {
+      "id": "server-frontend-vite-security-audit-2026-10-21-0350",
+      "title": "Servidor/web: correção de advisories do Vite e auditoria npm",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, Node 26/npm 11, Vitest, Vite build e .NET 10 Release",
+      "location": "MulletaFlix-web-master/package.json e package-lock.json; frontend web empacotado pelo servidor",
+      "scope": "Atualizar apenas Vite para o patch 7.3.7, revalidar testes/build e publicar o estado factual da auditoria de dependências sem alegar homologação de produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-21T03:36:00-03:00",
+      "updatedAt": "2026-10-21T04:34:24-03:00",
+      "evidence": "npm audit inicial: 12 vulnerabilidades somente em dev-dependencies (1 moderada, 11 altas); npm audit --omit=dev: 0. Vite 7.3.6 foi atualizado para 7.3.7 para corrigir advisories de launch-editor no Windows. Após: audit completo 11 dev (1 moderada, 10 altas), produção segue 0. Typecheck passou; Vitest 418/418 em 75 arquivos; build:production e verify:build passaram, 1.926 artefatos e orçamento inicial 294,3 KiB gzip/420 KiB. Suite .NET Release terminou exit 0; Implementations 1.509 aprovados/65 ignorados, Providers 817/817, API 763 aprovados/3 ignorados. Skips incluem Mongo/MariaDB opt-in e plataforma; não são aprovados. Pester do runtime Nebula 1/1 e contratos Node do package builder 2/2. Release GitHub v12.1.30 publicada no commit e5fa14356cf51908c84f62acfcd3515cd6d6f2c5; API confirmou 3 assets e digests: EXE 423.476.625 bytes, ZIP 388.591.700 bytes, Linux tar.gz 137.184.231 bytes. O ZIP foi verificado com DLL, frontend, tray e runtime Nebula, sem .coverage/.ruff_cache. Artefatos cross-published em Windows; Linux nativo, CI remoto, instalação/upgrade, produção e playback não foram verificados. Homologação ampla continua aberta; nenhuma instalação ou alteração em produção nesta sessão.",
+      "release": "v12.1.30 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.30 (commit e5fa14356cf51908c84f62acfcd3515cd6d6f2c5)",
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.30"]
     }
   ]
 }

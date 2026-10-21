@@ -3573,3 +3573,30 @@ test('portal records release revalidation, blocking GitHub Actions billing state
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /release v12\.1\.26 revalidada; Actions bloqueado por cobrança/);
 });
+
+test('portal records Vite security patch and keeps production risk claims scoped', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-frontend-vite-security-audit-2026-10-21-0350');
+
+    assert.ok(event);
+    assert.equal(server.status, 'in_progress');
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Vite 7\.3\.6 foi atualizado para 7\.3\.7/);
+    assert.match(event.evidence, /audit completo 11 dev.*produção segue 0/);
+    assert.match(event.evidence, /Vitest 418\/418 em 75 arquivos/);
+    assert.match(event.evidence, /1\.926 artefatos e orçamento inicial 294,3 KiB gzip\/420 KiB/);
+    assert.match(event.evidence, /Release GitHub v12\.1\.30 publicada/);
+    assert.match(event.evidence, /Pester do runtime Nebula 1\/1 e contratos Node do package builder 2\/2/);
+    assert.match(event.evidence, /sem \.coverage\/\.ruff_cache/);
+    assert.match(event.evidence, /Linux nativo, CI remoto, instalação\/upgrade, produção e playback não foram verificados/);
+    assert.match(event.release, /v12\.1\.30/);
+    assert.match(event.links[0], /releases\/tag\/v12\.1\.30/);
+    assert.match(event.evidence, /nenhuma instalação ou alteração em produção/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /advisories do Vite e auditoria npm/);
+});
