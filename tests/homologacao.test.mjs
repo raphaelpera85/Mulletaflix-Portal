@@ -1095,16 +1095,21 @@ test('formal Android matrix separates local evidence from pending product accept
     assert.match(dashboard.getElement('android-task-checklist').textContent, /228\/275 marcados e 47 abertos/);
 });
 
-test('server restore transaction status distinguishes passing unit tests from skipped MariaDB rollback', async () => {
+test('server restore transaction records isolated MariaDB rollback validation without closing formal homologation', async () => {
     const event = statusData.events.find(item => item.id === 'server-backup-restore-transaction-boundary-2026-10-21-1226');
     assert.ok(event);
     assert.equal(event.front, 'server');
-    assert.equal(event.status, 'in_progress');
+    assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, null);
     assert.match(event.evidence, /FullSystemBackup Release 40\/40/);
-    assert.match(event.evidence, /2 passaram e 2 foram ignorados/);
-    assert.match(event.evidence, /regressão nova de rollback via trigger SQL não foi exercitada/);
-    assert.match(event.evidence, /sem commit, pacote ou release do servidor/);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests: 4\/4 aprovados contra MariaDB 11\.4\.4 descartável/);
+    assert.match(event.evidence, /rollback por erro SQL injetado com preservação do arquivo/);
+    assert.match(event.evidence, /serviço da aplicação em 127\.0\.0\.1:3306 permaneceu intocado/);
+    assert.match(event.evidence, /Nebula suggestions 14\/14; NebulaUploadEngine 224\/224/);
+    assert.match(event.evidence, /0 avisos e 0 erros/);
+    assert.match(event.evidence, /filesystem após commit não é atomicamente transacional/);
+    assert.match(event.evidence, /homologação formal global permanece 2\/7 gates \(28,6%\)/);
+    assert.match(event.evidence, /Patch sem commit\/release do servidor/);
 
     const dashboard = createDashboard();
     await settleDashboard();
