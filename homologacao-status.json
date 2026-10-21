@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T01:39:05-03:00",
+  "generatedAt": "2026-10-21T02:41:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8426,6 +8426,21 @@
       "startedAt": "2026-10-21T00:08:40-03:00",
       "updatedAt": "2026-10-21T00:19:00-03:00",
       "evidence": "A API pública confirma v12.1.26 publicada em main com ZIP Windows, instalador Windows x64 e pacote Linux x64; tamanhos conferem com docs/releases/12.1.26.md. main do servidor está limpa em 9889dbd6; após a tag 7e463a26 há apenas documentação e VersionPrefix continua 12.1.26. Testes Release ItemImageProviderRefreshTests + MetadataServiceTests + ItemImageProviderTests passaram 97/97; web Vitest passou 418/418 em 75 arquivos. O workflow público Release v12.1.26 (run 39535737236) falhou antes de executar steps; a anotação oficial informa que a conta está bloqueada por cobrança, e jobs Linux/Windows foram ignorados. Não há código novo sem release, portanto não foi criada versão redundante. CI, instalação limpa/elevada, upgrade, Linux nativo, runtime e smoke de produção permanecem pendentes; nenhuma instalação ou alteração de produção foi feita."
+    },
+    {
+      "id": "server-release-12-1-28-restore-crc-2026-10-21-0229",
+      "title": "Servidor: release 12.1.28 — restore rejeita ZIP corrompido antes de gravar",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET Release, Node, GitHub Releases API e pacote Linux cross-publish",
+      "location": "BackupService.RestoreBackupCoreAsync e empacotamento Windows/Linux do servidor",
+      "scope": "Publicar release 12.1.28 com validação CRC prévia no restore, correção de OutputDir relativo e pacotes Windows/Linux; registrar evidências sem declarar homologação de produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T02:29:00-03:00",
+      "updatedAt": "2026-10-21T02:41:00-03:00",
+      "evidence": "Release GitHub publicada: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.28, tag main no commit 2e0493ec760c5298d0499b4397a104a91f9400fa; API pública confirmou release não draft/prerelease e três assets/digests. FullSystemBackup 33/33; build Jellyfin.Server.Implementations Release sem erros (quatro avisos XML em projetos referenciados); contratos Node de release 23/23. EXE Windows 423.407.235 bytes (SHA-256 90A5A5E83910DF55337369DA5BC6166EF293ACF62C3B86D9FB62F9CDDB1E72CE), ZIP atualizador 388.896.840 bytes (FEF7A4FC13A74BB9160E5D150EECB403C0DC5DBDF0A90136BD9C5546CAD88257) e tar.gz Linux x64 137.183.113 bytes (B1D2017DF4E563FA715DFF14D3AFC2A8D23AF9E2599EB478924317BB2F0CF94D) produzidos e inspecionados. Build Linux ocorreu em Windows; CI, instalação Linux nativa, instalação/upgrade e produção não foram homologados. O backup integral continua parcial e esta alteração só previne sobrescrita por ZIP corrompido."
     }
   ]
 }

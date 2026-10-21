@@ -7,6 +7,22 @@ const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json',
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records server release 12.1.28 without claiming production homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-release-12-1-28-restore-crc-2026-10-21-0229');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.location, /BackupService\.RestoreBackupCoreAsync/);
+    assert.match(event.evidence, /FullSystemBackup 33\/33/);
+    assert.match(event.evidence, /90A5A5E83910DF55337369DA5BC6166EF293ACF62C3B86D9FB62F9CDDB1E72CE/);
+    assert.match(event.evidence, /Build Linux ocorreu em Windows/);
+    assert.match(event.evidence, /produção não foram homologados/);
+    assert.match(event.evidence, /backup integral continua parcial/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal reports the incomplete full-system backup without claiming production validation', () => {
     const event = statusData.events.find(item => item.id === 'server-full-system-backup-coverage-audit-2026-10-21');
 
