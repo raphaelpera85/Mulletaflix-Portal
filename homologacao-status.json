@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T06:38:18-03:00",
+  "generatedAt": "2026-10-21T07:14:18-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3019,6 +3019,23 @@
       "evidence": "Release pública v12.1.32 não-draft; commit servidor 53d37e9d439e1464b8faa1f34375e27e6fe1922c enviado a main e tag v12.1.32 aponta para o mesmo commit. GitHub API confirmou três assets e digests: ZIP Windows 388.586.940 bytes (SHA-256 42DE6940B6D45FBE8DD9CF324243AACFFC149DC5C0F6B933025389161BAAF48C), instalador Windows 423.402.774 bytes (SHA-256 E54DD7606199236F4C2EDA7B1847FCBD71F353FAAA18B7808114782C8E4A5EEF), tar.gz Linux x64 137.187.232 bytes (SHA-256 C34007A6CE4879D704F89968F021BADBE93DD101BA2BB692125F1D1D135A7FE4). FullSystemBackup 39/39; Jellyfin.Server.Implementations.Tests Release 1.515 aprovados, 65 ignorados, zero falhas. O restore agora pré-valida o conteúdo JSON relacional em streaming antes de copiar os arquivos ou abrir o banco. ZIP verificado com 3.353 entradas e servidor, web, tray, Nebula, NSSM e MariaDB; tar.gz verificado com servidor, web e worker Nebula. Linux foi cross-published em Windows, não em host Linux. Restore ainda não transacional. Backup integral continua parcial. CI remota, instalação/upgrade, restore contra produção e homologação em produção não foram executados. Nenhuma instalação ou alteração em produção.",
       "release": "v12.1.32 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.32 (commit 53d37e9d439e1464b8faa1f34375e27e6fe1922c)",
       "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.32"]
+    },
+    {
+      "id": "server-release-12-1-34-backup-storage-test-isolation-2026-10-21-0714",
+      "title": "Release servidor v12.1.34 — validação de espaço do backup isolada do disco local",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows; .NET 10 Release; orquestrador oficial de pacote; GitHub Releases API",
+      "location": "Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; StorageHelpers; ApplicationHost",
+      "scope": "Isolar a leitura de espaço livre no BackupService para testes determinísticos, executar validações locais e publicar pacotes do servidor.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-21T06:20:00-03:00",
+      "updatedAt": "2026-10-21T07:14:18-03:00",
+      "evidence": "Release pública v12.1.34 não-draft confirmada na API GitHub; commit/tag 1fcc52e9c84a8b32fd7a42f8136abead3d50da84 em main, três assets e digests: ZIP Windows 388586763 bytes (SHA-256 BAD1D73C7385A370C61EFF24C19FD5776C9353ECB6EAA07E67F2FC39F86EDBBC), instalador Windows 423402555 bytes (SHA-256 D914AAD29F4008DCB90CC54310614BC9E891CDE6935528D412A167F23B2C5EDF), tar.gz Linux x64 137185631 bytes (SHA-256 90E8441FA4968740BE882E97EE18EEC75F68DBB784F6AA8E490A411B2E587AF0). FullSystemBackup 40/40; build solution Release 0 erros/44 avisos; testes da solução com filtro FullyQualifiedName!~Integration: 5091 aprovados, 68 ignorados, 0 falhas. Estágio Windows validado e build web TypeScript/Vite concluído. Linux cross-published em Windows, não testado em host Linux. npm install reportou 11 vulnerabilidades; nenhum upgrade automático foi aplicado. Integrações externas/bancos reais, instalação limpa/elevada, smoke de upgrade, CI remota e produção não foram validados; homologação formal do servidor permanece em andamento.",
+      "release": "v12.1.34 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.34 (commit 1fcc52e9c84a8b32fd7a42f8136abead3d50da84)",
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.34"]
     },
     {
       "id": "server-release-12-1-33-notification-branding-2026-10-21-0920",

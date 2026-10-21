@@ -3663,3 +3663,20 @@ test('portal records the published v12.1.33 notification brand fix and its billi
     assert.match(event.evidence, /produção não foram testados/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the published v12.1.34 backup test isolation release and validation limits', () => {
+    const event = statusData.events.find(item => item.id === 'server-release-12-1-34-backup-storage-test-isolation-2026-10-21-0714');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.scope, /Isolar a leitura de espaço livre/);
+    assert.match(event.evidence, /FullSystemBackup 40\/40/);
+    assert.match(event.evidence, /5091 aprovados, 68 ignorados, 0 falhas/);
+    assert.match(event.evidence, /BAD1D73C7385A370C61EFF24C19FD5776C9353ECB6EAA07E67F2FC39F86EDBBC/);
+    assert.match(event.evidence, /instalação limpa\/elevada.*produção não foram validados/);
+    assert.match(event.release, /v12\.1\.34/);
+    assert.match(event.links[0], /releases\/tag\/v12\.1\.34/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
