@@ -3815,3 +3815,15 @@ test('portal renders the Nebula Telegram acceptance and Mongo checkpoint ambigui
     assert.match(renderedEvents, /Nebula: risco de parte Telegram sem checkpoint Mongo/);
     assert.match(renderedEvents, /Em execução/);
 });
+
+test('portal evidence for partial STRM indexing reports the latest focused Release retest', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-partial-strm-index-2026-10-21');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /NebulaMediaSuggestionCatalogTests 4\/4/);
+    assert.match(event.evidence, /NebulaMediaSuggestionTests 10\/10/);
+    assert.match(event.evidence, /Sem ACL real, instalação, CI remota ou produção validadas/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

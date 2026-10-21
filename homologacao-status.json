@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T11:33:24-03:00",
+  "generatedAt": "2026-10-21T11:44:36-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8757,8 +8757,8 @@
       "scope": "Evitar que subpastas inacessíveis desapareçam silenciosamente do catálogo de autocomplete; continuar indexando pastas acessíveis e expor estado parcial.",
       "status": "completed",
       "progressPercent": null,
-      "updatedAt": "2026-10-21T10:59:39-03:00",
-      "evidence": "Implementado em árvore de trabalho baseada em d51f4f38: enumeração STRM por diretório, sem IgnoreInaccessible silencioso; subpastas com falha são contabilizadas, as demais continuam e o status fica ReadyWithWarnings. Testes Nebula de catálogo/sugestões passaram 14/14 em Release. Sem ACL real, instalação, CI remota ou produção validadas; esta correção local ainda não integra uma release pública.",
+      "updatedAt": "2026-10-21T11:44:36-03:00",
+      "evidence": "Implementado em árvore de trabalho baseada em d51f4f38: enumeração STRM por diretório, sem IgnoreInaccessible silencioso; subpastas com falha são contabilizadas, as demais continuam e o status fica ReadyWithWarnings. Revalidação Release executada nesta sessão: NebulaMediaSuggestionCatalogTests 4/4 e NebulaMediaSuggestionTests 10/10. Sem ACL real, instalação, CI remota ou produção validadas; esta correção local ainda não integra uma release pública.",
       "links": []
     },
     {
