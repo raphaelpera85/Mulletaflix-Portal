@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T22:12:00-03:00",
+  "generatedAt": "2026-10-20T23:22:18-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8318,6 +8318,21 @@
       "startedAt": "2026-10-20T10:12:00-03:00",
       "updatedAt": "2026-10-20T10:27:41-03:00",
       "evidence": "Revalidação em Windows/.NET 10 Release com MongoDB 8.3.7 descartável, processo independente, bind `127.0.0.1:27099`, `directConnection=true`, `dbPath` exclusivo em TEMP. `Category=RequiresMongo`: 24 aprovados, 0 ignorados/falhas, em 21 s. `FullyQualifiedName~Nebula`: 729 aprovados, 0 ignorados/falhas, exit 0, em 1m57s. Serviço MongoDB existente permaneceu Running em 27017/PID 4200, sem conexão. Processo isolado encerrado; 27099 sem listener. Pasta TEMP permanece porque o executor recusou remoção recursiva. Mongo 7.0/CI Linux, APIs reais Telegram/Supabase, runtime instalado, playback, produção e release não foram validados."
+    },
+    {
+      "id": "server-release-12-1-25-2026-10-20",
+      "title": "Release servidor v12.1.25 publicada; validação e limites registrados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T2.1", "T4.2"],
+      "local": "Windows PowerShell, .NET 10 Release, Node/Vitest, NebulaPython 3.10 isolado, build cross-platform Linux x64",
+      "location": "Servidor MulletaFlix, Nebula FTP/Download, APIs GetAvatar/ACL, metadata/images, cliente web embarcado e empacotamento Windows/Linux",
+      "scope": "Consolidar, testar e publicar a release 12.1.25 do servidor e atualizar o estado público no portal pelo Git, sem instalar em produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-20T22:14:47-03:00",
+      "updatedAt": "2026-10-20T23:22:18-03:00",
+      "evidence": "Commit servidor 0ea45508 enviado a GitHub main; release https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.25 criada com instalador Windows, ZIP de atualização e pacote Linux x64. Local: .NET 5.071 aprovados/67 ignorados/0 falhas (sem Integration); NebulaPython 660/660 e pip check limpo; web 418/418, build e bundle budget 294,3 KB gzip; contratos Node release 22/22; Pester runtime copier 1/1. npm audit --omit=dev: zero vulnerabilidades; full audit tem 12 em dev-deps. Foram conferidos arquivos dentro dos três pacotes e requirements.lock no Linux. O workflow GitHub Actions não executou por bloqueio de billing; Linux nativo, MongoDB 7.0/MariaDB CI, instalação/runtime, APIs reais, upload/playback de mídia e produção não foram homologados. Nenhuma instalação ou alteração em produção."
     }
   ]
 }
