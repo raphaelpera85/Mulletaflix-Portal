@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T14:33:00-03:00",
+  "generatedAt": "2026-10-21T14:46:35-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8846,6 +8846,40 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T11:53:08-03:00",
       "evidence": "A fonte repete sendDocument após exceções de transporte e só persiste tg_message_id/tg_file_id depois da resposta de sucesso. Se o Telegram aceitar e a resposta se perder, ou a escrita Mongo falhar após o aceite, a retomada pode não ter a parte persistida e reenviá-la. A auditoria não encontrou reconciliação por nome/caption antes de novo envio. Isto é risco estático, não evidência de duplicata em produção. Não há teste que injete aceite Telegram + falha Mongo. Validação local do projeto de implementações: Release 1.517 aprovados, 65 ignorados, 0 falhas; NebulaUploadEngine 224/224 e NebulaSupabaseSync 50/50; cinco grupos Category=RequiresMongo passaram 25/25 contra MongoDB efêmero restrito a 127.0.0.1:27099, com zero ignorados/falhas. O teste não cobre perda de resposta após aceite Telegram nem falha de checkpoint pós-aceite; MariaDB e topologia/credenciais Supabase de produção continuam pendentes. Próximo trabalho: decidir a semântica para envio ambíguo, então implementar e testar estado durável e reconciliação; retry simples não cobre crash nem resposta perdida. Nenhum dado, upload, serviço de produção ou release foi executado/alterado.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
+      ]
+    },
+    {
+      "id": "server-backup-filesystem-rollback-2026-10-21-1446",
+      "title": "Backup: rollback de arquivos durante falhas de restore",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; testes automatizados locais",
+      "location": "BackupService.RestoreBackupCoreAsync e testes FullSystemBackup/MariaDB",
+      "scope": "Preservar estado anterior do filesystem quando um arquivo ou o restore relacional falhar, sem remover itens ausentes do ZIP.",
+      "status": "completed",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T14:46:35-03:00",
+      "evidence": "Restore instala cada entrada por arquivo temporário e rename no mesmo volume, retendo o destino anterior até o restore relacional concluir; rollback reverso ocorre em exceções observáveis. Regressão isolada reproduziu falha no segundo arquivo e confirmou preservação do primeiro. FullSystemBackup: 43/43; build Release do servidor: 0 avisos/erros. Três casos MariaDB foram compilados, mas ignorados por falta de conexão descartável configurada; sem CI remota, instalação, produção ou release. Crash abrupto ainda requer journal durável. Homologação formal global permanece 2/7 (28,6%).",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
+      ]
+    },
+    {
+      "id": "server-nebula-telegram-retry-decision-2026-10-21-1446",
+      "title": "Nebula: decisão por manter retries automáticos do Telegram",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Decisão registrada; nenhuma operação remota executada",
+      "location": "NebulaTelegramPool, NebulaUploadEngine e checkpoint Mongo",
+      "scope": "Manter retries automáticos em resultado ambíguo e exigir reconciliação/idempotência antes de novo envio para reduzir duplicatas.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T14:46:35-03:00",
+      "evidence": "Preferência do usuário confirmada: manter retentativas automáticas. O retry isolado não resolve aceite remoto sem checkpoint Mongo; próximo passo é implementar e testar reconciliação durável antes do reenvio. Código pendente; nenhum upload, Telegram real ou produção foi acessado.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]
