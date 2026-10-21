@@ -871,7 +871,7 @@ test('homologation timeline sorts newest events first without mutating source da
 });
 
 test('homologation timeline renders the newest published status event first', async () => {
-    const newestEvent = statusData.events.find(event => event.id === 'server-release-12-1-31-backup-semantic-validation-2026-10-21-0506');
+    const newestEvent = statusData.events.find(event => event.id === 'server-release-12-1-32-backup-json-validation-2026-10-21-0600');
     const dashboard = createDashboard();
     await settleDashboard();
 
@@ -879,7 +879,7 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'completed');
-    assert.match(newestEvent.evidence, /FullSystemBackup 36\/36/);
+    assert.match(newestEvent.evidence, /FullSystemBackup 39\/39/);
     assert.match(newestEvent.evidence, /Backup integral continua parcial/);
     assert.match(newestEvent.evidence, /Nenhuma instalação ou alteração em produção/);
     assert.equal(statusData.events[0].id, newestEvent.id);
@@ -3620,4 +3620,26 @@ test('portal records server release 12.1.31 with fail-closed backup restore and 
     const dashboard = createDashboard();
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Release servidor v12\.1\.31 publicada/);
+});
+
+test('portal records server release 12.1.32 with semantic JSON restore validation and package digests', async () => {
+    const event = statusData.events.find(item => item.id === 'server-release-12-1-32-backup-json-validation-2026-10-21-0600');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /FullSystemBackup 39\/39/);
+    assert.match(event.evidence, /1\.515 aprovados, 65 ignorados, zero falhas/);
+    assert.match(event.evidence, /JSON relacional/);
+    assert.match(event.evidence, /Linux foi cross-published em Windows/);
+    assert.match(event.evidence, /homologação em produção não foram executados/);
+    assert.match(event.evidence, /42DE6940B6D45FBE8DD9CF324243AACFFC149DC5C0F6B933025389161BAAF48C/);
+    assert.match(event.release, /v12\.1\.32/);
+    assert.match(event.links[0], /releases\/tag\/v12\.1\.32/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Release servidor v12\.1\.32 publicada/);
 });
