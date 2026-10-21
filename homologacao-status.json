@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:41:44-03:00",
+  "generatedAt": "2026-10-21T17:10:59-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8941,6 +8941,23 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T14:46:35-03:00",
       "evidence": "Preferência do usuário confirmada: manter retentativas automáticas. O retry isolado não resolve aceite remoto sem checkpoint Mongo; próximo passo é implementar e testar reconciliação durável antes do reenvio. Código pendente; nenhum upload, Telegram real ou produção foi acessado.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
+      ]
+    },
+    {
+      "id": "server-nebula-upload-lease-fencing-2026-10-21-1710",
+      "title": "Nebula: fencing de lease impede mutações por ciclos antigos de upload",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET Release e MongoDB 8.3.7 efêmero em 127.0.0.1:27099",
+      "location": "NebulaMongoContext, NebulaUploadEngine, NebulaStagingWatcher e testes Nebula",
+      "scope": "Propagar leaseId por progresso, falha, cancelamento, conclusão e liberação de retry; rejeitar worker/lease obsoleto mesmo quando workerId é reutilizado.",
+      "status": "completed",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T17:10:59-03:00",
+      "evidence": "Implementado fencing com leaseId em todas as transições mutáveis do ciclo de upload e aquisição estrita antes da conclusão de duplicatas; ciclo legado recebe lease próprio. Regressão Mongo ReclaimedLease_FencesEveryMutationWhenWorkerIdIsReused 1/1; testes RequiresMongo focalizados 21 aprovados, 1 ignorado por exigir failpoint; NebulaStreamEngineTests 69/69. Build Release de Jellyfin.Server.Implementations: 0 avisos e 0 erros; dotnet format e git diff --check aprovados. O contrato do portal passou 217/217. O Mongo de teste foi isolado em loopback e parado após os testes. Sem upload real, CI remota, instalação, produção ou release; homologação formal global continua 2/7 (28,6%). Retentativas automáticas permanecem habilitadas conforme decisão do usuário; não se promete exactly-once se Telegram aceitar um envio cuja resposta/checkpoint se perca.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]

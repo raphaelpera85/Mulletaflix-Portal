@@ -3963,3 +3963,24 @@ test('portal reports backup restore reparse-point defense without closing formal
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records Nebula upload lease fencing without claiming production homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-upload-lease-fencing-2026-10-21-1710');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.scope, /leaseId/);
+    assert.match(event.evidence, /ReclaimedLease_FencesEveryMutationWhenWorkerIdIsReused 1\/1/);
+    assert.match(event.evidence, /RequiresMongo focalizados 21 aprovados, 1 ignorado/);
+    assert.match(event.evidence, /NebulaStreamEngineTests 69\/69/);
+    assert.match(event.evidence, /Build Release.*0 avisos e 0 erros/);
+    assert.match(event.evidence, /sem upload real, CI remota, instalação, produção ou release/i);
+    assert.match(event.evidence, /homologação formal global continua 2\/7 \(28,6%\)/);
+    assert.match(event.evidence, /Retentativas automáticas permanecem habilitadas/);
+    assert.match(event.evidence, /não se promete exactly-once/);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
