@@ -3893,7 +3893,10 @@ test('portal reports durable Telegram acknowledgement recovery without overstati
     assert.equal(event.progressPercent, null);
     assert.match(event.evidence, /journal local versionado por UUID/i);
     assert.match(event.evidence, /NebulaUploadCheckpointJournal 4\/4/);
-    assert.match(event.evidence, /710 aprovados, 25 ignorados opt-in, 0 falhas/);
+    assert.match(event.evidence, /integração com Mongo descartável\/failpoint e Bot API simulada 1\/1/);
+    assert.match(event.evidence, /opt-in Mongo 26\/26/);
+    assert.match(event.evidence, /suíte Nebula Release 736\/736, 0 ignorados e 0 falhas/);
+    assert.match(event.evidence, /Retentativas automáticas mantidas conforme decisão do usuário/);
     assert.match(event.evidence, /sem release/);
     assert.match(event.evidence, /ainda pode duplicar/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
