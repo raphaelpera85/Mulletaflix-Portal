@@ -23,6 +23,21 @@ test('portal records server release 12.1.28 without claiming production homologa
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal keeps the custom Nebula token collection fix in progress until Mongo integration passes', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-custom-bot-token-backup-2026-10-21-0250');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.scope, /coleção padrão e customizada/);
+    assert.match(event.evidence, /dois casos.*SKIP/);
+    assert.match(event.evidence, /127\.0\.0\.1:27099/);
+    assert.match(event.evidence, /Sem validação integrada, empacotamento ou nova release/);
+    assert.match(event.release, /Pendente/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal reports the incomplete full-system backup without claiming production validation', () => {
     const event = statusData.events.find(item => item.id === 'server-full-system-backup-coverage-audit-2026-10-21');
 

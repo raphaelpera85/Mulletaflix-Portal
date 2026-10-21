@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T02:41:00-03:00",
+  "generatedAt": "2026-10-21T02:50:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8441,6 +8441,23 @@
       "startedAt": "2026-10-21T02:29:00-03:00",
       "updatedAt": "2026-10-21T02:41:00-03:00",
       "evidence": "Release GitHub publicada: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.28, tag main no commit 2e0493ec760c5298d0499b4397a104a91f9400fa; API pública confirmou release não draft/prerelease e três assets/digests. FullSystemBackup 33/33; build Jellyfin.Server.Implementations Release sem erros (quatro avisos XML em projetos referenciados); contratos Node de release 23/23. EXE Windows 423.407.235 bytes (SHA-256 90A5A5E83910DF55337369DA5BC6166EF293ACF62C3B86D9FB62F9CDDB1E72CE), ZIP atualizador 388.896.840 bytes (FEF7A4FC13A74BB9160E5D150EECB403C0DC5DBDF0A90136BD9C5546CAD88257) e tar.gz Linux x64 137.183.113 bytes (B1D2017DF4E563FA715DFF14D3AFC2A8D23AF9E2599EB478924317BB2F0CF94D) produzidos e inspecionados. Build Linux ocorreu em Windows; CI, instalação Linux nativa, instalação/upgrade e produção não foram homologados. O backup integral continua parcial e esta alteração só previne sobrescrita por ZIP corrompido."
+    },
+    {
+      "id": "server-nebula-custom-bot-token-backup-2026-10-21-0250",
+      "title": "Servidor: correção de backup Supabase para coleção customizada de tokens Nebula",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; teste Mongo opt-in",
+      "location": "NebulaMongoContext, NebulaSupabaseSyncService, NebulaFtpManager",
+      "scope": "Propagar BotTokensCollection através de backup/restauração Supabase e testar coleção padrão e customizada, sem acessar banco remoto ou produção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T02:46:00-03:00",
+      "updatedAt": "2026-10-21T02:50:00-03:00",
+      "evidence": "Correção e regressão adicionadas à fonte. A compilação Release da suíte passou, mas os dois casos de coleção padrão/customizada foram SKIP porque MULLETAFLIX_TEST_MONGODB_CONNECTION_STRING não está configurada e 127.0.0.1:27099 não tem listener. Não foi usada a instância Mongo preexistente em 27017, nem Supabase ou produção. Sem validação integrada, empacotamento ou nova release; testes de backup/restore isolado continuam pendentes.",
+      "release": "Pendente: aguarda MongoDB descartável em 127.0.0.1:27099 e testes integrados",
+      "links": []
     }
   ]
 }
