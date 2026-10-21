@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T17:10:59-03:00",
+  "generatedAt": "2026-10-21T18:00:01-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8953,11 +8953,11 @@
       "featureIds": [],
       "local": "Windows, .NET Release e MongoDB 8.3.7 efêmero em 127.0.0.1:27099",
       "location": "NebulaMongoContext, NebulaUploadEngine, NebulaStagingWatcher e testes Nebula",
-      "scope": "Propagar leaseId por progresso, falha, cancelamento, conclusão e liberação de retry; rejeitar worker/lease obsoleto mesmo quando workerId é reutilizado.",
+      "scope": "Propagar leaseId por toda mutação; exigir lease_until vigente; revalidar antes de cada envio e após backoff, preservando retries automáticos sem escrita por worker obsoleto.",
       "status": "completed",
       "progressPercent": null,
-      "updatedAt": "2026-10-21T17:10:59-03:00",
-      "evidence": "Implementado fencing com leaseId em todas as transições mutáveis do ciclo de upload e aquisição estrita antes da conclusão de duplicatas; ciclo legado recebe lease próprio. Regressão Mongo ReclaimedLease_FencesEveryMutationWhenWorkerIdIsReused 1/1; testes RequiresMongo focalizados 21 aprovados, 1 ignorado por exigir failpoint; NebulaStreamEngineTests 69/69. Build Release de Jellyfin.Server.Implementations: 0 avisos e 0 erros; dotnet format e git diff --check aprovados. O contrato do portal passou 217/217. O Mongo de teste foi isolado em loopback e parado após os testes. Sem upload real, CI remota, instalação, produção ou release; homologação formal global continua 2/7 (28,6%). Retentativas automáticas permanecem habilitadas conforme decisão do usuário; não se promete exactly-once se Telegram aceitar um envio cuja resposta/checkpoint se perca.",
+      "updatedAt": "2026-10-21T18:00:01-03:00",
+      "evidence": "C# e os três workers Python exigem _id, worker_id, lease_id e lease_until > now para mutações; renewal/acquire vencidos são recusados. A lease é revalidada antes de cada envio/parte e novamente após o backoff, inclusive no worker legado. Python Nebula 665/665; workers focados 19/19; py_compile aprovado. Testes .NET Release direcionados 313/313, 0 ignorados/falhas, incluindo MongoDB 8.3.7 descartável em 127.0.0.1:27099; processo encerrado e porta fechada. NebulaStreamEngineTests 69/69. dotnet format da implementação C# passou; verificação do projeto de testes reporta avisos SA1201/xUnit1051, portanto não declarada limpa. git diff --check aprovado. Sem upload real, CI remota, instalação, produção ou release; homologação formal global continua 2/7 (28,6%). Retentativas automáticas permanecem habilitadas conforme decisão do usuário; envio aceito cuja resposta/checkpoint se perca ainda pode duplicar; exactly-once não é garantido.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]
