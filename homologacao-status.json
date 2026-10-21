@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T03:21:00-03:00",
+  "generatedAt": "2026-10-21T03:32:15-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3009,14 +3009,14 @@
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Windows; análise estática .NET 10; teste focal Release",
+      "local": "Windows; análise estática .NET 10; reconciliação de contextos EF",
       "location": "MulletaFlix-master/docs/backup-coverage-audit.md",
       "scope": "Documentar a cobertura real dos contextos EF, IntroSkipper e Mongo Nebula e os gates para uma correção segura do backup/restore.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-21T01:24:18-03:00",
-      "updatedAt": "2026-10-21T01:39:05-03:00",
-      "evidence": "A fonte de BackupService mostra exportação/restauração de MulletaFlixDbContext + HistoryRow, sem enumerar os demais seis contextos centrais nem os dois contextos IntroSkipper de schema separado. Mongo Nebula tem seis coleções Mongo conhecidas fora desse backup: files, nebula_admission, users, bot_tokens, operation_replays e stats opcional; BotTokensCollection configurável pode apontar para outra coleção. A sincronização Supabase é independente e não prova cobertura integral. Os testes focados existentes passaram 23/23, mas não verificam backup/restore de todos os stores. ZIP sem criptografia explícita; manifesto exige versão exata 0.2.0 e a restauração aplica arquivos antes de concluir o banco. Auditoria registrada em docs/backup-coverage-audit.md. Nenhum código runtime, banco ou produção foi alterado/acessado; cobertura integral e restore isolado continuam pendentes. Sem nova release por não haver delta de runtime.",
+      "updatedAt": "2026-10-21T03:32:00-03:00",
+      "evidence": "Reconciliação estática identifica nove DbContexts de produção. Os sete factories centrais recebem a mesma efCoreConfiguration; Users/System têm entidades compartilhadas com o modelo principal. Os quatro modelos de mídia mapeiam tabelas próprias e DomainSchemaInitializer usa DatabaseNames.Main. IntroSkipper usa o banco mulletaflix_introskipper. Setup cria bancos mulletaflix_* mas os factories não selecionam nomes individuais; a topologia física ativa não foi verificada. BackupService exporta/restaura apenas MulletaFlixDbContext + HistoryRow. Mongo Nebula permanece externo: files, nebula_admission, users, bot_tokens, operation_replays e stats opcional; sincronização Supabase é parcial e separada. FullSystemBackup 33/33 foi executado na validação anterior, mas não cobre todos os stores. ZIP sem criptografia explícita; manifesto exige versão exata 0.2.0 e restore ainda não é transacional. Auditoria-fonte atualizada. Nenhum código runtime, banco ou produção alterado/acessado; cobertura integral e restore isolado continuam pendentes.",
       "release": "Sem nova release; auditoria documental, cobertura incompleta pendente",
       "links": []
     },
@@ -3063,8 +3063,12 @@
       "scope": "Trocar o ícone Jellyfin usado como fallback das notificações pela marca MulletaFlix e auditar outros pontos de branding.",
       "status": "in_progress",
       "progressPercent": 90,
-      "updatedAt": "2026-10-20T22:12:00-03:00",
-      "evidence": "Busca no código ativo encontrou o PNG Jellyfin somente como fallback de icon/badge das notificações; agora usa src/assets/branding/icon.png da MulletaFlix, mantendo o poster da mídia quando disponível. Favicon/manifest, login, botão do servidor, screensaver e tray foram conferidos e já usam branding MulletaFlix. `npm run build:check` passou. A primeira suíte concorrente passou 416/418 devido a dois timeouts de 10 ms em testes de layout não relacionados; o arquivo focado passou 107/107 e a suíte completa repetida com --maxWorkers=2 passou 418/418 em 75 arquivos. A confirmação visual de uma notificação real no cliente atualizado ainda está pendente; sem build de pacote, instalação, produção ou release."
+      "updatedAt": "2026-10-21T03:32:00-03:00",
+      "evidence": "Correção foi aplicada em 6bb2362bc4529668ffdb5a1ea291f8775347c094: fallback icon/badge e ícones de ação usam src/assets/branding/icon.png; novas mídias mantêm a capa quando disponível. Commit é ancestral da release pública v12.1.28. Favicon/manifest, login, botão do servidor, screensaver e tray foram conferidos e usam branding MulletaFlix. Build:check e testes web 418/418 em 75 arquivos estão registrados na validação da correção. Descrição da release foi corrigida nesta sessão. Confirmação visual com notificação real em cliente atualizado segue pendente; sem instalação ou produção.",
+      "release": "Incluída na release pública v12.1.28; notas atualizadas",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.28"
+      ]
     },
     {
       "id": "server-release-12-1-26-revalidated-2026-10-21-0008",

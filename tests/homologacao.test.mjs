@@ -42,7 +42,7 @@ test('portal records the released custom Nebula token collection fix with valida
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
-test('portal reports the incomplete full-system backup without claiming production validation', () => {
+test('portal reports the incomplete full-system backup and reconciled EF database wiring', () => {
     const event = statusData.events.find(item => item.id === 'server-full-system-backup-coverage-audit-2026-10-21');
 
     assert.ok(event);
@@ -50,13 +50,17 @@ test('portal reports the incomplete full-system backup without claiming producti
     assert.equal(event.status, 'in_progress');
     assert.equal(event.progressPercent, null);
     assert.match(event.location, /backup-coverage-audit\.md/);
-    assert.match(event.evidence, /23\/23/);
-    assert.match(event.evidence, /sem enumerar os demais seis contextos/);
-    assert.match(event.evidence, /seis coleções Mongo conhecidas/);
+    assert.match(event.evidence, /nove DbContexts de produção/);
+    assert.match(event.evidence, /sete factories centrais recebem a mesma efCoreConfiguration/);
+    assert.match(event.evidence, /DomainSchemaInitializer usa DatabaseNames\.Main/);
+    assert.match(event.evidence, /IntroSkipper usa o banco mulletaflix_introskipper/);
+    assert.match(event.evidence, /topologia física ativa não foi verificada/);
+    assert.match(event.evidence, /Mongo Nebula permanece externo/);
+    assert.match(event.evidence, /files.*nebula_admission.*users.*bot_tokens.*operation_replays.*stats/);
     assert.match(event.evidence, /stats.*opcional/);
-    assert.match(event.evidence, /BotTokensCollection configurável/);
-    assert.match(event.evidence, /Nenhum código runtime, banco ou produção foi alterado\/acessado/);
-    assert.match(event.evidence, /Sem nova release/);
+    assert.match(event.evidence, /FullSystemBackup 33\/33/);
+    assert.match(event.evidence, /Nenhum código runtime, banco ou produção alterado\/acessado/);
+    assert.match(event.release, /Sem nova release/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -96,7 +100,7 @@ test('portal records cancellation-aware test waits and remaining analyzer debt',
     assert.match(dashboard.getElement('event-list').innerHTML, /Servidor: testes propagam cancelamento sem alongar timeouts/);
 });
 
-test('portal documents the corrected MulletaFlix notification brand icon and remaining visual check', () => {
+test('portal records notification brand fix in v12.1.28 and keeps live visual confirmation pending', () => {
     const event = statusData.events.find(item => item.id === 'server-media-notification-brand-icon-2026-10-20-2204');
 
     assert.ok(event);
@@ -106,7 +110,11 @@ test('portal documents the corrected MulletaFlix notification brand icon and rem
     assert.match(event.location, /notifications\.ts/);
     assert.match(event.evidence, /src\/assets\/branding\/icon\.png/);
     assert.match(event.evidence, /418\/418 em 75 arquivos/);
-    assert.match(event.evidence, /confirmação visual.*pendente/);
+    assert.match(event.evidence, /6bb2362bc4529668ffdb5a1ea291f8775347c094/);
+    assert.match(event.evidence, /release pública v12\.1\.28/);
+    assert.match(event.evidence, /Confirmação visual.*pendente/);
+    assert.match(event.release, /v12\.1\.28/);
+    assert.match(event.links[0], /releases\/tag\/v12\.1\.28/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -871,10 +879,10 @@ test('homologation timeline renders the newest published status event first', as
     const renderedEvents = dashboard.getElement('event-list').innerHTML;
     assert.ok(renderedEvents.indexOf(newestEvent.title) >= 0);
     assert.equal(newestEvent.status, 'in_progress');
-    assert.match(newestEvent.evidence, /23\/23/);
-    assert.match(newestEvent.evidence, /backup\/restore de todos os stores/);
-    assert.match(newestEvent.evidence, /seis coleções Mongo conhecidas/);
-    assert.match(newestEvent.evidence, /produção foi alterado\/acessado/);
+    assert.match(newestEvent.evidence, /FullSystemBackup 33\/33/);
+    assert.match(newestEvent.evidence, /BackupService exporta\/restaura apenas MulletaFlixDbContext/);
+    assert.match(newestEvent.evidence, /Mongo Nebula permanece externo/);
+    assert.match(newestEvent.evidence, /produção alterado\/acessado/);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
