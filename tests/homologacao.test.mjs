@@ -821,7 +821,7 @@ test('homologation timeline renders the newest published status event first', as
     assert.match(newestEvent.evidence, /exige decodificação completa/);
     assert.match(newestEvent.evidence, /177\/177/);
     assert.match(newestEvent.evidence, /817\/817/);
-    assert.match(newestEvent.evidence, /teste provider\/CDN\/mídia real/);
+    assert.match(newestEvent.evidence, /teste provider\/CDN\/mídia real/i);
     assert.equal(statusData.events[0].id, newestEvent.id);
     assert.ok(renderedEvents.indexOf(newestEvent.title) < renderedEvents.indexOf(previousBillingBlockerTitle));
 });
