@@ -3700,6 +3700,8 @@ test('portal records full solution validation and keeps the release gate blocked
     assert.equal(event.status, 'blocked');
     assert.equal(event.progressPercent, null);
     assert.match(event.evidence, /MulletaFlix\.sln -c Release --no-build terminou com exit 0/);
+    assert.match(event.evidence, /Build completo.*273 avisos.*0 erros/);
+    assert.match(event.evidence, /5\.110 testes Passed, 248 NotExecuted.*0 Failed, 5\.358 total/);
     assert.match(event.evidence, /1\.518 aprovados, 65 ignorados/);
     assert.match(event.evidence, /805 aprovados, 13 integrações externas ignoradas/);
     assert.match(event.evidence, /v12\.1\.33 já registra a correção de branding/);
