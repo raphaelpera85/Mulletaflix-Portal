@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T19:08:58-03:00",
+  "generatedAt": "2026-10-21T20:47:12-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9011,6 +9011,20 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T19:08:58-03:00",
       "evidence": "Teste focal do journal 7/7; suíte NebulaPython completa 673/673 com requirements.lock e requirements-test.txt em venv isolado. Falhas injetadas em fsync/os.replace mantêm o checkpoint anterior recuperável e limpam o temporário. A primeira coleta no Python global não executou testes por ausência de dependências runtime; nenhuma dependência foi instalada globalmente. Sem acesso a Mongo/MariaDB, Telegram, runtime instalado, CI remota ou produção. Alteração somente de testes, sem mudar runtime ou política de retries. A alteração de teste e documentação permanece local, não foi enviada ao repositório do servidor. Homologação formal segue 2/7 (28,6%), sem crédito por testes locais; nenhuma release criada."
+    },
+    {
+      "id": "server-nebula-claim-package-restore-audit-2026-10-21-2047",
+      "title": "Auditoria: fencing de uploads Nebula, pacotes e restore atômico",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, Python venv, PowerShell e .NET 10 Release",
+      "location": "NebulaPython/main.py; scripts de pacote Linux/Windows; BackupService",
+      "scope": "Fencing de claims do upload por token, inclusão e integridade do módulo upload_checkpoint.py nos pacotes, e rejeição segura de restore 0.3.0 sem transação relacional compartilhada.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T20:47:12-03:00",
+      "evidence": "NebulaPython 685/685; testes de workers 15/15; Jellyfin.Server.Implementations.Tests 1.537 aprovados, 70 ignorados opt-in, 0 falhas; teste focal de restore passou; pacote Linux e integridade do stage Windows passaram; git diff --check passou. Sem Telegram real, Mongo/MariaDB produtivos, runtime instalado, CI remota ou produção. Homologação formal do servidor continua 2/7 (28,6%); testes locais não contam como aceite. Sem release."
     }
   ]
 }
