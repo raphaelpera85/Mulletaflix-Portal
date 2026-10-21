@@ -1139,6 +1139,28 @@ test('server backup records cross-context atomic rollback while keeping broader 
     assert.equal(statusData.tracks.find(track => track.id === 'server').homologation.percent, 28.6);
 });
 
+test('server backup records one consistent temporal snapshot across the five relational contexts', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-consistent-snapshot-2026-10-21-1433');
+    const fullRecovery = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /transação RepeatableRead/);
+    assert.match(event.evidence, /versão pré-concorrência em todos/);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests 6\/6/);
+    assert.match(event.evidence, /FullSystemBackup Release 42\/42/);
+    assert.match(event.evidence, /0 avisos e 0 erros/);
+    assert.match(event.evidence, /homologação formal global permanece 2\/7 gates \(28,6%\)/);
+    assert.match(event.evidence, /sem commit\/release/);
+
+    assert.equal(fullRecovery.status, 'in_progress');
+    assert.match(fullRecovery.evidence, /consistência temporal do snapshot está validada/);
+    assert.match(fullRecovery.evidence, /Continuam pendentes recuperação IntroSkipper/);
+    assert.match(fullRecovery.evidence, /Homologação formal global permanece 2\/7/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
 test('formal server homologation consolidates gates, percentage, evidence and pending production signoff', async () => {
     const dashboard = createDashboard();
     await settleDashboard();

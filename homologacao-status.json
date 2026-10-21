@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T14:20:54-03:00",
+  "generatedAt": "2026-10-21T14:33:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -97,7 +97,7 @@
         "id": "SRV-H03",
         "name": "Consistência e recuperação integral entre domínios",
         "status": "in_progress",
-        "evidence": "Restore relacional atômico validado em cinco contextos (central, Movies, Series, Channels e Books), com falhas injetadas em Series e Books (último contexto), preservando as linhas anteriores dos cinco contextos; BackupRestoreMariaDbTests 6/6. Permanecem pendentes a consistência temporal do snapshot entre factories, recuperação IntroSkipper/DetectionCache, MongoDB e Supabase, criptografia/chaves, rollback de filesystem e idempotência ponta a ponta. Auditoria local ainda não publicada; nenhuma alteração de produção."
+        "evidence": "Restore relacional atômico validado em cinco contextos (central, Movies, Series, Channels e Books), com falhas injetadas em Series e Books (último contexto), preservando as linhas anteriores dos cinco contextos; BackupRestoreMariaDbTests 6/6. A consistência temporal do snapshot está validada: transação RepeatableRead compartilhada nos mesmos cinco contextos; teste concorrente alterou Movies, Series, Channels e Books após serializar o histórico e confirmou que o arquivo reteve a versão anterior comum. FullSystemBackup 42/42; build Release Jellyfin.Server.csproj 0 avisos/erros. Continuam pendentes recuperação IntroSkipper/DetectionCache, MongoDB e Supabase, criptografia/chaves, rollback de filesystem e idempotência ponta a ponta; patch local não publicado, sem alteração de produção/instalação e sem release. Homologação formal global permanece 2/7 (28,6%)."
       },
       {
         "id": "SRV-H04",
@@ -3054,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-backup-consistent-snapshot-2026-10-21-1433",
+      "title": "Backup: snapshot temporal consistente entre cinco contextos relacionais",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; MariaDB 11.4.4 descartável em loopback; patch local não publicado baseado em v12.1.35",
+      "location": "BackupService · exportação relacional central e Movies/Series/Channels/Books",
+      "scope": "Eliminar mistura temporal entre contexts durante exportação e provar snapshot comum sob escrita concorrente, sem acessar produção.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-21T14:20:00-03:00",
+      "updatedAt": "2026-10-21T14:33:00-03:00",
+      "evidence": "Uma regressão RED reproduziu snapshot inconsistente: após serializar o histórico, escrita concorrente em Movies, Series, Channels e Books era incluída pelo backup. A correção compartilha uma connection e transação RepeatableRead entre contexto central e quatro contexts de domínio; o teste GREEN confirmou que o arquivo contém a versão pré-concorrência em todos. BackupRestoreMariaDbTests 6/6 em MariaDB 11.4.4 descartável, FullSystemBackup Release 42/42, build Release Jellyfin.Server.csproj com 0 avisos e 0 erros. MariaDB operacional 127.0.0.1:3306 intocada; instância descartável 33099 encerrada. Cobertura limitada aos cinco contexts relacionais: filesystem, IntroSkipper/DetectionCache, MongoDB/Supabase, instalação e produção seguem pendentes. Patch local sem commit/release; homologação formal global permanece 2/7 gates (28,6%), aceite pendente.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
+      ]
+    },
     {
       "id": "server-backup-cross-context-rollback-2026-10-21-1416",
       "title": "Backup: rollback relacional único validado entre cinco contextos",
