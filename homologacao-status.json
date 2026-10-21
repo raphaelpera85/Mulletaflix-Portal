@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T02:50:00-03:00",
+  "generatedAt": "2026-10-21T03:21:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8451,13 +8451,13 @@
       "local": "Windows, .NET 10 Release; teste Mongo opt-in",
       "location": "NebulaMongoContext, NebulaSupabaseSyncService, NebulaFtpManager",
       "scope": "Propagar BotTokensCollection através de backup/restauração Supabase e testar coleção padrão e customizada, sem acessar banco remoto ou produção.",
-      "status": "in_progress",
-      "progressPercent": null,
+      "status": "completed",
+      "progressPercent": 100,
       "startedAt": "2026-10-21T02:46:00-03:00",
-      "updatedAt": "2026-10-21T02:50:00-03:00",
-      "evidence": "Correção e regressão adicionadas à fonte. A compilação Release da suíte passou, mas os dois casos de coleção padrão/customizada foram SKIP porque MULLETAFLIX_TEST_MONGODB_CONNECTION_STRING não está configurada e 127.0.0.1:27099 não tem listener. Não foi usada a instância Mongo preexistente em 27017, nem Supabase ou produção. Sem validação integrada, empacotamento ou nova release; testes de backup/restore isolado continuam pendentes.",
-      "release": "Pendente: aguarda MongoDB descartável em 127.0.0.1:27099 e testes integrados",
-      "links": []
+      "updatedAt": "2026-10-21T03:21:00-03:00",
+      "evidence": "Correção testada com MongoDB 8.3.7 descartável em 127.0.0.1:27099: backup/restore das coleções padrão e customizada 2/2; suíte Nebula Release 730/730; contratos Node de release 23/23; TypeScript sem erros e Vite compilou 5.097 módulos. Produzidos e inspecionados instalador Windows x64 (423.407.491 bytes; SHA-256 9051C923E3E6DEC1F9A43144CC7E6CA1E28A0C192D486ED04B7EFB889C047CA1), ZIP atualizador (388.897.141 bytes; SHA-256 11733C251CF85D201FB6FD57A16C848204A97CECA8AD314A5941E8332246C6B8) e tar.gz Linux x64 (137.183.278 bytes; SHA-256 B93546207199DEC44BEE0C81959B7635DE48B79A146DB5900C4E70038F8B3744). Release v12.1.29 publicada no GitHub. Build Linux cross-published em Windows; CI, Linux nativo, instalação/upgrade, integrações reais e produção não foram homologados. Backup integral continua parcial; nenhuma produção foi alterada.",
+      "release": "v12.1.29 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.29 (commit cd8dc8821b74e139c44a3cd1f681f40144ae0bc0)",
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.29"]
     }
   ]
 }
