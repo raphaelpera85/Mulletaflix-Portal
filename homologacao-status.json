@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:02:00-03:00",
+  "generatedAt": "2026-10-22T12:08:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9536,6 +9536,28 @@
         "https://developer.themoviedb.org/reference/movie-images",
         "https://jovemnerd.com.br/noticias/filmes/invasao-zumbi-2-peninsula-ganha-dois-novos-posteres",
         "https://www.adorocinema.com/filmes/filme-266875/fotos/",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
+    {
+      "id": "server-tmdb-tv-image-languages-2026-10-22-1208",
+      "title": "Servidor: idioma pt-BR priorizado nas imagens de séries",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb/TmdbClientManager.cs; MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb/TV; MulletaFlix-master/tests/Jellyfin.Providers.Tests/Tmdb/TmdbUtilsTests.cs",
+      "scope": "Aplicar include_image_language em imagens TMDb de séries, temporadas e episódios, com catálogo cacheado, inglês como fallback e isolamento de cache por idiomas.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T12:03:00-03:00",
+      "updatedAt": "2026-10-22T12:08:00-03:00",
+      "evidence": "Implementação local compilou MediaBrowser.Providers durante dotnet test em Release. TmdbUtilsTests 25/25, incluindo regressões para cache por idiomas em série, temporada e episódio. Sem API TMDb autenticada/live, refresh de item, inspeção visual, runtime instalado ou produção. Artes persistidas ainda necessitam refresh. Coleções não têm parâmetro include_image_language na assinatura TMDbLib e continuam solicitadas sem filtro via language=null. Homologação formal segue 1/7 (14,3%); sem crédito por testes locais.",
+      "release": "Nenhuma. Validação controlada com TMDb real e refresh/visual de um título ainda pendente; outras gates formais do servidor seguem abertas.",
+      "links": [
+        "https://developer.themoviedb.org/reference/tv-series-images",
+        "https://developer.themoviedb.org/reference/tv-season-images",
+        "https://developer.themoviedb.org/reference/tv-episode-details",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]
     }

@@ -4315,6 +4315,24 @@ test('portal records global preferred-language fallback for artwork without form
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal publishes TMDb TV image-language coverage without claiming live validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-tmdb-tv-image-languages-2026-10-22-1208');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.scope, /séries, temporadas e episódios/);
+    assert.match(event.evidence, /TmdbUtilsTests 25\/25/);
+    assert.match(event.evidence, /Sem API TMDb autenticada\/live/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records restore TOCTOU API research without claiming mitigation or formal credit', () => {
     const event = statusData.events.find(item => item.id === 'server-restore-toctou-api-revalidation-2026-10-22-1148');
     const server = statusData.tracks.find(track => track.id === 'server');
