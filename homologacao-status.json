@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T14:13:27-03:00",
+  "generatedAt": "2026-10-22T14:22:27-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9709,6 +9709,28 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs"
+      ]
+    },
+    {
+      "id": "server-restore-toctou-windows-api-doc-correction-2026-10-22-1422",
+      "title": "Restore ZIP: retificação da análise de API Windows, TOCTOU continua pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Documentação oficial Microsoft Learn e man-pages Linux",
+      "location": "BackupService.FileSystemRestoreTransaction; docs/backup-coverage-audit.md; TODO-AUDITORIA.md",
+      "scope": "Corrigir a classificação documental de NtCreateFile e OBJ_DONT_REPARSE sem alterar o comportamento do restore.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T14:19:00-03:00",
+      "updatedAt": "2026-10-22T14:22:27-03:00",
+      "evidence": "A página Microsoft Learn documenta NtCreateFile para user-mode e nome relativo a RootDirectory; OBJECT_ATTRIBUTES documenta OBJ_DONT_REPARSE. A página específica limita Attributes a zero/OBJ_CASE_INSENSITIVE e a orientação geral diz que APIs winternl.h são internas e sujeitas a mudanças. Corrigida a afirmação de ausência de documentação user-mode. A combinação/garantia permanece ambígua e não foi aprovada. Nenhum código ou teste mudou; sem testes/build nesta rodada. TOCTOU continua aberta: validação e operações ainda usam caminhos absolutos separados. Homologação formal permanece 1/7 (14,3%), sem crédito por esta revisão documental. Sem instalação, produção ou release.",
+      "release": "Nenhuma. Próximo gate: desenho seguro e teste determinístico cross-platform contra troca concorrente de diretório.",
+      "links": [
+        "https://learn.microsoft.com/en-us/windows/win32/api/winternl/nf-winternl-ntcreatefile",
+        "https://learn.microsoft.com/en-us/windows/win32/api/ntdef/ns-ntdef-_object_attributes",
+        "https://learn.microsoft.com/en-us/windows/win32/devnotes/calling-internal-apis",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]
     },
     {
