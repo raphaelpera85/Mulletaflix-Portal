@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T09:42:08-03:00",
+  "generatedAt": "2026-10-22T09:50:47-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9365,8 +9365,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T09:10:00-03:00",
-      "updatedAt": "2026-10-22T09:42:08-03:00",
-      "evidence": "Filtro dotnet test ... --filter FullyQualifiedName~FullSystemBackup recompilou e passou 50/50. Revisão confirmou risco TOCTOU ainda aberto: validação por path é seguida por Directory.CreateDirectory, FileStream, File.Move e File.Delete absolutos; teste atual só cobre link estático. Linux openat2/dirfd é candidata. Windows NtCreateFile é API winternl interna sujeita a mudanças pela própria Microsoft e não foi aprovada sem validação de suporte. Próximo gate: desenho suportado cross-platform e teste determinístico de troca concorrente provando zero escrita fora da raiz. Homologação formal segue 1/7 (14,3%), sem crédito pelo teste local.",
+      "updatedAt": "2026-10-22T09:50:47-03:00",
+      "evidence": "Filtro dotnet test ... --filter FullyQualifiedName~FullSystemBackup recompilou e passou 50/50. Revisão confirmou risco TOCTOU ainda aberto: validação por path é seguida por Directory.CreateDirectory, FileStream, File.Move e File.Delete absolutos; teste atual só cobre link estático. O endpoint de restore exige RequiresElevation (papel Administrator) e limita seleção ao diretório configurado de backups; a auditoria de fonte não encontrou rota HTTP de restore para usuário não administrador. O instalador define ACL restritiva para o diretório de dados, mas a ACL efetiva de uma instalação não foi testada nesta sessão. Não há evidência de exploração remota; a alcançabilidade local depende das ACLs e do controle dos diretórios ancestrais. Linux openat2/dirfd é candidata. Windows NtCreateFile é API winternl interna sujeita a mudanças pela própria Microsoft e não foi aprovada sem validação de suporte. Próximo gate: validar ACL instalada e criar teste determinístico de troca concorrente provando zero escrita fora da raiz. Homologação formal segue 1/7 (14,3%), sem crédito pelo teste local.",
       "release": "Nenhuma; segurança TOCTOU, kill/restart real, MariaDB descartável, validação FK, consistência temporal e aceite formal permanecem pendentes. Sem produção ou instalação.",
       "links": []
     }
