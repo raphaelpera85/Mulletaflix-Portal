@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T00:58:06-03:00",
+  "generatedAt": "2026-10-22T01:06:01-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -21,11 +21,11 @@
       "progressPercent": null,
       "source": "GitHub Actions e testes de integração",
       "homologation": {
-        "completed": 2,
+        "completed": 1,
         "total": 7,
-        "percent": 28.6,
+        "percent": 14.3,
         "unit": "gates formais igualmente ponderados",
-        "label": "2 de 7 gates com evidência local validada; 1 em andamento, 3 pendentes e 1 bloqueado. Aceite formal de produção permanece pendente."
+        "label": "1 de 7 gates com evidência local validada; 2 em andamento, 3 pendentes e 1 bloqueado. SRV-H02 foi reaberto após divergência entre a evidência publicada e o escopo coberto pela fonte/teste inspecionados. Aceite formal de produção permanece pendente."
       },
       "testAudit": {
         "passed": 5120,
@@ -90,8 +90,8 @@
       {
         "id": "SRV-H02",
         "name": "Backup e restauração relacional em MariaDB descartável",
-        "status": "completed",
-        "evidence": "Regressões FullSystemBackup 42/42 e BackupRestoreMariaDbTests 6/6 contra MariaDB 11.4.4 descartável: round-trip dos cinco contextos relacionais, rollback com falhas injetadas em ActivityLogs, Series e Books (último contexto), linhas anteriores preservadas nos cinco contextos e arquivos intactos. Build Release do servidor sem avisos/erros. A instância operacional 127.0.0.1:3306 não foi acessada; a descartável 127.0.0.1:33099 foi encerrada. Não cobre MongoDB/Supabase nem restore operacional instalado."
+      "status": "in_progress",
+      "evidence": "Reaberto em 22/10/2026: a evidência anterior alegava round-trip/rollback em cinco contextos e BackupRestoreMariaDbTests 6/6, mas a fonte atual de BackupService injeta somente IDbContextFactory de MulletaFlixDbContext; o teste MariaDB inspecionado usa somente esse contexto. A cobertura dos modelos Movies, Series, Channels e Books independentes e o resultado 6/6 não foram rastreados/reproduzidos nesta sessão. Histórico anterior registra MariaDB descartável, mas não resolve a discrepância. Validar commits/relatórios e ajustar ou implementar a cobertura antes de concluir o gate. A instância operacional 127.0.0.1:3306 não foi acessada."
       },
       {
         "id": "SRV-H03",
@@ -9193,6 +9193,25 @@
       "release": "Nenhuma release; gates formais permanecem abertos.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/NEBULA-RUNBOOK.md"
+      ]
+    },
+    {
+      "id": "server-fullsystembackup-domain-context-coverage-2026-10-22-0101",
+      "title": "Auditoria: cobertura de contextos de domínio no backup integral",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Inspeção estática do checkout principal Windows",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/Jellyfin.Server.Implementations/Billing/DomainDataMigrator.cs",
+      "scope": "Verificar se contextos EF independentes de filmes, séries, canais e livros entram no snapshot/restore do FullSystemBackup.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T01:01:10-03:00",
+      "updatedAt": "2026-10-22T01:06:01-03:00",
+      "evidence": "BackupService injeta e enumera apenas MulletaFlixDbContext. MoviesDbContext, SeriesDbContext, ChannelsDbContext e BooksDbContext são separados e populados por migração, sem snapshot próprio. rg -l não encontrou escritor API/serviço fora de definições, DI e migrações; perda atual não está demonstrada. A evidência anterior do gate SRV-H02 alegava cobertura relacional de cinco contextos, mas o código e o teste MariaDB inspecionados cobrem somente MulletaFlixDbContext; o resultado/commit alegado não foi rastreado nesta sessão. Gate reaberto, formal 1/7 (14,3%). Auditoria estática, sem mudança de código/testes e sem release.",
+      "release": "Nenhuma release; auditoria multi-contexto permanece aberta.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]
     }
   ]

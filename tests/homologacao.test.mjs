@@ -1117,7 +1117,7 @@ test('server restore transaction records isolated MariaDB rollback validation wi
     assert.ok(rendered.indexOf(event.title) >= 0);
 });
 
-test('server backup records cross-context atomic rollback while keeping broader homologation open', () => {
+test('server backup history is distinguished from current source-verified restore scope', () => {
     const event = statusData.events.find(item => item.id === 'server-backup-cross-context-rollback-2026-10-21-1416');
     const relationalRestore = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H02');
     const fullRecovery = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');
@@ -1131,12 +1131,13 @@ test('server backup records cross-context atomic rollback while keeping broader 
     assert.match(event.evidence, /MariaDB operacional em 127\.0\.0\.1:3306 não foi acessada/);
     assert.match(event.evidence, /Patch local sem commit\/release/);
 
-    assert.equal(relationalRestore.status, 'completed');
-    assert.match(relationalRestore.evidence, /BackupRestoreMariaDbTests 6\/6/);
+    assert.equal(relationalRestore.status, 'in_progress');
+    assert.match(relationalRestore.evidence, /fonte atual de BackupService injeta somente/);
+    assert.match(relationalRestore.evidence, /não foram rastreados\/reproduzidos nesta sessão/);
     assert.equal(fullRecovery.status, 'in_progress');
     assert.match(fullRecovery.evidence, /consistência temporal do snapshot/);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.tracks.find(track => track.id === 'server').homologation.percent, 28.6);
+    assert.equal(statusData.tracks.find(track => track.id === 'server').homologation.percent, 14.3);
 });
 
 test('server backup records one consistent temporal snapshot across the five relational contexts', () => {
@@ -1172,25 +1173,25 @@ test('formal server homologation consolidates gates, percentage, evidence and pe
     const percent = Math.round((completed / areas.length) * 1000) / 10;
 
     assert.equal(areas.length, 7);
-    assert.equal(completed, 2);
-    assert.equal(areas.filter(area => area.status === 'in_progress').length, 1);
+    assert.equal(completed, 1);
+    assert.equal(areas.filter(area => area.status === 'in_progress').length, 2);
     assert.equal(areas.filter(area => area.status === 'pending').length, 3);
     assert.equal(areas.filter(area => area.status === 'blocked').length, 1);
-    assert.equal(percent, 28.6);
+    assert.equal(percent, 14.3);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.deepEqual(server.homologation, {
-        completed: 2,
+        completed: 1,
         total: 7,
-        percent: 28.6,
+        percent: 14.3,
         unit: 'gates formais igualmente ponderados',
-        label: '2 de 7 gates com evidência local validada; 1 em andamento, 3 pendentes e 1 bloqueado. Aceite formal de produção permanece pendente.'
+        label: '1 de 7 gates com evidência local validada; 2 em andamento, 3 pendentes e 1 bloqueado. SRV-H02 foi reaberto após divergência entre a evidência publicada e o escopo coberto pela fonte/teste inspecionados. Aceite formal de produção permanece pendente.'
     });
-    assert.match(dashboard.getElement('server-homologation-percent').textContent, /^28\.6%$/);
-    assert.equal(dashboard.getElement('server-homologation-progress-bar').style.width, '28.6%');
-    assert.equal(dashboard.getElement('server-homologation-progress').attributes['aria-valuenow'], '28.6');
-    assert.match(dashboard.getElement('server-homologation-state').textContent, /2\/7 gates concluídos · 1 em andamento · 3 pendentes · 1 bloqueado · aceite formal pendente/);
-    assert.match(dashboard.getElement('track-summary-table').innerHTML, /28\.6%/);
-    assert.match(dashboard.getElement('track-grid').innerHTML, /Homologação formal: 28\.6%/);
+    assert.match(dashboard.getElement('server-homologation-percent').textContent, /^14\.3%$/);
+    assert.equal(dashboard.getElement('server-homologation-progress-bar').style.width, '14.3%');
+    assert.equal(dashboard.getElement('server-homologation-progress').attributes['aria-valuenow'], '14.3');
+    assert.match(dashboard.getElement('server-homologation-state').textContent, /1\/7 gates concluídos · 2 em andamento · 3 pendentes · 1 bloqueado · aceite formal pendente/);
+    assert.match(dashboard.getElement('track-summary-table').innerHTML, /14\.3%/);
+    assert.match(dashboard.getElement('track-grid').innerHTML, /Homologação formal: 14\.3%/);
     assert.match(dashboard.getElement('track-grid').innerHTML, /Auditoria: 5120\/5356 · 95\.6%/);
     assert.match(rendered, /CI remota e matriz das plataformas suportadas/);
     assert.match(rendered, /runner_id=0 e steps vazios/);
@@ -3960,7 +3961,7 @@ test('portal reports backup restore reparse-point defense without closing formal
     assert.match(event.evidence, /fencing de lease_id/);
     assert.match(event.evidence, /2\/7 \(28,6%\)/);
     assert.match(event.evidence, /Nenhum release do servidor criado/);
-    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -3977,7 +3978,7 @@ test('portal distinguishes reparse-point protection in the primary checkout from
     assert.match(event.evidence, /TOCTOU/);
     assert.match(event.evidence, /64a33dcf, 8 commits atrás/);
     assert.match(event.release, /Nenhuma release/);
-    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -4000,7 +4001,7 @@ test('portal records Nebula upload lease fencing without claiming production hom
     assert.match(event.evidence, /homologação formal global continua 2\/7 \(28,6%\)/);
     assert.match(event.evidence, /Retentativas automáticas permanecem habilitadas/);
     assert.match(event.evidence, /exactly-once não é garantido/);
-    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -4026,7 +4027,7 @@ test('portal records Python Telegram retry reconciliation while formal homologat
     assert.match(event.evidence, /árvore principal local está 8 commits atrás/);
     assert.match(event.evidence, /worktree gerenciada ainda não está integrada à árvore principal/);
     assert.match(event.evidence, /Homologação formal permanece 2\/7 \(28,6%\)/);
-    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -4040,7 +4041,7 @@ test('portal records the Mongo queue identity regression without claiming execut
     assert.match(event.evidence, /113 aprovados, 1 ignorado, 0 falhas/);
     assert.match(event.evidence, /A regressão compilou, mas não executou/);
     assert.match(event.evidence, /Sem release, instalação ou produção/);
-    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -4057,7 +4058,7 @@ test('portal records checkpoint write-failure coverage without treating local te
     assert.match(event.evidence, /permanece local, não foi enviada ao repositório do servidor/);
     assert.match(event.evidence, /Homologação formal segue 2\/7 \(28,6%\)/);
     assert.match(event.evidence, /nenhuma release criada/);
-    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.homologation.percent, 14.3);
     assert.equal(server.status, 'in_progress');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
@@ -4075,9 +4076,9 @@ test('portal distinguishes locally validated Nebula automatic retry from formal 
     assert.match(event.evidence, /5\.120 aprovados, 236 ignorados, 0 falhas\/5\.356/);
     assert.match(event.evidence, /Sem Telegram\/Mongo operacional/);
     assert.match(event.evidence, /Nenhuma release criada ou publicada/);
-    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.completed, 1);
     assert.equal(server.homologation.total, 7);
-    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -4097,8 +4098,8 @@ test('portal records C# checkpoint concurrency fix without claiming integration 
     assert.match(event.evidence, /reconciliação limitada aos três bots/);
     assert.match(event.evidence, /Sem Mongo\/Telegram reais/);
     assert.match(event.evidence, /Nenhuma release criada\/publicada/);
-    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.completed, 1);
     assert.equal(server.homologation.total, 7);
-    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
