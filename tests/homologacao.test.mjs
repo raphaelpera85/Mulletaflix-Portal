@@ -4293,6 +4293,26 @@ test('portal records the latest focal server regressions without changing formal
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records Portuguese image preference with English fallback without claiming live TMDb validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-tmdb-ptbr-fallback-revalidation-2026-10-22-1216');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.scope, /pt-BR/);
+    assert.match(event.evidence, /154 aprovados/);
+    assert.match(event.evidence, /inglês permanece disponível/);
+    assert.match(event.evidence, /Nenhuma chamada autenticada ao TMDb/);
+    assert.match(event.evidence, /Homologação formal permanece 1\/7 \(14,3%\)/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records global preferred-language fallback for artwork without formal credit', () => {
     const event = statusData.events.find(item => item.id === 'server-artwork-language-fallback-global-2026-10-22-1130');
     const server = statusData.tracks.find(track => track.id === 'server');

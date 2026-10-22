@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:08:00-03:00",
+  "generatedAt": "2026-10-22T12:16:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9558,6 +9558,26 @@
         "https://developer.themoviedb.org/reference/tv-series-images",
         "https://developer.themoviedb.org/reference/tv-season-images",
         "https://developer.themoviedb.org/reference/tv-episode-details",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
+    {
+      "id": "server-tmdb-ptbr-fallback-revalidation-2026-10-22-1216",
+      "title": "Servidor: capas priorizam português e mantêm inglês como fallback",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/MediaBrowser.Model/Extensions/EnumerableExtensions.cs; MulletaFlix-master/MediaBrowser.Providers/Manager/ProviderManager.cs; MulletaFlix-master/MediaBrowser.Providers/Manager/ItemImageProvider.cs; MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb/Movies/TmdbMovieImageProvider.cs; testes Providers/Model",
+      "scope": "Revalidar a escolha de imagens para preferência pt-BR, códigos TMDb pt e fallback inglês; registrar o estado de Invasão Zumbi 2 sem afirmar validação ao vivo.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T12:08:00-03:00",
+      "updatedAt": "2026-10-22T12:16:00-03:00",
+      "evidence": "dotnet test Jellyfin.Providers.Tests Release, filtro ProviderManagerTests|ItemImageProviderTests|TmdbUtilsTests: 154 aprovados, zero ignorados/falhas; Jellyfin.Model.Tests EnumerableExtensionsTests: 7/7. A fonte reconhece pt-BR como pt, agrega candidatos de provedores e filtra por tipo; inglês permanece disponível quando não há arte no idioma preferido. Nenhuma chamada autenticada ao TMDb, refresh ou inspeção visual de Invasão Zumbi 2 foi feita; artes já persistidas podem exigir substituição/FullRefresh após instalação. Fanart pode ser plugin externo. Homologação formal permanece 1/7 (14,3%), sem crédito de testes locais; produção e release não validadas.",
+      "release": "Nenhuma. A verificação demonstra os contratos locais; falta homologação com resposta real do TMDb e refresh visual do título.",
+      "links": [
+        "https://developer.themoviedb.org/reference/movie-images",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]
     }
