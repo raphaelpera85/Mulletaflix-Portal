@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T00:50:20-03:00",
+  "generatedAt": "2026-10-22T00:55:58-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9188,8 +9188,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T00:50:20-03:00",
-      "updatedAt": "2026-10-22T00:50:20-03:00",
-      "evidence": "Formatter+NebulaSupabaseSyncTests: 65/65; regressão Implementations: 1.532 aprovados, 66 ignorados, 0 falhas. 66 ignorados incluem testes condicionados a ambiente/opt-in. git diff --check passou; busca dos usos diretos pesquisados encontrou zero restantes. Sem consultas ao MongoDB/Supabase, sem produção. Homologação formal permanece 2/7 (28,6%); sem release.",
+      "updatedAt": "2026-10-22T00:55:58-03:00",
+      "evidence": "Formatter+NebulaSupabaseSyncTests: 65/65; regressão Implementations: 1.532 aprovados, 66 ignorados, 0 falhas. Auditoria P0 do restore ZIP: o filtro BackupServiceTests em Release passou 32/32; contagem antiga 41/41 não foi reproduzida neste checkout. TOCTOU, crash recovery/journal durável, MariaDB descartável e cobertura de contextos externos continuam pendentes. git diff --check passou. Sem consultas a Mongo/Supabase nem produção. Homologação formal permanece 2/7 (28,6%); sem release.",
       "release": "Nenhuma release; gates formais permanecem abertos.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/NEBULA-RUNBOOK.md"
