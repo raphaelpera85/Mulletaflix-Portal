@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T21:51:52-03:00",
+  "generatedAt": "2026-10-21T22:31:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9053,6 +9053,20 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T21:51:52-03:00",
       "evidence": "Testes focados checkpoint/scanner 22/22. NebulaPython completa passou 683/683; primeira execução marcou uma falha transitória no teste STRM, mas o teste passou 5/5 isolado, módulo STRM 19/19 e nova suíte completa 683/683. Suíte .NET Release sem build/restore: exit 0, 5.120 aprovados, 236 ignorados, 0 falhas/5.356. Web 418/418; Stylelint, typecheck, build e verificação dos 1.926 artefatos passaram; bundle inicial 294,3 KiB gzip. Contrato do portal reexecutado: 221/221; sintaxe JavaScript, JSON e `git diff --check` válidos. `npm audit` de produção zero; o completo ainda tem 10 altas dev-only em braces@3.0.3 sem patch upstream. Sem Telegram/Mongo operacional, runtime instalado, CI remota ou produção; formal continua 2/7 (28,6%). Nenhuma release criada ou publicada."
+    },
+    {
+      "id": "server-supabase-delta-checkpoint-2026-10-21-2211",
+      "title": "Sync Supabase: cursor delta baseado em execução concluída",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "Jellyfin.Server.Implementations/Nebula/NebulaSupabaseSyncService.cs e testes NebulaSupabaseSyncTests",
+      "scope": "Impedir que o cursor delta avance por causa de um lote parcial; usar checkpoint v2 de sucesso e forçar sync integral quando não há histórico confiável.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T22:31:00-03:00",
+      "evidence": "Testes focais NebulaSupabaseSyncTests: 52/52. Suite Jellyfin.Server.Implementations.Tests Release, filtro FullyQualifiedName!~Integration: 1.517 aprovados, 66 ignorados, 0 falhas (1.583). dotnet format --verify-no-changes passou. Contratos do portal 221/221, node --check, JSON e git diff --check aprovados. Correção local em fonte; sem Supabase/Mongo reais, CI remota, runtime instalado ou produção. Homologação formal permanece 2/7 (28,6%); nenhuma release do servidor criada/publicada."
     }
   ]
 }
