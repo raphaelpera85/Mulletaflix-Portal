@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T23:44:06-03:00",
+  "generatedAt": "2026-10-21T23:53:09-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9109,6 +9109,20 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T23:44:06-03:00",
       "evidence": "O loop preserva a primeira tentativa imediata e agenda retry em 1/2/4/8/16/32 minutos, limitado ao intervalo normal, resetando após sucesso; cancelamento do serviço encerra o ciclo. NebulaSupabaseSyncTests Release 62/62; Jellyfin.Server.Implementations.Tests Release 1.527 aprovados, 66 ignorados, 0 falhas; build Jellyfin.Server Release 0 avisos/erros. Mongo local Running/Automatic e TCP 127.0.0.1:27017 acessível em checagem read-only; nenhuma consulta/escrita Supabase, backup persistido, produção ou instalação. Homologação formal permanece 2/7 (28,6%), sem crédito por estes testes locais. Nenhuma release do servidor criada/publicada; falta validar persistência/retry em ambiente isolado e os demais gates formais."
+    },
+    {
+      "id": "server-nebula-ambiguous-retry-revalidation-2026-10-21-2353",
+      "title": "Nebula: revalidação dos retries automáticos após resposta ambígua",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, Python 3.10 em venv temporária",
+      "location": "Tools/NebulaPython/main.py, upload_checkpoint.py e testes do worker",
+      "scope": "Confirmar a decisão do usuário de manter retry automático após possível aceite Telegram sem resposta ou checkpoint Mongo, preservando reconciliação antes de reenviar.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T23:53:09-03:00",
+      "evidence": "A fonte já preserva retry automático: reconcilia pelo UUID/parte/SHA-256; busca inconclusiva agenda novo processamento sem novo POST imediato. Testes focados de checkpoint/worker/worker legado: 31/31; suíte NebulaPython completa: 683/683; py_compile passou. Foram testes locais com mocks, sem Telegram/Mongo reais, runtime instalado, CI remota ou produção; pode haver duplicata se uma parte aceita continuar invisível à busca. Revalidação sem alteração de código. Homologação formal permanece 2/7 (28,6%); nenhuma release do servidor criada/publicada. O checkout principal está sujo e 8 commits atrás de origin/main."
     }
   ]
 }
