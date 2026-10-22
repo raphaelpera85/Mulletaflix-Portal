@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T01:24:43-03:00",
+  "generatedAt": "2026-10-22T01:41:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -91,13 +91,13 @@
         "id": "SRV-H02",
         "name": "Backup e restauração relacional em MariaDB descartável",
       "status": "in_progress",
-        "evidence": "Reaberto em 22/10/2026 após divergência entre o relato anterior de cinco contextos/6 testes e a fonte atual. Correção local: manifesto agora usa nomes de propriedades DbSet aceitos pelo validador; PlaybackReports, o conjunto exclusivo ativo encontrado em UsersDbContext, foi incluído no contexto central e confirmado no modelo EF. BackupServiceTests 34/34. BackupRestoreMariaDbTests 2 aprovados e 1 ignorado; sem MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING, o round-trip atualizado não executou. Contextos Movies, Series, Channels e Books seguem sem snapshot próprio; resultado histórico 6/6 ainda sem SHA/relatórios rastreados. Banco operacional 127.0.0.1:3306 não acessado. SRV-H02 segue em andamento, sem crédito parcial."
+        "evidence": "Reaberto em 22/10/2026 após divergência entre o relato anterior de cinco contextos/6 testes e a fonte atual. Correção local: manifesto, ZIP e validação agora compartilham nomes físicos mapeados pelo modelo EF; PlaybackReports usa a tabela/arquivo singular PlaybackReport. Declaração legada DbSet`1 só é aceita quando as entradas físicas requeridas existem. O conjunto ativo de PlaybackReports foi incluído no contexto central e confirmado no modelo EF. BackupServiceTests 34/34. BackupRestoreMariaDbTests 2 aprovados e 1 ignorado; sem MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING, o round-trip atualizado não executou. Contextos Movies, Series, Channels e Books seguem sem snapshot próprio; resultado histórico 6/6 ainda sem SHA/relatórios rastreados. Banco operacional 127.0.0.1:3306 não acessado. SRV-H02 segue em andamento, sem crédito parcial."
       },
       {
         "id": "SRV-H03",
         "name": "Consistência e recuperação integral entre domínios",
         "status": "in_progress",
-        "evidence": "Correção local do contexto relacional central: manifesto compartilhando nomes de DbSet com o validador e PlaybackReports incluído; teste de modelo passou. A execução MariaDB que comprovaria round-trip atualizado foi ignorada por ausência de conexão descartável. Os quatro contextos Movies, Series, Channels e Books continuam fora do snapshot e o relato anterior de cinco contextos/6 testes não foi rastreado; a consistência transacional multi-contexto e sua evidência pública são retiradas até reconciliação. Permanecem pendentes cobertura de IntroSkipper/DetectionCache, MongoDB/Supabase, criptografia/chaves e recuperação após crash. Patch local não publicado, sem instalação/produção/release. H02/H03 seguem abertos; formal global 1/7 (14,3%)."
+        "evidence": "Correção local do contexto relacional central: manifesto, ZIP e validação usam os nomes físicos mapeados pelo modelo EF; PlaybackReports grava como PlaybackReport e foi incluído no contexto central, com teste de modelo. Declaração DbSet`1 é aceita apenas para compatibilidade legada quando todas as entradas físicas requeridas existem. A execução MariaDB que comprovaria round-trip atualizado foi ignorada por ausência de conexão descartável. Os quatro contextos Movies, Series, Channels e Books continuam fora do snapshot e o relato anterior de cinco contextos/6 testes não foi rastreado; a consistência transacional multi-contexto e sua evidência pública são retiradas até reconciliação. Permanecem pendentes cobertura de IntroSkipper/DetectionCache, MongoDB/Supabase, criptografia/chaves e recuperação após crash. Patch local não publicado, sem instalação/produção/release. H02/H03 seguem abertos; formal global 1/7 (14,3%)."
       },
       {
         "id": "SRV-H04",
@@ -9222,12 +9222,12 @@
       "featureIds": ["T4.3"],
       "local": "Windows, .NET 10; testes unitários e integração MariaDB opt-in",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; JellyfinDbContext; BackupServiceTests; BackupRestoreMariaDbTests",
-      "scope": "Alinhar os nomes de tabelas declarados pelo manifesto com o validador e incluir o conjunto ativo PlaybackReports no escopo central de backup/restore.",
+      "scope": "Alinhar manifesto, arquivos ZIP, validação e restore pelos nomes físicos de tabelas do modelo EF e incluir PlaybackReports no escopo central de backup/restore.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T01:06:01-03:00",
-      "updatedAt": "2026-10-22T01:24:43-03:00",
-      "evidence": "BackupServiceTests 34/34; teste InMemory confirma PlaybackReport no modelo. BackupRestoreMariaDbTests 2 aprovados/1 ignorado por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING; o round-trip novo não executou. A alteração está apenas no checkout local sujo, 8 commits atrás de origin/main; nenhum banco operacional, instalação, produção ou CI remota foi acessado. Contextos Movies/Series/Channels/Books e a divergência do relatório 6/6 continuam pendentes; SRV-H02/H03 abertos, formal 1/7 (14,3%). Nenhuma release criada.",
+      "updatedAt": "2026-10-22T01:41:50-03:00",
+      "evidence": "BackupServiceTests 34/34 após corrigir casos de validação para usar os nomes físicos do modelo EF; o teste InMemory confirma que PlaybackReports mapeia para PlaybackReport. BackupRestoreMariaDbTests 2 aprovados/1 ignorado por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING; o round-trip novo não executou. Manifesto, arquivos ZIP, validação e restore agora usam nomes físicos coerentes; declaração DbSet`1 legada só é aceita com todas as entradas físicas exigidas. A alteração está apenas no checkout local sujo, 8 commits atrás de origin/main; nenhum banco operacional, instalação, produção ou CI remota foi acessado. Contextos Movies/Series/Channels/Books e a divergência do relatório 6/6 continuam pendentes; SRV-H02/H03 abertos, formal 1/7 (14,3%). Nenhuma release criada.",
       "release": "Nenhuma release; aguarda integração, teste MariaDB descartável e gates formais.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"

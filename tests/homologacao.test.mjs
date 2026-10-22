@@ -1175,6 +1175,8 @@ test('portal records the local manifest and PlaybackReports correction without g
     assert.equal(event.progressPercent, null);
     assert.match(event.evidence, /BackupServiceTests 34\/34/);
     assert.match(event.evidence, /round-trip novo não executou/);
+    assert.match(event.evidence, /nomes físicos/);
+    assert.match(event.evidence, /PlaybackReports mapeia para PlaybackReport/);
     assert.match(h02.evidence, /PlaybackReports/);
     assert.equal(server.homologation.completed, 1);
     assert.equal(server.homologation.total, 7);
