@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T13:05:00-03:00",
+  "generatedAt": "2026-10-22T13:12:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-lyric-upload-toctou-triage-2026-10-22-1312",
+      "title": "Upload de letras: triagem de segurança e alcance TOCTOU",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; checkout local baseado em 64a33dcf",
+      "location": "LyricsController.UploadLyrics · LyricManager.TrySaveLyric · LyricManager.IsPathWithinDirectory",
+      "scope": "Avaliar se o caminho do upload de letras pode escapar da biblioteca e separar risco remoto do hardening contra corrida local.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T13:12:00-03:00",
+      "updatedAt": "2026-10-22T13:12:00-03:00",
+      "evidence": "Auditoria de fonte e revisão independente: o endpoint exige EnableLyricManagement, resolve item Audio visível ao usuário, rejeita separadores/traversal e limita a extensão; o caminho final deriva do item, não do nome enviado. Nenhum escape remoto controlável via filename foi encontrado. Persistem operações absolutas após checagem; ator local com permissão de escrita pode potencialmente trocar a árvore entre validação e abertura. Helper não verifica raiz/ancestrais; uso como symlink em produção não foi validado. Testes Release: LyricManagerPathSafetyTests 20/20, LyricsControllerTests 10/10; não exercitam corrida determinística nem ACL/runtime instalado. Nenhuma alteração runtime/instalação/produção/release. Homologação formal servidor permanece 1/7 (14,3%); teste local não recebe crédito formal. Checkout principal sujo e 8 commits atrás de origin/main."
+    },
     {
       "id": "server-image-locale-refresh-validation-2026-10-22",
       "title": "Artes localizadas: validação de prioridade pt-BR e fallback inglês",
