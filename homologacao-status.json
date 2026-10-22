@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T01:06:01-03:00",
+  "generatedAt": "2026-10-22T01:24:43-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -91,13 +91,13 @@
         "id": "SRV-H02",
         "name": "Backup e restauração relacional em MariaDB descartável",
       "status": "in_progress",
-      "evidence": "Reaberto em 22/10/2026: a evidência anterior alegava round-trip/rollback em cinco contextos e BackupRestoreMariaDbTests 6/6, mas a fonte atual de BackupService injeta somente IDbContextFactory de MulletaFlixDbContext; o teste MariaDB inspecionado usa somente esse contexto. A cobertura dos modelos Movies, Series, Channels e Books independentes e o resultado 6/6 não foram rastreados/reproduzidos nesta sessão. Histórico anterior registra MariaDB descartável, mas não resolve a discrepância. Validar commits/relatórios e ajustar ou implementar a cobertura antes de concluir o gate. A instância operacional 127.0.0.1:3306 não foi acessada."
+        "evidence": "Reaberto em 22/10/2026 após divergência entre o relato anterior de cinco contextos/6 testes e a fonte atual. Correção local: manifesto agora usa nomes de propriedades DbSet aceitos pelo validador; PlaybackReports, o conjunto exclusivo ativo encontrado em UsersDbContext, foi incluído no contexto central e confirmado no modelo EF. BackupServiceTests 34/34. BackupRestoreMariaDbTests 2 aprovados e 1 ignorado; sem MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING, o round-trip atualizado não executou. Contextos Movies, Series, Channels e Books seguem sem snapshot próprio; resultado histórico 6/6 ainda sem SHA/relatórios rastreados. Banco operacional 127.0.0.1:3306 não acessado. SRV-H02 segue em andamento, sem crédito parcial."
       },
       {
         "id": "SRV-H03",
         "name": "Consistência e recuperação integral entre domínios",
         "status": "in_progress",
-        "evidence": "Restore relacional atômico validado em cinco contextos (central, Movies, Series, Channels e Books), com falhas injetadas em Series e Books (último contexto), preservando as linhas anteriores dos cinco contextos; BackupRestoreMariaDbTests 6/6. A consistência temporal do snapshot está validada: transação RepeatableRead compartilhada nos mesmos cinco contextos; teste concorrente alterou Movies, Series, Channels e Books após serializar o histórico e confirmou que o arquivo reteve a versão anterior comum. FullSystemBackup 42/42; build Release Jellyfin.Server.csproj 0 avisos/erros. Continuam pendentes recuperação IntroSkipper/DetectionCache, MongoDB e Supabase, criptografia/chaves, rollback de filesystem e idempotência ponta a ponta; patch local não publicado, sem alteração de produção/instalação e sem release. Homologação formal global permanece 2/7 (28,6%)."
+        "evidence": "Correção local do contexto relacional central: manifesto compartilhando nomes de DbSet com o validador e PlaybackReports incluído; teste de modelo passou. A execução MariaDB que comprovaria round-trip atualizado foi ignorada por ausência de conexão descartável. Os quatro contextos Movies, Series, Channels e Books continuam fora do snapshot e o relato anterior de cinco contextos/6 testes não foi rastreado; a consistência transacional multi-contexto e sua evidência pública são retiradas até reconciliação. Permanecem pendentes cobertura de IntroSkipper/DetectionCache, MongoDB/Supabase, criptografia/chaves e recuperação após crash. Patch local não publicado, sem instalação/produção/release. H02/H03 seguem abertos; formal global 1/7 (14,3%)."
       },
       {
         "id": "SRV-H04",
@@ -3117,14 +3117,14 @@
     },
     {
       "id": "server-backup-consistent-snapshot-2026-10-21-1433",
-      "title": "Backup: snapshot temporal consistente entre cinco contextos relacionais",
+      "title": "Evidência histórica sob reconciliação: snapshot temporal entre cinco contextos relacionais",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
       "local": "Windows, .NET 10 Release; MariaDB 11.4.4 descartável em loopback; patch local não publicado baseado em v12.1.35",
       "location": "BackupService · exportação relacional central e Movies/Series/Channels/Books",
       "scope": "Eliminar mistura temporal entre contexts durante exportação e provar snapshot comum sob escrita concorrente, sem acessar produção.",
-      "status": "completed",
+      "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-21T14:20:00-03:00",
       "updatedAt": "2026-10-21T14:33:00-03:00",
@@ -3136,14 +3136,14 @@
     },
     {
       "id": "server-backup-cross-context-rollback-2026-10-21-1416",
-      "title": "Backup: rollback relacional único validado entre cinco contextos",
+      "title": "Evidência histórica sob reconciliação: rollback entre cinco contextos relacionais",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
       "local": "Windows, .NET 10 Release; MariaDB 11.4.4 descartável em loopback; patch local não publicado baseado em v12.1.35",
       "location": "BackupService · restauração central e domínios Movies/Series/Channels/Books",
       "scope": "Reproduzir e corrigir perda de linhas após falha intermediária no restore, sem acessar banco ou filesystem de produção.",
-      "status": "completed",
+      "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-21T14:09:03-03:00",
       "updatedAt": "2026-10-21T14:20:54-03:00",
@@ -9210,6 +9210,25 @@
       "updatedAt": "2026-10-22T01:06:01-03:00",
       "evidence": "BackupService injeta e enumera apenas MulletaFlixDbContext. MoviesDbContext, SeriesDbContext, ChannelsDbContext e BooksDbContext são separados e populados por migração, sem snapshot próprio. rg -l não encontrou escritor API/serviço fora de definições, DI e migrações; perda atual não está demonstrada. A evidência anterior do gate SRV-H02 alegava cobertura relacional de cinco contextos, mas o código e o teste MariaDB inspecionados cobrem somente MulletaFlixDbContext; o resultado/commit alegado não foi rastreado nesta sessão. Gate reaberto, formal 1/7 (14,3%). Auditoria estática, sem mudança de código/testes e sem release.",
       "release": "Nenhuma release; auditoria multi-contexto permanece aberta.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
+      ]
+    },
+    {
+      "id": "server-fullsystembackup-manifest-playbackreports-2026-10-22-0124",
+      "title": "Correção local do manifesto e inclusão de PlaybackReports no backup",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.3"],
+      "local": "Windows, .NET 10; testes unitários e integração MariaDB opt-in",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; JellyfinDbContext; BackupServiceTests; BackupRestoreMariaDbTests",
+      "scope": "Alinhar os nomes de tabelas declarados pelo manifesto com o validador e incluir o conjunto ativo PlaybackReports no escopo central de backup/restore.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T01:06:01-03:00",
+      "updatedAt": "2026-10-22T01:24:43-03:00",
+      "evidence": "BackupServiceTests 34/34; teste InMemory confirma PlaybackReport no modelo. BackupRestoreMariaDbTests 2 aprovados/1 ignorado por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING; o round-trip novo não executou. A alteração está apenas no checkout local sujo, 8 commits atrás de origin/main; nenhum banco operacional, instalação, produção ou CI remota foi acessado. Contextos Movies/Series/Channels/Books e a divergência do relatório 6/6 continuam pendentes; SRV-H02/H03 abertos, formal 1/7 (14,3%). Nenhuma release criada.",
+      "release": "Nenhuma release; aguarda integração, teste MariaDB descartável e gates formais.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]

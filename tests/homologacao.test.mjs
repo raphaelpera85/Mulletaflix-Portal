@@ -1117,14 +1117,15 @@ test('server restore transaction records isolated MariaDB rollback validation wi
     assert.ok(rendered.indexOf(event.title) >= 0);
 });
 
-test('server backup history is distinguished from current source-verified restore scope', () => {
+test('server backup history remains uncredited until cross-context evidence is reconciled', () => {
     const event = statusData.events.find(item => item.id === 'server-backup-cross-context-rollback-2026-10-21-1416');
     const relationalRestore = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H02');
     const fullRecovery = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');
 
     assert.ok(event);
-    assert.equal(event.status, 'completed');
+    assert.equal(event.status, 'in_progress');
     assert.equal(event.progressPercent, null);
+    assert.match(event.title, /sob reconciliação/);
     assert.match(event.evidence, /BackupRestoreMariaDbTests passou 6\/6/);
     assert.match(event.evidence, /falhas SQL injetadas em ActivityLogs, Series e Books/);
     assert.match(event.evidence, /Jellyfin.Server.csproj passou com 0 avisos e 0 erros/);
@@ -1132,21 +1133,24 @@ test('server backup history is distinguished from current source-verified restor
     assert.match(event.evidence, /Patch local sem commit\/release/);
 
     assert.equal(relationalRestore.status, 'in_progress');
-    assert.match(relationalRestore.evidence, /fonte atual de BackupService injeta somente/);
-    assert.match(relationalRestore.evidence, /não foram rastreados\/reproduzidos nesta sessão/);
+    assert.match(relationalRestore.evidence, /BackupServiceTests 34\/34/);
+    assert.match(relationalRestore.evidence, /2 aprovados e 1 ignorado/);
+    assert.match(relationalRestore.evidence, /round-trip atualizado não executou/);
     assert.equal(fullRecovery.status, 'in_progress');
-    assert.match(fullRecovery.evidence, /consistência temporal do snapshot/);
+    assert.match(fullRecovery.evidence, /Movies, Series, Channels e Books continuam fora do snapshot/);
+    assert.match(fullRecovery.evidence, /formal global 1\/7 \(14,3%\)/);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.equal(statusData.tracks.find(track => track.id === 'server').homologation.percent, 14.3);
 });
 
-test('server backup records one consistent temporal snapshot across the five relational contexts', () => {
+test('server keeps historical five-context snapshot claim visible but unverified', () => {
     const event = statusData.events.find(item => item.id === 'server-backup-consistent-snapshot-2026-10-21-1433');
     const fullRecovery = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');
 
     assert.ok(event);
-    assert.equal(event.status, 'completed');
+    assert.equal(event.status, 'in_progress');
     assert.equal(event.progressPercent, null);
+    assert.match(event.title, /Evidência histórica sob reconciliação/);
     assert.match(event.evidence, /transação RepeatableRead/);
     assert.match(event.evidence, /versão pré-concorrência em todos/);
     assert.match(event.evidence, /BackupRestoreMariaDbTests 6\/6/);
@@ -1156,10 +1160,27 @@ test('server backup records one consistent temporal snapshot across the five rel
     assert.match(event.evidence, /sem commit\/release/);
 
     assert.equal(fullRecovery.status, 'in_progress');
-    assert.match(fullRecovery.evidence, /consistência temporal do snapshot está validada/);
-    assert.match(fullRecovery.evidence, /Continuam pendentes recuperação IntroSkipper/);
-    assert.match(fullRecovery.evidence, /Homologação formal global permanece 2\/7/);
+    assert.match(fullRecovery.evidence, /consistência transacional multi-contexto e sua evidência pública são retiradas/);
+    assert.match(fullRecovery.evidence, /formal global 1\/7 \(14,3%\)/);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
+test('portal records the local manifest and PlaybackReports correction without granting formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-fullsystembackup-manifest-playbackreports-2026-10-22-0124');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const h02 = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H02');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /BackupServiceTests 34\/34/);
+    assert.match(event.evidence, /round-trip novo não executou/);
+    assert.match(h02.evidence, /PlaybackReports/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
 test('formal server homologation consolidates gates, percentage, evidence and pending production signoff', async () => {
