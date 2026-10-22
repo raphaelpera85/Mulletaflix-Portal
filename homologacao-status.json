@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T14:32:13-03:00",
+  "generatedAt": "2026-10-22T14:50:40-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9772,6 +9772,26 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/Jellyfin.Plugin.GetAvatar/Services/AvatarFileStore.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs"
+      ]
+    },
+    {
+      "id": "server-media-sync-path-containment-2026-10-22-1450",
+      "title": "Sync de mídia: contenção do manifesto, M3U e links do filesystem",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Plugins/MidiaStorageOnline; tests/Jellyfin.Providers.Tests/Plugins/MidiaStorageOnline",
+      "scope": "Aplicar validação compartilhada ao sync manual e agendado, migração legada, download e limpeza, sem declarar a corrida TOCTOU como resolvida.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T14:32:00-03:00",
+      "updatedAt": "2026-10-22T14:50:40-03:00",
+      "evidence": "A barreira lexical e reparse-point foi aplicada aos caminhos da M3U e às chaves do manifesto nos dois fluxos; raiz, symlinks dangling, arquivos hard-linked e limpeza de migração receberam regressões. `MidiaStorageOnlinePathGuardTests` Release 15/15; suíte `Plugins.MidiaStorageOnline` Release 36/36, 0 ignorados/falhas. Checagens por pathname e operações continuam separadas, então TOCTOU local permanece. Sem instalação, produção ou homologação formal; testes locais não geram crédito formal. Homologação formal do servidor segue 1/7 (14,3%).",
+      "release": "Nenhuma. Aguardar suíte final e tratar TOCTOU/validação operacional antes de release.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/TODO-AUDITORIA.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]
     }
   ]

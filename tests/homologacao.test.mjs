@@ -4389,3 +4389,22 @@ test('portal records restore TOCTOU API research without claiming mitigation or 
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records media-sync path containment while keeping local TOCTOU open', () => {
+    const event = statusData.events.find(item => item.id === 'server-media-sync-path-containment-2026-10-22-1450');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.scope, /sync manual e agendado/);
+    assert.match(event.evidence, /symlinks dangling/);
+    assert.match(event.evidence, /TOCTOU local permanece/);
+    assert.match(event.evidence, /Homologação formal do servidor segue 1\/7 \(14,3%\)/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
