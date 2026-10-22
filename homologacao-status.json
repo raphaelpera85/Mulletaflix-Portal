@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T10:42:00-03:00",
+  "generatedAt": "2026-10-22T11:20:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9451,6 +9451,26 @@
         "https://github.com/jellyfin/TMDbLib/blob/master/TMDbLib/Client/TMDbClientMovies.cs",
         "https://github.com/jellyfin/TMDbLib/blob/master/TMDbLib/Client/TMDbClientTvShows.cs",
         "https://github.com/jellyfin/TMDbLib/blob/7abd4c8/TMDbLib/Client/TMDbClientCollections.cs"
+      ]
+    },
+    {
+      "id": "server-restore-artwork-focal-2026-10-22-1120",
+      "title": "Servidor: replay de restore e regressões de artes pt-BR revalidados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup; MediaBrowser.Model; MediaBrowser.Providers",
+      "scope": "Reexecutar regressões de recuperação de restore e de ordenação de imagens em português; registrar o avanço sem atribuir crédito formal.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T11:20:00-03:00",
+      "updatedAt": "2026-10-22T11:20:00-03:00",
+      "evidence": "dotnet test Jellyfin.Server.Implementations.Tests --configuration Release --no-restore, filtro de replay/interrupção: 2/2. Jellyfin.Model.Tests, EnumerableExtensionsTests: 7/7. Jellyfin.Providers.Tests, ProviderManagerTests: 73/73. Revisão estática confirma replay do mesmo ZIP via journal; falha não reproduzida. MariaDB descartável não foi testado nesta sessão (variável opt-in ausente); sem consulta a banco operacional. Imagens pt persistidas ainda podem exigir FullRefresh e TMDb ao vivo/visual de Invasão Zumbi 2 não foi validado. TOCTOU continua pendente. Homologação formal permanece 1/7 (14,3%); nenhum crédito parcial. Nenhuma instalação, produção ou release.",
+      "release": "Nenhuma; gates formais e conjunto de melhorias ainda abertos.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]
     }
   ]

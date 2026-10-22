@@ -4272,3 +4272,23 @@ test('portal records the TMDb all-language artwork fix without claiming a releas
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the latest focal server regressions without changing formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-artwork-focal-2026-10-22-1120');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /filtro de replay\/interrupção: 2\/2/);
+    assert.match(event.evidence, /EnumerableExtensionsTests: 7\/7/);
+    assert.match(event.evidence, /ProviderManagerTests: 73\/73/);
+    assert.match(event.evidence, /TOCTOU continua pendente/);
+    assert.match(event.evidence, /Homologação formal permanece 1\/7/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
