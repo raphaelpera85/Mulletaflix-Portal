@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T15:57:28-03:00",
+  "generatedAt": "2026-10-22T16:12:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-lyrics-hardlink-safe-save-2026-10-22",
+      "title": "Servidor: upload de letras não trunca destino ligado por hard link",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Lyric/LyricManager.cs; tests/Jellyfin.Providers.Tests/Lyrics/LyricManagerPathSafetyTests.cs",
+      "scope": "Trocar escrita direta no destino por temporário irmão exclusivo e rename, preservando o conteúdo associado a outro hard link.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-22T16:04:00-03:00",
+      "updatedAt": "2026-10-22T16:12:00-03:00",
+      "evidence": "Teste TrySaveToFiles_ReplacesHardLinkWithoutTruncatingItsOtherTarget e LyricManagerPathSafetyTests passaram 21/21; suíte Jellyfin.Providers.Tests Release passou 847/847, 0 ignorados/falhas. Revisão adversarial identificou pendências: rename ainda usa pathname e não fecha TOCTOU contra ator local com acesso à pasta; substituir inode pode não preservar permissões/ACL explícitas. O teste de hard link será ignorado em hosts/filesystems que não permitam criar esse tipo de link. Evidência é teste local, não homologação formal; gate do servidor permanece 1/7 (14,3%). Sem instalação, produção ou release."
+    },
     {
       "id": "server-backup-restore-open-archive-identity-2026-10-22",
       "title": "Restore registra a identidade do ZIP já aberto",
