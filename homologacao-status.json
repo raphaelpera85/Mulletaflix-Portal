@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T09:58:14-03:00",
+  "generatedAt": "2026-10-22T10:18:46-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9388,6 +9388,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-tmdb-artwork-language-2026-10-22-1017",
+      "title": "Servidor: corrigida a consulta de artes TMDb em idioma preferido",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; testes focados e providers",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb; tests/Jellyfin.Providers.Tests/Tmdb/TmdbUtilsTests.cs",
+      "scope": "Reauditar artes em inglês apesar do idioma português, usando Invasão Zumbi 2 como exemplo, enviar idioma/país preferidos aos image providers TMDb e separar cache por idioma.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T09:58:00-03:00",
+      "updatedAt": "2026-10-22T10:17:00-03:00",
+      "evidence": "Causa na fonte: providers de filme/série/temporada/episódio/coleção consultavam TMDb com idioma, idiomas de imagem e país nulos; cache ignorava include_image_language e país. Agora consultam idioma/país preferidos, idiomas preferido+null+en e particionam cache por todos parâmetros. TmdbUtilsTests Release: 20/20; teste de recuperação após encerramento do processo de restore: 3/3. dotnet format whitespace restrito aos seis arquivos de providers passou; `git diff --check` passou. A suíte Providers sem integração externa ficou sem resumo após quatro minutos e foi interrompida, não contabilizada. Não houve TMDb autenticado, refresh do título real, instalação, produção, imagem gravada ou validação visual. Imagens já persistidas exigem atualização manual após release futura. Homologação formal permanece 1/7 (14,3%); nenhum crédito local.",
+      "release": "Nenhuma. Correção apenas no checkout local; não criar release antes dos gates formais e da premissa de completar as melhorias planejadas.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md",
+        "https://developer.themoviedb.org/reference/movie-images"
       ]
     }
   ]
