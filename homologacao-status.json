@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:00:00-03:00",
+  "generatedAt": "2026-10-22T12:02:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -115,7 +115,7 @@
         "id": "SRV-H06",
         "name": "Fluxo E2E de mídia e Nebula em ambiente real",
         "status": "pending",
-        "evidence": "Falta evidência E2E reproduzível em ambiente de homologação para reprodução real (incluindo áudio/imagens) e download, upload, montagem, refresh do disco, cache e recuperação/performance do Nebula. Testes de contrato não substituem o smoke operacional. Revalidação de artes em 22/10: TMDb/provider manager Release 22/22, mas sem API ao vivo. A captura de Invasão Zumbi 2 mostra candidatos en; pesquisa encontrou pôsteres brasileiros em fontes editoriais fora dos provedores identificados. O usuário confirmou inglês como fallback quando não houver pt-BR; a prioridade de arte localizada permanece. Fontes adicionais e refresh visual ainda não validados; nenhum refresh operacional, produção ou release."
+        "evidence": "Falta evidência E2E reproduzível em ambiente de homologação para reprodução real (incluindo áudio/imagens) e download, upload, montagem, refresh do disco, cache e recuperação/performance do Nebula. Testes de contrato não substituem o smoke operacional. Revalidação de artes em 22/10: TMDb/provider manager Release 22/22, mas sem API ao vivo. Os cartões da captura de Invasão Zumbi 2 mostram en, porém o recorte não exibe o checkbox Todos os idiomas; não é possível determinar se o filtro estava ativo nem se a API omitiu candidatos pt. Pesquisa encontrou pôsteres brasileiros em fontes editoriais fora dos provedores identificados. O usuário confirmou inglês como fallback quando não houver pt-BR; a prioridade de arte localizada permanece. Fontes adicionais e refresh visual ainda não validados; nenhum refresh operacional, produção ou release."
       },
       {
         "id": "SRV-H07",
@@ -9529,8 +9529,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T11:51:00-03:00",
-      "updatedAt": "2026-10-22T12:00:00-03:00",
-      "evidence": "Filtro Release TmdbUtilsTests|ProviderManagerImageProviderTests passou 22/22, sem chamada à API real. Fonte pede pt junto do catálogo TMDb e preserva inglês como fallback quando não há candidato pt. A captura de Invasão Zumbi 2 mostra apenas cards en; pesquisa encontrou cartazes brasileiros em Jovem Nerd/AdoroCinema, externos aos provedores mostrados. O usuário confirmou inglês como fallback se não houver pt-BR. Contrato/licença para integrar fontes externas, API autenticada, refresh de itens persistidos, instalação e produção não verificados. Homologação formal servidor continua 1/7 (14,3%).",
+      "updatedAt": "2026-10-22T12:02:00-03:00",
+      "evidence": "Filtro Release TmdbUtilsTests|ProviderManagerImageProviderTests passou 22/22, sem chamada à API real. Fonte pede pt junto do catálogo TMDb e preserva inglês como fallback quando não há candidato pt. Os cards da captura de Invasão Zumbi 2 mostram en, mas o recorte não mostra o estado do checkbox Todos os idiomas; não se pode inferir se filtro estava ativo ou se o TMDb retornou arte pt. Pesquisa encontrou cartazes brasileiros em Jovem Nerd/AdoroCinema, externos aos provedores mostrados. O usuário confirmou inglês como fallback se não houver pt-BR. Contrato/licença para integrar fontes externas, API autenticada, refresh de itens persistidos, instalação e produção não verificados. Homologação formal servidor continua 1/7 (14,3%).",
       "release": "Nenhuma. É necessário validar disponibilidade real por título e decidir fallback; sem alteração de runtime.",
       "links": [
         "https://developer.themoviedb.org/reference/movie-images",
