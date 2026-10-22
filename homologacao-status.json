@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T13:33:00-03:00",
+  "generatedAt": "2026-10-22T13:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9669,6 +9669,26 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/.github/workflows/ci.yml"
+      ]
+    },
+    {
+      "id": "server-artwork-language-fallback-2026-10-22-1342",
+      "title": "Servidor: seleção de artes prioriza pt-BR e limita fallback automático",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ProviderManager.cs; testes Jellyfin.Providers.Tests; MulletaFlix-master/docs/image-metadata-flow-audit.md",
+      "scope": "Manter arte pt/pt-BR quando disponível por tipo; usar inglês e imagens sem idioma apenas como fallback; preservar consulta manual de todos os idiomas.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T13:34:00-03:00",
+      "updatedAt": "2026-10-22T13:42:00-03:00",
+      "evidence": "Testes focais GetAvailableRemoteImages em Release: 4/4 aprovados; dotnet format style --verify-no-changes aprovado; git diff --check aprovado. Testes usam fixtures e não recebem crédito formal. Sem chamada real TMDb/Fanart, refresh visual, instalação ou produção; artes persistidas continuam pendentes de atualização. Homologação formal do servidor permanece 1/7 (14,3%).",
+      "release": "Nenhuma. Validar fonte real, refresh visual e homologação formal antes de considerar release.",
+      "links": [
+        "https://developer.themoviedb.org/docs/image-languages",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]
     }
   ]
