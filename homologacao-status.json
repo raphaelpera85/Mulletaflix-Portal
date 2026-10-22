@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T18:32:42-03:00",
+  "generatedAt": "2026-10-22T18:39:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10092,15 +10092,15 @@
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Windows/.NET 10; filtros de imagem/metadata 103/103 Release; mapper 1/1 Release",
+      "local": "Windows/.NET 10; Providers 72/72 e Server.Implementations 4/4 Release; teste de migration incluído",
       "location": "MediaBrowser.Controller/Entities/ItemImageInfo.cs; src/Jellyfin.Database/.../BaseItemImageInfo.cs; MediaBrowser.Providers/Manager/ItemImageProvider.cs e MetadataService.cs; migration AddRemoteImageProvenance",
       "scope": "Persistir provedor/idioma nas imagens; refresh comum corrige capa singular remota conhecida quando existe candidata pt-BR/pt. Mantém inglês se não houver candidata e preserva imagens legadas sem origem ou substituídas manualmente.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T18:15:00-03:00",
-      "updatedAt": "2026-10-22T18:32:42-03:00",
-      "evidence": "ItemImageProviderTests|ProviderManagerImageProviderTests|MetadataServiceTests passaram 103/103 em Release, incluindo persistência de provedor/idioma pelo MetadataService, localização, fallback inglês, preservação de imagens sem proveniência e remoção da origem ao substituir manualmente; BaseItemMapperImageTests passou 1/1 Release. Build Debug de Jellyfin.Server.Implementations passou; migration e script EF foram gerados. Nenhuma migration aplicada em MariaDB, chamada real TMDb, biblioteca, runtime ou produção testados. Testes locais não contam para homologação formal, que permanece 1/7 (14,3%).",
-      "release": "Nenhuma. A validação da migration em MariaDB descartável, a confirmação visual/runtime e os gates formais permanecem pendentes.",
+      "updatedAt": "2026-10-22T18:39:06-03:00",
+      "evidence": "Proveniência de capas e refresh seguro: teste anterior 103/103 em Providers e mapper 1/1. Revalidação atual: Providers 72/72 e Server.Implementations 4/4 em Release. Nova regressão confirmou que en-US emite en,null sem repetir fallback; pt-BR continua pt,null,en. Contrato EF verifica colunas Language/ProviderName nullable e rollback somente delas. dotnet-ef não está restaurado e MariaDB descartável não foi configurada; nenhuma migration aplicada. Sem chamada real TMDb, mídia, runtime instalado ou produção testados. Testes locais não contam para homologação formal, que permanece 1/7 (14,3%).",
+      "release": "Nenhuma. Validar a migration em MariaDB descartável e realizar confirmação visual/runtime; gates formais permanecem pendentes.",
       "links": []
     }
   ]
