@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T14:22:27-03:00",
+  "generatedAt": "2026-10-22T14:32:13-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9751,6 +9751,27 @@
       "links": [
         "https://developer.themoviedb.org/docs/image-languages",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
+    {
+      "id": "server-restore-handle-relative-audit-2026-10-22-1432",
+      "title": "Restore ZIP: auditoria do padrão handle-relative, TOCTOU ainda aberta",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/Jellyfin.Plugin.GetAvatar/Services/AvatarFileStore.cs; tests/Jellyfin.Server.Implementations.Tests; tests/Jellyfin.Api.Tests",
+      "scope": "Avaliar se os primitivos handle-relative existentes podem resolver a escrita concorrente segura do restore ZIP; sem alteração funcional.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T14:22:00-03:00",
+      "updatedAt": "2026-10-22T14:32:13-03:00",
+      "evidence": "FullSystemBackup Release: 53/53 aprovados. AvatarFileStoreTests Release: 4 aprovados, 3 ignorados por serem específicos de Linux no host Windows. A auditoria confirmou que AvatarFileStore protege operações de componente único, mas não oferece árvore aninhada, staging/backup, journal nem replay necessários ao restore. FileSystemRestoreTransaction continua validando e operando por caminhos absolutos separados; corrida TOCTOU e validação determinística de concorrência em Windows/Linux continuam pendentes. Não houve mudança de código; os testes existentes não exercitam essa corrida nem comprovam Linux. Homologação formal permanece 1/7 (14,3%); nenhum crédito formal por estes testes locais. Sem instalação, produção ou release.",
+      "release": "Nenhuma. Próximo gate: abstração filesystem relativa ao handle/dirfd para restore e recovery, com testes determinísticos de troca concorrente em Windows e Linux.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/Jellyfin.Plugin.GetAvatar/Services/AvatarFileStore.cs",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs"
       ]
     }
   ]
