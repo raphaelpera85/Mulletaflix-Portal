@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:35:52-03:00",
+  "generatedAt": "2026-10-22T04:04:18-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9311,6 +9311,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
+      ]
+    },
+    {
+      "id": "server-fullsystembackup-crash-recovery-replay-2026-10-22-0404",
+      "title": "Servidor: recuperação idempotente do restore após interrupção",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.3"],
+      "local": "Windows, .NET 10 Release; testes unitários com filesystem isolado",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupRestoreRecoveryJournal.cs; BackupService.cs; Jellyfin.Server/Program.cs",
+      "scope": "Persistir a identidade SHA-256 do backup integral, retomar a instalação filesystem por sidecars determinísticos e reaplicar o mesmo ZIP antes da inicialização do host principal.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T03:37:00-03:00",
+      "updatedAt": "2026-10-22T04:04:18-03:00",
+      "evidence": "BackupServiceTests Release: 40/40; projeto Jellyfin.Server.Implementations.Tests: 1.540 aprovados, 66 ignorados, 0 falhas/1.606; dotnet format whitespace --verify-no-changes e git diff --check passaram. Journal guarda ID, caminho, tamanho, mtime e SHA-256 fora dos roots restaurados; journal inválido ou ZIP ausente/alterado falha fechado; restore pendente bloqueia outro; mesmo ZIP recuperado não é aplicado duas vezes pela linha de comando. Testes montam estados de sidecar/journal no disco e não simulam kill/restart real. Sem MariaDB descartável nesta rodada; SetupServer inicia antes do gate de recovery. Worktree servidor suja e oito commits atrás de origin/main, mudança ainda não integrada. Homologação formal permanece 1/7 (14,3%), sem crédito local; sem instalação, produção, CI remota ou release.",
+      "release": "Nenhuma release; crash/restart real, MariaDB descartável e gates formais permanecem pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
       ]
     }
   ]

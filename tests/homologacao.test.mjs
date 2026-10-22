@@ -1255,7 +1255,8 @@ test('formal server homologation consolidates gates, percentage, evidence and pe
     const formalPage = readFileSync(new URL('../homologacao-servidor.html', import.meta.url), 'utf8');
     assert.match(formalPage, /Homologação formal do/);
     assert.match(formalPage, /CI remota\/plataformas/);
-    assert.match(formalPage, /nenhum step iniciou/);
+    assert.match(formalPage, /Um dos sete gates formais concluído \(14,3%\)/);
+    assert.match(formalPage, /kill\/restart real e MariaDB descartável ainda não foram validados/);
 });
 
 test('GitHub workflow runs are assigned only to the matching product front', async () => {
@@ -4179,6 +4180,27 @@ test('portal records full server regression and Mongo TCP limits without grantin
     assert.match(event.evidence, /oito commits atrás de origin\/main\/v12\.1\.35/);
     assert.match(event.evidence, /Homologação formal permanece 1\/7 \(14,3%\)/);
     assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal records restore crash-recovery evidence without marking formal homologation complete', () => {
+    const event = statusData.events.find(item => item.id === 'server-fullsystembackup-crash-recovery-replay-2026-10-22-0404');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.location, /BackupRestoreRecoveryJournal/);
+    assert.match(event.evidence, /BackupServiceTests Release: 40\/40/);
+    assert.match(event.evidence, /1\.540 aprovados, 66 ignorados, 0 falhas\/1\.606/);
+    assert.match(event.evidence, /não simulam kill\/restart real/);
+    assert.match(event.evidence, /Sem MariaDB descartável nesta rodada/);
+    assert.match(event.evidence, /Homologação formal permanece 1\/7 \(14,3%\)/);
+    assert.match(event.release, /Nenhuma release/);
     assert.equal(server.homologation.completed, 1);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 14.3);
