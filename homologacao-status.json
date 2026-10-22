@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T10:21:00-03:00",
+  "generatedAt": "2026-10-22T10:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9428,6 +9428,29 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md",
         "https://developer.themoviedb.org/reference/movie-images"
+      ]
+    },
+    {
+      "id": "server-tmdb-all-languages-artwork-fix-2026-10-22-1040",
+      "title": "Servidor: artes TMDb respeitam pt-BR e opção de todos os idiomas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; TMDb image providers e ProviderManager",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb; MulletaFlix-master/tests/Jellyfin.Providers.Tests/Manager/ProviderManagerImageProviderTests.cs",
+      "scope": "Buscar imagens sem filtrar idiomas no TMDb e permitir que o ProviderManager ordene pela preferência pt-BR ou retorne todas as línguas quando solicitado.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T10:25:00-03:00",
+      "updatedAt": "2026-10-22T10:42:00-03:00",
+      "evidence": "Revisão local encontrou regressão: a API recebia somente idioma preferido, null e inglês, então 'todos os idiomas' não podia oferecer outras artes. Quatro providers usam endpoints próprios sem filtros; episódios conservam resolução de ordem com parâmetros vazios. `ProviderManager` preserva filtro/ordenação preferidos e `IncludeAllLanguages`. Teste Release focal passou 39/39, incluindo contrato com pt-BR, en e ko. Fonte do TMDbLib 3.0.0 foi inspecionada: coleção precisa de null para omitir language, enquanto os demais endpoints aceitam string vazia. Formatação verify-no-changes e diff-check restrito passaram após o ajuste. Sem chamada TMDb autenticada, refresh de Invasão Zumbi 2, runtime, instalação, mídia real ou validação visual. Artes persistidas exigem refresh após futura instalação. Homologação formal permanece 1/7 (14,3%); nenhum crédito local.",
+      "release": "Nenhuma. Alteração local ainda não é release; aguardando gates gerais e conclusão das melhorias planejadas.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md",
+        "https://developer.themoviedb.org/reference/movie-images",
+        "https://github.com/jellyfin/TMDbLib/blob/master/TMDbLib/Client/TMDbClientMovies.cs",
+        "https://github.com/jellyfin/TMDbLib/blob/master/TMDbLib/Client/TMDbClientTvShows.cs",
+        "https://github.com/jellyfin/TMDbLib/blob/7abd4c8/TMDbLib/Client/TMDbClientCollections.cs"
       ]
     }
   ]
