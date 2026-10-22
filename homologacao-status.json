@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T02:20:05-03:00",
+  "generatedAt": "2026-10-22T02:34:21-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9248,6 +9248,26 @@
       "updatedAt": "2026-10-22T02:20:05-03:00",
       "evidence": "Build Jellyfin.Server: êxito, 0 avisos/erros. BackupServiceTests: 37/37. BackupRestoreMariaDbTests: 2 aprovados/1 ignorado por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING; teste multi-contexto não executado. MariaDB operacional não usado. Código local não integrado/publicado; sem pacote, instalação ou release. Pré-validação de PK/índices únicos; FK depende do banco. Filesystem não é crash-safe. SRV-H02/H03 abertos, homologação formal 1/7 (14,3%).",
       "release": "Nenhuma; aguarda MariaDB descartável, recovery crash-safe e gates formais.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-fullsystembackup-pooled-context-recovery-2026-10-22-0234",
+      "title": "MariaDB isolado: restore multi-contexto e correção de conexão pooled",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.3"],
+      "local": "Windows, .NET 10; MariaDB 11.4.4 descartável em loopback:47251",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Extensions/ServiceCollectionExtensions.cs; MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; testes FullSystemBackup e BackupRestoreMariaDbTests",
+      "scope": "Reproduzir e corrigir reutilização de conexão descartada em contextos de domínio após rollback de restore multi-contexto.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T02:20:05-03:00",
+      "updatedAt": "2026-10-22T02:34:21-03:00",
+      "evidence": "A integração MariaDB reproduziu ObjectDisposedException ao consultar Movies depois de falha FK: os contextos Movies/Series/Channels/Books eram pooled e tinham DbConnection temporariamente substituída para compartilhar a transação de restore. Apenas essas quatro factories foram alteradas para AddDbContextFactory sem pool. Após a correção, BackupRestoreMariaDbTests 3/3 e FullSystemBackup 46/46 passaram; build Jellyfin.Server Release: 0 avisos/0 erros; dotnet format whitespace focal passou. A instância descartável foi encerrada; MariaDB operacional 3306 não foi acessado. Testes locais não creditam gates formais: homologação 1/7 (14,3%), H02/H03 em andamento. Persistem crash recovery, validação prévia FK, TOCTOU, snapshot temporal, CI remota e aceite formal; sem produção, instalação ou release.",
+      "release": "Nenhuma; correção local ainda não integrada e demais gates seguem pendentes.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
