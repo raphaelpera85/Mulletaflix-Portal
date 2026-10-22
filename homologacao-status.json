@@ -10085,6 +10085,23 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MediaBrowser.Model/Configuration/ServerConfiguration.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]
+    },
+    {
+      "id": "server-image-provenance-refresh-2026-10-22-1831",
+      "title": "Servidor: origem de capa persistida e refresh localizado sem sobrescrever arte manual",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10; filtros de imagem/metadata 102/102 Release; mapper 1/1 Release",
+      "location": "MediaBrowser.Controller/Entities/ItemImageInfo.cs; src/Jellyfin.Database/.../BaseItemImageInfo.cs; MediaBrowser.Providers/Manager/ItemImageProvider.cs e MetadataService.cs; migration AddRemoteImageProvenance",
+      "scope": "Persistir provedor/idioma nas imagens; refresh comum corrige capa singular remota conhecida quando existe candidata pt-BR/pt. Mantém inglês se não houver candidata e preserva imagens legadas sem origem ou substituídas manualmente.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T18:15:00-03:00",
+      "updatedAt": "2026-10-22T18:31:14-03:00",
+      "evidence": "ItemImageProviderTests|ProviderManagerImageProviderTests|MetadataServiceTests passaram 102/102 em Release, incluindo localização, fallback inglês, preservação de imagens sem proveniência e remoção da origem ao substituir manualmente; BaseItemMapperImageTests passou 1/1 Release. Build Debug de Jellyfin.Server.Implementations passou; migration e script EF foram gerados. Nenhuma migration aplicada em MariaDB, chamada real TMDb, biblioteca, runtime ou produção testados. Testes locais não contam para homologação formal, que permanece 1/7 (14,3%).",
+      "release": "Nenhuma. A validação da migration em MariaDB descartável, a confirmação visual/runtime e os gates formais permanecem pendentes.",
+      "links": []
     }
   ]
 }
