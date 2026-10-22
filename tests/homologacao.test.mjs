@@ -3964,6 +3964,23 @@ test('portal reports backup restore reparse-point defense without closing formal
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal distinguishes reparse-point protection in the primary checkout from the candidate transaction helper', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-restore-reparse-points-2026-10-22-0009');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.location, /BackupService\.RestoreBackupCoreAsync\.CopyDirectory/);
+    assert.match(event.evidence, /FullSystemBackup Release: 40\/40/);
+    assert.match(event.evidence, /TOCTOU/);
+    assert.match(event.evidence, /64a33dcf, 8 commits atrás/);
+    assert.match(event.release, /Nenhuma release/);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records Nebula upload lease fencing without claiming production homologation', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-upload-lease-fencing-2026-10-21-1710');
     const server = statusData.tracks.find(track => track.id === 'server');

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T23:53:09-03:00",
+  "generatedAt": "2026-10-22T00:09:32-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9123,6 +9123,22 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T23:53:09-03:00",
       "evidence": "A fonte já preserva retry automático: reconcilia pelo UUID/parte/SHA-256; busca inconclusiva agenda novo processamento sem novo POST imediato. Testes focados de checkpoint/worker/worker legado: 31/31; suíte NebulaPython completa: 683/683; py_compile passou. Foram testes locais com mocks, sem Telegram/Mongo reais, runtime instalado, CI remota ou produção; pode haver duplicata se uma parte aceita continuar invisível à busca. Revalidação sem alteração de código. Homologação formal permanece 2/7 (28,6%); nenhuma release do servidor criada/publicada. O checkout principal está sujo e 8 commits atrás de origin/main."
+    },
+    {
+      "id": "server-backup-restore-reparse-points-2026-10-22-0009",
+      "title": "Restore de backup: rejeição de symlink/junction no destino",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release, diretório temporário isolado",
+      "location": "BackupService.RestoreBackupCoreAsync.CopyDirectory e BackupServiceTests",
+      "scope": "Impedir que entradas do ZIP escrevam fora da raiz configurada ao atravessar reparse points descendentes.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-22T00:09:32-03:00",
+      "evidence": "Teste adversarial com symlink real reproduziu escrita fora da raiz antes da correção; a fonte local rejeita links descendentes antes/depois de criar o diretório pai e antes da extração, mantendo a raiz configurada confiável. FullSystemBackup Release: 40/40; TWINS encontrou 1 uso de ExtractToFile no C# do servidor. Correção está apenas no checkout principal sujo 64a33dcf, 8 commits atrás de origin/main; sem release, instalação, Linux, bancos, produção ou CI remota. Janela TOCTOU, rollback transacional e falha de DbContext.Add permanecem pendentes. Homologação formal 2/7 (28,6%).",
+      "release": "Nenhuma release: gates ativos continuam abertos.",
+      "links": []
     }
   ]
 }
