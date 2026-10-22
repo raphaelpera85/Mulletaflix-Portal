@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T11:32:00-03:00",
+  "generatedAt": "2026-10-22T11:40:10-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9475,19 +9475,19 @@
     },
     {
       "id": "server-artwork-language-fallback-global-2026-10-22-1130",
-      "title": "Servidor: galeria de artes prioriza o idioma do servidor entre provedores",
+      "title": "Servidor: artes automáticas priorizam idioma entre provedores",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
       "local": "Windows, .NET 10 Release",
-      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ProviderManager.cs; tests/Jellyfin.Providers.Tests/Manager/ProviderManagerImageProviderTests.cs",
-      "scope": "Na galeria padrão, imagens em inglês só são fallback se nenhum provedor retornar arte no idioma preferido; preservar imagens sem idioma e a opção Todos os idiomas.",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ProviderManager.cs; MulletaFlix-master/MediaBrowser.Providers/Manager/ItemImageProvider.cs; tests/Jellyfin.Providers.Tests/Manager/ProviderManagerImageProviderTests.cs; tests/Jellyfin.Providers.Tests/Manager/ItemImageProviderRefreshTests.cs",
+      "scope": "Refresh automático agrega imagens de todos os provedores, prioriza pt/pt-BR e filtra por tipo; preserva fallback por tipo e consultas explícitas Todos os idiomas.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T11:25:00-03:00",
-      "updatedAt": "2026-10-22T11:32:00-03:00",
-      "evidence": "Causa reproduzida: filtro por provedor deixava arte inglesa de uma fonte mesmo com arte pt em outra. A decisão agora ocorre após agregar os provedores. Testes Release focais passaram 3/3: opção todos idiomas, arte portuguesa em fonte distinta suprime inglês e fallback inglês quando não há português. ProviderManagerTests passou 74/74. dotnet format verify-no-changes e git diff --check passaram. Suíte ampla Providers ficou sem resultado e foi interrompida; não conta como aprovada. Sem API TMDb autenticada, refresh ou conferência visual de Invasão Zumbi 2; arte já persistida exige refresh/substituição após futura release. Homologação formal permanece 1/7; sem crédito local.",
-      "release": "Nenhuma; demais gates do roadmap e validação visual em runtime permanecem pendentes.",
+      "updatedAt": "2026-10-22T11:40:10-03:00",
+      "evidence": "Causa confirmada no refresh: candidatos eram consultados por provedor com todos os idiomas, permitindo gravar en antes de pt disponível em outra fonte; o filtro combinado também não separava image type. Corrigido para agregar uma vez por item, preservar ProviderName e filtrar por ImageType antes de despachar downloads. ProviderManagerTests Release 75/75; ItemImageProviderTests.RefreshImages 36/36; GetAvailableRemoteImages 4/4; regressões incluem poster pt entre provedores e backdrop en preservado quando não há backdrop localizado. git diff --check passou. Sem API TMDb autenticada, refresh visual de Invasão Zumbi 2, instalação ou produção. Imagens já persistidas exigem substituição/refresh depois de versão corrigida; Fanart não foi localizada no checkout. Homologação formal permanece 1/7 (14,3%), sem crédito por testes locais.",
+      "release": "Nenhuma; homologação real da arte e demais gates do roadmap permanecem pendentes.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]

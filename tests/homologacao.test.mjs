@@ -4301,10 +4301,11 @@ test('portal records global preferred-language fallback for artwork without form
     assert.equal(event.front, 'server');
     assert.equal(event.status, 'in_progress');
     assert.equal(event.progressPercent, null);
-    assert.match(event.scope, /idioma preferido/);
-    assert.match(event.evidence, /passaram 3\/3/);
-    assert.match(event.evidence, /ProviderManagerTests passou 74\/74/);
-    assert.match(event.evidence, /Suíte ampla Providers ficou sem resultado/);
+    assert.match(event.scope, /prioriza pt\/pt-BR/);
+    assert.match(event.scope, /agrega imagens de todos os provedores/);
+    assert.match(event.evidence, /ProviderManagerTests Release 75\/75/);
+    assert.match(event.evidence, /ItemImageProviderTests\.RefreshImages 36\/36/);
+    assert.match(event.evidence, /GetAvailableRemoteImages 4\/4/);
     assert.match(event.evidence, /Sem API TMDb autenticada/);
     assert.match(event.evidence, /Homologação formal permanece 1\/7/);
     assert.match(event.release, /Nenhuma/);
