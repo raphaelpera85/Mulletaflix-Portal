@@ -4443,3 +4443,23 @@ test('portal reports the full server suite after correcting the OTLP restore fix
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the restore interprocess lease and MariaDB cleanup limits without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-interprocess-lease-2026-10-22-1701');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /FileShare\.None/);
+    assert.match(event.evidence, /FullSystemBackup Release passou 61\/61/);
+    assert.match(event.evidence, /DROP DATABASE usa CancellationToken\.None/);
+    assert.match(event.evidence, /0 aprovados\/1 ignorado/);
+    assert.match(event.evidence, /Linux\/mounts/);
+    assert.match(event.evidence, /TOCTOU na árvore de destino permanece P0/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T17:01:54-03:00",
+  "generatedAt": "2026-10-22T17:05:26-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9930,14 +9930,14 @@
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Windows/.NET 10; FullSystemBackup Release 61/61; format checks focados aprovados",
-      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupRestoreRecoveryJournal.cs; tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs",
+      "local": "Windows/.NET 10; FullSystemBackup Release 61/61; teste MariaDB compilado mas opt-in ignorado sem banco; format checks focados aprovados",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupRestoreRecoveryJournal.cs; tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs; tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
       "scope": "Serializar restore normal e recovery antes de qualquer leitura do journal com lease persistente compartilhado; não declarar fechado TOCTOU na árvore de destino.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T16:50:43-03:00",
-      "updatedAt": "2026-10-22T17:01:54-03:00",
-      "evidence": "BackupRestoreRecoveryJournal usa arquivo restore-operation.lock persistente aberto com FileShare.None. Restore normal e RecoverInterruptedRestoreAsync adquirem lease antes de ler o journal e o mantêm durante restore/replay; gate por instância permanece complementar. FullSystemBackup Release passou 61/61 em Windows/.NET 10; regressões cobrem contenção cross-process, reabertura após fechar handle e aquisição antes da leitura do journal nos dois entrypoints. Format checks focados e git diff --check passaram. Revisão adversarial: a exclusão depende de processos cooperativos resolverem o mesmo pathname; troca do diretório/arquivo ou reparse point, ACL efetiva, Linux/mounts e ordem completa do startup real não foram verificados. WSL não está instalado. A corrida TOCTOU na árvore de destino permanece P0. Homologação formal segue 1/7 (14,3%), sem crédito local.",
+      "updatedAt": "2026-10-22T17:05:26-03:00",
+      "evidence": "BackupRestoreRecoveryJournal usa arquivo restore-operation.lock persistente aberto com FileShare.None. Restore normal e RecoverInterruptedRestoreAsync adquirem lease antes de ler o journal e o mantêm durante restore/replay; gate por instância permanece complementar. FullSystemBackup Release passou 61/61 em Windows/.NET 10; regressões cobrem contenção cross-process, reabertura após fechar handle e aquisição antes da leitura do journal nos dois entrypoints. Format checks focados e git diff --check passaram. A revisão também encontrou limpeza cancelável no teste de crash/MariaDB; diretórios passaram a ser criados dentro do try e DROP DATABASE usa CancellationToken.None no finally. O projeto compilou, mas a execução opt-in resultou em 0 aprovados/1 ignorado por ausência de MariaDB descartável. Revisão adversarial: a exclusão depende de processos cooperativos resolverem o mesmo pathname; troca do diretório/arquivo ou reparse point, ACL efetiva, Linux/mounts e ordem completa do startup real não foram verificados. WSL não está instalado. A corrida TOCTOU na árvore de destino permanece P0. Homologação formal segue 1/7 (14,3%), sem crédito local.",
       "release": "Nenhuma. Validação Linux/mount, ACL, startup integrado, MariaDB/CI remota e produção pendentes; não fecha a auditoria TOCTOU global.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
