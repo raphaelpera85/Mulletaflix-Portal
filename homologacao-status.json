@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T13:42:00-03:00",
+  "generatedAt": "2026-10-22T14:04:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9689,6 +9689,26 @@
       "links": [
         "https://developer.themoviedb.org/docs/image-languages",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
+    {
+      "id": "server-restore-ambiguous-relational-commit-2026-10-22-1355",
+      "title": "Servidor: restore falho em confirmação ambígua preserva journal e reinicia",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "scope": "Em exceção após tentativa de commit relacional, preservar arquivos restaurados/sidecars/journal e parar o servidor para replay antes de servir novamente.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T13:44:00-03:00",
+      "updatedAt": "2026-10-22T14:04:00-03:00",
+      "evidence": "FullSystemBackup Release: 53/53 aprovados. O teste MariaDB envolve CommitAsync, confirma o commit relacional e lança antes de devolver controle, simulando acknowledgement perdido; verifica journal/sidecars/arquivos, aguarda e confirma StopApplication e executa recovery. O filtro BackupRestoreMariaDbTests compilou e descobriu 4 casos: 2 aprovaram validação de conexão e 2 casos que exigem MariaDB foram ignorados por ausência de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING. Portanto, o novo cenário está compilado mas não foi executado contra banco. Sem acesso ao banco operacional, produção, instalação ou CI remota. Homologação formal permanece 1/7 (14,3%); testes locais não recebem crédito formal.",
+      "release": "Nenhuma. Execução em MariaDB descartável/CI, TOCTOU e demais gates de restore ainda pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs"
       ]
     }
   ]
