@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T14:50:40-03:00",
+  "generatedAt": "2026-10-22T15:23:40-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-backup-restore-open-archive-identity-2026-10-22",
+      "title": "Restore registra a identidade do ZIP já aberto",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "MulletaFlix Server",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup e testes FullSystemBackup",
+      "scope": "Vincular validação, leitura e hash do journal de recuperação à mesma cópia aberta do backup, recusando replay se o pathname for substituído.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T14:20:00-03:00",
+      "updatedAt": "2026-10-22T15:23:40-03:00",
+      "evidence": "Teste adversarial abre o ZIP A, troca atomicamente o caminho por B e confirma que o journal identifica A e VerifyArchiveAsync recusa B. A validação de integridade e o ZipArchive do restore compartilham o mesmo stream; SHA-256/length do journal vêm do handle consumido. FullSystemBackup Release passou 54/54; BackupRestoreMariaDbTests compilou/descobriu: 2 validações passaram e 2 casos que exigem MariaDB descartável foram ignorados porque MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não está configurada. Não houve teste MariaDB real, CI remota, instalação ou produção. TOCTOU das operações de extração continua aberto; homologação formal do servidor segue 1/7 (14,3%), sem crédito por esses testes locais. Nenhuma release publicada."
+    },
     {
       "id": "server-lyric-upload-toctou-triage-2026-10-22-1312",
       "title": "Upload de letras: triagem de segurança e alcance TOCTOU",

@@ -4408,3 +4408,20 @@ test('portal records media-sync path containment while keeping local TOCTOU open
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records restore archive identity race fix without closing formal homologation', async () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-restore-open-archive-identity-2026-10-22');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /FullSystemBackup Release passou 54\/54/);
+    assert.match(event.evidence, /MariaDB descartável foram ignorados/);
+    assert.match(event.evidence, /TOCTOU das operações de extração continua aberto/);
+    assert.equal(server.homologation.percent, 14.3);
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Restore registra a identidade do ZIP já aberto/);
+});
