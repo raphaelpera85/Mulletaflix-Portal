@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:00:39-03:00",
+  "generatedAt": "2026-10-22T03:12:41-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9245,8 +9245,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T01:41:50-03:00",
-      "updatedAt": "2026-10-22T02:20:05-03:00",
-      "evidence": "Build Jellyfin.Server: êxito, 0 avisos/erros. BackupServiceTests: 37/37. BackupRestoreMariaDbTests: 2 aprovados/1 ignorado por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING; teste multi-contexto não executado. MariaDB operacional não usado. Código local não integrado/publicado; sem pacote, instalação ou release. Pré-validação de PK/índices únicos; FK depende do banco. Filesystem não é crash-safe. SRV-H02/H03 abertos, homologação formal 1/7 (14,3%).",
+      "updatedAt": "2026-10-22T03:12:41-03:00",
+      "evidence": "Build Jellyfin.Server: êxito, 0 avisos/erros. BackupServiceTests: 37/37. BackupRestoreMariaDbTests: 2 aprovados/1 ignorado por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING; teste multi-contexto não executado nesta rodada. Na revalidação de 22/10 às 03:07 (-03), os testes RestoreBackupAsync_ em Release passaram 12/12; eles não simulam kill/restart. A revisão da fonte confirma rollback filesystem em memória, commit relacional antes de fileRestore.Commit e ausência de journal durável/recuperação no startup; a restauração não é crash-safe e crash pode divergir arquivos e banco. MariaDB operacional não usado. Código local não integrado/publicado; sem pacote, instalação ou release. Pré-validação de PK/índices únicos; FK depende do banco. SRV-H02/H03 abertos, homologação formal 1/7 (14,3%).",
       "release": "Nenhuma; aguarda MariaDB descartável, recovery crash-safe e gates formais.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
@@ -9281,12 +9281,12 @@
       "featureIds": [],
       "local": "Windows, Python 3.10 em venv temporário isolado; testes focados com Telegram/Mongo simulados",
       "location": "MulletaFlix-master/Tools/NebulaPython/upload_checkpoint.py; main.py; testes de checkpoint e envio de parte",
-      "scope": "Revalidar a decisão do usuário de manter retries automáticos quando Telegram aceita uma parte mas resposta/checkpoint Mongo se perde.",
+      "scope": "Manter retries automáticos, conforme confirmação do usuário, quando Telegram aceita uma parte mas resposta/checkpoint Mongo se perde; reconciliar antes de reenviar.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T02:37:37-03:00",
-      "updatedAt": "2026-10-22T03:00:39-03:00",
-      "evidence": "Em venv temporário Python 3.10, a suíte focal `test_upload_checkpoint.py`, `test_main_upload_part.py`, `test_main_upload_worker.py`, `test_main_upload_worker_legacy.py`, `test_staging_scanner.py` e `test_upload_queue.py` passou 63/63. Os cenários cobrem reconciliação UUID/parte/SHA-256 antes de reenviar, recuperação do ack, defer quando a busca é inconclusiva e retorno automático à fila após 60 s; a aceitação simulada é recuperada sem segundo envio. Não houve conexão Telegram/Mongo de produção, teste de runtime instalado ou CI remota; duplicata ainda é possível se a mensagem aceita permanecer invisível ao histórico, sem garantia exactly-once. Homologação formal permanece 1/7 (14,3%); nenhum crédito parcial, instalação, produção ou release.",
+      "updatedAt": "2026-10-22T03:12:41-03:00",
+      "evidence": "A suíte focal (`test_upload_checkpoint.py`, `test_main_upload_part.py`, `test_main_upload_worker.py`, `test_main_upload_worker_legacy.py`, `test_staging_scanner.py`, `test_upload_queue.py`) passou 63/63 em venv temporária isolada Python 3.10, criada a partir de `requirements.lock` e `requirements-test.txt`. Os cenários cobrem reconciliação UUID/parte/SHA-256 antes de reenviar, recuperação do ack sem segundo envio quando a mensagem simulada é encontrada, defer quando a busca é inconclusiva e retorno automático à fila após 60 s. A tentativa inicial com Python global foi bloqueada pelo guard antes da coleta e não instalou dependências globais. Sem Telegram/Mongo reais, runtime instalado ou CI remota; duplicata ainda é possível se a mensagem aceita permanecer invisível ao histórico, sem garantia exactly-once. Homologação formal permanece 1/7 (14,3%); nenhum crédito parcial, instalação, produção ou release.",
       "release": "Nenhuma; validação local focal não substitui integração/homologação formal nem gera release.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
