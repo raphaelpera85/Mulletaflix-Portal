@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T15:46:22-03:00",
+  "generatedAt": "2026-10-22T15:57:28-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9811,19 +9811,19 @@
     },
     {
       "id": "server-restore-otlp-test-fixture-2026-10-22-1546",
-      "title": "Servidor: fixture OTLP alinhada ao journal de restore",
+      "title": "Servidor: suíte completa passou após corrigir fixture OTLP do restore",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
       "local": "Windows, .NET 10 Release",
       "location": "MulletaFlix-master/tests/Jellyfin.Server.Tests/MulletaFlixOpenTelemetryExportTests.cs; MulletaFlix-master/docs/backup-coverage-audit.md",
       "scope": "Corrigir somente a fixture OTLP que criava BackupService sem IServerApplicationPaths e restaurar a asserção de ZIP ausente; sem mudar código de produção.",
-      "status": "in_progress",
-      "progressPercent": null,
+      "status": "completed",
+      "progressPercent": 100,
       "startedAt": "2026-10-22T15:31:44-03:00",
-      "updatedAt": "2026-10-22T15:46:22-03:00",
-      "evidence": "A regressão completa inicial terminou exit 1 com 1 falha em Jellyfin.Server.Tests: a fixture esperava FileNotFoundException, mas BackupService recebeu IServerApplicationPaths nulo ao consultar o journal antes do ZIP. A fixture foi corrigida com ProgramDataPath temporário único. Depois da correção: teste focal Release 1/1; Jellyfin.Server.Tests 74/74; FullSystemBackup 54/54. A solução completa não foi repetida depois da correção; o resultado integral fica pendente. Integrações opt-in MariaDB e casos Linux foram ignorados por falta das condições locais. Sem mudança de runtime, instalação, produção ou homologação formal; esta evidência não recebe crédito no gate formal, que permanece 1/7 (14,3%).",
-      "release": "Nenhuma. Repetir a solução completa após o ajuste e executar MariaDB descartável/Linux antes de considerar os gates de restore validados.",
+      "updatedAt": "2026-10-22T15:57:28-03:00",
+      "evidence": "A regressão completa inicial terminou exit 1 com 1 falha em Jellyfin.Server.Tests: a fixture esperava FileNotFoundException, mas BackupService recebeu IServerApplicationPaths nulo ao consultar o journal antes do ZIP. A fixture foi corrigida com ProgramDataPath temporário único. Após a correção, dotnet test da solução completa em Release terminou exit 0: 5.180 aprovados, 237 ignorados, 0 falhas/5.417. Teste focal 1/1, Jellyfin.Server.Tests 74/74 e FullSystemBackup 54/54 também passaram. Os ignorados incluem integrações opt-in MariaDB e testes Linux-only; não há prova desses ambientes. Sem mudança de runtime, instalação, produção ou homologação formal; esta evidência não recebe crédito no gate formal, que permanece 1/7 (14,3%).",
+      "release": "Nenhuma. Gates de restore/MariaDB e Linux continuam pendentes; homologação formal não consolidada.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/TODO-AUDITORIA.md"

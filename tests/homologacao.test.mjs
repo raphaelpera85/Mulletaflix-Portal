@@ -4426,17 +4426,18 @@ test('portal records restore archive identity race fix without closing formal ho
     assert.match(dashboard.getElement('event-list').innerHTML, /Restore registra a identidade do ZIP já aberto/);
 });
 
-test('portal reports the OTLP restore fixture failure and focused recovery without overstating full-suite validation', () => {
+test('portal reports the full server suite after correcting the OTLP restore fixture without overstating formal homologation', () => {
     const event = statusData.events.find(item => item.id === 'server-restore-otlp-test-fixture-2026-10-22-1546');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.ok(event);
     assert.equal(event.front, 'server');
-    assert.equal(event.status, 'in_progress');
-    assert.equal(event.progressPercent, null);
-    assert.match(event.evidence, /regressão completa inicial terminou exit 1/);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /solução completa em Release terminou exit 0/);
+    assert.match(event.evidence, /5\.180 aprovados, 237 ignorados, 0 falhas\/5\.417/);
     assert.match(event.evidence, /FullSystemBackup 54\/54/);
-    assert.match(event.evidence, /solução completa não foi repetida/);
+    assert.match(event.evidence, /não há prova desses ambientes/);
     assert.equal(server.homologation.completed, 1);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 14.3);
