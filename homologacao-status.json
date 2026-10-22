@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T20:57:44-03:00",
+  "generatedAt": "2026-10-21T21:22:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9025,6 +9025,20 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T20:47:12-03:00",
       "evidence": "NebulaPython 685/685; testes de workers 15/15; Jellyfin.Server.Implementations.Tests 1.537 aprovados, 70 ignorados opt-in, 0 falhas; teste focal de restore passou; pacote Linux e integridade do stage Windows passaram; git diff --check passou. Sem Telegram real, Mongo/MariaDB produtivos, runtime instalado, CI remota ou produção. Homologação formal do servidor continua 2/7 (28,6%); testes locais não contam como aceite. Sem release."
+    },
+    {
+      "id": "server-nebula-python-checkpoint-main-integration-2026-10-21-2122",
+      "title": "Nebula Python: checkpoint, reconciliação ambígua e recuperação em processo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, Python 3.10, PowerShell, Node.js e Git Bash",
+      "location": "Tools/NebulaPython/upload_checkpoint.py, main.py, testes Python e empacotamento Windows/Linux",
+      "scope": "Integrar journal durável, reconciliação por UUID/parte/SHA-256, retry automático seguro para resultado inconclusivo, recuperação de lease vencida sem reiniciar o serviço e inclusão/verificação do módulo nos pacotes.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T21:22:00-03:00",
+      "evidence": "Checkout principal validado: Python 3.10 py_compile e suíte NebulaPython 681/681; Pester de cópia do runtime Windows 1/1; integridade do stage Windows aceitou fonte correspondente e rejeitou helper ausente/SHA divergente; contratos Node de packaging 4/4; cópia/verificação do runtime Linux passou; git diff --check passou. Não foram executados testes .NET nesta continuação nem usados Telegram/Mongo operacionais, runtime instalado, CI remota, mídia real ou produção. MTProto observa até 31 s antes de classificar ausência; duplicata ainda possível se mensagem aceita permanecer invisível. Retry automático mantido, sem garantia exactly-once. Homologação formal permanece 2/7 (28,6%); nenhuma release do servidor publicada."
     }
   ]
 }
