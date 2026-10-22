@@ -42,7 +42,7 @@
         <li><a href="https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md">Auditoria de cobertura de backup/restauração</a></li>
         <li><a href="homologacao-status.json">Snapshot público de status e evidências</a></li>
       </ul>
-      <p class="document-note"><strong>Atualização:</strong> 22/10/2026. Um dos sete gates formais concluído (14,3%); backup integral permanece em andamento. O restore agora possui journal e replay idempotente local, cobertos por testes que simulam estados em disco; kill/restart real e MariaDB descartável ainda não foram validados. O aceite formal permanece pendente.</p>
+      <p class="document-note"><strong>Atualização:</strong> 22/10/2026. Um dos sete gates formais concluído (14,3%); backup integral permanece em andamento. Revalidação local: `FullSystemBackup` Release 61/61; integração MariaDB 2 aprovados e 2 ignorados por falta de banco descartável, portanto kill/restart relacional não foi validado. A revisão também mantém aberta a corrida TOCTOU em operações filesystem por pathname. O aceite formal permanece pendente.</p>
     </section>
   </main>
 </body>

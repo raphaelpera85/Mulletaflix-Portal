@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T18:39:06-03:00",
+  "generatedAt": "2026-10-22T18:50:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-restore-gate-rerun-2026-10-22-1850",
+      "title": "Servidor: revalidação local do gate de restauração",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup; tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup; tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "scope": "Reexecutar testes unitários do restore e verificar se os cenários de crash/restart MariaDB estão disponíveis nesta sessão.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T18:43:00-03:00",
+      "updatedAt": "2026-10-22T18:50:00-03:00",
+      "evidence": "FullSystemBackup Release passou 61/61, sem ignorados/falhas. BackupRestoreMariaDbTests compilou: 2 passaram e 2 foram ignorados por ausência de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING; o crash/restart após commit relacional não foi executado. Revisão independente confirmou operações path-based na extração/rollback e TOCTOU ainda aberto. Isso não altera homologação formal: servidor permanece 1/7 (14,3%). Nenhuma release, instalação, produção ou banco operacional foi acessado. Próximos gates: MariaDB descartável, desenho seguro por handles, matriz Linux e ACL efetiva."
+    },
     {
       "id": "server-lyrics-hardlink-safe-save-2026-10-22",
       "title": "Servidor: upload de letras não trunca destino ligado por hard link",

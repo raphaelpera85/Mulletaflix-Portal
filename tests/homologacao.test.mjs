@@ -1256,7 +1256,7 @@ test('formal server homologation consolidates gates, percentage, evidence and pe
     assert.match(formalPage, /Homologação formal do/);
     assert.match(formalPage, /CI remota\/plataformas/);
     assert.match(formalPage, /Um dos sete gates formais concluído \(14,3%\)/);
-    assert.match(formalPage, /kill\/restart real e MariaDB descartável ainda não foram validados/);
+    assert.match(formalPage, /integração MariaDB 2 aprovados e 2 ignorados por falta de banco descartável, portanto kill\/restart relacional não foi validado/);
 });
 
 test('GitHub workflow runs are assigned only to the matching product front', async () => {
@@ -4519,6 +4519,22 @@ test('portal records current server regression totals without changing formal ho
     assert.equal(server.testAudit.skipped, 69);
     assert.equal(server.testAudit.failed, 0);
     assert.equal(server.testAudit.percent, 98.7);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal publishes the restore gate rerun without claiming the skipped MariaDB integration', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-gate-rerun-2026-10-22-1850');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /FullSystemBackup Release passou 61\/61/);
+    assert.match(event.evidence, /2 passaram e 2 foram ignorados/);
+    assert.match(event.evidence, /crash\/restart após commit relacional não foi executado/);
     assert.equal(server.homologation.completed, 1);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 14.3);
