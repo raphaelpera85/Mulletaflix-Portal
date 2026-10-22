@@ -4353,6 +4353,25 @@ test('portal publishes TMDb TV image-language coverage without claiming live val
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records backup restore FK preflight without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-restore-fk-preflight-2026-10-22-1228');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /BackupServiceTests Release: 44\/44/);
+    assert.match(event.evidence, /2 aprovados e 1 ignorado/);
+    assert.match(event.evidence, /todas as 39 FKs/);
+    assert.match(event.evidence, /Homologação formal permanece 1\/7 \(14,3%\)/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records restore TOCTOU API research without claiming mitigation or formal credit', () => {
     const event = statusData.events.find(item => item.id === 'server-restore-toctou-api-revalidation-2026-10-22-1148');
     const server = statusData.tracks.find(track => track.id === 'server');

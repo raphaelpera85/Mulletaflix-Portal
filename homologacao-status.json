@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:16:00-03:00",
+  "generatedAt": "2026-10-22T12:28:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9559,6 +9559,25 @@
         "https://developer.themoviedb.org/reference/tv-season-images",
         "https://developer.themoviedb.org/reference/tv-episode-details",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
+    {
+      "id": "server-backup-restore-fk-preflight-2026-10-22-1228",
+      "title": "Servidor: restore valida referências do backup antes de aplicar",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/src/Jellyfin.Database/Jellyfin.Database.Implementations/Entities/ImageInfo.cs; testes FullSystemBackup e MariaDB",
+      "scope": "Validar referências FK contra o conteúdo do próprio backup antes de alterar arquivos ou tabelas; cobrir modelos principal e de domínio.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T12:17:00-03:00",
+      "updatedAt": "2026-10-22T12:28:00-03:00",
+      "evidence": "BackupServiceTests Release: 44/44 aprovados, incluindo FK opcional inválida e round-trip ImageInfo.UserId com setter privado. O preflight compara chaves dependentes com chaves principais dos arquivos central e de domínio antes da aplicação de arquivos/mutação relacional; HistoryRow não pertencente ao modelo EF fica fora. BackupRestoreMariaDbTests foi atualizado para exigir InvalidDataException no Episode/Season inválido; filtro compilou, 2 aprovados e 1 ignorado por falta de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING. Não executada a matriz de todas as 39 FKs nem a suíte completa. Revisão adversarial apontou que FK composta opcional não tem teste dedicado. Sem banco operacional, instalação, produção, release ou CI remota. Homologação formal permanece 1/7 (14,3%), sem crédito por teste unitário local.",
+      "release": "Nenhuma. Integração MariaDB descartável, regressão ampla e critérios globais de homologação continuam pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]
     },
     {
