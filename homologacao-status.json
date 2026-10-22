@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T16:12:00-03:00",
+  "generatedAt": "2026-10-22T16:19:37-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9822,6 +9822,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/TODO-AUDITORIA.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
+      ]
+    },
+    {
+      "id": "server-restore-staging-hardlink-2026-10-22-1619",
+      "title": "Restore: replay recria staging sem truncar hard link preexistente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs",
+      "scope": "Descartar staging temporário de replay e recriá-lo exclusivamente, com teste adversarial de hard link; não declarar TOCTOU da árvore resolvido.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T15:58:00-03:00",
+      "updatedAt": "2026-10-22T16:19:37-03:00",
+      "evidence": "O replay remove o nome .tmp sob a árvore de restore sem abrir/truncar o inode e cria o temporário com FileMode.CreateNew; o ZIP verificado continua sendo a fonte de verdade. Regressão focal 1/1 e FullSystemBackup Release 55/55. Revisão independente confirmou o caso estático de hard link, mas mantém aberta a corrida TOCTOU entre criação e rename; symlink e substituição concorrente não foram testados. Sem MariaDB descartável, Linux, ACL efetiva, runtime instalado ou produção. Homologação formal do servidor permanece 1/7 (14,3%), sem crédito por testes locais.",
+      "release": "Nenhuma; aguardar fechamento das pendências planejadas e dos gates formais.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/TODO-AUDITORIA.md"
       ]
     },
     {
