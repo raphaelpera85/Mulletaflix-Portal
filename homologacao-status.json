@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T16:19:37-03:00",
+  "generatedAt": "2026-10-22T16:28:21-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9862,6 +9862,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/TODO-AUDITORIA.md"
+      ]
+    },
+    {
+      "id": "server-restore-staging-symlink-static-2026-10-22-1628",
+      "title": "Restore: regressão de symlink estático no staging",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs; MulletaFlix-master/docs/backup-coverage-audit.md",
+      "scope": "Verificar que replay substitui um symlink preexistente em .tmp sem tocar no sentinel externo; não cobrir troca concorrente nem declarar TOCTOU resolvida.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T16:19:00-03:00",
+      "updatedAt": "2026-10-22T16:28:21-03:00",
+      "evidence": "Teste focal RecoverInterruptedRestoreAsync_RemovesPreexistingSymbolicLinkStagingPathWithoutTouchingTarget passou 1/1, symlink criado e exercitado sem skip; FullSystemBackup Release passou 56/56, 0 ignorados/falhas. Sentinel externo permaneceu intacto e destino restaurado do ZIP. Escopo estático apenas: as operações seguem pathname, logo TOCTOU concorrente em backup/rename/rollback/cleanup/journal permanece aberta. Linux, MariaDB real, ACL instalada, CI remota e produção não validados. Homologação formal continua 1/7 (14,3%), sem crédito por testes locais.",
+      "release": "Nenhuma. Aguardar resolução multiplataforma do TOCTOU e fechamento das pendências/gates formais.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]
     }
   ]
