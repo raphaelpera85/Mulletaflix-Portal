@@ -4207,3 +4207,22 @@ test('portal records restore crash-recovery evidence without marking formal homo
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the open restore TOCTOU risk without promoting formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-toctou-audit-2026-10-22-0942');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /FullSystemBackup recompilou e passou 50\/50/);
+    assert.match(event.evidence, /TOCTOU ainda aberto/);
+    assert.match(event.evidence, /teste atual só cobre link estático/);
+    assert.match(event.evidence, /NtCreateFile é API winternl interna sujeita a mudanças/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
