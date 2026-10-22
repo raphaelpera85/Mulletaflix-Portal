@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T18:09:14-03:00",
+  "generatedAt": "2026-10-22T18:15:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10064,6 +10064,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MediaBrowser.Model/Configuration/ServerConfiguration.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb/TmdbUtils.cs"
+      ]
+    },
+    {
+      "id": "server-tmdb-default-ptbr-config-2026-10-22-1815",
+      "title": "Servidor: novas configurações priorizam metadados pt-BR",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10; 26 testes focais Release aprovados",
+      "location": "MulletaFlix-master/MediaBrowser.Model/Configuration/ServerConfiguration.cs; testes Jellyfin.Providers.Tests/Tmdb",
+      "scope": "Alterar os defaults de idioma/país para pt-BR/BR; manter imagens sem idioma e inglês como fallback. Configuração existente e imagens já salvas não foram migradas nem reprocessadas.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-22T18:09:14-03:00",
+      "updatedAt": "2026-10-22T18:15:00-03:00",
+      "evidence": "ServerConfiguration passou a usar pt-BR/BR em novas configurações. Filtros TmdbUtilsTests, ProviderManagerImageProviderTests e ItemImageProviderRefreshTests passaram 26/26; git diff --check passou. Sem consulta TMDb ao vivo, instalação, refresh, biblioteca de produção ou runtime instalado. O teste comprova default e seleção local, não capa visível em produção. Homologação formal do servidor permanece 1/7 (14,3%), sem crédito parcial; nenhum release criado.",
+      "release": "Nenhuma. Preferências persistidas e atualização segura das capas existentes continuam pendentes; gates formais de homologação seguem abertos.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MediaBrowser.Model/Configuration/ServerConfiguration.cs",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]
     }
   ]
