@@ -4195,8 +4195,9 @@ test('portal records restore crash-recovery evidence without marking formal homo
     assert.equal(event.status, 'in_progress');
     assert.equal(event.progressPercent, null);
     assert.match(event.location, /BackupRestoreRecoveryJournal/);
-    assert.match(event.evidence, /BackupServiceTests Release: 40\/40/);
-    assert.match(event.evidence, /1\.540 aprovados, 66 ignorados, 0 falhas\/1\.606/);
+    assert.match(event.evidence, /BackupServiceTests Release: 41\/41/);
+    assert.match(event.evidence, /1\.541 aprovados, 66 ignorados, 0 falhas\/1\.607/);
+    assert.match(event.evidence, /sidecars \.bak e \.absent conflitantes falham fechado/);
     assert.match(event.evidence, /não simulam kill\/restart real/);
     assert.match(event.evidence, /Sem MariaDB descartável nesta rodada/);
     assert.match(event.evidence, /Homologação formal permanece 1\/7 \(14,3%\)/);
