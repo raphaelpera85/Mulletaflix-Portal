@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T22:40:00-03:00",
+  "generatedAt": "2026-10-21T22:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9065,8 +9065,8 @@
       "scope": "Impedir que o cursor delta avance por causa de um lote parcial; usar checkpoint v2 de sucesso e forçar sync integral quando não há histórico confiável.",
       "status": "in_progress",
       "progressPercent": null,
-      "updatedAt": "2026-10-21T22:40:00-03:00",
-      "evidence": "Testes focais NebulaSupabaseSyncTests: 55/55, incluindo filtro status=eq.success, tipos v2 e timestamps inválidos/sem fuso/offset local que exigem sync integral. Suite Jellyfin.Server.Implementations.Tests Release, filtro FullyQualifiedName!~Integration: 1.520 aprovados, 66 ignorados, 0 falhas (1.586). dotnet format --verify-no-changes passou. Contratos do portal 221/221, node --check, JSON e git diff --check aprovados. Correção local em fonte; sem Supabase/Mongo reais, CI remota, runtime instalado ou produção. Homologação formal permanece 2/7 (28,6%); nenhuma release do servidor criada/publicada."
+      "updatedAt": "2026-10-21T22:42:00-03:00",
+      "evidence": "Testes focais NebulaSupabaseSyncTests: 55/55, incluindo filtro status=eq.success, tipos v2 e timestamps inválidos/sem fuso/offset local que exigem sync integral. Suite Jellyfin.Server.Implementations.Tests Release, filtro FullyQualifiedName!~Integration: 1.520 aprovados, 66 ignorados, 0 falhas (1.586). dotnet format --verify-no-changes passou. Contratos do portal 221/221, node --check, JSON e git diff --check aprovados. Pendente fault-injection integrado provando que falha de lote não gera checkpoint final success. Correção local em fonte; sem Supabase/Mongo reais, CI remota, runtime instalado ou produção. Homologação formal permanece 2/7 (28,6%); nenhuma release do servidor criada/publicada."
     }
   ]
 }
