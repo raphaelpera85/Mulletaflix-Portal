@@ -4475,6 +4475,7 @@ test('portal distinguishes full .NET regression from the Nebula Python environme
     assert.match(event.evidence, /dotnet test MulletaFlix\.sln .* terminou exit code 0/);
     assert.match(event.evidence, /Providers 848\/848/);
     assert.match(event.evidence, /Server Implementations 1\.552 aprovados, 66 ignorados/);
+    assert.match(event.evidence, /Python 3\.14: `py -3\.14 -m pytest tests -q` passou 685\/685/);
     assert.match(event.evidence, /py -3\.10 -m pytest tests -q.*0 testes executados/s);
     assert.match(event.evidence, /homologação formal do servidor permanece 1\/7 \(14,3%\)/);
     assert.equal(server.homologation.completed, 1);
