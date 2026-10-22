@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T23:23:28-03:00",
+  "generatedAt": "2026-10-21T23:44:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9095,6 +9095,20 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T23:23:28-03:00",
       "evidence": "Incluído bloqueio process-local por caminho/UUID, compartilhado entre instâncias do journal e liberado quando não há mais operações; intenção e confirmação continuam atômicas no formato v2. Teste concorrente grava 32 intenções e 32 confirmações por duas instâncias: journal 7/7, regressão repetida 10/10 e conjunto NebulaUploadEngineTests + NebulaUploadCheckpointJournalTests + NebulaTelegramNotifierTests 247/247; dotnet format dos dois arquivos e git diff --check passaram. Revisão independente ainda aponta reconciliação limitada aos três bots elegíveis e ausência de busca MTProto real em teste. Alteração está apenas na worktree destacada suja; integração com checkout principal pendente por divergência de base/alterações sobrepostas. Sem Mongo/Telegram reais, runtime instalado, produção ou release; formal permanece 2/7 (28,6%). Nenhuma release criada/publicada."
+    },
+    {
+      "id": "server-supabase-automatic-backup-retry-2026-10-21-2344",
+      "title": "Retry automático do backup Supabase após falhas transitórias",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "Jellyfin.Server.Implementations/Nebula/NebulaSupabaseSyncService.cs e NebulaSupabaseSyncTests",
+      "scope": "Manter o agendador de backup MongoDB → Supabase ativo e repetir falha retornada, timeout ou exceção transitória com backoff; sucesso restaura o intervalo normal.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T23:44:06-03:00",
+      "evidence": "O loop preserva a primeira tentativa imediata e agenda retry em 1/2/4/8/16/32 minutos, limitado ao intervalo normal, resetando após sucesso; cancelamento do serviço encerra o ciclo. NebulaSupabaseSyncTests Release 62/62; Jellyfin.Server.Implementations.Tests Release 1.527 aprovados, 66 ignorados, 0 falhas; build Jellyfin.Server Release 0 avisos/erros. Mongo local Running/Automatic e TCP 127.0.0.1:27017 acessível em checagem read-only; nenhuma consulta/escrita Supabase, backup persistido, produção ou instalação. Homologação formal permanece 2/7 (28,6%), sem crédito por estes testes locais. Nenhuma release do servidor criada/publicada; falta validar persistência/retry em ambiente isolado e os demais gates formais."
     }
   ]
 }
