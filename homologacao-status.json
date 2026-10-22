@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T21:22:00-03:00",
+  "generatedAt": "2026-10-21T21:51:52-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "2 de 7 gates com evidência local validada; 1 em andamento, 3 pendentes e 1 bloqueado. Aceite formal de produção permanece pendente."
       },
       "testAudit": {
-        "passed": 5110,
-        "total": 5358,
-        "skipped": 248,
+        "passed": 5120,
+        "total": 5356,
+        "skipped": 236,
         "failed": 0,
-        "percent": 95.4,
-        "label": "Atualizado em 21/10: build Release sem erros; suíte .NET Release inclusiva gerou 17 TRX completos: 5.110 aprovados, 248 NotExecuted, 0 falhas/5.358; o processo terminou com exit code 0. Os ignorados incluem casos opt-in de MariaDB/MongoDB e dependências de plataforma/pré-condições; execuções focais não alteram a contagem deste snapshot. Suplemento separado Category=RequiresMongo passou 24/24 contra MongoDB 8.3.7 isolado. NebulaPython 3.10: 647/647; OSV resolveu 62 dependências sem advisories conhecidos, sem validar runtime instalado ou produção. Contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site: 72/72; ACL do instalador passou. MariaDB focal: 197/198 casos opt-in passaram em Windows; um requer Linux com @@lower_case_table_names=0. CI remota, matriz Linux, runtime instalado e smoke de mídia real permanecem pendentes. A validação específica da v12.1.35 aprovou 808/808 testes Providers sem integrações externas e 28/28 focados; esse subconjunto não altera a contagem geral acima. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35."
+        "percent": 95.6,
+        "label": "Atualizado em 21/10: execução local de `dotnet test MulletaFlix.sln --configuration Release --no-build --no-restore` terminou exit code 0; 5.120 aprovados, 236 ignorados/NotExecuted, 0 falhas/5.356 nos sumários dos projetos. Os ignorados incluem opt-ins de MariaDB/MongoDB e pré-condições de plataforma; nenhum deles conta como aprovação. NebulaPython 3.10: 683/683. Vitest 418/418 em 75 arquivos; Stylelint, typecheck, build e verify:build aprovados; bundle inicial 294,3 KiB gzip/420 KiB. Contratos Node de release: 19/19; teste da página Nebula: 4/4; contrato portal-site anterior: 72/72; ACL do instalador passou. MariaDB focal anterior: 197/198 opt-in em Windows; um requer Linux com @@lower_case_table_names=0. CI remota, matriz Linux, runtime instalado e smoke de mídia real permanecem pendentes. Auditoria NuGet e `npm audit --omit=dev` sem vulnerabilidades; audit npm completo conserva 10 altas somente dev via braces@3.0.3 sem versão corrigida. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35."
       }
     },
     {
@@ -9039,6 +9039,20 @@
       "progressPercent": null,
       "updatedAt": "2026-10-21T21:22:00-03:00",
       "evidence": "Checkout principal validado: Python 3.10 py_compile e suíte NebulaPython 681/681; Pester de cópia do runtime Windows 1/1; integridade do stage Windows aceitou fonte correspondente e rejeitou helper ausente/SHA divergente; contratos Node de packaging 4/4; cópia/verificação do runtime Linux passou; git diff --check passou. Não foram executados testes .NET nesta continuação nem usados Telegram/Mongo operacionais, runtime instalado, CI remota, mídia real ou produção. MTProto observa até 31 s antes de classificar ausência; duplicata ainda possível se mensagem aceita permanecer invisível. Retry automático mantido, sem garantia exactly-once. Homologação formal permanece 2/7 (28,6%); nenhuma release do servidor publicada."
+    },
+    {
+      "id": "server-nebula-auto-retry-regression-and-full-audit-2026-10-21-2146",
+      "title": "Nebula: retry automático validado com confirmação local ou Mongo perdida",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, Python 3.10 isolado, .NET 10 Release e Node.js",
+      "location": "Tools/NebulaPython/tests/test_upload_checkpoint.py; suites locais do servidor e frontend",
+      "scope": "Revalidar a preferência do usuário por retry automático: reconciliar mensagem já aceita sem novo envio quando checkpoint local falha e retomar confirmação durável quando o progresso Mongo se perde.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "updatedAt": "2026-10-21T21:51:52-03:00",
+      "evidence": "Testes focados checkpoint/scanner 22/22. NebulaPython completa passou 683/683; primeira execução marcou uma falha transitória no teste STRM, mas o teste passou 5/5 isolado, módulo STRM 19/19 e nova suíte completa 683/683. Suíte .NET Release sem build/restore: exit 0, 5.120 aprovados, 236 ignorados, 0 falhas/5.356. Web 418/418; Stylelint, typecheck, build e verificação dos 1.926 artefatos passaram; bundle inicial 294,3 KiB gzip. Contrato do portal reexecutado: 221/221; sintaxe JavaScript, JSON e `git diff --check` válidos. `npm audit` de produção zero; o completo ainda tem 10 altas dev-only em braces@3.0.3 sem patch upstream. Sem Telegram/Mongo operacional, runtime instalado, CI remota ou produção; formal continua 2/7 (28,6%). Nenhuma release criada ou publicada."
     }
   ]
 }
