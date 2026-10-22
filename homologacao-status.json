@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T20:47:12-03:00",
+  "generatedAt": "2026-10-21T20:57:44-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -8974,8 +8974,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-21T18:20:34-03:00",
-      "updatedAt": "2026-10-21T18:43:47-03:00",
-      "evidence": "C# nativo previamente validado: 26/26 testes Release focados contra MongoDB 8.3.7 efêmero; processo encerrado e porta fechada. No motor Python, foi criado journal local atômico e integração nos workers paralelo e small: intenção persistida antes do POST, confirmação local antes do checkpoint Mongo e busca MTProto por UUID + marcadores exatos após resposta ambígua ou restart. Python 3.10: suíte completa 671/671, incluindo regressão que confirma que uma parte journalizada fora de ordem não é reenviada; py_compile e git diff --check passaram. Cenários simulados cobrem resposta perdida sem segundo POST, retomada após falha de checkpoint Mongo, confirmação fora de ordem sem duplicação e retry automático quando o histórico não encontra a mensagem. Pester de cópia de runtime passou 1/1 e o script de integridade aceitou o stage. Ainda sem Telegram/Mongo remotos, instalação/runtime, CI remota ou produção; busca e permissões MTProto reais não foram homologadas. Retentativas automáticas permanecem conforme decisão do usuário e duplicata residual é possível; exactly-once não é garantido. Homologação formal permanece 2/7 (28,6%), não creditada por estes testes locais. Nenhum release do servidor criado.",
+      "updatedAt": "2026-10-21T20:57:44-03:00",
+      "evidence": "C# nativo previamente validado: 26/26 testes Release focados contra MongoDB 8.3.7 efêmero; processo encerrado e porta fechada. No motor Python, foi criado journal local atômico e integração nos workers paralelo e small: intenção persistida antes do POST, confirmação local antes do checkpoint Mongo e busca MTProto por UUID + marcadores exatos após resposta ambígua ou restart. Python 3.10: suíte completa 671/671, incluindo regressão que confirma que uma parte journalizada fora de ordem não é reenviada; py_compile e git diff --check passaram. Cenários simulados cobrem resposta perdida sem segundo POST, retomada após falha de checkpoint Mongo, confirmação fora de ordem sem duplicação e retry automático quando o histórico não encontra a mensagem. Pester de cópia de runtime passou 1/1 e o script de integridade aceitou o stage. Revalidação focal desta sessão: 35/35 testes passaram em venv temporária Python 3.10 com system-site-packages, incluindo resposta ambígua, restart, checkpoint, fila automática e journal. A árvore principal local está 8 commits atrás de origin/main e não contém upload_checkpoint.py nem os handlers de reconciliação; possui alterações locais não commitadas em main.py. A implementação testada em worktree gerenciada ainda não está integrada à árvore principal, publicada, instalada ou em produção. Ainda sem Telegram/Mongo remotos, instalação/runtime, CI remota ou produção; busca e permissões MTProto reais não foram homologadas. Retentativas automáticas permanecem conforme decisão do usuário e duplicata residual é possível; exactly-once não é garantido. Homologação formal permanece 2/7 (28,6%), não creditada por estes testes locais. Nenhum release do servidor criado.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]

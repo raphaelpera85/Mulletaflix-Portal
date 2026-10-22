@@ -4005,6 +4005,9 @@ test('portal records Python Telegram retry reconciliation while formal homologat
     assert.match(event.evidence, /Ainda sem Telegram\/Mongo remotos, instalação\/runtime, CI remota ou produção/);
     assert.match(event.evidence, /Retentativas automáticas permanecem/);
     assert.match(event.evidence, /Nenhum release do servidor criado/);
+    assert.match(event.evidence, /Revalidação focal desta sessão: 35\/35 testes passaram/);
+    assert.match(event.evidence, /árvore principal local está 8 commits atrás/);
+    assert.match(event.evidence, /worktree gerenciada ainda não está integrada à árvore principal/);
     assert.match(event.evidence, /Homologação formal permanece 2\/7 \(28,6%\)/);
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
