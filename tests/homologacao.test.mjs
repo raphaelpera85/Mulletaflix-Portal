@@ -4292,3 +4292,23 @@ test('portal records the latest focal server regressions without changing formal
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records global preferred-language fallback for artwork without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-artwork-language-fallback-global-2026-10-22-1130');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.scope, /idioma preferido/);
+    assert.match(event.evidence, /passaram 3\/3/);
+    assert.match(event.evidence, /Suíte ampla Providers ficou sem resultado/);
+    assert.match(event.evidence, /Sem API TMDb autenticada/);
+    assert.match(event.evidence, /Homologação formal permanece 1\/7/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
