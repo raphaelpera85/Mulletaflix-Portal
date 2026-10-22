@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T04:13:11-03:00",
+  "generatedAt": "2026-10-22T04:24:02-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9331,6 +9331,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-nebulapython-isolated-venv-suite-2026-10-22-0424",
+      "title": "NebulaPython: suíte completa revalidada em venv isolada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, Python 3.10 em venv temporária isolada existente",
+      "location": "MulletaFlix-master/Tools/NebulaPython",
+      "scope": "Reexecutar a suíte completa sem alterar Python global, após o guard de isolamento impedir a coleta na tentativa inicial.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T04:14:00-03:00",
+      "updatedAt": "2026-10-22T04:24:02-03:00",
+      "evidence": "A tentativa com Python global foi bloqueada pelo guard antes da coleta; nenhum pacote foi instalado globalmente. A suíte integral rodou com uma venv Python 3.10 preexistente e passou 684/684 em 14,19 s. Não houve chamadas a Telegram, Mongo, Supabase ou MariaDB; a instância MariaDB operacional na porta padrão não foi acessada. Isso é evidência local de testes, não fecha crash/restart real, gates formais ou produção; homologação permanece 1/7 (14,3%).",
+      "release": "Nenhuma; validação local não satisfaz os gates de homologação nem autoriza release.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/NEBULA-RUNBOOK.md"
       ]
     }
   ]
