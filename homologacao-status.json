@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T18:04:06-03:00",
+  "generatedAt": "2026-10-22T18:09:14-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10044,6 +10044,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaUploadCheckpointJournal.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/NEBULA-RUNBOOK.md"
+      ]
+    },
+    {
+      "id": "server-tmdb-default-brazilian-image-language-2026-10-22-1809",
+      "title": "Servidor: TMDb prioriza capas pt-BR com fallback inglês",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10; TmdbUtilsTests 19 aprovados; EnumerableExtensionsTests 7 aprovados",
+      "location": "MulletaFlix-master/MediaBrowser.Model/Configuration/ServerConfiguration.cs; MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb; testes Jellyfin.Providers.Tests/Tmdb e Jellyfin.Model.Tests/Extensions",
+      "scope": "Novas configurações do servidor passam a usar pt-BR/BR para metadados e imagens; mantém imagens sem idioma e inglês como fallback. Preferências já persistidas não são migradas nem títulos existentes reprocessados automaticamente.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-22T18:04:06-03:00",
+      "updatedAt": "2026-10-22T18:09:14-03:00",
+      "evidence": "Testes focais em Windows/.NET 10 passaram: TmdbUtilsTests 19/19, incluindo os padrões pt-BR/BR e include_image_language pt-BR,null,en; EnumerableExtensionsTests 7/7, garantindo pt-BR acima do fallback inglês mesmo com menor pontuação. Avisos de analisadores preexistentes apareceram no build dos testes. Sem chamada TMDb ao vivo, instalação ou biblioteca de produção; itens existentes com preferência en/US persistida requerem ajuste/reprocessamento. Homologação formal segue 1/7 (14,3%), sem crédito pelo teste local.",
+      "release": "Nenhuma. Não instalada em produção; release do servidor depende do fluxo e dos gates formais.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MediaBrowser.Model/Configuration/ServerConfiguration.cs",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb/TmdbUtils.cs"
       ]
     }
   ]
