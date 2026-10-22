@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:12:41-03:00",
+  "generatedAt": "2026-10-22T03:35:52-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9291,6 +9291,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/NEBULA-RUNBOOK.md"
+      ]
+    },
+    {
+      "id": "server-full-regression-library-gate-test-race-2026-10-22-0335",
+      "title": "Servidor: suíte completa revalidada após corrigir corrida de teste",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release e NebulaPython 3.14; suíte ampla local",
+      "location": "MulletaFlix-master/tests/Jellyfin.Api.Tests/Controllers/LibraryBackgroundOperationGateTests.cs; docs/AUDIT-EVIDENCE.md",
+      "scope": "Diagnosticar a falha intermitente da suíte ampla, corrigir sincronização do teste e revalidar API, solução .NET e Nebula Python.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T03:20:59-03:00",
+      "updatedAt": "2026-10-22T03:35:52-03:00",
+      "evidence": "A primeira execução integral terminou exit 1 por uma corrida no teste: o callback do monitor sinalizava antes da liberação do lease em finally. Reprodução isolada passou 1/1; o teste foi ajustado para esperar admissão com limite/cancelamento. Regressão API Release passou 763 aprovados, 3 ignorados, 0 falhas; nova solução Release --no-restore --no-build terminou exit 0. Resumos capturados incluem Providers 818/818 e Server.Implementations 1.537 aprovados/66 ignorados/0 falhas. NebulaPython 684/684. Mongo local está Running e TCP 127.0.0.1:27017 acessível agora; autenticação, query, cursor e Supabase não testados, portanto a causa do erro histórico não está confirmada. Worktree principal suja, HEAD 64a33dcf, oito commits atrás de origin/main/v12.1.35; alterações anteriores preservadas. Sem merge, instalação, CI remota, bancos operacionais, Telegram/Supabase, produção, pacote ou release. Homologação formal permanece 1/7 (14,3%); nenhum crédito parcial.",
+      "release": "Nenhuma; execução local não fecha homologação formal nem autoriza release.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
       ]
     }
   ]

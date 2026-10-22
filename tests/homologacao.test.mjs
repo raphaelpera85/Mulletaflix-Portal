@@ -4161,3 +4161,26 @@ test('portal records C# checkpoint concurrency fix without claiming integration 
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records full server regression and Mongo TCP limits without granting formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-full-regression-library-gate-test-race-2026-10-22-0335');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /Reprodução isolada passou 1\/1/);
+    assert.match(event.evidence, /API Release passou 763 aprovados, 3 ignorados, 0 falhas/);
+    assert.match(event.evidence, /nova solução Release --no-restore --no-build terminou exit 0/);
+    assert.match(event.evidence, /NebulaPython 684\/684/);
+    assert.match(event.evidence, /TCP 127\.0\.0\.1:27017 acessível agora/);
+    assert.match(event.evidence, /autenticação, query, cursor e Supabase não testados/);
+    assert.match(event.evidence, /oito commits atrás de origin\/main\/v12\.1\.35/);
+    assert.match(event.evidence, /Homologação formal permanece 1\/7 \(14,3%\)/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
