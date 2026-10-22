@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T00:27:33-03:00",
+  "generatedAt": "2026-10-22T00:38:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9156,6 +9156,25 @@
       "evidence": "No checkout principal local baseado em 64a33dcf, a exceção de DbContext.Add era registrada e ignorada depois da purga. A fonte local foi alterada para propagar a falha, usar transação relacional e rollback compensatório dos arquivos; foram adicionadas regressões unitária e MariaDB. FullSystemBackup Release passou 41/41; dotnet build Jellyfin.Server Release passou com 0 avisos/0 erros. BackupRestoreMariaDbTests passou 2, ignorou 1 porque não há MariaDB descartável configurado; a falha em MariaDB ainda não foi validada em runtime. O checkout está sujo e 8 commits atrás de origin/main; mudanças preexistentes foram preservadas. Nenhum banco operacional, instalação, produção, pacote, release ou CI remota foi acessado. Homologação formal segue 2/7 (28,6%); restore integral e T4.3 permanecem abertos.",
       "release": "Nenhuma release até validação MariaDB e fechamento dos gates gerais.",
       "links": []
+    },
+    {
+      "id": "server-nebula-upload-checkpoint-corruption-2026-10-22-0038",
+      "title": "Nebula: retry automático seguro para journal local inválido",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, testes Nebula Python com fakes; Python 3.14",
+      "location": "Tools/NebulaPython/main.py e tests/test_upload_checkpoint.py",
+      "scope": "Manter retries automáticos quando Telegram pode ter aceitado a parte, sem rotacionar UUID nem reenviar às cegas se o journal estiver corrompido/incompatível.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T00:31:00-03:00",
+      "updatedAt": "2026-10-22T00:38:50-03:00",
+      "evidence": "O usuário confirmou manter retentativas automáticas. Journal local inválido agora adia o arquivo, preserva UUID e mantém retry; nova regressão protege contra duplicação cega. Focados checkpoint/worker/scanner: 56/56; suíte NebulaPython Python 3.14: 684/684. Python 3.10 não executou porque o guard bloqueou dependências globais antes da coleta, sem instalar dependências. Testes usam mocks; Telegram/Mongo reais, runtime, produção, CI remota e exactly-once não validados. Patch local, checkout sujo e 8 commits atrás de origin/main; sem pacote/release. Homologação formal permanece 2/7 (28,6%).",
+      "release": "Nenhuma release; os gates formais e outras melhorias do servidor continuam abertos.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
+      ]
     }
   ]
 }
