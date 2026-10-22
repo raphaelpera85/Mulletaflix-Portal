@@ -4463,3 +4463,22 @@ test('portal records the restore interprocess lease and MariaDB cleanup limits w
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal distinguishes full .NET regression from the Nebula Python environment blocker', () => {
+    const event = statusData.events.find(item => item.id === 'server-full-solution-regression-python-runtime-blocked-2026-10-22-1722');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /dotnet test MulletaFlix\.sln .* terminou exit code 0/);
+    assert.match(event.evidence, /Providers 848\/848/);
+    assert.match(event.evidence, /Server Implementations 1\.552 aprovados, 66 ignorados/);
+    assert.match(event.evidence, /py -3\.10 -m pytest tests -q.*0 testes executados/s);
+    assert.match(event.evidence, /homologação formal do servidor permanece 1\/7 \(14,3%\)/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
