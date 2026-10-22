@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T18:50:00-03:00",
+  "generatedAt": "2026-10-22T19:10:40-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10116,6 +10116,23 @@
       "updatedAt": "2026-10-22T18:39:06-03:00",
       "evidence": "Proveniência de capas e refresh seguro: teste anterior 103/103 em Providers e mapper 1/1. Revalidação atual: Providers 72/72 e Server.Implementations 4/4 em Release. Nova regressão confirmou que en-US emite en,null sem repetir fallback; pt-BR continua pt,null,en. Contrato EF verifica colunas Language/ProviderName nullable e rollback somente delas. dotnet-ef não está restaurado e MariaDB descartável não foi configurada; nenhuma migration aplicada. Sem chamada real TMDb, mídia, runtime instalado ou produção testados. Testes locais não contam para homologação formal, que permanece 1/7 (14,3%).",
       "release": "Nenhuma. Validar a migration em MariaDB descartável e realizar confirmação visual/runtime; gates formais permanecem pendentes.",
+      "links": []
+    },
+    {
+      "id": "server-restore-fk-preflight-contract-2026-10-22-1910",
+      "title": "Restore: contrato de cobertura das FKs exportadas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; teste focal 1/1 e FullSystemBackup 62/62",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs; docs/backup-coverage-audit.md",
+      "scope": "Validar o contrato entre FKs dos modelos EF, entidades exportadas e planos do preflight; sem alteração de runtime, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-22T19:00:00-03:00",
+      "updatedAt": "2026-10-22T19:10:40-03:00",
+      "evidence": "Teste RestorePreflight_CreatesValidationPlanForEveryExportedForeignKey passou 1/1; a suíte FullSystemBackup em Release passou 62/62. Os cinco modelos têm 39 FKs no total; 38 pertencem a entidades exportadas e todas as 38 geram plano. O build focado terminou com 0 erros e 303 avisos de analisadores. A primeira expectativa de 39 relações exportadas falhou; foi esclarecido que o 39 é o total dos modelos e 38 o escopo serializado, agora conferidos em assertions distintas. MariaDB descartável, replay relacional/crash-restart, Linux/WSL, runtime instalado, CI remota, produção e aceite formal não foram validados. Homologação formal do servidor continua 1/7 (14,3%); sem release ou instalação.",
+      "release": "Nenhuma. Validar crash/replay relacional em MariaDB descartável e manter pendências TOCTOU, Linux e aceite formal.",
       "links": []
     }
   ]

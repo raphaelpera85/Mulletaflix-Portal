@@ -81,6 +81,22 @@ test('portal records the current public server release and confirms there is no 
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records restore FK preflight coverage without inflating formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-fk-preflight-contract-2026-10-22-1910');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /39 FKs no total/);
+    assert.match(event.evidence, /38 pertencem a entidades exportadas/);
+    assert.match(event.evidence, /FullSystemBackup em Release passou 62\/62/);
+    assert.match(event.evidence, /MariaDB descartável.*não foram validados/);
+    assert.match(event.evidence, /Homologação formal do servidor continua 1\/7 \(14,3%\)/);
+    assert.match(event.release, /Nenhuma/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records cancellation-aware test waits and remaining analyzer debt', async () => {
     const event = statusData.events.find(item => item.id === 'server-test-waits-runner-cancellation-2026-10-20-2142');
 
