@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T00:09:32-03:00",
+  "generatedAt": "2026-10-22T00:27:33-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9138,6 +9138,23 @@
       "updatedAt": "2026-10-22T00:09:32-03:00",
       "evidence": "Teste adversarial com symlink real reproduziu escrita fora da raiz antes da correção; a fonte local rejeita links descendentes antes/depois de criar o diretório pai e antes da extração, mantendo a raiz configurada confiável. FullSystemBackup Release: 40/40; TWINS encontrou 1 uso de ExtractToFile no C# do servidor. Correção está apenas no checkout principal sujo 64a33dcf, 8 commits atrás de origin/main; sem release, instalação, Linux, bancos, produção ou CI remota. Janela TOCTOU, rollback transacional e falha de DbContext.Add permanecem pendentes. Homologação formal 2/7 (28,6%).",
       "release": "Nenhuma release: gates ativos continuam abertos.",
+      "links": []
+    },
+    {
+      "id": "server-backup-restore-database-rollback-2026-10-22-0026",
+      "title": "Restore de backup: abortar falha relacional sem sucesso parcial",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.3"],
+      "local": "FullSystemBackup Release e IntroSkipper.Integration.Tests Release",
+      "location": "BackupService.RestoreBackupCoreAsync; FileSystemRestoreTransaction; BackupRestoreMariaDbTests",
+      "scope": "Fazer falhas de inclusão/persistência abortarem o restore e reverterem alterações relacionais e arquivos já instalados.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T00:26:49-03:00",
+      "updatedAt": "2026-10-22T00:27:33-03:00",
+      "evidence": "No checkout principal local baseado em 64a33dcf, a exceção de DbContext.Add era registrada e ignorada depois da purga. A fonte local foi alterada para propagar a falha, usar transação relacional e rollback compensatório dos arquivos; foram adicionadas regressões unitária e MariaDB. FullSystemBackup Release passou 41/41; dotnet build Jellyfin.Server Release passou com 0 avisos/0 erros. BackupRestoreMariaDbTests passou 2, ignorou 1 porque não há MariaDB descartável configurado; a falha em MariaDB ainda não foi validada em runtime. O checkout está sujo e 8 commits atrás de origin/main; mudanças preexistentes foram preservadas. Nenhum banco operacional, instalação, produção, pacote, release ou CI remota foi acessado. Homologação formal segue 2/7 (28,6%); restore integral e T4.3 permanecem abertos.",
+      "release": "Nenhuma release até validação MariaDB e fechamento dos gates gerais.",
       "links": []
     }
   ]
