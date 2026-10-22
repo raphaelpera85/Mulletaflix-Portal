@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T02:34:21-03:00",
+  "generatedAt": "2026-10-22T02:37:37-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9271,6 +9271,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-nebula-telegram-automatic-retry-revalidation-2026-10-22-0237",
+      "title": "Nebula: retries automáticos após confirmação ambígua do Telegram",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, Python 3.14.7; testes locais com Telegram/Mongo simulados",
+      "location": "MulletaFlix-master/Tools/NebulaPython/upload_checkpoint.py; main.py; testes de checkpoint e envio de parte",
+      "scope": "Revalidar a decisão do usuário de manter retries automáticos quando Telegram aceita uma parte mas resposta/checkpoint Mongo se perde.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T02:37:37-03:00",
+      "updatedAt": "2026-10-22T02:37:37-03:00",
+      "evidence": "O código reconcilia UUID/parte/SHA-256 no histórico antes de reenviar e adia o retry se o resultado for inconclusivo. `py -3 -m pytest tests/test_upload_checkpoint.py tests/test_main_upload_part.py -q`: 27/27. A regressão simulada recupera a mensagem aceita após perda do ack local e evita um segundo envio. Sem Telegram/Mongo reais; duplicata segue possível se a mensagem permanecer invisível ao histórico. Nenhum crédito de homologação formal, instalação ou release.",
+      "release": "Nenhuma; teste local de retry não substitui a integração/homologação formal.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/NEBULA-RUNBOOK.md"
       ]
     }
   ]
