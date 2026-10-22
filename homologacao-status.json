@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T16:28:21-03:00",
+  "generatedAt": "2026-10-22T16:36:32-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9882,6 +9882,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
+      ]
+    },
+    {
+      "id": "server-restore-toctou-review-2026-10-22-1636",
+      "title": "Restore: revisão adversarial mantém TOCTOU aberto",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Revisão read-only; sem build/teste nesta sessão",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupRestoreRecoveryJournal.cs; MulletaFlix-master/docs/backup-coverage-audit.md",
+      "scope": "Registrar riscos de corrida em operações por pathname, staging, journal single-writer e reabertura do ZIP; não alterar runtime nem declarar correção.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T16:28:21-03:00",
+      "updatedAt": "2026-10-22T16:36:32-03:00",
+      "evidence": "Revisão independente read-only encontrou: checks de contenção/reparse podem ser invalidados antes de criação/move/rollback/cleanup; `.tmp` pode ser trocado após close e antes do install; journal ativo pode ser sobrescrito sem lease interprocesso; VerifyArchiveAsync reabre o pathname e pode autenticar arquivo diferente do stream aberto pelo restore. Recomendação: transação integral fail-closed por handles/dirfd, política para rename de ancestrais, lease single-writer e testes determinísticos em Windows/Linux, incluindo troca do ZIP. Revisor não executou testes; único check informado foi git diff --check em dois arquivos. Nenhum teste/build executado nesta sessão. TOCTOU P0 segue aberto; formal do servidor permanece 1/7 (14,3%), sem crédito.",
+      "release": "Nenhuma. Corrida TOCTOU e gates formais permanecem pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/TODO-AUDITORIA.md"
       ]
     }
   ]
