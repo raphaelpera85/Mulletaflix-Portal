@@ -4425,3 +4425,20 @@ test('portal records restore archive identity race fix without closing formal ho
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Restore registra a identidade do ZIP já aberto/);
 });
+
+test('portal reports the OTLP restore fixture failure and focused recovery without overstating full-suite validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-otlp-test-fixture-2026-10-22-1546');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /regressão completa inicial terminou exit 1/);
+    assert.match(event.evidence, /FullSystemBackup 54\/54/);
+    assert.match(event.evidence, /solução completa não foi repetida/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
