@@ -9409,6 +9409,26 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md",
         "https://developer.themoviedb.org/reference/movie-images"
       ]
+    },
+    {
+      "id": "server-tmdb-artwork-language-revalidation-2026-10-22-1025",
+      "title": "Servidor: revalidação focal da consulta de artes TMDb",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; Providers TMDb",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb; MulletaFlix-master/tests/Jellyfin.Providers.Tests/Tmdb/TmdbUtilsTests.cs",
+      "scope": "Reexecutar testes e conferir se os cinco image providers enviam idioma, idiomas de imagem e país preferidos.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T10:24:00-03:00",
+      "updatedAt": "2026-10-22T10:25:00-03:00",
+      "evidence": "O filtro Release FullyQualifiedName~Tmdb recompilou e passou 38/38; o subconjunto focal TmdbUtilsTests passou 20/20. Busca dos call sites confirmou parâmetros linguísticos nos cinco image providers e diff-check restrito passou. Isto valida código/testes locais, não chamada real TMDb, refresh de Invasão Zumbi 2, imagem persistida ou visual em produção. A captura também mostra opções Fanart, cuja implementação não foi localizada no checkout. Imagens persistidas exigem refresh após futura release. Homologação formal permanece 1/7 (14,3%), sem crédito local.",
+      "release": "Nenhuma; revalidação local não fecha gates formais nem autoriza release.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md",
+        "https://developer.themoviedb.org/reference/movie-images"
+      ]
     }
   ]
 }
