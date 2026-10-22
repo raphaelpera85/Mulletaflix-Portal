@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T23:05:42-03:00",
+  "generatedAt": "2026-10-21T23:07:47-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9079,8 +9079,8 @@
       "scope": "Validar a implementação C# de checkpoint durável e reconciliação de uploads ambíguos sem integrar ou alterar a worktree preexistente.",
       "status": "in_progress",
       "progressPercent": null,
-      "updatedAt": "2026-10-21T23:05:42-03:00",
-      "evidence": "dotnet test Release focado em NebulaUploadCheckpointJournalTests na worktree destacada: 6 aprovados, 0 ignorados/falhas. A implementação permanece fora do checkout principal e não publicada; a worktree contém alterações preexistentes não integradas e foi preservada. Checkout principal está 8 commits atrás de origin/main; seus testes Nebula focados foram 267/267 e NebulaPython 683/683 em venv isolado. Sem Mongo/Telegram reais, runtime instalado, CI remota ou produção. Retentativas automáticas mantidas; homologação formal segue 2/7 (28,6%). Nenhuma release criada/publicada."
+      "updatedAt": "2026-10-21T23:07:47-03:00",
+      "evidence": "Regressão Release na worktree destacada com NebulaUploadEngineTests, NebulaUploadCheckpointJournalTests e NebulaTelegramNotifierTests: 246 aprovados, 0 ignorados/falhas; o journal isolado passou 6/6. A implementação permanece fora do checkout principal e não publicada; a worktree contém alterações preexistentes não integradas e foi preservada. Checkout principal está 8 commits atrás de origin/main; seus testes Nebula focados foram 267/267 e NebulaPython 683/683 em venv isolado. Sem Mongo/Telegram reais, runtime instalado, CI remota ou produção. Retentativas automáticas mantidas; homologação formal segue 2/7 (28,6%). Nenhuma release criada/publicada."
     }
   ]
 }
