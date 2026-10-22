@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T17:45:22-03:00",
+  "generatedAt": "2026-10-22T17:58:01-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10004,6 +10004,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/TODO-AUDITORIA.md"
+      ]
+    },
+    {
+      "id": "server-nebula-checkpoint-hash-validation-2026-10-22-1758",
+      "title": "Nebula: validação fail-closed de hashes no checkpoint de upload",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10; NebulaUploadCheckpointJournalTests 9/9",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaUploadCheckpointJournal.cs; tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaUploadCheckpointJournalTests.cs",
+      "scope": "Validar entradas nulas, duplicadas, fora de faixa ou com SHA-256 inválido antes de montar o mapa de hashes pendentes; sem reenvio cego, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-22T17:48:00-03:00",
+      "updatedAt": "2026-10-22T17:58:01-03:00",
+      "evidence": "O journal C# valida cada item antes de construir o dicionário e rejeita dados corrompidos com InvalidDataException. Testes focais passaram 9/9: restart/ack, recuperação, concorrência, fonte alterada, ack inválido, remoção, legado, hash duplicado e entrada nula. Build focal foi repetido após corrigir SA1117; o assembly final executado passou sem recompilação. Não foi executada a suíte Nebula completa, Telegram/Mongo reais, Linux, runtime instalado, CI remota ou produção. Checkpoint inválido interrompe o fluxo; homologação formal do servidor continua 1/7 (14,3%), sem crédito parcial por este teste local.",
+      "release": "Nenhuma. Validações amplas, gates de homologação e release seguem pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaUploadCheckpointJournal.cs",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/NEBULA-RUNBOOK.md"
       ]
     }
   ]
