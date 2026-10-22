@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:53:00-03:00",
+  "generatedAt": "2026-10-22T13:05:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,21 @@
     }
   ],
   "events": [
+    {
+      "id": "server-image-locale-refresh-validation-2026-10-22",
+      "title": "Artes localizadas: validação de prioridade pt-BR e fallback inglês",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["H06"],
+      "local": "Windows, .NET 10 Release; checkout local baseado em 64a33dcf",
+      "location": "ProviderManager.GetAvailableRemoteImages · ItemImageProvider.RefreshImages · TmdbClientManager",
+      "scope": "Revalidar a seleção de artes em português quando disponíveis e manter inglês como fallback por tipo de imagem, sem afirmar cobertura visual de título sem resposta real do provedor.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T13:05:00-03:00",
+      "updatedAt": "2026-10-22T13:05:00-03:00",
+      "evidence": "Regressões Release de ProviderManager, ItemImageProvider e TmdbUtils: 154/154 aprovadas; avisos StyleCop preexistentes durante compilação. O fluxo agrega provedores, prioriza pt/pt-BR por tipo e mantém inglês quando não há arte preferida. A captura de Invasão Zumbi 2 não identifica se ‘Todos os idiomas’ estava ligado nem prova a resposta real do TMDb; nenhuma consulta autenticada, refresh visual, substituição de mídia persistida ou alteração de runtime foi feita. Falha ao obter catálogo de idiomas reduz temporariamente a lista ao fallback preferido/original/en/null. Inglês permanece fallback conforme decisão do usuário em 22/10. Homologação formal permanece 1/7 (14,3%); teste local não recebe crédito formal. Checkout sujo, 8 commits atrás de origin/main; sem instalação, produção, release ou CI remota."
+    },
     {
       "id": "server-backup-restore-reparse-defense-2026-10-21-1641",
       "title": "Restore do backup bloqueia symlink e junction fora da raiz configurada",
