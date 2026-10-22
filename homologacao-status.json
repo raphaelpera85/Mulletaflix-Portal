@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T09:53:01-03:00",
+  "generatedAt": "2026-10-22T09:58:14-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9369,6 +9369,26 @@
       "evidence": "Filtro dotnet test ... --filter FullyQualifiedName~FullSystemBackup recompilou e passou 50/50. O teste isolado MulletaFlix-packaging-master/scripts/tests/ServiceDataAcl.Tests.ps1 passou: removeu grants de escrita ampla herdados/explicitos no fixture, preservou herança aos filhos e sentinel externo. Isso valida a lógica ACL num fixture temporário, não a ACL de uma instalação real. dotnet test ... --filter FullyQualifiedName~ProtectedApiSurfacesHttpTests passou 2/2; pipeline HTTP rejeitou anônimo (401) e usuário comum (403) nas rotas administrativas, incluindo Backup/Restore e RestorePointInTime. Revisão confirmou risco TOCTOU ainda aberto: validação por path é seguida por Directory.CreateDirectory, FileStream, File.Move e File.Delete absolutos; teste atual só cobre link estático. O endpoint de restore exige RequiresElevation (papel Administrator) e limita seleção ao diretório configurado de backups; a auditoria de fonte não encontrou rota HTTP de restore para usuário não administrador. Não há evidência de exploração remota; a alcançabilidade local depende das ACLs reais e do controle dos diretórios ancestrais. Linux openat2/dirfd é candidata. Windows NtCreateFile é API winternl interna sujeita a mudanças pela própria Microsoft e não foi aprovada sem validação de suporte. Próximo gate: validar ACL efetiva instalada e criar teste determinístico de troca concorrente provando zero escrita fora da raiz. Homologação formal segue 1/7 (14,3%), sem crédito pelo teste local.",
       "release": "Nenhuma; segurança TOCTOU, kill/restart real, MariaDB descartável, validação FK, consistência temporal e aceite formal permanecem pendentes. Sem produção ou instalação.",
       "links": []
+    },
+    {
+      "id": "server-restore-recovery-test-revalidation-2026-10-22-0958",
+      "title": "Servidor: revalidação dos testes de recuperação do restore",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T4.3"],
+      "local": "Windows, .NET 10 Release; suíte FullSystemBackup",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupRestoreRecoveryJournal.cs; MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs",
+      "scope": "Reexecutar a suíte focal após a implementação local do journal/replay e reconciliar a documentação histórica do risco crash-safe.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T09:54:00-03:00",
+      "updatedAt": "2026-10-22T09:58:14-03:00",
+      "evidence": "`dotnet test MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter FullyQualifiedName~FullSystemBackup --logger 'console;verbosity=minimal'` recompilou os projetos dependentes e passou 50/50, zero ignorados/falhas. Isso revalida testes unitários, mas a recuperação ainda é testada por estados simulados em filesystem; nenhum processo foi encerrado/reiniciado durante um restore real. TOCTOU, kill/restart real com MariaDB descartável, FKs pré-validadas, consistência temporal, CI remota, runtime instalado, produção e aceite formal seguem pendentes. Homologação formal permanece 1/7 (14,3%), sem crédito por este teste local.",
+      "release": "Nenhuma; esta revalidação não altera runtime e não fecha os gates formais.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
     }
   ]
 }

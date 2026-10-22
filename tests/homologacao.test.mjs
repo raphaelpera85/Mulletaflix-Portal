@@ -4232,3 +4232,21 @@ test('portal records the open restore TOCTOU risk without promoting formal homol
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the latest 50/50 restore test revalidation without claiming a real process restart', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-recovery-test-revalidation-2026-10-22-0958');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /passou 50\/50, zero ignorados\/falhas/);
+    assert.match(event.evidence, /nenhum processo foi encerrado\/reiniciado/);
+    assert.match(event.evidence, /Homologação formal permanece 1\/7 \(14,3%\)/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
