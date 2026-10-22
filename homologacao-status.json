@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:28:00-03:00",
+  "generatedAt": "2026-10-22T12:53:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9598,6 +9598,26 @@
       "links": [
         "https://developer.themoviedb.org/reference/movie-images",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
+    {
+      "id": "server-nebula-multipart-failure-resume-2026-10-22-1253",
+      "title": "Servidor: retomada multipart preserva partes concluídas após falha",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, Python 3.10 isolado e .NET Release",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; tools/feed_ftp.py; tests/test_feed_ftp_strm.py",
+      "scope": "Aguardar todos os workers multipart antes de propagar falhas, preservar partes concluídas para retry e não substituir destino íntegro por download incompleto.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T12:30:00-03:00",
+      "updatedAt": "2026-10-22T12:53:00-03:00",
+      "evidence": "Suíte NebulaPython isolada 685/685. Dois testes focados passaram em 10 repetições (20/20); py_compile passou. Implementations Release 1.544 aprovados, 66 ignorados, 0 falhas/1.610; FullSystemBackup focal 53/53. Ruff não estava disponível na venv. Sem serviços reais, instalação, CI remota ou produção. Homologação formal servidor permanece 1/7 (14,3%); testes locais não recebem crédito formal.",
+      "release": "Nenhuma: gate global de homologação ainda aberto.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/NEBULA-RUNBOOK.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
       ]
     }
   ]
