@@ -1133,11 +1133,12 @@ test('server backup history remains uncredited until cross-context evidence is r
     assert.match(event.evidence, /Patch local sem commit\/release/);
 
     assert.equal(relationalRestore.status, 'in_progress');
-    assert.match(relationalRestore.evidence, /BackupServiceTests 34\/34/);
-    assert.match(relationalRestore.evidence, /2 aprovados e 1 ignorado/);
-    assert.match(relationalRestore.evidence, /round-trip atualizado não executou/);
+    assert.match(relationalRestore.evidence, /BackupServiceTests 37\/37/);
+    assert.match(relationalRestore.evidence, /2 aprovados\/1 ignorado/);
+    assert.match(relationalRestore.evidence, /round-trip\/rollback multi-contexto não executou/);
     assert.equal(fullRecovery.status, 'in_progress');
-    assert.match(fullRecovery.evidence, /Movies, Series, Channels e Books continuam fora do snapshot/);
+    assert.match(fullRecovery.evidence, /inclui agora Movies, Series, Channels e Books no snapshot/);
+    assert.match(fullRecovery.evidence, /não resiste a encerramento abrupto/);
     assert.match(fullRecovery.evidence, /formal global 1\/7 \(14,3%\)/);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.equal(statusData.tracks.find(track => track.id === 'server').homologation.percent, 14.3);
@@ -1160,7 +1161,7 @@ test('server keeps historical five-context snapshot claim visible but unverified
     assert.match(event.evidence, /sem commit\/release/);
 
     assert.equal(fullRecovery.status, 'in_progress');
-    assert.match(fullRecovery.evidence, /consistência transacional multi-contexto e sua evidência pública são retiradas/);
+    assert.match(fullRecovery.evidence, /compartilha a transação relacional com MulletaFlixDbContext no restore/);
     assert.match(fullRecovery.evidence, /formal global 1\/7 \(14,3%\)/);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
@@ -1177,12 +1178,26 @@ test('portal records the local manifest and PlaybackReports correction without g
     assert.match(event.evidence, /round-trip novo não executou/);
     assert.match(event.evidence, /nomes físicos/);
     assert.match(event.evidence, /PlaybackReports mapeia para PlaybackReport/);
-    assert.match(h02.evidence, /PlaybackReports/);
+    assert.match(h02.evidence, /PlaybackReports usa PlaybackReport/);
     assert.equal(server.homologation.completed, 1);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 14.3);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal publishes multi-context restore as local work and retains MariaDB and crash-recovery gates', () => {
+    const event = statusData.events.find(item => item.id === 'server-fullsystembackup-multicontext-restore-2026-10-22-0220');
+    const h03 = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /BackupServiceTests: 37\/37/);
+    assert.match(event.evidence, /multi-contexto não executado/);
+    assert.match(event.evidence, /não é crash-safe/);
+    assert.match(h03.evidence, /FK ainda é validada pelo banco/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
 
 test('formal server homologation consolidates gates, percentage, evidence and pending production signoff', async () => {
