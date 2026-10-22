@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T17:24:27-03:00",
+  "generatedAt": "2026-10-22T17:29:25-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9962,6 +9962,28 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
+      ]
+    },
+    {
+      "id": "server-restore-path-primitives-reevaluation-2026-10-22-1729",
+      "title": "Restore: revalidação das APIs de caminho seguro e teste focal 61/61",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; FullSystemBackup 61/61",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; BackupRestoreRecoveryJournal.cs; MulletaFlix-master/docs/backup-coverage-audit.md",
+      "scope": "Revalidar suíte focal e limites documentados das primitivas handle-relative; sem alterar runtime, instalar ferramentas, acessar banco, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-22T17:24:27-03:00",
+      "updatedAt": "2026-10-22T17:29:25-03:00",
+      "evidence": "`dotnet test tests/Jellyfin.Server.Implementations.Tests/Jellyfin.Server.Implementations.Tests.csproj --configuration Release --no-restore --filter \"FullyQualifiedName~FullSystemBackup\"` recompilou e passou 61/61 em Windows/.NET 10; build produziu warnings existentes de XML/analisadores. Os casos cobrem estados estáticos, identidade do ZIP, journal e lease; não simulam a troca concorrente de ancestral na árvore de destino. Fontes primárias: Linux `openat2`/`RESOLVE_BENEATH` e `RESOLVE_NO_SYMLINKS` (Linux 5.6+); sua documentação alerta sobre incompatibilidade de proibir symlinks e sobre `RESOLVE_NO_XDEV` bloquear mounts/bind mounts. Windows `OBJECT_ATTRIBUTES` documenta RootDirectory e OBJ_DONT_REPARSE, mas a página específica `NtCreateFile` só lista zero/OBJ_CASE_INSENSITIVE; a combinação user-mode permanece ambígua. Verificação local não encontrou `mariadbd`, `mysqld`, Docker ou WSL/distro; nenhum banco operacional foi acessado. TOCTOU e crash/replay MariaDB integrado não foram fechados. Homologação formal permanece 1/7 (14,3%), sem crédito local ou release.",
+      "release": "Nenhuma. Matriz Linux/filesystem, MariaDB descartável, contrato Windows suportado e teste determinístico de troca concorrente continuam pendentes.",
+      "links": [
+        "https://www.man7.org/linux/man-pages/man2/openat2.2.html",
+        "https://learn.microsoft.com/en-us/windows/win32/api/ntdef/ns-ntdef-_object_attributes",
+        "https://learn.microsoft.com/en-us/windows/win32/api/winternl/nf-winternl-ntcreatefile",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]
     }
   ]

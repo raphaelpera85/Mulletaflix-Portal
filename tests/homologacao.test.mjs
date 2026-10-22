@@ -4483,3 +4483,23 @@ test('portal distinguishes full .NET regression from the Nebula Python environme
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records restore path API limits and focal suite without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-path-primitives-reevaluation-2026-10-22-1729');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /FullSystemBackup.*passou 61\/61/);
+    assert.match(event.evidence, /não simulam a troca concorrente/);
+    assert.match(event.evidence, /RESOLVE_NO_XDEV.*bloquear mounts\/bind mounts/);
+    assert.match(event.evidence, /combinação user-mode permanece ambígua/);
+    assert.match(event.evidence, /não encontrou `mariadbd`, `mysqld`, Docker ou WSL\/distro/);
+    assert.match(event.evidence, /Homologação formal permanece 1\/7 \(14,3%\)/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
