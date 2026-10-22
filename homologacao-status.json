@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T14:04:00-03:00",
+  "generatedAt": "2026-10-22T14:13:27-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9709,6 +9709,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs"
+      ]
+    },
+    {
+      "id": "server-tmdb-preferred-language-fallback-2026-10-22-1413",
+      "title": "Servidor: imagens TMDb usam idioma preferido e fallback inglês",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb; tests/Jellyfin.Providers.Tests/Tmdb/TmdbUtilsTests.cs",
+      "scope": "Limitar consulta automática de arte a idioma preferido, idioma neutro e inglês; pt-BR é enviado como pt. Não incluir outros idiomas ou idioma original.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T14:04:00-03:00",
+      "updatedAt": "2026-10-22T14:13:27-03:00",
+      "evidence": "Filtro Release TmdbUtilsTests + ProviderManagerImageProviderTests: 25/25 aprovados; providers compilados. A suíte comprova regra/filtro com fixtures, não a resposta real do TMDb. Sem refresh ou conferência visual de Invasão Zumbi 2, sem instalação ou produção. Artes já salvas podem exigir refresh/substituição após release. Homologação formal do servidor permanece 1/7 (14,3%); teste local não recebe crédito formal.",
+      "release": "Nenhuma. Código permanece local; validar resposta TMDb e imagem do título após futura instalação.",
+      "links": [
+        "https://developer.themoviedb.org/docs/image-languages",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]
     }
   ]
