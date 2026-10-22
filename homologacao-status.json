@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T13:12:00-03:00",
+  "generatedAt": "2026-10-22T13:27:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9648,6 +9648,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/NEBULA-RUNBOOK.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-restore-postcommit-crash-replay-2026-10-22-1324",
+      "title": "Servidor: regressão de crash pós-commit e replay MariaDB adicionada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "scope": "Adicionar integração opt-in que pausa após commit relacional, encerra o processo e verifica replay do backup no processo seguinte.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T13:15:00-03:00",
+      "updatedAt": "2026-10-22T13:27:00-03:00",
+      "evidence": "BackupServiceTests Release: 44/44 aprovados. BackupRestoreMariaDbTests Release compilou: 2 testes de validação de conexão aprovados e 2 casos com banco ignorados por ausência de MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING. Revisão encontrou e corrigiu limpeza que poderia abortar com token cancelado; o finally agora aguarda o processo sem cancelamento. Formatação aprovada. Docker CLI e MariaDB local não encontrados; nenhum banco foi acessado. O cenário de kill/restart compila, mas não foi executado contra MariaDB. Homologação formal permanece 1/7 (14,3%); testes locais não recebem crédito formal.",
+      "release": "Nenhuma. Executar o cenário contra MariaDB descartável em loopback/porta não padrão ainda é necessário; gates P0 e homologação formal seguem abertos.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs"
       ]
     }
   ]
