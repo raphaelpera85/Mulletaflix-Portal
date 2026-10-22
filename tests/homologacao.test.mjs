@@ -4120,6 +4120,26 @@ test('portal distinguishes locally validated Nebula automatic retry from formal 
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records the latest focused Python retry validation without promoting formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-telegram-automatic-retry-revalidation-2026-10-22-0237');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.local, /Python 3\.10 em venv temporário isolado/);
+    assert.match(event.evidence, /suíte focal.*passou 63\/63/);
+    assert.match(event.evidence, /retorno automático à fila após 60 s/);
+    assert.match(event.evidence, /sem garantia exactly-once/);
+    assert.match(event.evidence, /Homologação formal permanece 1\/7 \(14,3%\)/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records C# checkpoint concurrency fix without claiming integration or release', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-csharp-journal-concurrency-2026-10-21-2322');
     const server = statusData.tracks.find(track => track.id === 'server');
