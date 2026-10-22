@@ -4221,8 +4221,11 @@ test('portal records the open restore TOCTOU risk without promoting formal homol
     assert.match(event.evidence, /teste atual só cobre link estático/);
     assert.match(event.evidence, /NtCreateFile é API winternl interna sujeita a mudanças/);
     assert.match(event.evidence, /exige RequiresElevation \(papel Administrator\)/);
-    assert.match(event.evidence, /ACL efetiva de uma instalação não foi testada/);
+    assert.match(event.evidence, /não a ACL de uma instalação real/);
     assert.match(event.evidence, /Não há evidência de exploração remota/);
+    assert.match(event.evidence, /ServiceDataAcl\.Tests\.ps1 passou/);
+    assert.match(event.evidence, /ProtectedApiSurfacesHttpTests passou 2\/2/);
+    assert.match(event.evidence, /não a ACL de uma instalação real/);
     assert.match(event.release, /Nenhuma/);
     assert.equal(server.homologation.completed, 1);
     assert.equal(server.homologation.total, 7);
