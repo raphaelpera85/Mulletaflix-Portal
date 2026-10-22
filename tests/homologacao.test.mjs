@@ -4063,3 +4063,25 @@ test('portal distinguishes locally validated Nebula automatic retry from formal 
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records C# checkpoint concurrency fix without claiming integration or release', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-csharp-journal-concurrency-2026-10-21-2322');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.location, /NebulaUploadCheckpointJournal/);
+    assert.match(event.evidence, /journal 7\/7/);
+    assert.match(event.evidence, /10\/10/);
+    assert.match(event.evidence, /247\/247/);
+    assert.match(event.evidence, /worktree destacada suja/);
+    assert.match(event.evidence, /reconciliação limitada aos três bots/);
+    assert.match(event.evidence, /Sem Mongo\/Telegram reais/);
+    assert.match(event.evidence, /Nenhuma release criada\/publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
