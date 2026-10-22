@@ -4303,6 +4303,7 @@ test('portal records global preferred-language fallback for artwork without form
     assert.equal(event.progressPercent, null);
     assert.match(event.scope, /idioma preferido/);
     assert.match(event.evidence, /passaram 3\/3/);
+    assert.match(event.evidence, /ProviderManagerTests passou 74\/74/);
     assert.match(event.evidence, /Suíte ampla Providers ficou sem resultado/);
     assert.match(event.evidence, /Sem API TMDb autenticada/);
     assert.match(event.evidence, /Homologação formal permanece 1\/7/);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T11:30:00-03:00",
+  "generatedAt": "2026-10-22T11:32:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9485,8 +9485,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-22T11:25:00-03:00",
-      "updatedAt": "2026-10-22T11:30:00-03:00",
-      "evidence": "Causa reproduzida: filtro por provedor deixava arte inglesa de uma fonte mesmo com arte pt em outra. A decisão agora ocorre após agregar os provedores. Testes Release focais passaram 3/3: opção todos idiomas, arte portuguesa em fonte distinta suprime inglês e fallback inglês quando não há português. dotnet format verify-no-changes e git diff --check passaram. Suíte ampla Providers ficou sem resultado e foi interrompida; não conta como aprovada. Sem API TMDb autenticada, refresh ou conferência visual de Invasão Zumbi 2; arte já persistida exige refresh/substituição após futura release. Homologação formal permanece 1/7; sem crédito local.",
+      "updatedAt": "2026-10-22T11:32:00-03:00",
+      "evidence": "Causa reproduzida: filtro por provedor deixava arte inglesa de uma fonte mesmo com arte pt em outra. A decisão agora ocorre após agregar os provedores. Testes Release focais passaram 3/3: opção todos idiomas, arte portuguesa em fonte distinta suprime inglês e fallback inglês quando não há português. ProviderManagerTests passou 74/74. dotnet format verify-no-changes e git diff --check passaram. Suíte ampla Providers ficou sem resultado e foi interrompida; não conta como aprovada. Sem API TMDb autenticada, refresh ou conferência visual de Invasão Zumbi 2; arte já persistida exige refresh/substituição após futura release. Homologação formal permanece 1/7; sem crédito local.",
       "release": "Nenhuma; demais gates do roadmap e validação visual em runtime permanecem pendentes.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
