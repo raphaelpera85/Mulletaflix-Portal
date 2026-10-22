@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T17:58:01-03:00",
+  "generatedAt": "2026-10-22T18:04:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10021,6 +10021,26 @@
       "updatedAt": "2026-10-22T17:58:01-03:00",
       "evidence": "O journal C# valida cada item antes de construir o dicionário e rejeita dados corrompidos com InvalidDataException. Testes focais passaram 9/9: restart/ack, recuperação, concorrência, fonte alterada, ack inválido, remoção, legado, hash duplicado e entrada nula. Build focal foi repetido após corrigir SA1117; o assembly final executado passou sem recompilação. Não foi executada a suíte Nebula completa, Telegram/Mongo reais, Linux, runtime instalado, CI remota ou produção. Checkpoint inválido interrompe o fluxo; homologação formal do servidor continua 1/7 (14,3%), sem crédito parcial por este teste local.",
       "release": "Nenhuma. Validações amplas, gates de homologação e release seguem pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaUploadCheckpointJournal.cs",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/NEBULA-RUNBOOK.md"
+      ]
+    },
+    {
+      "id": "server-nebula-duplicate-checkpoint-parts-2026-10-22-1804",
+      "title": "Nebula: checkpoint rejeita partes duplicadas sem descartar diagnóstico",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10; 257 testes NebulaUpload aprovados",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaUploadCheckpointJournal.cs; tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaUploadCheckpointJournalTests.cs; docs/NEBULA-RUNBOOK.md",
+      "scope": "Rejeitar duplicatas em partes confirmadas e intenções pendentes, preservar checkpoint e impedir composição ambígua; sem release ou teste de produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-22T17:58:01-03:00",
+      "updatedAt": "2026-10-22T18:04:06-03:00",
+      "evidence": "O loader usa TryAdd e falha com InvalidDataException para número de parte confirmado duplicado ou número pendente repetido. Testes provam que o arquivo permanece inalterado: suite NebulaUploadCheckpointJournalTests 11/11; filtro NebulaUpload (engine, journal e integrity) 257/257; git diff --check sem erros. Busca de twins encontrou ToDictionary em NebulaUploadCheckpointJournal.cs:225, aplicado somente sobre snapshot validado/único. Build/teste local em Windows/.NET 10; Telegram/Mongo reais, Linux, runtime instalado, CI remota e produção não foram validados. Homologação formal permanece 1/7 (14,3%), sem crédito por testes locais.",
+      "release": "Nenhuma. Gates formais e validação operacional continuam pendentes.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaUploadCheckpointJournal.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/NEBULA-RUNBOOK.md"
