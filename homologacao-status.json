@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T11:40:10-03:00",
+  "generatedAt": "2026-10-22T11:50:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -9490,6 +9490,31 @@
       "release": "Nenhuma; homologação real da arte e demais gates do roadmap permanecem pendentes.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
+    {
+      "id": "server-restore-toctou-api-revalidation-2026-10-22-1148",
+      "title": "Servidor: revalidação das APIs de filesystem para TOCTOU",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [
+        "T4.3"
+      ],
+      "local": "Windows, .NET 10 Release; auditoria de documentação e código",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/MediaBrowser.Providers/Lyric/LyricManager.cs; docs/backup-coverage-audit.md",
+      "scope": "Revalidar desenho multiplataforma para impedir troca concorrente de diretórios no restore e identificar ocorrências de escrita com validação por path.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-22T11:42:00-03:00",
+      "updatedAt": "2026-10-22T11:48:00-03:00",
+      "evidence": "Leitura direta confirmou que o restore valida contenção/reparse point, depois usa FileStream/File.Move/File.Delete/Directory.CreateDirectory por caminhos absolutos; teste cobre apenas reparse point estático. Pesquisa em fontes oficiais: Linux openat2 desde kernel 5.6 suporta resolução sob dirfd; Windows documenta handles de diretório e rename relativo, mas não abertura/criação geral de filhos relativa ao root. NtCreateFile oferece RootDirectory, porém a Microsoft classifica winternl.h como API interna sujeita a mudanças. Nenhuma solução multiplataforma foi aprovada ou implementada. Busca encontrou ocorrência semelhante em LyricManager.UploadLyrics; impacto equivalente requer triagem. Nenhum código de runtime mudou; testes/build não executados nesta sessão. Mapa conferido, sem mudança estrutural. Homologação formal segue 1/7 (14,3%), sem crédito por pesquisa/documentação.",
+      "release": "Nenhuma. Permanecem pendentes protótipo suportado, teste determinístico sem escrita fora da raiz, matriz Windows/Linux/filesystems e análise da gravação de letras. Sem instalação ou produção.",
+      "links": [
+        "https://man7.org/linux/man-pages/man2/openat2.2.html",
+        "https://learn.microsoft.com/en-us/windows/win32/fileio/obtaining-a-handle-to-a-directory",
+        "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileinformationbyhandle",
+        "https://learn.microsoft.com/en-us/windows/win32/api/winternl/nf-winternl-ntcreatefile",
+        "https://learn.microsoft.com/en-us/windows/win32/devnotes/calling-internal-apis"
       ]
     }
   ]

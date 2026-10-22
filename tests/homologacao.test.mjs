@@ -4314,3 +4314,21 @@ test('portal records global preferred-language fallback for artwork without form
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records restore TOCTOU API research without claiming mitigation or formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-toctou-api-revalidation-2026-10-22-1148');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /Nenhuma solução multiplataforma foi aprovada ou implementada/);
+    assert.match(event.evidence, /LyricManager\.UploadLyrics/);
+    assert.match(event.evidence, /Homologação formal segue 1\/7/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
