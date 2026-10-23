@@ -4884,3 +4884,20 @@ test('portal records manifest preservation after incomplete M3U link validation 
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records Linux packaging CI coverage without formal homologation credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-linux-packaging-ci-coverage-2026-10-23-1306');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.local, /contrato de workflow 8\/8/);
+    assert.match(event.evidence, /Git Bash/);
+    assert.match(event.evidence, /execução hospedada do GitHub ainda não observada/);
+    assert.match(event.release, /Nenhuma release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
