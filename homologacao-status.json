@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T10:02:00-03:00",
+  "generatedAt": "2026-10-23T10:10:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10423,6 +10423,25 @@
       "release": "Nenhuma. Checkout do servidor permanece sujo e 8 commits atrás de origin/main; integrar e revisar o conjunto antes de publicar release.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/NEBULA-RUNBOOK.md"
+      ]
+    },
+    {
+      "id": "server-tmdb-fallback-confirmation-2026-10-23-1010",
+      "title": "Servidor: fallback inglês de capas confirmado e testes focados reexecutados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; TmdbUtilsTests e ProviderManagerImageProviderTests 27/27",
+      "location": "MulletaFlix-master/docs/image-metadata-flow-audit.md; provedores TMDb e ProviderManager",
+      "scope": "Revalidar preferência pt-BR e inglês como fallback. Sem mudança de runtime, refresh real, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T10:08:00-03:00",
+      "updatedAt": "2026-10-23T10:10:00-03:00",
+      "evidence": "Testes focados passaram 27/27. Isso confirma o contrato local de ranking e códigos de idioma; não houve chamada ao TMDb nem refresh visual de Invasão Zumbi 2, portanto não comprova disponibilidade de pôster pt-BR ou imagem persistida. Inglês permanece fallback conforme escolha do usuário. Imagens antigas não são atualizadas em massa. Homologação formal do servidor permanece 1/7 (14,3%).",
+      "release": "Nenhuma. Consulta real ao TMDb e refresh visual controlado continuam pendentes; servidor não instalado nem exercitado em produção.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]
     }
   ]

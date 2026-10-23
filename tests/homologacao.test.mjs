@@ -4791,3 +4791,21 @@ test('portal publishes the restore gate rerun without claiming the skipped Maria
     assert.equal(server.homologation.percent, 14.3);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records TMDb English fallback rerun without claiming visual media validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-tmdb-fallback-confirmation-2026-10-23-1010');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.local, /27\/27/);
+    assert.match(event.evidence, /não houve chamada ao TMDb/);
+    assert.match(event.evidence, /[Ii]magens antigas não são atualizadas em massa/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
