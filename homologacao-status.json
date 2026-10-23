@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T15:49:45-03:00",
+  "generatedAt": "2026-10-23T16:03:09-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10791,6 +10791,26 @@
       "evidence": "dotnet test MulletaFlix.sln --configuration Release --no-restore --no-build --filter 'FullyQualifiedName!~Integration' --logger 'console;verbosity=minimal' --verbosity quiet -m:1 terminou exit 0: 5.221 aprovados, 72 ignorados, 0 falhas/5.293 em 15 projetos no Windows/.NET 10. py -3.14 -m pytest -q passou 688/688. Ignorados não contam como aprovados; o filtro exclui nomes Integration.",
       "release": "Nenhuma release criada. Homologação formal permanece 2/7 (28,6%), sem crédito. Linux/CI remota, integrações externas, runtime instalado e produção não validados nesta rodada.",
       "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-image-refresh-english-fallback-2026-10-23-1603",
+      "title": "Servidor: fallback inglês após falha de imagem localizada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release: ItemImageProviderTests + ProviderManagerTests 137/137; teste de regressão cobre falha pt seguida de sucesso en em outro provider",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ItemImageProvider.cs; tests/Jellyfin.Providers.Tests/Manager/ItemImageProviderRefreshTests.cs",
+      "scope": "Manter pt-BR/pt prioritário e inglês como fallback real após erro de download, sem alterar a galeria manual.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T15:58:00-03:00",
+      "updatedAt": "2026-10-23T16:03:09-03:00",
+      "evidence": "O refresh automático pedia IncludeAllLanguages=false; quando algum provider tinha capa pt, o ProviderManager removia as opções en de outros providers antes do download. Agora o refresh busca todos os candidatos, mantém somente idioma preferido, inglês e sem idioma, e prioriza providers com imagem localizada. A galeria manual segue usando o filtro restrito. Regressão e grupos ItemImageProviderTests|ProviderManagerTests passaram 137/137 em Windows/.NET 10 Release; dotnet format --verify-no-changes e git diff --check passaram.",
+      "release": "Nenhuma release. Não houve chamada TMDb, refresh/renderização real de Invasão Zumbi 2, instalação ou produção. Capas já persistidas não foram alteradas automaticamente. Homologação formal segue 2/7 (28,6%), sem crédito novo; checkout do servidor permanece sujo e 8 commits atrás.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
       ]
     }
