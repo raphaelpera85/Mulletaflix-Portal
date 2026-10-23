@@ -42,7 +42,7 @@
         <li><a href="https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md">Auditoria de cobertura de backup/restauração</a></li>
         <li><a href="homologacao-status.json">Snapshot público de status e evidências</a></li>
       </ul>
-      <p class="document-note"><strong>Atualização:</strong> 22/10/2026. Um dos sete gates formais concluído (14,3%); backup integral permanece em andamento. Revalidação local: `FullSystemBackup` Release 61/61; integração MariaDB 2 aprovados e 2 ignorados por falta de banco descartável, portanto kill/restart relacional não foi validado. A revisão também mantém aberta a corrida TOCTOU em operações filesystem por pathname. O aceite formal permanece pendente.</p>
+      <p class="document-note"><strong>Atualização:</strong> 23/10/2026. Dois dos sete gates com evidência técnica local validada (28,6%); isso não equivale a aceite formal de produção. SRV-H02 passou a concluído após `BackupRestoreMariaDbTests` passar 4/4 em MariaDB 11.4.4 descartável, incluindo restore multi-contexto, acknowledgement de commit perdido e encerramento real do processo seguido de replay. O banco operacional não foi acessado. SRV-H03 continua aberto por consistência interdomínio e risco P0 de TOCTOU por pathname; CI remota, instalação/runtime, E2E e signoff formal também permanecem pendentes. Nenhuma release ou alteração de produção foi feita.</p>
     </section>
   </main>
 </body>

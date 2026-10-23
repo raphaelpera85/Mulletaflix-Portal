@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T10:27:00-03:00",
+  "generatedAt": "2026-10-23T10:52:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -21,11 +21,11 @@
       "progressPercent": null,
       "source": "GitHub Actions e testes de integração",
       "homologation": {
-        "completed": 1,
+        "completed": 2,
         "total": 7,
-        "percent": 14.3,
+        "percent": 28.6,
         "unit": "gates formais igualmente ponderados",
-        "label": "1 de 7 gates com evidência local validada; 2 em andamento, 3 pendentes e 1 bloqueado. SRV-H02 foi reaberto após divergência entre a evidência publicada e o escopo coberto pela fonte/teste inspecionados. Aceite formal de produção permanece pendente."
+        "label": "2 de 7 gates com evidência técnica local validada; 1 em andamento, 3 pendentes e 1 bloqueado. SRV-H02 validado em MariaDB descartável; aceite formal de produção permanece pendente."
       },
       "testAudit": {
         "passed": 5248,
@@ -90,14 +90,14 @@
       {
         "id": "SRV-H02",
         "name": "Backup e restauração relacional em MariaDB descartável",
-      "status": "in_progress",
-        "evidence": "Reaberto em 22/10/2026 após divergência entre a evidência anterior e o escopo atual. Manifesto/ZIP/validação usam nomes físicos EF; PlaybackReports usa PlaybackReport no contexto central. Snapshot cobre Movies, Series, Channels e Books; restore associa os contextos à transação central. A suíte local da solução passou, mas não substitui a integração opt-in. Round-trip/rollback multi-contexto em MariaDB descartável não foi executado nesta sessão; MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não está configurada conforme a última checagem registrada. O listener operacional não foi acessado. H02 segue em andamento, sem crédito parcial, release ou instalação."
+        "status": "completed",
+        "evidence": "Validado em 23/10/2026: BackupRestoreMariaDbTests passou 4/4 em MariaDB 11.4.4 descartável, loopback 127.0.0.1:33099. Cobriu round-trip/rollback multi-contexto, recuperação após acknowledgement de commit perdido, crash real entre commit relacional e commit de arquivos com replay, e rejeição de connection strings remota/porta padrão. O manifesto/ZIP usa os nomes físicos EF; PlaybackReports mapeia para PlaybackReport no contexto central. Primeira rodada revelou falha no harness: recovery reutilizava a injeção de falha; foi corrigido para usar novo serviço e capturar stdout/stderr do subprocesso. A reexecução passou 4/4. Nenhum acesso ao listener operacional 3306, instalação, produção ou aceite formal. H02 tem evidência técnica completa; isso não fecha H03 nem concede aceite de produção."
       },
       {
         "id": "SRV-H03",
         "name": "Consistência e recuperação integral entre domínios",
         "status": "in_progress",
-        "evidence": "Snapshot inclui Movies, Series, Channels e Books e o restore compartilha a transação relacional central. Journal durável e replay idempotente existem no working tree; FullSystemBackup passou 62/62 em rodada focal anterior, e a regressão ampla atual terminou exit 0. Ainda faltam crash/restart integrado com MariaDB descartável, consistência temporal, domínios IntroSkipper/DetectionCache, MongoDB/Supabase e propriedade/criptografia de chaves. TOCTOU por pathname permanece P0 sem teste concorrente determinístico Windows/Linux. Nenhuma dessas evidências locais concede crédito parcial: H03 em andamento, homologação global 1/7 (14,3%), sem release, instalação ou produção."
+        "evidence": "Journal durável e replay após crash agora foram exercitados com MariaDB 11.4.4 descartável no teste integrado de H02. H03 permanece em andamento: faltam consistência temporal, domínios IntroSkipper/DetectionCache, MongoDB/Supabase, propriedade/criptografia de chaves e mitigação/teste determinístico de TOCTOU por pathname em Windows/Linux; TOCTOU por pathname permanece P0. H03 não recebe crédito parcial; homologação técnica global 2/7 (28,6%), sem release, instalação ou aceite de produção."
       },
       {
         "id": "SRV-H04",
@@ -10462,6 +10462,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/TODO-AUDITORIA.md"
+      ]
+    },
+    {
+      "id": "server-mariadb-restore-crash-replay-2026-10-23-1052",
+      "title": "Servidor: restore e replay de crash validados em MariaDB descartável",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; FullSystemBackup 62/62; MariaDB 11.4.4 descartável; BackupRestoreMariaDbTests 4/4",
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs; MulletaFlix-master/docs/backup-coverage-audit.md; docs/AUDIT-EVIDENCE.md",
+      "scope": "Validar restore relacional multi-contexto e recuperação após falha/crash em MariaDB isolado; sem conexão ao banco operacional, instalação, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T10:47:00-03:00",
+      "updatedAt": "2026-10-23T10:52:00-03:00",
+      "evidence": "Filtro BackupRestoreMariaDbTests passou 4/4, 0 ignorados/falhas; regressão complementar FullSystemBackup passou 62/62. Round-trip/rollback multi-contexto, acknowledgement perdido seguido de recovery num serviço novo, encerramento real do processo entre commit relacional e commit dos arquivos e replay de journal passaram; duas connection strings inseguras foram rejeitadas. A primeira rodada identificou e levou a corrigir o harness para não repetir a falha injetada no recovery e para incluir stdout/stderr do filho. MariaDB iniciou em datadir temporário e loopback 127.0.0.1:33099; processo encerrado. MariaDB operacional 3306 e MongoDB não acessados. H02 validado tecnicamente; formal agregado 2/7 (28,6%), não significa aceite formal de produção. H03/TOCTOU, CI remota, Linux, instalação/runtime, E2E real e signoff continuam pendentes. Dois diretórios temporários (~285 MiB) não puderam ser removidos por bloqueio da ferramenta.",
+      "release": "Nenhuma. Não houve mudança de runtime ou produção; a evidência fecha apenas H02. H03 permanece aberto por TOCTOU e consistência interdomínio.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]
     }
   ]
