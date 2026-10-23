@@ -29,6 +29,23 @@ test('portal records the repeated restore TOCTOU baseline without claiming the r
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records TMDb image-language regression evidence without claiming visual production validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-tmdb-image-language-rerun-2026-10-23-0802');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /passou 72\/72/);
+    assert.match(event.evidence, /não houve chamada TMDb, refresh visual de Invasão Zumbi 2/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records server release 12.1.28 without claiming production homologation', () => {
     const event = statusData.events.find(item => item.id === 'server-release-12-1-28-restore-crc-2026-10-21-0229');
 

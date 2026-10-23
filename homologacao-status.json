@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T07:57:46-03:00",
+  "generatedAt": "2026-10-23T08:02:32-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10171,6 +10171,25 @@
       "updatedAt": "2026-10-22T19:22:18-03:00",
       "evidence": "Os testes Release focados passaram: ProviderManagerTests|ItemImageProviderTests|TmdbUtilsTests 160/160 e EnumerableExtensionsTests 7/7. O comportamento padrão prefere português por tipo de imagem, com inglês como fallback na ausência de português; consultas explícitas de todos os idiomas continuam separadas. Não houve chamada TMDb, refresh, confirmação visual de Invasão Zumbi 2, migration aplicada, runtime instalado ou produção exercitada. Imagens antigas não se alteram automaticamente. Homologação formal do servidor continua 1/7 (14,3%); nenhum release criado.",
       "release": "Nenhuma. Confirmar preferência efetiva da biblioteca/item e testar refresh controlado com mídia real antes de declarar correção visual homologada.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
+    {
+      "id": "server-tmdb-image-language-rerun-2026-10-23-0802",
+      "title": "Servidor: reexecução dos testes de idioma e fallback de capas TMDb",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; testes focados Providers 72/72",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb; MediaBrowser.Providers/Manager; tests/Jellyfin.Providers.Tests",
+      "scope": "Revalidar pt-BR como idioma preferido e inglês somente como fallback; nenhuma alteração de runtime ou produção nesta execução.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T07:59:58-03:00",
+      "updatedAt": "2026-10-23T08:02:32-03:00",
+      "evidence": "dotnet test Release com filtros TmdbUtilsTests, ProviderManagerImageProviderTests, ItemImageProviderRefreshTests e MetadataServiceTests passou 72/72, sem falhas/ignorados. Confirma contrato local: pt-BR corresponde a pt e inglês fica como fallback; não houve chamada TMDb, refresh visual de Invasão Zumbi 2, migration MariaDB, instalação ou mídia de produção. Capas persistidas não são automaticamente todas atualizadas. Homologação formal do servidor permanece 1/7 (14,3%); nenhum release de servidor.",
+      "release": "Nenhuma. Confirmação visual/runtime e gates de homologação continuam pendentes.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
       ]
