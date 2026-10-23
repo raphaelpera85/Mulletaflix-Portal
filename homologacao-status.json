@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T13:34:12-03:00",
+  "generatedAt": "2026-10-23T13:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10635,6 +10635,26 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
         "https://man7.org/linux/man-pages/man2/openat2.2.html",
         "https://learn.microsoft.com/en-us/windows/win32/api/winternl/nf-winternl-ntcreatefile"
+      ]
+    },
+    {
+      "id": "server-restore-toctou-rerun-2026-10-23-1342",
+      "title": "Servidor: reexecução de restore; lacuna TOCTOU continua aberta",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; FullSystemBackup 62/62 aprovados, 0 ignorados/falhas",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; BackupRestoreRecoveryJournal.cs",
+      "scope": "Revalidar os testes focais e reportar a evidência real sem conceder crédito formal nem declarar a mitigação TOCTOU concluída.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T13:40:00-03:00",
+      "updatedAt": "2026-10-23T13:42:00-03:00",
+      "evidence": "dotnet test FullSystemBackup Release no Windows/.NET 10 terminou exit 0: 62 aprovados, 0 ignorados, 0 falhas. Inspeção confirma operações por pathname após validações separadas; a suíte não força troca concorrente determinística. WSL não está instalado, portanto não há evidência Linux. Homologação formal continua 2/7 (28,6%), sem crédito novo. Nenhuma mudança de runtime, instalação, produção ou release.",
+      "release": "Nenhuma. TOCTOU P0 segue aberto; implementação relativa a handles, testes adversariais, ACL efetiva e validação Linux continuam pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
       ]
     }
   ]
