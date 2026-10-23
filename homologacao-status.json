@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T08:43:45-03:00",
+  "generatedAt": "2026-10-23T08:51:43-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10286,6 +10286,25 @@
       "updatedAt": "2026-10-23T08:18:48-03:00",
       "evidence": "AvatarFileStoreTests passou 4/4 em Windows; 3 testes Linux-only foram ignorados. A classe só aceita nomes de arquivo simples e não oferece mkdir/rename/journal/recovery; o delete Linux revalida identidade antes de unlinkat, mas permanece uma janela entre a revalidação e a remoção pelo nome. Isso não demonstra uma extensão segura para restore/letras/sync, e nenhuma corrida adversarial foi exercitada. Sem mudança de runtime/produção/release; gate formal do servidor permanece 1/7 (14,3%).",
       "release": "Nenhuma. Exige desenho aprovado de operações relativas a handles em Windows/Linux e testes determinísticos de troca concorrente antes de reutilizar/generalizar.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
+      ]
+    },
+    {
+      "id": "server-restore-toctou-ancestor-acl-audit-2026-10-23-0851",
+      "title": "Servidor: reauditoria de TOCTOU, ACLs ancestrais e regressão ampla",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; regressão ampla 1.557 aprovados, 66 ignorados, 1 falha/1.624; reprodução isolada confirmou falha de localização",
+      "location": "MulletaFlix-master/docs/backup-coverage-audit.md; MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Localization/LocalizationManagerTests.cs",
+      "scope": "Auditoria de restore/replay, ACLs de instalador e testes do checkout. Nenhuma alteração de runtime, instalação, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T08:43:00-03:00",
+      "updatedAt": "2026-10-23T08:51:43-03:00",
+      "evidence": "Dois exames independentes confirmaram que operações críticas de restore/replay/journal usam caminhos absolutos após validações separadas e que não há teste determinístico de troca concorrente de ancestral. O instalador configura a pasta final, mas o repositório não audita toda a cadeia ancestral nem demonstra ACL efetiva de BackupPath customizado; isto é evidência estática, não inspeção de instalação. Linux openat2/dirfd é candidato; não foi adotado backend porque falta contrato Windows comprovado para a transação inteira. Regressão geral Release no Windows terminou 1.557 aprovados, 66 ignorados e 1 falha em 1.624. GetParentalRatings_Default_Success reproduziu isoladamente: esperado 56, atual 42; causa pendente. Homologação formal servidor permanece 1/7 (14,3%), sem crédito. Nenhuma alteração de runtime, produção ou release.",
+      "release": "Nenhuma. O checkout do servidor permanece sujo e 8 commits atrás de origin/main. Antes do próximo release: explicar/corrigir a falha de localização e fechar desenho, testes determinísticos e matriz Windows/Linux do TOCTOU/ACL.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]

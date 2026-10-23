@@ -27,6 +27,24 @@ test('portal records Supabase Retry-After coverage without claiming production o
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records the restore ACL audit and failing broad regression without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-toctou-ancestor-acl-audit-2026-10-23-0851');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /1\.557 aprovados, 66 ignorados e 1 falha em 1\.624/);
+    assert.match(event.evidence, /esperado 56, atual 42/);
+    assert.match(event.evidence, /não há teste determinístico de troca concorrente/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records Supabase backup-history retry without claiming live or formal validation', () => {
     const event = statusData.events.find(item => item.id === 'server-supabase-backup-history-retry-2026-10-23-0836');
     const server = statusData.tracks.find(track => track.id === 'server');
