@@ -4828,3 +4828,21 @@ test('portal records TMDb English fallback rerun without claiming visual media v
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records media sync locking and atomic manifest persistence without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-media-sync-manifest-persistence-2026-10-23-1159');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.local, /69\/69.*858\/858/);
+    assert.match(event.evidence, /15 minutos/);
+    assert.match(event.evidence, /substituição atômica/);
+    assert.match(event.release, /Nenhuma/);
+    assert.match(event.release, /não garante FIFO/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
