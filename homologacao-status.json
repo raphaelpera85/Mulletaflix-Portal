@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T16:20:47-03:00",
+  "generatedAt": "2026-10-23T16:42:12-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "2 de 7 gates com evidência técnica local validada; 1 em andamento, 3 pendentes e 1 bloqueado. SRV-H02 validado em MariaDB descartável; aceite formal de produção permanece pendente."
       },
       "testAudit": {
-        "passed": 5221,
-        "total": 5293,
-        "skipped": 72,
+        "passed": 5241,
+        "total": 5494,
+        "skipped": 253,
         "failed": 0,
-        "percent": 98.6,
-        "label": "Atualizado em 23/10: regressão .NET Release Windows/.NET 10 passou com exit 0: 5.221 aprovados, 72 ignorados, 0 falhas/5.293 resultados em 15 projetos, usando FullyQualifiedName!~Integration. NebulaPython passou 688/688 em Python 3.14; NebulaPython 3.10 isolado: 685/685. O filtro exclui testes Integration; ignorados não contam como aprovados. Histórico de 21/10: 5.120 aprovados, 236 ignorados/NotExecuted, 0 falhas/5.356. MariaDB focal anterior: 197/198 opt-in em Windows. Auditoria npm anterior registrou 10 altas somente dev via braces@3.0.3. Não valida Linux/CI remota, integrações externas/MariaDB/MongoDB nesta rodada, runtime instalado, mídia real, produção ou aceite formal. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35. Nenhuma release criada."
+        "percent": 95.4,
+        "label": "Atualizado em 23/10: regressão da solução .NET Release Windows/.NET 10 passou com exit 0: 5.241 aprovados, 253 ignorados, 0 falhas/5.494 resultados em 17 projetos, sem filtro que exclua Integration. Os ignorados incluem testes condicionais/opt-in; não contam como aprovados. NebulaPython passou 688/688 em Python 3.14; NebulaPython 3.10 isolado: 685/685. Histórico de 21/10: 5.120 aprovados, 236 ignorados/NotExecuted, 0 falhas/5.356. MariaDB focal anterior: 197/198 opt-in em Windows. Auditoria npm anterior registrou 10 altas somente dev via braces@3.0.3. Não valida Linux/CI remota, integrações externas/MariaDB/MongoDB reais nesta rodada, runtime instalado, mídia real, produção ou aceite formal. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35. Nenhuma release criada."
       }
     },
     {
@@ -10851,6 +10851,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
         "https://github.com/raphaelpera85/Mulletaflix-Portal/blob/main/homologacao.html"
+      ]
+    },
+    {
+      "id": "server-full-solution-regression-2026-10-23-1642",
+      "title": "Servidor: regressão completa da solução .NET repetida",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release: 5.241 aprovados, 253 ignorados, 0 falhas/5.494 resultados em 17 projetos; exit 0",
+      "location": "MulletaFlix-master/MulletaFlix.sln",
+      "scope": "Reexecutar regressão completa do servidor no checkout atual e atualizar evidência sem converter testes em homologação formal.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T16:36:00-03:00",
+      "updatedAt": "2026-10-23T16:42:12-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --no-build --verbosity quiet -m:1` terminou com exit 0. Foram 5.241 aprovados, 253 ignorados, 0 falhas em 17 projetos. O run não filtrou assemblies Integration; testes condicionais/opt-in seguem ignorados. O foco `FullSystemBackup` passou com 80 aprovados, 3 ignorados (Linux-only), 0 falhas/83. Isso não testa as corridas Linux, ACL efetiva nem restore integrado por handle; o helper segue sem caller no fluxo ativo.",
+      "release": "Nenhuma release ou instalação. Linux/CI remota, integrações externas/MariaDB/MongoDB reais, runtime instalado e produção não foram validados nesta rodada. Homologação formal permanece 2/7 (28,6%), sem crédito novo; TOCTOU/ACL P0 do restore continua aberto.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
       ]
     }
   ]
