@@ -19,8 +19,9 @@ test('portal records fail-closed remote image validation without claiming produc
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /85\/85/);
-    assert.match(event.evidence, /suíte completa Jellyfin\.Providers\.Tests não terminou/);
-    assert.match(event.evidence, /Sem provider\/CDN real/);
+    assert.match(event.evidence, /Jellyfin\.Providers\.Tests excluindo Integration passou 844\/844/);
+    assert.match(event.evidence, /total desconhecido/);
+    assert.match(event.evidence, /Sem provider\/CDN isolado/);
     assert.match(event.release, /Nenhuma/);
     assert.equal(server.homologation.completed, 1);
     assert.equal(server.homologation.total, 7);

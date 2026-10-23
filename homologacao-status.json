@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T09:28:30-03:00",
+  "generatedAt": "2026-10-23T09:35:24-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3060,14 +3060,14 @@
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Windows, .NET 10 Debug; regressões focalizadas",
+      "local": "Windows, .NET 10 Debug; suíte Providers sem Integration e regressões focalizadas",
       "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/RemoteImagePayloadValidator.cs; Jellyfin.Providers.Tests/Manager/RemoteImagePayloadValidatorTests.cs; ProviderManagerRemoteImageValidationTests.cs",
       "scope": "Impedir que bytes remotos sem decoder compatível sejam persistidos; rejeitar bytes inválidos e preservar a imagem atual para que o refresh tente outra candidata.",
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-23T09:18:00-03:00",
-      "updatedAt": "2026-10-23T09:28:30-03:00",
-      "evidence": "Suite focalizada RemoteImagePayloadValidatorTests, ProviderManagerTests e ItemImageProviderRefreshTests passou 85/85, incluindo encoder indisponível, formato sem suporte, cleanup, limite de payload, preservação da imagem anterior e fallback de candidato. A suíte completa Jellyfin.Providers.Tests não terminou dentro da janela observada e foi interrompida; não é contada como aprovada. Sem provider/CDN real, runtime instalado, Linux ou produção. Homologação formal servidor permanece 1/7 (14,3%), sem crédito local.",
+      "updatedAt": "2026-10-23T09:35:24-03:00",
+      "evidence": "Regressões focadas RemoteImagePayloadValidatorTests, ProviderManagerTests e ItemImageProviderRefreshTests passaram 85/85; a suíte Jellyfin.Providers.Tests excluindo Integration passou 844/844. Execução sem filtro foi abortada pelo watchdog após 746 aprovações durante DramaBoxLiveIntegrationTests.RebuildIndex_FindsTheRealCatalogueAndMatchesRealLibraryTitles, que faz crawl real de catálogo externo; total desconhecido e teste externo não foi repetido isoladamente. Sem provider/CDN isolado, runtime instalado, Linux ou produção. Homologação formal servidor permanece 1/7 (14,3%), sem crédito local.",
       "release": "Nenhuma. Checkout do servidor permanece sujo e 8 commits atrás de origin/main; sem instalação ou validação em produção.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
