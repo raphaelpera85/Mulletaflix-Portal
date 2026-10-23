@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T12:20:00-03:00",
+  "generatedAt": "2026-10-23T12:36:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 69,
         "failed": 0,
         "percent": 98.7,
-        "label": "Atualizado em 23/10: suíte .NET Release no Windows com filtro FullyQualifiedName!~Integration terminou exit code 0: 5.248 aprovados, 69 ignorados, 0 falhas/5.317 resultados. Providers 849/849; API 763 aprovados/3 ignorados; Server 74/74; Server.Implementations 1.559 aprovados/66 ignorados. NebulaPython em venv isolada passou 685/685 (NebulaPython 3.10 isolado 685/685). O filtro exclui testes Integration e não equivale à matriz remota. CI remota, Linux, MariaDB/Mongo reais, runtime instalado, mídia real, produção e frontend não foram validados nesta sessão. 69 ignorados não contam como aprovados. Auditoria automatizada não equivale à homologação formal (2/7, 28,6%) nem a aceite de produção; nenhum crédito formal foi concedido nesta execução. Nenhuma release foi criada. Histórico do snapshot anterior (21/10): 5.120 aprovados, 236 ignorados/NotExecuted, 0 falhas/5.356; NebulaPython 3.10: 683/683; MariaDB focal anterior: 197/198 opt-in em Windows. O audit npm completo registrou 10 altas somente dev nas dependências de desenvolvimento via braces@3.0.3 sem versão corrigida. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35. Reexecução da solução em 23/10 terminou exit code 0, mas a saída agregada foi truncada e os contadores acima mantêm o último snapshot agregado exato; nessa rodada, Jellyfin.Providers.Tests passou 861, 13 ignorados e 0 falhas."
+        "label": "Atualizado em 23/10: suíte .NET Release no Windows com filtro FullyQualifiedName!~Integration terminou exit code 0: 5.248 aprovados, 69 ignorados, 0 falhas/5.317 resultados. Providers 849/849; API 763 aprovados/3 ignorados; Server 74/74; Server.Implementations 1.559 aprovados/66 ignorados. NebulaPython em venv isolada passou 685/685 (NebulaPython 3.10 isolado 685/685). O filtro exclui testes Integration e não equivale à matriz remota. CI remota, Linux, MariaDB/Mongo reais, runtime instalado, mídia real, produção e frontend não foram validados nesta sessão. 69 ignorados não contam como aprovados. Auditoria automatizada não equivale à homologação formal (2/7, 28,6%) nem a aceite de produção; nenhum crédito formal foi concedido nesta execução. Nenhuma release foi criada. Histórico do snapshot anterior (21/10): 5.120 aprovados, 236 ignorados/NotExecuted, 0 falhas/5.356; NebulaPython 3.10: 683/683; MariaDB focal anterior: 197/198 opt-in em Windows. O audit npm completo registrou 10 altas somente dev nas dependências de desenvolvimento via braces@3.0.3 sem versão corrigida. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35. Reexecução da solução em 23/10 terminou exit code 0, mas a saída agregada foi truncada e os contadores acima mantêm o último snapshot agregado exato; nessa rodada, Jellyfin.Providers.Tests passou 862, 13 ignorados e 0 falhas."
       }
     },
     {
@@ -10544,14 +10544,14 @@
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Windows/.NET 10 Release; regressão manifesto 3/3; Providers 861 aprovados, 13 ignorados; regressão da solução exit 0",
+      "local": "Windows/.NET 10 Release; regressão manifesto 4/4; Providers 862 aprovados, 13 ignorados; regressão da solução exit 0",
       "location": "MediaBrowser.Providers/Plugins/MidiaStorageOnline/MidiaStorageOnlineManifestCleanup.cs; MidiaStorageOnlineController.cs; MidiaStorageOnlineManifestCleanupTests.cs",
       "scope": "Evitar apagar downloads e perder referências de manifesto quando links M3U falham temporariamente na validação; nenhuma alteração de produção ou instalação.",
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-23T12:03:00-03:00",
-      "updatedAt": "2026-10-23T12:19:00-03:00",
-      "evidence": "Auditoria identificou que candidatos filtrados como offline no modo download podiam ser considerados removidos e excluídos junto com seus downloads. A política agora preserva o manifesto anterior e adia a limpeza se a validação for incompleta; uma validação completa ainda remove entradas ausentes. Testes da política passaram 3/3; Jellyfin.Providers.Tests Release passou 861 aprovados, 13 ignorados, 0 falhas. A regressão completa da solução Release, filtro FullyQualifiedName!~Integration, terminou exit code 0; a saída agregada foi truncada, por isso não atualizamos totais globais. Um teste falhou na primeira rodada ampla e passou 1/1 na repetição focal. Nenhum sync real, M3U externa, Linux, runtime instalado ou produção foi testado. Homologação formal permanece 2/7 (28,6%), sem crédito por este teste.",
+      "updatedAt": "2026-10-23T12:33:00-03:00",
+      "evidence": "Auditoria identificou que candidatos filtrados como offline no modo download ou uma playlist inesperadamente vazia diante de manifesto existente podiam ser considerados removidos e excluir downloads já concluídos. A política agora preserva o manifesto anterior e adia a limpeza se a validação for incompleta ou não houver mídia candidata apesar de manifesto não vazio; uma validação completa ainda remove entradas ausentes. Testes da política passaram 4/4; Jellyfin.Providers.Tests Release passou 862 aprovados, 13 ignorados, 0 falhas. A regressão completa da solução Release, filtro FullyQualifiedName!~Integration, terminou exit code 0; a saída agregada foi truncada, por isso não atualizamos totais globais. Um teste falhou na primeira rodada ampla e passou 1/1 na repetição focal. Nenhum sync real, M3U externa, Linux, runtime instalado ou produção foi testado. Homologação formal permanece 2/7 (28,6%), sem crédito por este teste.",
       "release": "Nenhuma. Checkout server continua sujo e 8 commits atrás de origin/main; alterações existentes foram preservadas. Sem instalação/produção ou CI remota. Release não criada.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md",

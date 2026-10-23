@@ -4854,8 +4854,9 @@ test('portal records manifest preservation after incomplete M3U link validation 
     assert.ok(event);
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.local, /manifesto 3\/3.*Providers 861 aprovados, 13 ignorados/);
+    assert.match(event.local, /manifesto 4\/4.*Providers 862 aprovados, 13 ignorados/);
     assert.match(event.evidence, /ad[ií]a a limpeza/i);
+    assert.match(event.evidence, /playlist inesperadamente vazia/);
     assert.match(event.evidence, /solução Release.*exit code 0/);
     assert.match(event.evidence, /saída agregada foi truncada/);
     assert.match(event.evidence, /Homologação formal permanece 2\/7 \(28,6%\)/);
