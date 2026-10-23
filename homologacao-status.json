@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T13:10:00-03:00",
+  "generatedAt": "2026-10-23T13:27:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10592,6 +10592,26 @@
       "release": "Nenhuma. A correção não foi integrada, empacotada ou validada em produção; checkout do servidor permanece sujo e 8 commits atrás de origin/main. TOCTOU P0 permanece pendente.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-restore-toctou-focused-rerun-2026-10-23-1326",
+      "title": "Servidor: revalidação focal do backup/restore; TOCTOU continua aberto",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "FullSystemBackup Release no Windows/.NET 10: 62/62 aprovados, 0 ignorados, 0 falhas",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; BackupRestoreRecoveryJournal.cs",
+      "scope": "Reexecutar os testes de backup/restore e confrontar sua cobertura com o risco P0 de troca concorrente de ancestral; nenhuma mudança de runtime.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T13:18:00-03:00",
+      "updatedAt": "2026-10-23T13:26:00-03:00",
+      "evidence": "dotnet test ... --configuration Release --no-restore --filter FullyQualifiedName~FullSystemBackup terminou exit 0: 62 aprovados, 0 ignorados, 0 falhas. A inspeção confirma que restore, rollback, cleanup e journal ainda usam operações por pathname após validações separadas; a suíte não testa troca determinística de ancestral. Risco local condicionado a permissões de escrita; nenhuma exploração remota demonstrada. Homologação formal permanece 2/7 (28,6%), sem crédito novo. ACL efetiva, Linux, CI remota, instalação, runtime e produção não validados.",
+      "release": "Nenhuma; sem alteração de runtime. O gate P0 TOCTOU/ACL permanece aberto.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
       ]
     }
