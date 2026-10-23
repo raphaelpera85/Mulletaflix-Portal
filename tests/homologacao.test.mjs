@@ -4846,3 +4846,22 @@ test('portal records media sync locking and atomic manifest persistence without 
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records manifest preservation after incomplete M3U link validation without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-sync-manifest-preserve-on-validation-failure-2026-10-23-1219');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.local, /manifesto 3\/3.*Providers 861 aprovados, 13 ignorados/);
+    assert.match(event.evidence, /ad[ií]a a limpeza/i);
+    assert.match(event.evidence, /solução Release.*exit code 0/);
+    assert.match(event.evidence, /saída agregada foi truncada/);
+    assert.match(event.evidence, /Homologação formal permanece 2\/7 \(28,6%\)/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
