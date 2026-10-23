@@ -4901,3 +4901,21 @@ test('portal records Linux packaging CI coverage without formal homologation cre
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal publishes the candidate relative-I/O contract without claiming the TOCTOU fix', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-relative-io-contract-2026-10-23-1334');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /openat\(O_DIRECTORY \| O_NOFOLLOW\)/);
+    assert.match(event.evidence, /Ubuntu 20\.04\/kernel GA 5\.4/);
+    assert.match(event.evidence, /FullSystemBackup passou 62\/62/);
+    assert.match(event.evidence, /não testa troca concorrente determinística/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

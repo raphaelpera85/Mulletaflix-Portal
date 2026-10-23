@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T13:27:00-03:00",
+  "generatedAt": "2026-10-23T13:34:12-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10613,6 +10613,28 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-restore-relative-io-contract-2026-10-23-1334",
+      "title": "Servidor: contrato candidato de I/O relativo para restore; implementação pendente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Pesquisa de APIs oficiais e revisão de arquitetura; FullSystemBackup Release 62/62 no Windows/.NET 10",
+      "location": "MulletaFlix-master/docs/backup-coverage-audit.md; docs/AUDIT-EVIDENCE.md; TODO-AUDITORIA.md; decisão de restore no vault",
+      "scope": "Refinar contrato técnico para mitigar troca concorrente de ancestrais em restore sem afirmar que a implementação ou homologação foi concluída.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T13:27:00-03:00",
+      "updatedAt": "2026-10-23T13:34:12-03:00",
+      "evidence": "Desenho Linux: componentes abertos com openat(O_DIRECTORY | O_NOFOLLOW) e mkdirat/renameat/unlinkat relativos a dirfd; openat2 não é requisito porque os pacotes incluem Ubuntu 20.04/kernel GA 5.4. Candidato Windows: NtCreateFile relativo a RootDirectory, FILE_OPEN_REPARSE_POINT e inspeção do handle; rename por FILE_RENAME_INFO.RootDirectory, sem depender de OBJ_DONT_REPARSE nem fallback por pathname. Duas revisões independentes e fontes oficiais consultadas. FullSystemBackup passou 62/62, mas não testa troca concorrente determinística. Nenhum backend/teste adversarial foi implementado, ACL efetiva não foi medida; TOCTOU P0 permanece aberto. Formal segue 2/7 (28,6%), sem crédito novo.",
+      "release": "Nenhuma. Somente documentação/decisão; sem mudança de runtime, instalação ou produção. A compatibilidade Windows, matriz Linux/filesystems, testes concorrentes/crash e ACL ainda precisam ser comprovados.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
+        "https://man7.org/linux/man-pages/man2/openat2.2.html",
+        "https://learn.microsoft.com/en-us/windows/win32/api/winternl/nf-winternl-ntcreatefile"
       ]
     }
   ]
