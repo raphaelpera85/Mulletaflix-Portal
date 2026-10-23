@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T10:10:00-03:00",
+  "generatedAt": "2026-10-23T10:27:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "1 de 7 gates com evidência local validada; 2 em andamento, 3 pendentes e 1 bloqueado. SRV-H02 foi reaberto após divergência entre a evidência publicada e o escopo coberto pela fonte/teste inspecionados. Aceite formal de produção permanece pendente."
       },
       "testAudit": {
-        "passed": 5158,
-        "total": 5227,
+        "passed": 5248,
+        "total": 5317,
         "skipped": 69,
         "failed": 0,
         "percent": 98.7,
-        "label": "Atualizado em 22/10: regressão .NET Release no Windows, excluindo todos os testes Integration/externos, terminou exit code 0: 5.158 aprovados, 69 NotExecuted, 0 falhas/5.227 resultados em 17 TRX. Providers 835/835; API 763 aprovados/3 ignorados; Server 74/74; Server.Implementations 1.552 aprovados/66 ignorados. NebulaPython 3.10 isolado 685/685; contratos Node de release/empacotamento 25/25. NotExecuted não conta como aprovação. CI remota, execução Linux, MariaDB/Mongo descartáveis, runtime instalado, mídia real e frontend nesta sessão permanecem pendentes. Auditoria automatizada não equivale à homologação formal (1/7, 14,3%) nem a aceite de produção. Nenhuma release foi criada. Histórico do snapshot anterior (21/10): 5.120 aprovados, 236 ignorados/NotExecuted, 0 falhas/5.356; NebulaPython 3.10: 683/683; MariaDB focal anterior: 197/198 opt-in em Windows. O audit npm completo registrou 10 altas somente dev nas dependências de desenvolvimento via braces@3.0.3 sem versão corrigida. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35."
+        "label": "Atualizado em 23/10: suíte .NET Release no Windows com filtro FullyQualifiedName!~Integration terminou exit code 0: 5.248 aprovados, 69 ignorados, 0 falhas/5.317 resultados. Providers 849/849; API 763 aprovados/3 ignorados; Server 74/74; Server.Implementations 1.559 aprovados/66 ignorados. NebulaPython em venv isolada passou 685/685 (NebulaPython 3.10 isolado 685/685). O filtro exclui testes Integration e não equivale à matriz remota. CI remota, Linux, MariaDB/Mongo reais, runtime instalado, mídia real, produção e frontend não foram validados nesta sessão. 69 ignorados não contam como aprovados. Auditoria automatizada não equivale à homologação formal (1/7, 14,3%) nem a aceite de produção; nenhum crédito formal foi concedido. Nenhuma release foi criada. Histórico do snapshot anterior (21/10): 5.120 aprovados, 236 ignorados/NotExecuted, 0 falhas/5.356; NebulaPython 3.10: 683/683; MariaDB focal anterior: 197/198 opt-in em Windows. O audit npm completo registrou 10 altas somente dev nas dependências de desenvolvimento via braces@3.0.3 sem versão corrigida. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35."
       }
     },
     {
@@ -85,19 +85,19 @@
         "id": "SRV-H01",
         "name": "Build Release e regressão automatizada local",
         "status": "completed",
-      "evidence": "Evidência local em 21/10/2026: build Release sem erros e suíte .NET Release com exit code 0; 17 TRX agregam 5.110 aprovados, 248 NotExecuted e 0 falhas/5.358. Casos ignorados e requisitos opt-in permanecem discriminados no roadmap. Patch v12.1.35: suíte Providers 808/808 sem integrações externas, 28/28 testes focados; builds e pacotes Windows/Linux gerados e conteúdo ZIP/TAR verificado. Não valida CI remota, API TMDb ao vivo, runtime instalado ou produção."
+      "evidence": "Evidência local em 23/10/2026: suíte .NET Release no Windows com filtro FullyQualifiedName!~Integration terminou exit code 0: 5.248 aprovados, 69 ignorados e 0 falhas/5.317 resultados; NebulaPython em venv isolada passou 685/685. O gate local confirma regressão automatizada, não CI remota, Linux, integrações externas, runtime instalado ou produção. A homologação formal permanece 1/7 (14,3%); nenhum crédito formal foi concedido nesta execução."
       },
       {
         "id": "SRV-H02",
         "name": "Backup e restauração relacional em MariaDB descartável",
       "status": "in_progress",
-        "evidence": "Reaberto em 22/10/2026 após divergência entre o relato anterior de cinco contextos/6 testes e a fonte atual. Manifesto/ZIP/validação usam nomes físicos EF; PlaybackReports usa PlaybackReport e foi incluído no contexto central. Implementação local agora inclui snapshot de Movies, Series, Channels e Books; restore associa esses quatro contextos à conexão/transação do contexto central. Preservada a assinatura de IMulletaFlixDatabaseProvider; capability de purge exigida apenas no restore, antes de aplicar arquivos. Build Jellyfin.Server: sucesso, 0 avisos/erros; BackupServiceTests 37/37. BackupRestoreMariaDbTests 2 aprovados/1 ignorado; falta MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING, portanto round-trip/rollback multi-contexto não executou. O listener operacional MariaDB não foi acessado. H02 em andamento, sem crédito parcial; patch não integrado nem liberado."
+        "evidence": "Reaberto em 22/10/2026 após divergência entre a evidência anterior e o escopo atual. Manifesto/ZIP/validação usam nomes físicos EF; PlaybackReports usa PlaybackReport no contexto central. Snapshot cobre Movies, Series, Channels e Books; restore associa os contextos à transação central. A suíte local da solução passou, mas não substitui a integração opt-in. Round-trip/rollback multi-contexto em MariaDB descartável não foi executado nesta sessão; MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não está configurada conforme a última checagem registrada. O listener operacional não foi acessado. H02 segue em andamento, sem crédito parcial, release ou instalação."
       },
       {
         "id": "SRV-H03",
         "name": "Consistência e recuperação integral entre domínios",
         "status": "in_progress",
-        "evidence": "Implementação local inclui agora Movies, Series, Channels e Books no snapshot e compartilha a transação relacional com MulletaFlixDbContext no restore. Pré-validação detecta JSON inválido e duplicidade de PK/índice único EF não filtrado; FK ainda é validada pelo banco durante SaveChanges. Testes focados: BackupServiceTests 37/37; MariaDB 2 aprovados/1 ignorado sem servidor descartável. Rollback de arquivos é apenas compensatório em processo e não resiste a encerramento abrupto; falta journal durável. Patch local não integrado, sem instalação/produção/release. Permanecem gates de round-trip/rollback MariaDB, crash recovery, IntroSkipper/DetectionCache, MongoDB/Supabase e criptografia/chaves. H02/H03 abertos; formal global 1/7 (14,3%), sem crédito parcial."
+        "evidence": "Snapshot inclui Movies, Series, Channels e Books e o restore compartilha a transação relacional central. Journal durável e replay idempotente existem no working tree; FullSystemBackup passou 62/62 em rodada focal anterior, e a regressão ampla atual terminou exit 0. Ainda faltam crash/restart integrado com MariaDB descartável, consistência temporal, domínios IntroSkipper/DetectionCache, MongoDB/Supabase e propriedade/criptografia de chaves. TOCTOU por pathname permanece P0 sem teste concorrente determinístico Windows/Linux. Nenhuma dessas evidências locais concede crédito parcial: H03 em andamento, homologação global 1/7 (14,3%), sem release, instalação ou produção."
       },
       {
         "id": "SRV-H04",
@@ -10442,6 +10442,26 @@
       "release": "Nenhuma. Consulta real ao TMDb e refresh visual controlado continuam pendentes; servidor não instalado nem exercitado em produção.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
+    {
+      "id": "server-full-regression-nebula-python-2026-10-23-1027",
+      "title": "Servidor: regressão Release ampla e validação da suíte NebulaPython",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; .NET 5.248 aprovados, 69 ignorados, 0 falhas; NebulaPython 685/685",
+      "location": "MulletaFlix-master/MulletaFlix.sln; Tools/NebulaPython/tests; docs/AUDIT-EVIDENCE.md; TODO-AUDITORIA.md",
+      "scope": "Revalidar regressão automatizada local do servidor e NebulaPython; sem alteração de runtime, instalação ou produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T10:23:05-03:00",
+      "updatedAt": "2026-10-23T10:27:00-03:00",
+      "evidence": "Dotnet test da solução com filtro FullyQualifiedName!~Integration terminou exit code 0: 5.248 aprovados, 69 ignorados, 0 falhas/5.317 resultados. Providers 849/849, API 763/766, Server 74/74 e Server.Implementations 1.559 aprovados/66 ignorados. NebulaPython na venv isolada nebula/.venv passou 685/685 em 13,90 s. Não valida CI remota, Linux, integrações reais, runtime instalado, mídia real ou produção. Reauditoria independente mantém TOCTOU do restore e fluxos irmãos como P0 sem troca concorrente determinística. Homologação formal permanece 1/7 (14,3%).",
+      "release": "Nenhuma. Antes da próxima release, resolver os gates P0 de MariaDB/crash recovery e desenho/teste TOCTOU Windows/Linux; homologação formal continua aberta.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/TODO-AUDITORIA.md"
       ]
     }
   ]
