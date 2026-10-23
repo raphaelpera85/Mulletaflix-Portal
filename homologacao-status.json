@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T16:03:09-03:00",
+  "generatedAt": "2026-10-23T16:12:35-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10812,6 +10812,25 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-nebula-downloader-early-exit-retry-2026-10-23-1612",
+      "title": "Servidor: retry limitado quando o worker do Downloader encerra antes da prontidão",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release: NebulaDownloaderStartupTests + NebulaHostedServiceConfigurationTests 48/48; encerramento precoce coberto por retry na segunda tentativa",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaFtpManager.cs; tests/Jellyfin.Server.Implementations.Tests/Nebula",
+      "scope": "Fazer o encerramento do worker antes do sinal de prontidão usar o retry limitado já existente, sem tornar outras exceções repetíveis.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T16:04:00-03:00",
+      "updatedAt": "2026-10-23T16:12:35-03:00",
+      "evidence": "Os dois casos de encerramento dentro de WaitForWorkerReadinessAsync agora lançam IOException, tipo já coberto pelo retry do NebulaHostedService (máximo 3 tentativas, atrasos de 5 s e 10 s). A busca confirmou um chamador de produção no startup do Downloader; exceções InvalidOperationException não relacionadas continuam fora do retry. Testes focados Release Windows/.NET 10 passaram 48/48; dotnet format --verify-no-changes e git diff --check passaram.",
+      "release": "Nenhuma release ou instalação. Sem smoke do worker real, scan STRM, transferência, Linux/CI remota ou produção; homologação formal permanece 2/7 (28,6%), sem crédito. O checkout do servidor continua sujo e 8 commits atrás, portanto não é seguro empacotar/publicar a release desta árvore.",
+      "links": [
+        "https://github.com/raphaelpera85/Mulletaflix-Portal/blob/main/homologacao.html"
       ]
     }
   ]

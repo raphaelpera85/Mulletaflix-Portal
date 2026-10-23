@@ -4990,3 +4990,21 @@ test('portal records the image-language fallback fix without claiming release or
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the Nebula downloader early-exit retry without claiming runtime or formal signoff', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-downloader-early-exit-retry-2026-10-23-1612');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.local, /NebulaDownloaderStartupTests \+ NebulaHostedServiceConfigurationTests 48\/48/);
+    assert.match(event.evidence, /IOException/);
+    assert.match(event.evidence, /um chamador de produção/);
+    assert.match(event.release, /Sem smoke do worker real, scan STRM, transferência/);
+    assert.match(event.release, /Nenhuma release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
