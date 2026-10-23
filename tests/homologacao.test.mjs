@@ -28,6 +28,23 @@ test('portal records the broadened filesystem race audit without claiming mitiga
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records AvatarFileStore revalidation and its Linux unlink race as unresolved', () => {
+    const event = statusData.events.find(item => item.id === 'server-avatar-handle-store-revalidation-2026-10-23-0818');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.local, /4 aprovados, 3 ignorados/);
+    assert.match(event.evidence, /janela entre a revalidação e a remoção pelo nome/);
+    assert.match(event.release, /testes determinísticos/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records the repeated restore TOCTOU baseline without claiming the race is fixed', () => {
     const event = statusData.events.find(item => item.id === 'server-restore-toctou-baseline-repeat-2026-10-23-0757');
     const server = statusData.tracks.find(track => track.id === 'server');

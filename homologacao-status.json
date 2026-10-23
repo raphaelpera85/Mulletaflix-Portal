@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T08:12:24-03:00",
+  "generatedAt": "2026-10-23T08:18:48-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10231,6 +10231,25 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MediaBrowser.Providers/Lyric/LyricManager.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MediaBrowser.Providers/Plugins/MidiaStorageOnline/MidiaStorageOnlinePathGuard.cs"
+      ]
+    },
+    {
+      "id": "server-avatar-handle-store-revalidation-2026-10-23-0818",
+      "title": "Servidor: revalidação dos limites do armazenamento seguro de avatares",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; AvatarFileStoreTests 4 aprovados, 3 ignorados",
+      "location": "MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarFileStore.cs; tests/Jellyfin.Api.Tests/Controllers/AvatarFileStoreTests.cs",
+      "scope": "Verificar se a primitiva existente pode ser generalizada com segurança para operações aninhadas/transacionais; sem alteração de runtime ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T08:12:24-03:00",
+      "updatedAt": "2026-10-23T08:18:48-03:00",
+      "evidence": "AvatarFileStoreTests passou 4/4 em Windows; 3 testes Linux-only foram ignorados. A classe só aceita nomes de arquivo simples e não oferece mkdir/rename/journal/recovery; o delete Linux revalida identidade antes de unlinkat, mas permanece uma janela entre a revalidação e a remoção pelo nome. Isso não demonstra uma extensão segura para restore/letras/sync, e nenhuma corrida adversarial foi exercitada. Sem mudança de runtime/produção/release; gate formal do servidor permanece 1/7 (14,3%).",
+      "release": "Nenhuma. Exige desenho aprovado de operações relativas a handles em Windows/Linux e testes determinísticos de troca concorrente antes de reutilizar/generalizar.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]
     }
   ]
