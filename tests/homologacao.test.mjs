@@ -45,6 +45,13 @@ test('portal records the restore ACL audit and failing broad regression without 
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('homologation status JSON is not cached between portal publications', () => {
+    const headerRule = portalConfig.headers.find(rule => rule.source === '/homologacao-status.json');
+
+    assert.ok(headerRule);
+    assert.equal(headerRule.headers.find(header => header.key === 'Cache-Control')?.value, 'no-store, max-age=0, must-revalidate');
+});
+
 test('portal records Supabase backup-history retry without claiming live or formal validation', () => {
     const event = statusData.events.find(item => item.id === 'server-supabase-backup-history-retry-2026-10-23-0836');
     const server = statusData.tracks.find(track => track.id === 'server');
