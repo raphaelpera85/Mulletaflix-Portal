@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T08:55:46-03:00",
+  "generatedAt": "2026-10-23T09:07:41-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10288,6 +10288,25 @@
       "release": "Nenhuma. Exige desenho aprovado de operações relativas a handles em Windows/Linux e testes determinísticos de troca concorrente antes de reutilizar/generalizar.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
+      ]
+    },
+    {
+      "id": "server-localization-rating-default-test-2026-10-23-0907",
+      "title": "Servidor: revalidação da divergência no teste de classificações",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; LocalizationManagerTests 67/67; regressão da solução 5.173 aprovados, 69 ignorados, 0 falhas/5.242",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Localization/LocalizationManagerTests.cs; MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md",
+      "scope": "Alinhar testes ao MetadataCountryCode padrão BR e preservar validação explícita US; sem alteração do runtime.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T08:56:00-03:00",
+      "updatedAt": "2026-10-23T09:07:41-03:00",
+      "evidence": "A falha anterior era uma expectativa de teste incompleta: ServerConfiguration.MetadataCountryCode usa BR por padrão, mas GetParentalRatings_Default_Success esperava 56 aliases US sem selecionar US. O caso US agora configura o país explicitamente; um caso novo valida BR padrão, 42 aliases e Livre com score 0. LocalizationManagerTests passou 67/67. Regressão da solução Release terminou 5.173 aprovados, 69 ignorados, 0 falhas/5.242 resultados, exit code 0, com FullyQualifiedName!~Integration; ignorados não são aprovações e integrações não foram incluídas. Nenhuma alteração de runtime ou produção. Homologação formal permanece 1/7 (14,3%).",
+      "release": "Nenhuma. Mudança somente em testes; TOCTOU/ACL do restore continuam pendentes e o checkout do servidor permanece sujo e 8 commits atrás de origin/main.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md"
       ]
     },
     {

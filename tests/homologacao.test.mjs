@@ -45,6 +45,23 @@ test('portal records the restore ACL audit and failing broad regression without 
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal publishes corrected localization regression totals without runtime or formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-localization-rating-default-test-2026-10-23-0907');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /MetadataCountryCode usa BR por padrão/);
+    assert.match(event.evidence, /LocalizationManagerTests passou 67\/67/);
+    assert.match(event.evidence, /5\.173 aprovados, 69 ignorados, 0 falhas\/5\.242/);
+    assert.match(event.evidence, /Nenhuma alteração de runtime ou produção/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('homologation status JSON is not cached between portal publications', () => {
     const headerRule = portalConfig.headers.find(rule => rule.source === '/homologacao-status.json');
 
