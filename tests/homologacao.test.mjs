@@ -28,6 +28,20 @@ test('portal reports latest local server regression separately from formal homol
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal reports Nebula directory refresh retry without claiming release or formal gate credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-directory-refresh-retry-2026-10-23-1620');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /backoff exponencial de 5 s até 5 min/);
+    assert.match(event.local, /NebulaDirectoryRefreshQueueTests 6\/6/);
+    assert.match(event.release, /Nenhuma release/);
+    assert.match(event.release, /2\/7 \(28,6%\), sem crédito novo/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+});
+
 test('portal records disposable MariaDB restore and crash replay without claiming production sign-off', () => {
     const event = statusData.events.find(item => item.id === 'server-mariadb-restore-crash-replay-2026-10-23-1052');
     const server = statusData.tracks.find(track => track.id === 'server');

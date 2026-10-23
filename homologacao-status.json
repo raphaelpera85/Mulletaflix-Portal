@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T16:12:35-03:00",
+  "generatedAt": "2026-10-23T16:20:47-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10830,6 +10830,26 @@
       "evidence": "Os dois casos de encerramento dentro de WaitForWorkerReadinessAsync agora lançam IOException, tipo já coberto pelo retry do NebulaHostedService (máximo 3 tentativas, atrasos de 5 s e 10 s). A busca confirmou um chamador de produção no startup do Downloader; exceções InvalidOperationException não relacionadas continuam fora do retry. Testes focados Release Windows/.NET 10 passaram 48/48; dotnet format --verify-no-changes e git diff --check passaram.",
       "release": "Nenhuma release ou instalação. Sem smoke do worker real, scan STRM, transferência, Linux/CI remota ou produção; homologação formal permanece 2/7 (28,6%), sem crédito. O checkout do servidor continua sujo e 8 commits atrás, portanto não é seguro empacotar/publicar a release desta árvore.",
       "links": [
+        "https://github.com/raphaelpera85/Mulletaflix-Portal/blob/main/homologacao.html"
+      ]
+    },
+    {
+      "id": "server-nebula-directory-refresh-retry-2026-10-23-1620",
+      "title": "Servidor: retry no refresh Nebula após falha transitória do rclone",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release: NebulaDirectoryRefreshQueueTests 6/6; teste cobre falha seguida de retry bem-sucedido",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaDirectoryRefreshQueue.cs; tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaDirectoryRefreshQueueTests.cs",
+      "scope": "Reagendar falhas do refresh rclone com backoff limitado, mantendo a fila disponível para os demais diretórios.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T16:13:00-03:00",
+      "updatedAt": "2026-10-23T16:20:47-03:00",
+      "evidence": "A fila removia o diretório antes do refresh e apenas registrava exceção. Agora reage com backoff exponencial de 5 s até 5 min; evento novo coalesce e substitui o retry, diretórios seguintes continuam sequenciais e shutdown cancela. Teste focal Release passou 6/6 em Windows/.NET 10.",
+      "release": "Nenhuma release. Não houve rclone/disco N real, instalação, Linux/CI remota ou produção. Homologação formal continua 2/7 (28,6%), sem crédito novo. Checkout servidor sujo e 8 commits atrás de origin/main; publicar release desta árvore não é seguro.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
         "https://github.com/raphaelpera85/Mulletaflix-Portal/blob/main/homologacao.html"
       ]
     }
