@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T08:27:40-03:00",
+  "generatedAt": "2026-10-23T08:36:48-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10269,6 +10269,25 @@
       "release": "Nenhuma. Exige desenho aprovado de operações relativas a handles em Windows/Linux e testes determinísticos de troca concorrente antes de reutilizar/generalizar.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
+      ]
+    },
+    {
+      "id": "server-supabase-backup-history-retry-2026-10-23-0836",
+      "title": "Servidor: retry transitório ao ler checkpoint do backup Supabase",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; NebulaSupabaseSyncTests 63/63",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaSupabaseSyncService.cs; tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaSupabaseSyncTests.cs; docs/NEBULA-RUNBOOK.md",
+      "scope": "Repetir leitura transitória HTTP/rede do histórico nebula_backups; sem execução contra instância real, instalação, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T08:29:00-03:00",
+      "updatedAt": "2026-10-23T08:36:48-03:00",
+      "evidence": "A regressão que antes falhava para HTTP 500 seguido de sucesso passou após implementar até três tentativas para HTTP 429/5xx e falhas transitórias de rede/timeout; 4xx permanentes não são repetidos. A suíte NebulaSupabaseSyncTests em Release passou 63/63, incluindo a falha persistente após as tentativas e a proibição de fallback inseguro. Nenhuma chamada real ao Supabase/MongoDB, teste de produção, instalação ou runtime foi executado. Homologação formal permanece 1/7 (14,3%); testes locais não recebem crédito parcial.",
+      "release": "Nenhuma. Checkout do servidor permanece sujo e 8 commits atrás de origin/main; integrar e revisar o conjunto antes de publicar release.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/NEBULA-RUNBOOK.md"
       ]
     }
   ]
