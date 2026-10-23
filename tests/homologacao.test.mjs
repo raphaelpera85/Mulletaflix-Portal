@@ -10,6 +10,23 @@ const portalConfig = JSON.parse(readFileSync(new URL('../vercel.json', import.me
 const sitemapSource = readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records provider live-test opt-in without changing formal homologation or release state', () => {
+    const event = statusData.events.find(item => item.id === 'server-provider-live-tests-opt-in-2026-10-23-0957');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /849 aprovados, 13 ignorados, 0 falhas/);
+    assert.match(event.evidence, /5 aprovados e 13 live ignorados/);
+    assert.match(event.evidence, /Nenhum teste live foi habilitado/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal distinguishes TMDb image picker languages from automatic fallback', () => {
     const event = statusData.events.find(item => item.id === 'server-image-language-gallery-audit-2026-10-23-0941');
     const server = statusData.tracks.find(track => track.id === 'server');

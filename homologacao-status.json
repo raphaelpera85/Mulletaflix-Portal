@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T09:45:22-03:00",
+  "generatedAt": "2026-10-23T09:57:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-provider-live-tests-opt-in-2026-10-23-0957",
+      "title": "Servidor: testes live de provedores isolados por opt-in",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10; suíte Jellyfin.Providers.Tests sem filtro e teste focal do gate",
+      "location": "MulletaFlix-master/tests/Jellyfin.Providers.Tests/Plugins/ProviderLiveTestEnvironment.cs e cinco classes LiveIntegrationTests",
+      "scope": "Impedir chamadas/crawls externos inesperados na suíte normal sem remover testes de integração sob demanda.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T09:46:00-03:00",
+      "updatedAt": "2026-10-23T09:57:00-03:00",
+      "evidence": "Gate exige MULLETAFLIX_RUN_LIVE_PROVIDER_TESTS=1 antes de qualquer chamada externa. Suíte completa sem filtro: 849 aprovados, 13 ignorados, 0 falhas (862 total); foco do gate: 5 aprovados e 13 live ignorados. dotnet format style --verify-no-changes passou. Nenhum teste live foi habilitado nem serviço externo acessado.",
+      "release": "Nenhuma. Mudança somente em testes; sem runtime, instalação ou produção. Homologação formal do servidor permanece 1/7 (14,3%), sem crédito.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
+      ]
+    },
     {
       "id": "server-image-language-gallery-audit-2026-10-23-0941",
       "title": "Servidor: auditoria da galeria remota de imagens por idioma",
