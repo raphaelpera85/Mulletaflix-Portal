@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T09:35:24-03:00",
+  "generatedAt": "2026-10-23T09:45:22-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,27 @@
     }
   ],
   "events": [
+    {
+      "id": "server-image-language-gallery-audit-2026-10-23-0941",
+      "title": "Servidor: auditoria da galeria remota de imagens por idioma",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Auditoria estática do fluxo TMDb, API e galeria web; documentação oficial",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Plugins/Tmdb/TmdbClientManager.cs; ProviderManager.cs; Jellyfin.Api/Controllers/RemoteImageController.cs; MulletaFlix-web-master/src/components/imageDownloader/imageDownloader.ts",
+      "scope": "Verificar se candidatos em inglês na galeria contradizem a preferência pt-BR e identificar se há correção segura comprovada na fonte.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T09:39:00-03:00",
+      "updatedAt": "2026-10-23T09:45:22-03:00",
+      "evidence": "Código consulta TMDb com pt,null,en; a API filtra idioma por padrão e inclui todos somente quando a caixa Todos os idiomas é marcada. A seleção automática global usa pt/pt-BR e inglês/neutro como fallback. Documentação oficial TMDb confirma os parâmetros. A captura de candidatos não prova imagem persistida nem disponibilidade de arte portuguesa para Invasão Zumbi 2: Península. Refresh visual, estado real da caixa e TMDb autenticado permanecem pendentes; sem mudança de código nesta auditoria.",
+      "release": "Nenhuma. Nenhuma correção de fonte comprovada nesta auditoria; homologação formal permanece 1/7 (14,3%).",
+      "links": [
+        "https://developer.themoviedb.org/reference/movie-images",
+        "https://developer.themoviedb.org/docs/image-languages",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
     {
       "id": "server-remote-image-decoder-fail-closed-2026-10-23-0928",
       "title": "Servidor: rejeitar imagens remotas não decodificáveis",

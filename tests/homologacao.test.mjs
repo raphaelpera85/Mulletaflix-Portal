@@ -10,6 +10,21 @@ const portalConfig = JSON.parse(readFileSync(new URL('../vercel.json', import.me
 const sitemapSource = readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal distinguishes TMDb image picker languages from automatic fallback', () => {
+    const event = statusData.events.find(item => item.id === 'server-image-language-gallery-audit-2026-10-23-0941');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /pt,null,en/);
+    assert.match(event.evidence, /Refresh visual.*permanecem pendentes/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records fail-closed remote image validation without claiming production or formal validation', () => {
     const event = statusData.events.find(item => item.id === 'server-remote-image-decoder-fail-closed-2026-10-23-0928');
     const server = statusData.tracks.find(track => track.id === 'server');
