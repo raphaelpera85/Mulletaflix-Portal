@@ -10,6 +10,24 @@ const portalConfig = JSON.parse(readFileSync(new URL('../vercel.json', import.me
 const sitemapSource = readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records the broadened filesystem race audit without claiming mitigation', () => {
+    const event = statusData.events.find(item => item.id === 'server-filesystem-race-audit-2026-10-23-0812');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /FullSystemBackup Release passou 62\/62/);
+    assert.match(event.evidence, /gravação de letras, avatar\/rollback e sync\/download/);
+    assert.match(event.evidence, /TOCTOU permanece P0/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records the repeated restore TOCTOU baseline without claiming the race is fixed', () => {
     const event = statusData.events.find(item => item.id === 'server-restore-toctou-baseline-repeat-2026-10-23-0757');
     const server = statusData.tracks.find(track => track.id === 'server');
