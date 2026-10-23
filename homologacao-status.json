@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T12:36:00-03:00",
+  "generatedAt": "2026-10-23T12:52:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10553,6 +10553,26 @@
       "updatedAt": "2026-10-23T12:33:00-03:00",
       "evidence": "Auditoria identificou que candidatos filtrados como offline no modo download ou uma playlist inesperadamente vazia diante de manifesto existente podiam ser considerados removidos e excluir downloads já concluídos. A política agora preserva o manifesto anterior e adia a limpeza se a validação for incompleta ou não houver mídia candidata apesar de manifesto não vazio; uma validação completa ainda remove entradas ausentes. Testes da política passaram 4/4; Jellyfin.Providers.Tests Release passou 862 aprovados, 13 ignorados, 0 falhas. A regressão completa da solução Release, filtro FullyQualifiedName!~Integration, terminou exit code 0; a saída agregada foi truncada, por isso não atualizamos totais globais. Um teste falhou na primeira rodada ampla e passou 1/1 na repetição focal. Nenhum sync real, M3U externa, Linux, runtime instalado ou produção foi testado. Homologação formal permanece 2/7 (28,6%), sem crédito por este teste.",
       "release": "Nenhuma. Checkout server continua sujo e 8 commits atrás de origin/main; alterações existentes foram preservadas. Sem instalação/produção ou CI remota. Release não criada.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-nebula-staging-claim-recovery-2026-10-23-1252",
+      "title": "Servidor: retry de uploads Nebula após falha do scanner pré-fila",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "NebulaPython Python 3.14.7; focados 16/16; suíte 688/688; py_compile aprovado",
+      "location": "Tools/NebulaPython/main.py: queued_mongo_scanner; test_queued_mongo_scanner.py",
+      "scope": "Evitar que erro transitório entre o claim Mongo e o enfileiramento deixe upload preso em staging; retry automático após 60 segundos e rollback condicional ao status staging.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T12:37:00-03:00",
+      "updatedAt": "2026-10-23T12:52:00-03:00",
+      "evidence": "Duas regressões falharam antes da correção. Depois da implementação, testes de queued_mongo_scanner e staging_scanner passaram 16/16; suíte completa NebulaPython passou 688/688 em 52,86s e py_compile passou. Teste de corrida confirma que registro já alterado para uploading por worker não é revertido. git diff --check passou, com avisos de conversão CRLF/LF. Evidência exclusivamente local/fake; Mongo/Telegram reais, Linux, runtime instalado, CI remota e produção não foram testados. Se Mongo também falhar na gravação compensatória, o registro pode permanecer staging. Homologação formal continua 2/7 (28,6%); teste unitário local não recebe crédito de gate.",
+      "release": "Nenhuma. A correção não foi integrada, empacotada ou validada em produção; checkout do servidor permanece sujo e 8 commits atrás de origin/main. TOCTOU P0 permanece pendente.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backend-auditoria-roadmap-tecnico.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"

@@ -30,6 +30,24 @@ test('portal records disposable MariaDB restore and crash replay without claimin
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records Nebula prequeue retry and preserves formal gate and release status', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-staging-claim-recovery-2026-10-23-1252');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.local, /16\/16.*688\/688/);
+    assert.match(event.evidence, /já alterado para uploading por worker não é revertido/);
+    assert.match(event.evidence, /Mongo também falhar.*permanecer staging/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal resolves the localization test expectation and keeps open gates unchanged', () => {
     const event = statusData.events.find(item => item.id === 'server-localization-test-expectation-resolved-2026-10-23-1002');
     const server = statusData.tracks.find(track => track.id === 'server');
