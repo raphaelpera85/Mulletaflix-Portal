@@ -5030,9 +5030,12 @@ test('portal records full .NET regression without granting formal restore credit
     assert.ok(event);
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.local, /5\.241 aprovados, 253 ignorados, 0 falhas\/5\.494 resultados em 17 projetos/);
+    assert.match(event.local, /fontes atuais recompiladas.*exit 0 em 17 projetos/);
+    assert.match(event.local, /FullSystemBackup: 80 aprovados, 3 Linux-only ignorados/);
     assert.match(event.evidence, /dotnet test MulletaFlix\.sln.*exit 0/);
-    assert.match(event.evidence, /3 ignorados \(Linux-only\), 0 falhas\/83/);
+    assert.match(event.evidence, /execução build-inclusive/);
+    assert.match(event.evidence, /buffer limitou a saída aos últimos 80 registros/);
+    assert.match(event.evidence, /FullSystemBackup.*passou 80\/83, com 3 ignorados Linux-only/);
     assert.match(event.release, /TOCTOU\/ACL P0.*continua aberto/);
     assert.equal(server.testAudit.passed, 5241);
     assert.equal(server.testAudit.total, 5494);
