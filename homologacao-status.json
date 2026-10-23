@@ -10675,6 +10675,26 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
       ]
+    },
+    {
+      "id": "server-full-regression-sweep-2026-10-23",
+      "title": "Servidor: varredura de regressão .NET e disponibilidade dos testes Nebula",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release: 17 projetos; 5.236 aprovados, 252 ignorados, 0 falhas reportadas por projeto",
+      "location": "MulletaFlix-master/MulletaFlix.sln; Tools/NebulaPython/tests",
+      "scope": "Executar a suíte .NET completa já disponível e verificar se a suíte Python Nebula pode rodar sem instalar dependências nem acessar serviços externos.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T14:24:00-03:00",
+      "updatedAt": "2026-10-23T14:37:00-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --no-build --verbosity quiet -m:1` percorreu os 17 projetos de teste; todos os resumos de projeto reportaram zero falhas: 5.236 aprovados e 252 ignorados (5.488 total). A sessão encerrou após o último projeto, antes de o host disponibilizar o exit code global; não afirmo código de saída agregado. Python 3.13 não tem pytest instalado: `python -m pytest --version` falhou por módulo ausente; `python -m unittest discover -s tests -p \"test*.py\" -v` importou 41 módulos, quatro casos independentes passaram e 37 módulos não foram carregados por `ModuleNotFoundError: pytest`. Não houve instalação de dependências nem acesso a MongoDB/Supabase/produção. A suíte Python permanece não validada neste ambiente. Avisos de compilação/analisadores .NET foram emitidos; não foram tratados nesta varredura.",
+      "release": "Nenhuma. Esta é evidência de regressão local, não homologação formal nem validação de runtime instalado. Formal permanece 2/7 (28,6%); o helper de restore continua sem integração ao fluxo ativo e TOCTOU P0 segue aberto. Gates Linux, ABI musl/Windows filesystem, pytest disponível e homologação formal continuam pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
     }
   ]
 }
