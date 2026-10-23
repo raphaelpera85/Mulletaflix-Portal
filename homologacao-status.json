@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T15:03:23-03:00",
+  "generatedAt": "2026-10-23T15:07:59-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10682,15 +10682,15 @@
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Windows/.NET 10 Release: BackupRestoreDirectoryTests 18 aprovados/3 ignorados; FullSystemBackup 79 aprovados/3 ignorados, 0 falhas",
+      "local": "Windows/.NET 10 Release: BackupRestoreDirectoryTests 18 aprovados/3 ignorados; FullSystemBackup 79 aprovados/3 ignorados, 0 falhas. CI origin/main tem suíte Ubuntu completa, mas helper/testes locais ainda não estão no remoto.",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupRestoreDirectory.cs; tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupRestoreDirectoryTests.cs",
       "scope": "Alinhar a rejeição de origem symlink no rename Linux ao comportamento Windows e adicionar regressão; helper não integrado ao restore ativo.",
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-23T15:20:00-03:00",
-      "updatedAt": "2026-10-23T15:03:23-03:00",
-      "evidence": "Linux agora consulta statx(AT_SYMLINK_NOFOLLOW) e rejeita origem symlink antes de renameat/renameat2. Teste Linux-only continua pendente neste host Windows. Foi adicionado teste Windows com junction de diretório; BackupRestoreDirectoryTests passou 18/18 executáveis, 3 testes Linux-only ignorados. FullSystemBackup passou 79 aprovados, 3 ignorados, 0 falhas na execução anterior. dotnet format whitespace --verify-no-changes passou. A branch Linux não foi executada; check estatístico e rename por nome ainda têm race se o diretório pai não estiver protegido por ACL confiável.",
-      "release": "Nenhuma. Helper segue sem caller no restore/runtime; TOCTOU P0 permanece. Homologação formal 2/7 (28,6%), sem crédito; Linux nativo/CI, ACL, races de mkdir/delete, matriz ABI/filesystems e integração completa pendentes. Nenhuma instalação ou produção.",
+      "updatedAt": "2026-10-23T15:07:59-03:00",
+      "evidence": "Linux agora consulta statx(AT_SYMLINK_NOFOLLOW) e rejeita origem symlink antes de renameat/renameat2. Teste Linux-only continua pendente neste host Windows. Foi adicionado teste Windows com junction de diretório; BackupRestoreDirectoryTests passou 18/18 executáveis, 3 testes Linux-only ignorados. FullSystemBackup passou 79 aprovados, 3 ignorados, 0 falhas na execução anterior. dotnet format whitespace --verify-no-changes passou. Auditoria corrigida: workflow em origin/main executa toda a solução em Ubuntu e inclui o projeto de testes; helper/testes atuais não estão rastreados nem no remoto, logo CI não validou esta revisão. A branch Linux segue pendente; check estatístico e rename por nome ainda têm race se o diretório pai não estiver protegido por ACL confiável.",
+      "release": "Nenhuma. Helper segue sem caller no restore/runtime; TOCTOU P0 permanece. Homologação formal 2/7 (28,6%), sem crédito. A CI já contém suíte Ubuntu completa, mas o run desta revisão aguarda que helper/testes cheguem ao remoto; ACL, races de mkdir/delete, matriz ABI/filesystems e integração completa também pendentes. Nenhuma instalação ou produção.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
