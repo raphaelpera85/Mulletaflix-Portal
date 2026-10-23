@@ -4929,8 +4929,10 @@ test('portal reports incremental restore-root hardening without formal signoff',
     assert.match(event.local, /79 aprovados, 2 ignorados \(Linux-only\), 0 falhas/);
     assert.match(event.evidence, /rejeita reparse points/);
     assert.match(event.evidence, /statx\(AT_SYMLINK_NOFOLLOW, STATX_TYPE\)/);
-    assert.match(event.evidence, /corrida statx→unlinkat/);
-    assert.match(event.evidence, /não foram migrados/);
+    assert.match(event.evidence, /mkdirat.*openat/);
+    assert.match(event.evidence, /statx→unlinkat/);
+    assert.match(event.evidence, /sem fallback por pathname/);
+    assert.match(event.release, /pathname-based/);
     assert.match(event.release, /Nenhuma/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);

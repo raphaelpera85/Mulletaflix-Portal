@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T14:13:45-03:00",
+  "generatedAt": "2026-10-23T14:21:52-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10668,9 +10668,9 @@
       "scope": "Criar e validar primitives internas por handle/descritor como primeiro corte do hardening de restore; não declarar o TOCTOU mitigado antes da integração do fluxo completo.",
       "status": "in_progress",
       "startedAt": "2026-10-23T13:48:00-03:00",
-      "updatedAt": "2026-10-23T14:13:45-03:00",
-      "evidence": "Helper interno oferece operações de componente único relativas ao diretório. Windows OpenRoot percorre ancestrais por NtCreateFile relativo a RootDirectory, rejeita reparse points e mantém handles ancestrais abertos; teste de ancestral reparse passou. Linux OpenRoot percorre com openat(O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC), e a exclusão valida tipo com statx(AT_SYMLINK_NOFOLLOW, STATX_TYPE) antes de unlinkat. FullSystemBackup Release Windows/.NET 10: 79 aprovados, 2 ignorados (Linux-only), 0 falhas / 81 total; format verify e git diff --check passaram. Linux nativo não executado: WSL/Docker ausentes. Risco residual: corrida statx→unlinkat por pathname se ator puder modificar o pai; ACL/trust boundary não auditada. BackupService/FileSystemRestoreTransaction e BackupRestoreRecoveryJournal ainda não foram migrados; restore/replay/rollback/limpeza ativos seguem pathname-based.",
-      "release": "Nenhuma. O protótipo não corrige o fluxo ativo; TOCTOU P0 e integração permanecem abertos. Homologação formal permanece 2/7 (28,6%), sem crédito novo; Linux nativo, ACL efetiva, integração e testes adversariais ainda pendentes.",
+      "updatedAt": "2026-10-23T14:21:52-03:00",
+      "evidence": "Helper continua isolado. Windows OpenRoot percorre cada ancestral por RootDirectory e rejeita reparse points; Linux percorre com openat(O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC) e verifica tipo via statx(AT_SYMLINK_NOFOLLOW, STATX_TYPE). Auditoria read-only confirmou que a migração segura precisa cobrir CopyDirectoryAsync, instalação/restauração, rollback, commit/limpeza de sidecars e diretórios, BackupRestoreRecoveryJournal/lease e replay startup em conjunto, sem fallback por pathname. O ZIP de entrada exige contrato de autoridade separado. Gaps adicionais: Linux CreateDirectory faz mkdirat e reabre nome com openat (race em pai modificável); statx→unlinkat também é check/use por nome. statx consta para Linux 4.11 e wrapper glibc 2.28; variantes musl empacotadas ainda não têm ABI teste. Windows usa NtCreateFile/NtSetInformationFile sem matriz de filesystems comprovada. ACL efetiva não foi verificada. Focal FullSystemBackup Release Windows/.NET 10 reexecutado: 79 aprovados, 2 ignorados (Linux-only), 0 falhas / 81 total. Nenhum runtime alterado; Linux nativo não executado.",
+      "release": "Nenhuma. Restore/replay/rollback/limpeza ativos continuam pathname-based; TOCTOU P0 permanece. Formal 2/7 (28,6%), sem crédito novo. Gates: ACL/fronteira verificável, fechar/modelar races, integrar fluxo e journal sem fallback, testes concorrência/crash/rollback/replay, Windows/Linux glibc/musl.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
