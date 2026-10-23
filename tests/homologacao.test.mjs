@@ -10,6 +10,24 @@ const portalConfig = JSON.parse(readFileSync(new URL('../vercel.json', import.me
 const sitemapSource = readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records fail-closed remote image validation without claiming production or formal validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-remote-image-decoder-fail-closed-2026-10-23-0928');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /85\/85/);
+    assert.match(event.evidence, /suíte completa Jellyfin\.Providers\.Tests não terminou/);
+    assert.match(event.evidence, /Sem provider\/CDN real/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records Supabase Retry-After coverage without claiming production or formal validation', () => {
     const event = statusData.events.find(item => item.id === 'server-supabase-retry-after-2026-10-23-0843');
     const server = statusData.tracks.find(track => track.id === 'server');
