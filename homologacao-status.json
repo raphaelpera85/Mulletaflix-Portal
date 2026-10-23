@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T14:21:52-03:00",
+  "generatedAt": "2026-10-23T14:44:41-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10671,6 +10671,26 @@
       "updatedAt": "2026-10-23T14:21:52-03:00",
       "evidence": "Helper continua isolado. Windows OpenRoot percorre cada ancestral por RootDirectory e rejeita reparse points; Linux percorre com openat(O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC) e verifica tipo via statx(AT_SYMLINK_NOFOLLOW, STATX_TYPE). Auditoria read-only confirmou que a migração segura precisa cobrir CopyDirectoryAsync, instalação/restauração, rollback, commit/limpeza de sidecars e diretórios, BackupRestoreRecoveryJournal/lease e replay startup em conjunto, sem fallback por pathname. O ZIP de entrada exige contrato de autoridade separado. Gaps adicionais: Linux CreateDirectory faz mkdirat e reabre nome com openat (race em pai modificável); statx→unlinkat também é check/use por nome. statx consta para Linux 4.11 e wrapper glibc 2.28; variantes musl empacotadas ainda não têm ABI teste. Windows usa NtCreateFile/NtSetInformationFile sem matriz de filesystems comprovada. ACL efetiva não foi verificada. Focal FullSystemBackup Release Windows/.NET 10 reexecutado: 79 aprovados, 2 ignorados (Linux-only), 0 falhas / 81 total. Nenhum runtime alterado; Linux nativo não executado.",
       "release": "Nenhuma. Restore/replay/rollback/limpeza ativos continuam pathname-based; TOCTOU P0 permanece. Formal 2/7 (28,6%), sem crédito novo. Gates: ACL/fronteira verificável, fechar/modelar races, integrar fluxo e journal sem fallback, testes concorrência/crash/rollback/replay, Windows/Linux glibc/musl.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-restore-active-callers-ci-audit-2026-10-23",
+      "title": "Servidor: rastreio do restore ativo e lacuna de CI concorrente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Auditoria estática dos chamadores e do workflow; teste focal mais recente: FullSystemBackup 79 aprovados, 2 Linux-only ignorados, 0 falhas (Windows/.NET 10)",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup; Jellyfin.Api/Controllers/BackupController.cs; Jellyfin.Server/Program.cs; Jellyfin.Server/Migrations/JellyfinMigrationService.cs; .github/workflows/ci.yml",
+      "scope": "Confirmar entradas em runtime para restore e escopo da evidência Linux/crash; não integrar helper incompleto nem conceder crédito formal.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T14:39:00-03:00",
+      "updatedAt": "2026-10-23T14:44:41-03:00",
+      "evidence": "Chamadores confirmados: API BackupController, replay de operação interrompida no startup via Program e rollback de migração via JellyfinMigrationService. Busca de referências mostra BackupRestoreDirectory sem caller de runtime. Restore/rollback/journal/cleanup ativos ainda fazem operações por pathname após validações separadas. CI tem teste Linux de crash/replay entre commit relacional e de arquivos; não foi encontrada etapa que rode o helper ou troque deterministicamente um ancestral no restore integrado. Auditoria estática, sem execução nova de teste/build nesta atualização. Evidência focal previamente executada: FullSystemBackup 79 aprovados, 2 ignorados Linux-only, 0 falhas em Windows/.NET 10.",
+      "release": "Nenhuma. TOCTOU P0 permanece; helper não integrado, ACL/autoridade do ZIP e races abertas, matriz Windows/Linux/glibc/musl e CI remota pendentes. Homologação formal permanece 2/7 (28,6%), sem crédito novo; sem instalação/produção.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
