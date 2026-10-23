@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T15:07:59-03:00",
+  "generatedAt": "2026-10-23T15:23:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10734,6 +10734,25 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-localized-backdrop-refresh-2026-10-23-1523",
+      "title": "Servidor: refresh de backdrops segue idioma preferido",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10: ItemImageProviderTests 60 aprovados, 0 ignorados, 0 falhas",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ItemImageProvider.cs; tests/Jellyfin.Providers.Tests/Manager/ItemImageProviderRefreshTests.cs",
+      "scope": "Corrigir substituição de backdrops remotos em inglês quando existe candidato localizado; manter artes manuais e fallback inglês sem candidato.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T15:04:00-03:00",
+      "updatedAt": "2026-10-23T15:23:00-03:00",
+      "evidence": "Antes, RefreshImages classificava como obsoletos somente os tipos singulares; backdrops remotos em inglês não iniciavam refresh localizado. Agora candidatos pt para backdrop substituem apenas os antigos remotos obsoletos após a nova imagem ser salva, preservando as imagens manuais/sem proveniência. A regressão RefreshImages_ReplacesStaleRemoteBackdropAndPreservesManualBackdrop valida troca en→pt e preservação manual. Testes Windows/.NET 10: ItemImageProviderTests 60/60, zero falhas, zero ignorados; git diff --check passou. Não houve TMDb ao vivo nem validação visual de Invasão Zumbi 2.",
+      "release": "Nenhuma. Alteração está apenas no working tree local; sem instalação ou produção. Homologação formal permanece 2/7 (28,6%), sem crédito novo; gates existentes continuam abertos.",
+      "links": [
+        "https://github.com/raphaelpera85/Mulletaflix-Portal/blob/main/homologacao.html"
       ]
     }
   ]
