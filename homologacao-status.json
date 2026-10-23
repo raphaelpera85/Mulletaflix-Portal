@@ -3067,7 +3067,7 @@
       "progressPercent": 100,
       "startedAt": "2026-10-23T12:40:00-03:00",
       "updatedAt": "2026-10-23T13:10:00-03:00",
-      "evidence": "Contrato de CI passou 8/8; os scripts passaram em bash -n e as três fixtures passaram localmente em Git Bash no Windows. Job configurado em ubuntu-latest com contents: read e persist-credentials: false. Não havia runner Linux/WSL local: execução hospedada do GitHub ainda não observada. A suíte .NET ampla está sendo validada separadamente e não integra esta evidência específica.",
+      "evidence": "Contrato de CI passou 8/8; os scripts passaram em bash -n e as três fixtures passaram localmente em Git Bash no Windows. Job configurado em ubuntu-latest com contents: read e persist-credentials: false. Não havia runner Linux/WSL local: execução hospedada do GitHub ainda não observada. Resultados da suíte .NET ampla não integram esta evidência específica.",
       "release": "Nenhuma release do servidor criada ou publicada. Mudança somente na cobertura/segurança do CI; sem execução Linux remota, instalação, runtime ou produção. Homologação formal do servidor permanece 2/7 (28,6%); este trabalho não recebe crédito de gate.",
       "links": []
     },
