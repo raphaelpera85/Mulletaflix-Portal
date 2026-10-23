@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T11:42:00-03:00",
+  "generatedAt": "2026-10-23T11:59:35-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10520,6 +10520,23 @@
       "updatedAt": "2026-10-23T11:42:00-03:00",
       "evidence": "Confirmado: UserManager aceitava os nomes exatos '.' e '..', e quatro pontos de produção compunham caminhos sob UserConfigurationDirectoryPath. Implementado helper compartilhado com validação de componente único, containment e recusa de caminhos inseguros; UserManager também rejeita os nomes especiais. FileSystemHelperPathSafetyTests + AvatarControllerUserAvatarAuthorizationTests passaram 44/44, incluindo links estáticos e aliases de ponto final do Windows; UserManagerTests passou 16/16; git diff --check passou. A suíte FullSystemBackup iniciada nesta sessão foi interrompida durante reconstrução e não tem resultado, não contada. TOCTOU contra troca concorrente de ancestrais permanece aberto; Linux, CI remota, runtime instalado, produção e aceite formal não executados.",
       "release": "Nenhuma. Correção validada localmente, mas release bloqueada pela consolidação do checkout do servidor, que já tem muitas mudanças preexistentes e está 8 commits atrás de origin/main. Homologação formal permanece 2/7 (28,6%); nenhuma mudança foi creditada aos gates."
+    },
+    {
+      "id": "server-media-sync-manifest-persistence-2026-10-23-1159",
+      "title": "Servidor: sync manual/agendado serializado e manifesto salvo atomicamente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; gate/path guard/TMDb 69/69; Providers sem Integration 858/858; build 0 avisos/0 erros",
+      "location": "MidiaStorageOnlineSyncGate; MidiaStorageOnlinePathGuard; controller manual e tarefa agendada",
+      "scope": "Evitar syncs manuais/agendados concorrentes sobre o mesmo manifesto, limitar espera e impedir sucesso falso em falha de gravação; confirmação do usuário: inglês mantido como fallback de arte após pt-BR/pt.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T11:42:00-03:00",
+      "updatedAt": "2026-10-23T11:59:35-03:00",
+      "evidence": "Sync manual e tarefa agendada compartilham gate assíncrono por caminho canonicalizado do manifesto; espera expira em 15 minutos sem cancelar o sync ativo. Manifesto é gravado por temporário irmão e substituição atômica; falha é propagada e a execução registra erro. Teste focal: 69 aprovados/0 falhas; suíte Jellyfin.Providers.Tests sem Integration: 858 aprovados/0 ignorados/0 falhas; build MediaBrowser.Providers Release: 0 avisos/0 erros; git diff --check passou. Homologação formal permanece 2/7 (28,6%).",
+      "release": "Nenhuma. Checkout do servidor está sujo e 8 commits atrás de origin/main; correção não foi integrada, instalada nem validada em produção. Também não houve sync concorrente real, Linux, CI remota ou coordenação entre processos. Timeout não garante FIFO; gate é intra-processo.",
+      "links": []
     }
   ]
 }
