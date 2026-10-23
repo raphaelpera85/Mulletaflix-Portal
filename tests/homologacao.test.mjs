@@ -4939,3 +4939,19 @@ test('portal reports incremental restore-root hardening without formal signoff',
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal reports the latest focused restore rerun without crediting formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-handle-rerun-2026-10-23-1530');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.local, /80 aprovados, 3 ignorados \(Linux-only\), 0 falhas/);
+    assert.match(event.evidence, /continua sem caller no restore ativo/);
+    assert.match(event.evidence, /Linux nem teste determinístico de troca concorrente/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

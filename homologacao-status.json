@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T15:23:00-03:00",
+  "generatedAt": "2026-10-23T15:30:27-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10753,6 +10753,26 @@
       "release": "Nenhuma. Alteração está apenas no working tree local; sem instalação ou produção. Homologação formal permanece 2/7 (28,6%), sem crédito novo; gates existentes continuam abertos.",
       "links": [
         "https://github.com/raphaelpera85/Mulletaflix-Portal/blob/main/homologacao.html"
+      ]
+    },
+    {
+      "id": "server-restore-handle-rerun-2026-10-23-1530",
+      "title": "Servidor: reexecução focal do helper de restore; TOCTOU segue aberto",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release: FullSystemBackup 80 aprovados, 3 ignorados (Linux-only), 0 falhas / 83 total",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup; tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup",
+      "scope": "Revalidar os testes focais atuais, manter os limites de plataforma explícitos e atualizar a evidência sem conceder crédito formal.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T15:29:00-03:00",
+      "updatedAt": "2026-10-23T15:30:27-03:00",
+      "evidence": "dotnet test FullSystemBackup Release terminou exit 0 no Windows/.NET 10: 80 aprovados, 3 ignorados (todos Linux-only), 0 falhas/83. A compilação emitiu avisos de analisadores/documentação. O helper BackupRestoreDirectory continua sem caller no restore ativo; journal, rollback e limpeza ainda usam operações por pathname após validações. Não foi executado Linux nem teste determinístico de troca concorrente de ancestral; ACL efetiva não foi verificada. Não há evidência de exploração remota.",
+      "release": "Nenhuma. TOCTOU/ACL P0 permanece aberto; homologação formal continua 2/7 (28,6%), sem crédito novo. Sem runtime, instalação ou produção.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
       ]
     }
   ]
