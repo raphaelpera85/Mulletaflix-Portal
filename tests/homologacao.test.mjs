@@ -4919,3 +4919,21 @@ test('portal publishes the candidate relative-I/O contract without claiming the 
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal reports incremental restore-root hardening without formal signoff', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-relative-io-prototype-2026-10-23-1358');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.local, /79 aprovados, 2 ignorados \(Linux-only\), 0 falhas/);
+    assert.match(event.evidence, /rejeita reparse points/);
+    assert.match(event.evidence, /statx\(AT_SYMLINK_NOFOLLOW, STATX_TYPE\)/);
+    assert.match(event.evidence, /corrida statx→unlinkat/);
+    assert.match(event.evidence, /não foram migrados/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

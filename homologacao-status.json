@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T14:01:00-03:00",
+  "generatedAt": "2026-10-23T14:13:45-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10663,14 +10663,14 @@
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Windows/.NET 10 Release; FullSystemBackup 77/77 aprovados, 0 ignorados/falhas",
+      "local": "Windows/.NET 10 Release; FullSystemBackup 79 aprovados, 2 ignorados (Linux-only), 0 falhas / 81 total",
       "location": "MulletaFlix.Server.Implementations/FullSystemBackup/BackupRestoreDirectory.cs; testes FullSystemBackup",
       "scope": "Criar e validar primitives internas por handle/descritor como primeiro corte do hardening de restore; não declarar o TOCTOU mitigado antes da integração do fluxo completo.",
       "status": "in_progress",
       "startedAt": "2026-10-23T13:48:00-03:00",
-      "updatedAt": "2026-10-23T14:01:00-03:00",
-      "evidence": "Helper interno oferece operações de componente único relativas ao diretório. Windows: NtCreateFile/FILE_OPEN_REPARSE_POINT e NtSetInformationFile para rename; Linux: openat/mkdirat/renameat[2]/unlinkat, ainda não executado. Focal FullSystemBackup passou 77/77 no Windows/.NET 10; teste local confirma que o handle Windows impede rename concorrente enquanto aberto. Rename via SetFileInformationByHandle retornou Win32 87 e foi substituído por NtSetInformationFile. Ponytail Review encontrou dois gaps antes de integração: Linux unlinkat não valida tipo do entry, e OpenRoot não bloqueia symlink em ancestrais (O_NOFOLLOW somente no final). BackupService/FileSystemRestoreTransaction e BackupRestoreRecoveryJournal ainda não foram migrados; restore ativo continua pathname-based. ACL/trust boundary e Linux não validados.",
-      "release": "Nenhuma. Protótipo sem integração não corrige a operação em produção; gaps Linux, TOCTOU P0 e ACL precisam ser tratados. Homologação formal permanece 2/7 (28,6%), sem crédito novo.",
+      "updatedAt": "2026-10-23T14:13:45-03:00",
+      "evidence": "Helper interno oferece operações de componente único relativas ao diretório. Windows OpenRoot percorre ancestrais por NtCreateFile relativo a RootDirectory, rejeita reparse points e mantém handles ancestrais abertos; teste de ancestral reparse passou. Linux OpenRoot percorre com openat(O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC), e a exclusão valida tipo com statx(AT_SYMLINK_NOFOLLOW, STATX_TYPE) antes de unlinkat. FullSystemBackup Release Windows/.NET 10: 79 aprovados, 2 ignorados (Linux-only), 0 falhas / 81 total; format verify e git diff --check passaram. Linux nativo não executado: WSL/Docker ausentes. Risco residual: corrida statx→unlinkat por pathname se ator puder modificar o pai; ACL/trust boundary não auditada. BackupService/FileSystemRestoreTransaction e BackupRestoreRecoveryJournal ainda não foram migrados; restore/replay/rollback/limpeza ativos seguem pathname-based.",
+      "release": "Nenhuma. O protótipo não corrige o fluxo ativo; TOCTOU P0 e integração permanecem abertos. Homologação formal permanece 2/7 (28,6%), sem crédito novo; Linux nativo, ACL efetiva, integração e testes adversariais ainda pendentes.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
