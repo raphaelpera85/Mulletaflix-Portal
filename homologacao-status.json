@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T11:36:00-03:00",
+  "generatedAt": "2026-10-23T11:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10506,19 +10506,19 @@
       ]
     },
     {
-      "id": "server-user-profile-path-containment-2026-10-23-1136",
+      "id": "server-user-profile-path-containment-2026-10-23-1142",
       "title": "Servidor: contenção do caminho das imagens de perfil",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Windows/.NET 10 Release; API/GetAvatar 43/43; UserManager 16/16",
+      "local": "Windows/.NET 10 Release; API/GetAvatar 44/44; UserManager 16/16",
       "location": "MulletaFlix-master/MediaBrowser.Controller/IO/FileSystemHelper.cs; Jellyfin.Api ImageController; GetAvatar AvatarService",
       "scope": "Rejeitar usernames que escapariam do diretório users e proteger fluxos nativos/GetAvatar, inclusive registros legados; sem instalação, produção ou release.",
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-23T11:21:00-03:00",
-      "updatedAt": "2026-10-23T11:36:00-03:00",
-      "evidence": "Confirmado: UserManager aceitava os nomes exatos '.' e '..', e quatro pontos de produção compunham caminhos sob UserConfigurationDirectoryPath. Implementado helper compartilhado com validação de componente único, containment e recusa de caminhos inseguros; UserManager também rejeita os nomes especiais. FileSystemHelperPathSafetyTests + AvatarControllerUserAvatarAuthorizationTests passaram 43/43; UserManagerTests passou 16/16; git diff --check passou. A suíte FullSystemBackup iniciada nesta sessão foi interrompida durante reconstrução e não tem resultado, não contada. TOCTOU contra troca concorrente de ancestrais permanece aberto; Linux, CI remota, runtime instalado, produção e aceite formal não executados.",
+      "updatedAt": "2026-10-23T11:42:00-03:00",
+      "evidence": "Confirmado: UserManager aceitava os nomes exatos '.' e '..', e quatro pontos de produção compunham caminhos sob UserConfigurationDirectoryPath. Implementado helper compartilhado com validação de componente único, containment e recusa de caminhos inseguros; UserManager também rejeita os nomes especiais. FileSystemHelperPathSafetyTests + AvatarControllerUserAvatarAuthorizationTests passaram 44/44, incluindo links estáticos e aliases de ponto final do Windows; UserManagerTests passou 16/16; git diff --check passou. A suíte FullSystemBackup iniciada nesta sessão foi interrompida durante reconstrução e não tem resultado, não contada. TOCTOU contra troca concorrente de ancestrais permanece aberto; Linux, CI remota, runtime instalado, produção e aceite formal não executados.",
       "release": "Nenhuma. Correção validada localmente, mas release bloqueada pela consolidação do checkout do servidor, que já tem muitas mudanças preexistentes e está 8 commits atrás de origin/main. Homologação formal permanece 2/7 (28,6%); nenhuma mudança foi creditada aos gates."
     }
   ]
