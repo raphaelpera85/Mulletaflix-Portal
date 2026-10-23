@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T10:52:00-03:00",
+  "generatedAt": "2026-10-23T11:21:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 69,
         "failed": 0,
         "percent": 98.7,
-        "label": "Atualizado em 23/10: suíte .NET Release no Windows com filtro FullyQualifiedName!~Integration terminou exit code 0: 5.248 aprovados, 69 ignorados, 0 falhas/5.317 resultados. Providers 849/849; API 763 aprovados/3 ignorados; Server 74/74; Server.Implementations 1.559 aprovados/66 ignorados. NebulaPython em venv isolada passou 685/685 (NebulaPython 3.10 isolado 685/685). O filtro exclui testes Integration e não equivale à matriz remota. CI remota, Linux, MariaDB/Mongo reais, runtime instalado, mídia real, produção e frontend não foram validados nesta sessão. 69 ignorados não contam como aprovados. Auditoria automatizada não equivale à homologação formal (1/7, 14,3%) nem a aceite de produção; nenhum crédito formal foi concedido. Nenhuma release foi criada. Histórico do snapshot anterior (21/10): 5.120 aprovados, 236 ignorados/NotExecuted, 0 falhas/5.356; NebulaPython 3.10: 683/683; MariaDB focal anterior: 197/198 opt-in em Windows. O audit npm completo registrou 10 altas somente dev nas dependências de desenvolvimento via braces@3.0.3 sem versão corrigida. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35."
+        "label": "Atualizado em 23/10: suíte .NET Release no Windows com filtro FullyQualifiedName!~Integration terminou exit code 0: 5.248 aprovados, 69 ignorados, 0 falhas/5.317 resultados. Providers 849/849; API 763 aprovados/3 ignorados; Server 74/74; Server.Implementations 1.559 aprovados/66 ignorados. NebulaPython em venv isolada passou 685/685 (NebulaPython 3.10 isolado 685/685). O filtro exclui testes Integration e não equivale à matriz remota. CI remota, Linux, MariaDB/Mongo reais, runtime instalado, mídia real, produção e frontend não foram validados nesta sessão. 69 ignorados não contam como aprovados. Auditoria automatizada não equivale à homologação formal (2/7, 28,6%) nem a aceite de produção; nenhum crédito formal foi concedido nesta execução. Nenhuma release foi criada. Histórico do snapshot anterior (21/10): 5.120 aprovados, 236 ignorados/NotExecuted, 0 falhas/5.356; NebulaPython 3.10: 683/683; MariaDB focal anterior: 197/198 opt-in em Windows. O audit npm completo registrou 10 altas somente dev nas dependências de desenvolvimento via braces@3.0.3 sem versão corrigida. Auditoria automatizada não equivale à homologação formal; release mais recente registrada: v12.1.35."
       }
     },
     {
@@ -10482,6 +10482,27 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
+      ]
+    },
+    {
+      "id": "server-tmdb-legacy-language-fallback-2026-10-23-1121",
+      "title": "Servidor: idioma pt-BR restaurado em configurações legadas vazias",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; ServerConfiguration 6/6; regressão de imagens 77/77",
+      "location": "MulletaFlix-master/MediaBrowser.Model/Configuration/ServerConfiguration.cs; MulletaFlix-master/tests/Jellyfin.Providers.Tests/Tmdb/TmdbUtilsTests.cs; docs/image-metadata-flow-audit.md",
+      "scope": "Corrigir configuração persistida sem idioma para solicitar artes pt-BR/pt e manter inglês como fallback; sem instalação, produção ou release.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T11:05:00-03:00",
+      "updatedAt": "2026-10-23T11:21:00-03:00",
+      "evidence": "Causa: valor legado vazio gerava `include_image_language=null,en`. O setter da configuração agora usa pt-BR para vazio/espaços e preserva idiomas explicitamente definidos. ServerConfiguration_* passou 6/6 incluindo desserialização XML; filtros TmdbUtils/ProviderManager/refresh/metadata passaram 77/77; git diff --check passou e revisão independente não encontrou problema. Consulta pública TMDb para Peninsula (581392) com pt,null,en retornou 6 posters, 2 backdrops e 1 logo em português. Essa consulta confirma disponibilidade da API, não valida o runtime ou a capa já persistida.",
+      "release": "Nenhuma. Sem instalação, refresh visual do item ou validação de produção. Homologação formal permanece 2/7 (28,6%); esta evidência técnica não recebe crédito de gate.",
+      "links": [
+        "https://www.themoviedb.org/movie/581392/images/posters?language=th-TH",
+        "https://developer.themoviedb.org/reference/movie-images",
+        "https://developer.themoviedb.org/docs/image-languages"
       ]
     }
   ]
