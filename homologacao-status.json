@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T19:32:00-03:00",
+  "generatedAt": "2026-10-23T07:37:20-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3066,7 +3066,7 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-22T19:22:00-03:00",
-      "updatedAt": "2026-10-22T19:32:00-03:00",
+      "updatedAt": "2026-10-23T07:37:20-03:00",
       "evidence": "Dois exames independentes confirmaram que extração/criação de diretórios, staging, instalação, rollback, limpeza e journal ainda resolvem caminhos absolutos após checagens separadas; testes atuais cobrem links estáticos, não troca concorrente de ancestral. A suíte focal FullSystemBackup Release passou 62/62 no Windows/.NET 10, sem ignorados/falhas, mas não cobre a corrida. Não há abstração existente capaz de proteger a transação completa em Windows e Linux. Próximo gate: desenho e teste determinístico de operações relativas a handles, incluindo journal/recovery e matriz Windows/Linux. Homologação formal continua 1/7 (14,3%); MariaDB descartável, Linux, CI remota, runtime instalado, produção e aceite permanecem pendentes. Nenhuma release criada.",
       "release": "Nenhuma. Não fechar o gate até cobrir a transação completa e reproduzir a troca de ancestral em Windows e Linux.",
       "links": [
