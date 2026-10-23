@@ -10,6 +10,23 @@ const portalConfig = JSON.parse(readFileSync(new URL('../vercel.json', import.me
 const sitemapSource = readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records Supabase Retry-After coverage without claiming production or formal validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-supabase-retry-after-2026-10-23-0843');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /65\/65/);
+    assert.match(event.evidence, /Sem chamadas reais ao Supabase\/MongoDB/);
+    assert.match(event.release, /sujo e 8 commits atrás/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records Supabase backup-history retry without claiming live or formal validation', () => {
     const event = statusData.events.find(item => item.id === 'server-supabase-backup-history-retry-2026-10-23-0836');
     const server = statusData.tracks.find(track => track.id === 'server');
