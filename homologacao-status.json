@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T07:37:20-03:00",
+  "generatedAt": "2026-10-23T07:57:46-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-restore-toctou-baseline-repeat-2026-10-23-0757",
+      "title": "Servidor: revalidação TOCTOU e linha de base repetida",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows, .NET 10 Release; revisão independente somente leitura",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup; MulletaFlix-master/docs/backup-coverage-audit.md",
+      "scope": "Repetir a linha de base do restore e revisar criação, replay, staging, instalação, rollback, limpeza e journal, sem alterar runtime nem creditar homologação formal.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T07:57:46-03:00",
+      "updatedAt": "2026-10-23T07:57:46-03:00",
+      "evidence": "FullSystemBackup Release passou 62/62 no Windows/.NET 10, sem ignorados/falhas. Revisão independente confirmou que a transação e o journal ainda resolvem caminhos absolutos depois de checks separados; não há teste determinístico de troca de ancestral, então o risco TOCTOU continua aberto. Nenhuma abstração atual cobre integralmente restore e journal por operações relativas a diretório em Windows e Linux. WSL/Linux não instalado, Docker CLI indisponível e MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não configurada; esses gates não executaram. Homologação formal continua 1/7 (14,3%); sem release, instalação ou produção.",
+      "release": "Nenhuma. O risco TOCTOU permanece aberto; qualquer release aguarda correção completa e validação da transação e journal em Windows/Linux.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
+      ]
+    },
     {
       "id": "server-restore-toctou-reaudit-2026-10-22-1932",
       "title": "Restore: reauditoria confirma TOCTOU ainda aberto",

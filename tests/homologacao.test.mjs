@@ -10,6 +10,25 @@ const portalConfig = JSON.parse(readFileSync(new URL('../vercel.json', import.me
 const sitemapSource = readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records the repeated restore TOCTOU baseline without claiming the race is fixed', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-toctou-baseline-repeat-2026-10-23-0757');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /FullSystemBackup Release passou 62\/62/);
+    assert.match(event.evidence, /risco TOCTOU continua aberto/);
+    assert.match(event.evidence, /WSL\/Linux não instalado, Docker CLI indisponível/);
+    assert.match(event.evidence, /MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não configurada/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records server release 12.1.28 without claiming production homologation', () => {
     const event = statusData.events.find(item => item.id === 'server-release-12-1-28-restore-crc-2026-10-21-0229');
 
