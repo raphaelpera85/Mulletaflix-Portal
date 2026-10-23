@@ -10,6 +10,25 @@ const portalConfig = JSON.parse(readFileSync(new URL('../vercel.json', import.me
 const sitemapSource = readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records the global metadata language refresh regression without claiming production validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-tmdb-global-language-refresh-2026-10-23-0827');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /falhou antes da correção e passou depois/);
+    assert.match(event.evidence, /40\/40/);
+    assert.match(event.evidence, /86\/86/);
+    assert.match(event.evidence, /Sem chamada real ao TMDb/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 1);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 14.3);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records the broadened filesystem race audit without claiming mitigation', () => {
     const event = statusData.events.find(item => item.id === 'server-filesystem-race-audit-2026-10-23-0812');
     const server = statusData.tracks.find(track => track.id === 'server');

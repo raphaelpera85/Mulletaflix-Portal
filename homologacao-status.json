@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T08:18:48-03:00",
+  "generatedAt": "2026-10-23T08:27:40-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-tmdb-global-language-refresh-2026-10-23-0827",
+      "title": "Servidor: refresh de capas respeita idioma global configurado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["H06"],
+      "local": "Windows, .NET 10 Release; regressão reproduzida e corrigida localmente",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ItemImageProvider.cs; ItemImageProviderRefreshTests.cs",
+      "scope": "Fazer o refresh de imagem remota elegível detectar a preferência global pt-BR quando item e biblioteca não definem idioma, mantendo inglês como fallback e preservando imagens manuais/sem proveniência.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-23T08:24:00-03:00",
+      "updatedAt": "2026-10-23T08:27:40-03:00",
+      "evidence": "O teste com preferência global pt-BR falhou antes da correção e passou depois. ItemImageProviderTests.RefreshImages passou 40/40; seleção/provedores/TMDb passou 86/86 em Release; contrato do portal passou 251/251. O refresh resolve o idioma efetivo do BaseItem quando há capa singular com provedor/idioma conhecidos; capas manuais e antigas sem proveniência não são substituídas automaticamente. Sem chamada real ao TMDb, refresh visual de Invasão Zumbi 2, imagem persistida, instalação ou validação em produção. Homologação formal continua 1/7 (14,3%); estes testes locais não adicionam crédito formal.",
+      "release": "Nenhuma. Alteração ainda local em checkout sujo e 8 commits atrás de origin/main; precisa integração/revisão e fluxo de release seguro.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/image-metadata-flow-audit.md"
+      ]
+    },
     {
       "id": "server-restore-toctou-baseline-repeat-2026-10-23-0757",
       "title": "Servidor: revalidação TOCTOU e linha de base repetida",
