@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T18:22:32-03:00",
+  "generatedAt": "2026-10-27T18:31:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-tls-sni-restore-audit-2026-10-27-1831",
+      "title": "Servidor: auditoria de falhas TLS do Nebula e gates de restore",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; Python 3.10; handshakes TLS básicos sem URL de mídia; revisão read-only do workflow Linux",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupRestoreDirectory.cs; .github/workflows/ci.yml",
+      "scope": "Auditar o log STRM com falhas TLS e revalidar a suíte local de restore e os gates de Linux.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-27T18:24:00-03:00",
+      "updatedAt": "2026-10-27T18:31:00-03:00",
+      "evidence": "O log contém 95 falhas TLSV1_UNRECOGNIZED_NAME. Dois arquivos STRM amostrados usam host cn53.org; handshake TLS básico para esse host passou localmente em .NET TLS 1.3 e Python 3.13/OpenSSL 3.0.16, o que não valida URL completa, redirects nem runtime de produção. Testes Python 3.10 do downloader passaram 99/99. FullSystemBackup em Windows/.NET 10 Release passou 142, ignorou 16 por plataforma e falhou 0/158. Revisão confirmou job Linux privilegiado no workflow, sem execução remota nesta sessão.",
+      "release": "Nenhuma causa de código foi confirmada; não houve alteração funcional ou nova release. Não desabilitar validação TLS; endpoint final/redirect precisa ser identificado sem expor URL ou credenciais. Restore Linux/ACL, runtime instalado e smoke de produção permanecem pendentes. Homologação formal continua 2/7 (28,6%).",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.36"
+      ]
+    },
     {
       "id": "server-nebula-supabase-log-revalidation-2026-10-27-1822",
       "title": "Servidor: revalidados erros de inicialização Nebula e backup Supabase",
