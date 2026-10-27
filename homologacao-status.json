@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T19:09:03-03:00",
+  "generatedAt": "2026-10-27T19:17:15-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10964,8 +10964,8 @@
       "status": "pending",
       "progressPercent": null,
       "startedAt": "2026-10-27T19:07:12-03:00",
-      "updatedAt": "2026-10-27T19:07:12-03:00",
-      "evidence": "A leitura de GET /System/Info/Public em 27/10/2026 retornou versão 12.1.36. A captura do navegador mostra falha de resolução de xmltv.template.html e schedulesdirect.template.html; a correção desses imports/templates foi publicada na v12.1.37 e os bundles dessa release contêm ambos os templates. Não houve instalação nem smoke visual pós-atualização nesta sessão; a causa observada é compatível com a versão anterior ainda ativa, mas a correção em produção só será confirmada após atualizar e repetir o fluxo. A homologação formal permanece 2/7 (28,6%), sem crédito novo.",
+      "updatedAt": "2026-10-27T19:17:15-03:00",
+      "evidence": "A leitura de GET /System/Info/Public em 27/10/2026 retornou versão 12.1.36. A captura do navegador mostra falha de resolução de xmltv.template.html e schedulesdirect.template.html; a correção desses imports/templates foi publicada na v12.1.37 e os bundles dessa release contêm ambos os templates. Rechecagem em 27/10 às 19:17 confirmou novamente a versão 12.1.36. O build de produção web passou; verify:build confirmou 1.929 arquivos, ambos templates e ausência do import variável; TypeScript passou. Não houve instalação nem smoke visual pós-atualização. A sessão não tem elevação administrativa, portanto instalar exige operador com privilégios; até lá, a correção em produção permanece não homologada. A homologação formal continua 2/7 (28,6%), sem crédito novo.",
       "release": "A release v12.1.37 está publicada: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.37. Instalação e validação visual em produção pendentes; nenhum componente do serviço foi alterado.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.37"
