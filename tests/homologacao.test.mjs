@@ -5061,16 +5061,21 @@ test('portal publishes server v12.1.36 assets without closing formal homologatio
     assert.equal(server.homologation.percent, 28.6);
 });
 
-test('portal records v12.1.37 live TV provider fix while release and production smoke remain pending', () => {
+test('portal records the published v12.1.37 live TV provider release while formal and production checks remain pending', () => {
     const event = statusData.events.find(item => item.id === 'server-web-live-tv-provider-import-fix-2026-10-27-1842');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.ok(event);
-    assert.equal(event.status, 'in_progress');
+    assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, null);
     assert.match(event.evidence, /Vitest 419\/419/);
     assert.match(event.evidence, /sem import\(\) variável/);
-    assert.match(event.release, /workflow de empacotamento Windows\/Linux/);
+    assert.match(event.evidence, /mulletaflix_12\.1\.37_windows-x64\.exe/);
+    assert.match(event.evidence, /mulletaflix-update-win-x64\.zip/);
+    assert.match(event.evidence, /mulletaflix_12\.1\.37_linux-x64\.tar\.gz/);
+    assert.match(event.evidence, /publicados no GitHub Release/);
+    assert.match(event.release, /releases\/tag\/v12\.1\.37/);
+    assert.match(event.release, /Homologação visual e formal pendentes/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);

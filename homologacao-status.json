@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T18:42:26-03:00",
+  "generatedAt": "2026-10-27T19:02:13-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10941,12 +10941,12 @@
       "local": "Web production build, typecheck, Vitest e verificação de artefatos",
       "location": "MulletaFlix-web-master/src/apps/dashboard/controllers/livetvguideprovider.ts",
       "scope": "Corrigir os imports não resolvidos nos formulários de provedores Live TV e registrar a evidência sem alterar a homologação formal.",
-      "status": "in_progress",
+      "status": "completed",
       "progressPercent": null,
       "startedAt": "2026-10-27T18:36:00-03:00",
-      "updatedAt": "2026-10-27T18:42:26-03:00",
-      "evidence": "Causa reproduzida nos assets instalados: o bundle mantinha import() com string variável e o navegador não resolvia os templates. O controlador agora usa import.meta.glob para módulos e templates de XMLTV e Schedules Direct, com fallback seguro para tipos desconhecidos. Validação local no checkout isolado da release: build:check aprovado; Vitest 419/419 em 76 arquivos; build:production aprovado; verify:build validou 1.927 arquivos e payload inicial 294,3 KiB gzip abaixo do limite de 420 KiB. Bundle confirmou ambos os templates e sem import() variável. Commit 5a6c44a7 em main e tag v12.1.37 enviados; workflow do GitHub ainda pendente de confirmação. Sem teste visual após instalação, aceite de produção ou evidência de homologação formal; o percentual formal permanece 2/7 (28,6%).",
-      "release": "Tag v12.1.37 enviada para disparar o workflow de empacotamento Windows/Linux; publicação dos assets e validação visual em produção ainda pendentes.",
+      "updatedAt": "2026-10-27T19:02:13-03:00",
+      "evidence": "Causa reproduzida nos assets instalados: o bundle mantinha import() com string variável e o navegador não resolvia os templates. O controlador agora usa import.meta.glob para módulos e templates de XMLTV e Schedules Direct, com fallback seguro para tipos desconhecidos. Validação local no checkout isolado da release: build:check aprovado; Vitest 419/419 em 76 arquivos; build:production aprovado; verify:build validou 1.927 arquivos e payload inicial 294,3 KiB gzip abaixo do limite de 420 KiB. Bundle confirmou ambos os templates e sem import() variável. Commit 5a6c44a7 em main e tag v12.1.37 publicados. Suíte web: 419/419; build/check/verify aprovados. Stage Windows validado e pacotes publicados no GitHub Release: mulletaflix_12.1.37_windows-x64.exe (452.342.716 bytes), mulletaflix-update-win-x64.zip (417.655.720 bytes) e mulletaflix_12.1.37_linux-x64.tar.gz (137.206.384 bytes). Workflow hospedado falhou antes de alocar runner, sem etapas/logs; pacotes foram compilados localmente. Sem teste visual após instalação nem aceite de produção; homologação formal continua em 2/7 (28,6%).",
+      "release": "Release v12.1.37 publicada com instalador Windows x64, ZIP de atualização Windows e pacote Linux x64: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.37. Homologação visual e formal pendentes; não altera o índice formal 2/7 (28,6%).",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/releases/12.1.37.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.37"
