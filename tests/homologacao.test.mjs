@@ -1866,7 +1866,7 @@ test('server audit preserves the remote CI blocker and displays the latest Mongo
     const priorBroadSuite = statusData.events.find(item => item.id === 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /5\.473.*5\.571/);
+    assert.match(server.testAudit.label, /5\.120.*5\.356/);
     assert.match(server.testAudit.label, /Auditoria automatizada não equivale à homologação formal; release mais recente é v12\.1\.37/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
@@ -3375,7 +3375,7 @@ test('portal reports Windows packaging CI as locally verified but remotely pendi
     assert.equal(server.status, 'in_progress');
     assert.equal(event.status, 'in_progress');
     assert.match(event.scope, /ainda está somente no checkout local e não foi enviada ao Git do servidor/);
-    assert.match(server.testAudit.label, /5\.473.*5\.571/);
+    assert.match(server.testAudit.label, /5\.120.*5\.356/);
     assert.match(event.evidence, /node --test dos contratos Mongo, MariaDB e empacotamento passou 3\/3/);
     assert.match(event.evidence, /passaram 4\/4 em PowerShell local/);
     assert.match(event.evidence, /runner Windows remoto ainda não executou/);
@@ -5092,6 +5092,26 @@ test('portal reports production on 12.1.36 and keeps the v12.1.37 visual check p
     assert.match(event.evidence, /publicada na v12\.1\.37/);
     assert.match(event.evidence, /Não houve instalação nem smoke visual/);
     assert.match(event.release, /Instalação e validação visual em produção pendentes/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal publishes the current Windows/.NET regression totals without formal gate credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-dotnet-regression-2026-10-27-1831');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /5.473 Passed, 98 NotExecuted, 0 falhas\/5.571/);
+    assert.match(event.evidence, /FullyQualifiedName!~Integration excluiu os casos de integração/);
+    assert.equal(server.testAudit.passed, 5473);
+    assert.equal(server.testAudit.total, 5571);
+    assert.equal(server.testAudit.skipped, 98);
+    assert.equal(server.testAudit.failed, 0);
+    assert.equal(server.testAudit.percent, 98.2);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);

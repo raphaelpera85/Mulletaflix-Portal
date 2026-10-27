@@ -85,7 +85,7 @@
         "id": "SRV-H01",
         "name": "Build Release e regressão automatizada local",
         "status": "completed",
-        "evidence": "Evidência local mais recente em 27/10/2026: regressão .NET Release no Windows/.NET 10, filtro FullyQualifiedName!~Integration, terminou com exit code 0: 5.473 aprovados, 98 NotExecuted e 0 falhas/5.571 resultados em 17 TRX. O filtro excluiu Integration e os 98 NotExecuted não contam como aprovados. Isso valida regressão local, não Linux/ACL, integrações MariaDB/MongoDB, CI remota, runtime instalado ou produção; nenhuma aprovação formal nova. O gate H01 já concluído permanece concluído; homologação formal global 2/7 (28,6%)."
+      "evidence": "Evidência local mais recente em 27/10/2026: regressão .NET Release no Windows/.NET 10, filtro FullyQualifiedName!~Integration, terminou com exit code 0: 5.473 aprovados, 98 NotExecuted e 0 falhas/5.571 resultados em 17 TRX. O filtro excluiu Integration e os 98 NotExecuted não contam como aprovados. Isso valida regressão local, não Linux/ACL, integrações MariaDB/MongoDB, CI remota, runtime instalado ou produção; nenhuma aprovação formal nova. O gate H01 já concluído permanece concluído; homologação formal global 2/7 (28,6%)."
       },
       {
         "id": "SRV-H02",
@@ -3211,9 +3211,7 @@
       "title": "Servidor: refresh de capas respeita idioma global configurado",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "H06"
-      ],
+      "featureIds": ["H06"],
       "local": "Windows, .NET 10 Release; regressão reproduzida e corrigida localmente",
       "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ItemImageProvider.cs; ItemImageProviderRefreshTests.cs",
       "scope": "Fazer o refresh de imagem remota elegível detectar a preferência global pt-BR quando item e biblioteca não definem idioma, mantendo inglês como fallback e preservando imagens manuais/sem proveniência.",
@@ -3330,9 +3328,7 @@
       "title": "Artes localizadas: validação de prioridade pt-BR e fallback inglês",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "H06"
-      ],
+      "featureIds": ["H06"],
       "local": "Windows, .NET 10 Release; checkout local baseado em 64a33dcf",
       "location": "ProviderManager.GetAvailableRemoteImages · ItemImageProvider.RefreshImages · TmdbClientManager",
       "scope": "Revalidar a seleção de artes em português quando disponíveis e manter inglês como fallback por tipo de imagem, sem afirmar cobertura visual de título sem resposta real do provedor.",
@@ -3347,9 +3343,7 @@
       "title": "Restore do backup bloqueia symlink e junction fora da raiz configurada",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Windows, .NET 10 Release; patch local não publicado baseado em v12.1.35",
       "location": "BackupService.RestoreBackupCoreAsync · FileSystemRestoreTransaction",
       "scope": "Impedir que extração de restore atravesse symlink/junction preexistente abaixo do diretório de destino e altere arquivos externos.",
@@ -3364,9 +3358,7 @@
       "title": "Nebula: reconciliação de envio após resposta Telegram perdida",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "MulletaFlix Server",
       "location": "NebulaUploadEngine, NebulaTelegramPool e journal local de checkpoints",
       "scope": "Persistir intenção de envio e reconciliar pelo histórico MTProto antes de repetir um sendDocument ambíguo, preservando retries automáticos.",
@@ -3532,9 +3524,7 @@
       "startedAt": "2026-10-21T07:20:00-03:00",
       "updatedAt": "2026-10-21T07:23:47-03:00",
       "evidence": "A inspeção das sete fábricas relacionais confirma que elas recebem a mesma configuração do provider MariaDB; o provider traduz schemas para DatabaseNames.Main (padrão mulletaflix, sobrescrito por variável de ambiente), e DomainSchemaInitializer cria nesse schema 11 tabelas dos contextos Movies/Series/Channels/Books. BackupService enumera apenas os DbSets ativos de MulletaFlixDbContext + HistoryRow; os contextos centrais não enumeram as 11 tabelas de domínio. A lacuna é confirmada no caminho definido pelo código. Nenhum banco/configuração de produção foi acessado. Nenhum código de runtime foi alterado; sem release nesta etapa. Próximos gates: incluir cada contexto no formato versionado, preservar backups legados e validar create/restore integrado em banco isolado. Homologação formal permanece aberta.",
-      "links": [
-        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"
-      ]
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md"]
     },
     {
       "id": "server-release-12-1-32-backup-json-validation-2026-10-21-0600",
@@ -3551,9 +3541,7 @@
       "updatedAt": "2026-10-21T06:00:45-03:00",
       "evidence": "Release pública v12.1.32 não-draft; commit servidor 53d37e9d439e1464b8faa1f34375e27e6fe1922c enviado a main e tag v12.1.32 aponta para o mesmo commit. GitHub API confirmou três assets e digests: ZIP Windows 388.586.940 bytes (SHA-256 42DE6940B6D45FBE8DD9CF324243AACFFC149DC5C0F6B933025389161BAAF48C), instalador Windows 423.402.774 bytes (SHA-256 E54DD7606199236F4C2EDA7B1847FCBD71F353FAAA18B7808114782C8E4A5EEF), tar.gz Linux x64 137.187.232 bytes (SHA-256 C34007A6CE4879D704F89968F021BADBE93DD101BA2BB692125F1D1D135A7FE4). FullSystemBackup 39/39; Jellyfin.Server.Implementations.Tests Release 1.515 aprovados, 65 ignorados, zero falhas. O restore agora pré-valida o conteúdo JSON relacional em streaming antes de copiar os arquivos ou abrir o banco. ZIP verificado com 3.353 entradas e servidor, web, tray, Nebula, NSSM e MariaDB; tar.gz verificado com servidor, web e worker Nebula. Linux foi cross-published em Windows, não em host Linux. Restore ainda não transacional. Backup integral continua parcial. CI remota, instalação/upgrade, restore contra produção e homologação em produção não foram executados. Nenhuma instalação ou alteração em produção.",
       "release": "v12.1.32 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.32 (commit 53d37e9d439e1464b8faa1f34375e27e6fe1922c)",
-      "links": [
-        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.32"
-      ]
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.32"]
     },
     {
       "id": "server-release-12-1-34-backup-storage-test-isolation-2026-10-21-0714",
@@ -3570,9 +3558,7 @@
       "updatedAt": "2026-10-21T07:14:18-03:00",
       "evidence": "Release pública v12.1.34 não-draft confirmada na API GitHub; commit/tag 1fcc52e9c84a8b32fd7a42f8136abead3d50da84 em main, três assets e digests: ZIP Windows 388586763 bytes (SHA-256 BAD1D73C7385A370C61EFF24C19FD5776C9353ECB6EAA07E67F2FC39F86EDBBC), instalador Windows 423402555 bytes (SHA-256 D914AAD29F4008DCB90CC54310614BC9E891CDE6935528D412A167F23B2C5EDF), tar.gz Linux x64 137185631 bytes (SHA-256 90E8441FA4968740BE882E97EE18EEC75F68DBB784F6AA8E490A411B2E587AF0). FullSystemBackup 40/40; build solution Release 0 erros/44 avisos; testes da solução com filtro FullyQualifiedName!~Integration: 5091 aprovados, 68 ignorados, 0 falhas. Estágio Windows validado e build web TypeScript/Vite concluído. Linux cross-published em Windows, não testado em host Linux. npm install reportou 11 vulnerabilidades; nenhum upgrade automático foi aplicado. Integrações externas/bancos reais, instalação limpa/elevada, smoke de upgrade, CI remota e produção não foram validados; homologação formal do servidor permanece em andamento.",
       "release": "v12.1.34 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.34 (commit 1fcc52e9c84a8b32fd7a42f8136abead3d50da84)",
-      "links": [
-        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.34"
-      ]
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.34"]
     },
     {
       "id": "server-release-12-1-33-notification-branding-2026-10-21-0920",
@@ -3589,9 +3575,7 @@
       "updatedAt": "2026-10-21T06:38:18-03:00",
       "evidence": "Release pública v12.1.33 não-draft publicada; tag e commit-fonte 29bb2fc0385c527e63410f2ff95a9f459c76f733. API GitHub confirmou três assets: ZIP Windows 388586528 bytes (SHA-256 BBACA4D57CCE73A0E93195FC269A1855B7A09BF6EC1564A8A5414687C3CCCD58), instalador Windows 423402326 bytes (SHA-256 2C88BEEA0FE23CF2813366CD320BEFD605507AEA30544CDEABB746DEFD8A0CA2), tar.gz Linux x64 134769809 bytes (SHA-256 01BDCCCA42E526BEABE902F70D3CDEFB2E210C73D6BA65857CD59E65041F3355). Teste foco 1/1; web 419/419 em 76 arquivos; build:check, build:production e verify:build aprovados. ZIP validado com 3353 entradas, branding atualizado e sem asset notificationicon.png. GitHub Actions não iniciou os jobs: anotação oficial informa bloqueio de cobrança da conta; suíte remota .NET/Nebula não executada. Linux foi cross-published em Windows, não testado em host Linux. Cliente atualizado, instalação/upgrade e produção não foram testados.",
       "release": "v12.1.33 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.33 (commit 29bb2fc0385c527e63410f2ff95a9f459c76f733)",
-      "links": [
-        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.33"
-      ]
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.33"]
     },
     {
       "id": "server-release-12-1-31-backup-semantic-validation-2026-10-21-0506",
@@ -3608,9 +3592,7 @@
       "updatedAt": "2026-10-21T05:06:53-03:00",
       "evidence": "Commit servidor f30396789884391a5b7520f26ea849ef06a73b66 enviado a main e tag v12.1.31 aponta para o mesmo commit. Release pública não-draft confirmada pela API com três assets e digests: ZIP Windows 388.592.231 bytes (SHA-256 585BEA0EDD2A4136EEAEEB6A2921A46F8519A8B7246ED7D910815E6B41BCB700), instalador Windows 423.407.911 bytes (SHA-256 1F34573B194585DC1985D8ED6E06F330F1F893356D7A30502FED0E244B17DD86), tar.gz Linux x64 137.184.365 bytes (SHA-256 B51CA184B835A0408AF0BD48905946AEF3782C768F162D3094ED3D4F9804D871). FullSystemBackup 36/36; Jellyfin.Server.Implementations.Tests Release 1.512 aprovados, 65 ignorados, zero falhas. ZIP validado: 3.356 entradas, DLL/web/tray presentes e sem .coverage/.ruff_cache; tar validado com executável, instalação e web. Linux foi cross-published em Windows, não em host Linux. O build registrou 11 vulnerabilidades em dependências de desenvolvimento do frontend (1 moderada/10 altas); npm audit --omit=dev não executado nesta sessão. Backup integral continua parcial; contextos independentes, Mongo/Supabase, snapshot consistente, criptografia, restore ponta a ponta, CI remota, instalação/upgrade e produção não foram homologados. Nenhuma instalação ou alteração em produção.",
       "release": "v12.1.31 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.31 (commit f30396789884391a5b7520f26ea849ef06a73b66)",
-      "links": [
-        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.31"
-      ]
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.31"]
     },
     {
       "id": "server-full-system-backup-coverage-audit-2026-10-21",
@@ -3831,10 +3813,7 @@
       "title": "Nebula: guard fail-closed e contratos de empacotamento revalidados",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Windows PowerShell, venv Nebula Python 3.10 e Node.js",
       "location": "Tools/NebulaPython/tools/check_deps.py; install-python-if-missing.ps1; contratos de packaging",
       "scope": "Revalidar proteção contra reparo de Python global e corrigir contrato estático desatualizado, sem instalar ou alterar o runtime do produto.",
@@ -3954,9 +3933,7 @@
       "title": "Nebula: teste do worker pronto até o primeiro STRM enfileirado",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T0.3.11"
-      ],
+      "featureIds": ["T0.3.11"],
       "local": "Python 3.10; teste integrado isolado",
       "location": "STRM Downloader: readiness → scan → download → fila Nebula",
       "scope": "Validar a integração do worker pronto até o primeiro STRM registrado na fila, sem Mongo, rede de mídia ou produção reais.",
@@ -3971,9 +3948,7 @@
       "title": "Live TV: produtor usa capability da gravação no EncoderPath",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T6.1"
-      ],
+      "featureIds": ["T6.1"],
       "local": "Release .NET; MediaSourceManager, resolver e pipeline HTTP isolados",
       "location": "MediaSourceManager.GetRecordingStreamMediaSources → GET /LiveTv/LiveRecordings/{streamId}/stream",
       "scope": "Verificar se o produtor da fonte aponta para a capability StreamId, sem expor timer ID na URL.",
@@ -4018,10 +3993,7 @@
       "title": "Auditoria dos 64 skips da regressão .NET; gates de DB isolado preservados",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "TRX: 64 ignorados (30 MySQL/MariaDB isolado; 24 Mongo opt-in; 5 Unix-only; 2 benchmarks; 1 /dev/shm; 1 ACL Unix/NTFS; 1 dependência ausente)",
       "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/TestResults/server-regression-20261019.trx; MulletaFlix-master/tests/Jellyfin.Server.Tests/TestResults/server-regression-20261019.trx",
       "scope": "Classificar os testes ignorados da regressão ampla e definir gates reexecutáveis, sem usar bancos de produção.",
@@ -4036,10 +4008,7 @@
       "title": "Mongo local 24/24; CI Mongo 7.0 e Release ainda bloqueados",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "RequiresMongo: 24/24 em MongoDB 8.3.7 descartável (execução anterior registrada); contrato de cobertura do CI: 1/1; run remoto 39212993752 não iniciou steps",
       "location": "docs/AUDIT-EVIDENCE.md; .github/workflows/ci.yml; tools/release/tests/ci-mongo-coverage.test.mjs",
       "scope": "Reconciliar a evidência integrada Mongo já aprovada com a versão MongoDB 7.0 do CI e o estado atual da publicação, sem acessar bancos nem runtime de produção.",
@@ -4054,10 +4023,7 @@
       "title": "Regressão .NET: 5.044 aprovados; 8 tarefas Nebula pré-cache descartadas explicitamente",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Solution .NET Release filtered: 5.044 aprovados, 64 ignorados, 0 falhas; NebulaPlaybackCacheTests 59/59; Implementations (rerun final): 1.506 aprovados, 63 ignorados, 0 falhas (1.569 total)",
       "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaPlaybackCacheTests.cs",
       "scope": "Reexecutar a regressão .NET local e tornar explícito o descarte das tarefas de pré-cache assíncronas nos testes, sem alterar runtime.",
@@ -4072,10 +4038,7 @@
       "title": "UserLibrary: suíte HTTP completa aprovada; 144/144 sem skips",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "UserLibraryControllerTests 16/16; Jellyfin.Server.Integration.Tests 144/144, 0 skips e 0 falhas",
       "location": "MulletaFlix-master/tests/Jellyfin.Server.Integration.Tests/Controllers/UserLibraryControllerTests.cs",
       "scope": "Reativar os testes positivos de item, intros, trailers locais e recursos especiais e executar a suíte HTTP completa contra MariaDB descartável, sem alegar validação de produção.",
@@ -4090,10 +4053,7 @@
       "title": "Suite Server Integration com MariaDB descartável: 140 aprovados; runtime pendente",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "NebulaPython 598/598; Vitest 418/418; Mongo 24/24; MariaDB IntroSkipper 39/39; Server Integration 140 aprovados, 3 ignorados e 0 falhas; typecheck e build aprovados",
       "location": "MulletaFlix-master/tests/Jellyfin.Server.Integration.Tests; Tools/NebulaPython; MulletaFlix-web-master",
       "scope": "Registrar os gates locais de servidor e web, incluindo a suíte completa Jellyfin.Server.Integration.Tests contra MariaDB descartável, sem usar produção nem alegar aceite/runtime de produção.",
@@ -4108,10 +4068,7 @@
       "title": "Regressão ampla da solução .NET aprovada; integrações seguem pendentes",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "dotnet test MulletaFlix.sln Release sem casos Integration; Node homologação 120/120",
       "location": "Solução .NET do servidor e portal público de homologação",
       "scope": "Reexecutar o gate determinístico completo disponível, atualizar os números auditáveis e manter gates de integração e produção separados.",
@@ -4201,10 +4158,7 @@
       "title": "Supabase: restore Mongo validado em instância isolada",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.2",
-        "T4.3"
-      ],
+      "featureIds": ["T4.2", "T4.3"],
       "local": "Testes de integração C# com MongoDB isolado",
       "location": "Restore paginado de catálogo, usuários FTP, usuários MulletaFlix e tokens de bots",
       "scope": "Executar a categoria RequiresMongo em banco descartável local, sem acessar dados remotos ou de produção.",
@@ -4219,10 +4173,7 @@
       "title": "Supabase: restore do catálogo Nebula por cursor",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.2",
-        "T4.3"
-      ],
+      "featureIds": ["T4.2", "T4.3"],
       "local": "NebulaSupabaseSyncService e testes de restore Supabase",
       "location": "Restore do catálogo nebula_files em páginas limitadas por chave id",
       "scope": "Substituir offset suscetível a deslocamento por keyset streaming; preservar consumo limitado de memória e explicitar parcialidade/retry.",
@@ -4237,10 +4188,7 @@
       "title": "Supabase: restore e reconciliação paginados por cursor",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.2",
-        "T4.3"
-      ],
+      "featureIds": ["T4.2", "T4.3"],
       "local": "NebulaSupabaseSyncService.FetchSupabaseRowsPagedAsync e testes focados",
       "location": "Leitura de nebula_users, mulletaflix_users e nebula_bot_tokens",
       "scope": "Recuperar páginas além do teto efetivo do PostgREST e evitar deslocamento de offset por inserções/remoções anteriores ao cursor, sem declarar snapshot transacional nem restore Mongo homologado.",
@@ -4255,10 +4203,7 @@
       "title": "Auditoria: serialização GetAvatar e preservação de ACL no restore FTP legado",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T0.3",
-        "T4.3.7"
-      ],
+      "featureIds": ["T0.3", "T4.3.7"],
       "local": "AvatarService.SetUserAvatarAsync, NebulaSupabaseSyncService.PerformRestoreAsync e NebulaMongoContext.UpsertLegacyFtpUserAsync",
       "location": "Fluxo de perfil e restauração Supabase → MongoDB do Nebula",
       "scope": "Evitar rollback sobreposto em trocas de avatar e preservar ACL/campos Mongo ao restaurar linha FTP legada sem doc_data; não afirmar homologação da integração sem fixture Mongo.",
@@ -4288,10 +4233,7 @@
       "title": "12.1.24 está na branch/tag, mas não tem GitHub Release",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T3.6",
-        "T9.5.2"
-      ],
+      "featureIds": ["T3.6", "T9.5.2"],
       "local": "UpdateInfoController, GitHub Releases API, branch/tag 12.1.24 e testes Providers/MetadataService",
       "location": "Painel admin Centro de Atualizações; tag v12.1.24; workflow 39212993752",
       "scope": "Explicar por que o Centro de Atualizações exibe 12.1.21 e registrar a validação mais recente sem alegar publicação ou instalação inexistente.",
@@ -4321,9 +4263,7 @@
       "title": "Capas: preservação de imagem principal e falhas reportadas na fonte",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T8.2"
-      ],
+      "featureIds": ["T8.2"],
       "local": "Correção de persistência e regressões de capas em metadata local e remoto",
       "location": "MetadataService.RefreshWithProviders / SaveRemoteResultImages → ProviderManager.SaveImage → ImageSaver",
       "scope": "Evitar sobrescrita de imagens singulares, registrar falhas finais e preservar fluxo de imagens múltiplas, sem alterar mídia de produção.",
@@ -4338,9 +4278,7 @@
       "title": "Nebula: regressão ampla aprovada; download real segue sem homologação",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": ".NET Release solution suite and NebulaPython pytest",
       "location": "MulletaFlix.sln; Tools/NebulaPython/tests",
       "scope": "Executar regressão automatizada ampla sem alterar produção e registrar os limites de homologação do Downloader.",
@@ -4355,9 +4293,7 @@
       "title": "Nebula: log repetido; início do Downloader sem reprodução",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log fornecido, interface Nebula e testes focados Release",
       "location": "POST NebulaFtp/Actions/StartDownloader; NebulaHostedService.StartComponentsAsync",
       "scope": "Distinguir falha da ação de download de falha do modo streaming sem alterar produção.",
@@ -4372,9 +4308,7 @@
       "title": "CI do servidor: seleção completa dos testes RequiresMongo",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T0.3"
-      ],
+      "featureIds": ["T0.3"],
       "local": "Validação YAML/contrato e seleção focal da suíte .NET",
       "location": ".github/workflows/ci.yml; nebula-mongo-integration-tests",
       "scope": "Substituir três classes Mongo fixas por seleção da categoria RequiresMongo para incluir todo cenário de persistência marcado.",
@@ -4389,9 +4323,7 @@
       "title": "Nebula: runtime ativo ainda está na versão 12.1.21",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "GET público local, processo/portas e hashes do worker instalado e da fonte",
       "location": "MulletaFlix 12.1.21; Nebula FTP 2121; HTTP stream 2123",
       "scope": "Verificar se o runtime de produção local contém o worker e a correção de prontidão validados na fonte, sem reiniciar/alterar serviço.",
@@ -4406,9 +4338,7 @@
       "title": "Nebula: revalidação ampliada do contrato de prontidão STRM",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Testes C# Release e NebulaPython 3.10",
       "location": "NebulaFtpManager; downloader STRM; mount N:",
       "scope": "Reexecutar os testes de inicialização/montagem após exigir scan efetivo antes de confirmar downloader pronto.",
@@ -4423,9 +4353,7 @@
       "title": "Nebula: downloader só confirma prontidão quando o scan começa",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Testes .NET Release e NebulaPython 3.10",
       "location": "NebulaFtpManager.StartDownloaderAsync; STRM-SCAN-STARTED",
       "scope": "Evitar sucesso falso do start quando o processo inicia, mas falha ao validar o índice Mongo antes de iniciar a varredura.",
@@ -4440,9 +4368,7 @@
       "title": "Nebula: startup usa runtime vivo para promover streaming a transferência",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Testes de fonte C# Release e revisão do log anexado",
       "location": "NebulaFtpManager.StartEnvioAsync; FTP 2121; STREAM_ONLY",
       "scope": "Evitar que uma flag lógica atrasada inicie uma segunda instância enquanto o worker FTP ainda está vivo; preservar o modo completo de transferência.",
@@ -7869,9 +7795,7 @@
       "title": "Nebula: autostart do Downloader ignorado porque o serviço está desabilitado",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Logs locais de produção, estado read-only da interface e fonte do servidor",
       "location": "NebulaHostedService startup; configuração NebulaFTP; ação StartDownloader",
       "scope": "Identificar por que o Downloader STRM permanece parado, sem iniciar varredura ou transferências em massa.",
@@ -7886,9 +7810,7 @@
       "title": "Nebula: bind FTP colide após reinícios; download STRM não comprovado",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log operacional anexado, GET local somente leitura e testes focados Release",
       "location": "NebulaHostedService; NebulaFtpManager; FTP 2121; mount N:; worker STRM",
       "scope": "Registrar o conflito repetido de porta e distinguir streaming/mount do Downloader STRM sem alterar produção.",
@@ -7903,9 +7825,7 @@
       "title": "Nebula: autosave preserva Enabled; log antigo não comprova download STRM",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log operacional anexado, regressões JavaScript/Python/C#",
       "location": "Jellyfin.Api/Web/NebulaFTP/configPage.js; Nebula downloader startup e mount N:",
       "scope": "Evitar que autosave altere o estado global do Nebula e registrar a limitação de evidência do runtime sem iniciar operação de produção.",
@@ -7920,9 +7840,7 @@
       "title": "Nebula: log confirma modo streaming, colisão de porta e Downloader sem readiness",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log operacional anexado, código-fonte e regressões locais",
       "location": "NebulaHostedService; NebulaFtpManager; worker STRM; FTP 2121 e mount N:",
       "scope": "Validar a hipótese do Downloader não iniciado e separar evidência do modo streaming, conflito FTP e montagem sem homologar produção.",
@@ -7937,9 +7855,7 @@
       "title": "Nebula: promoção Python de Somente Streaming para Envio libera FTP antes do novo worker",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log operacional, fonte C#/Python e testes focados",
       "location": "NebulaFtpManager.StartEnvioAsync; runtime Python; FTP 2121",
       "scope": "Corrigir a colisão de porta ao promover o mesmo serviço de Somente Streaming para Envio completo.",
@@ -7954,9 +7870,7 @@
       "title": "Auditoria: visibilidade do avatar customizado ainda precisa de validação HTTP",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T6.1"
-      ],
+      "featureIds": ["T6.1"],
       "local": "Inspeção estática de controllers e testes HTTP focados",
       "location": "MulletaFlix.Plugin.GetAvatar/Controllers/AvatarController.cs; Jellyfin.Api/Controllers/ImageController.cs",
       "scope": "Registrar diferença de autorização em GET /GetAvatar/UserAvatar/{userId} e definir a matriz de compatibilidade antes de alterar o contrato.",
@@ -7971,9 +7885,7 @@
       "title": "Nebula: rechecagem do log e validação local de startup/download",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log operacional de 16–17/10, fonte C#/Python e testes focados",
       "location": "NebulaHostedService; NebulaFtpManager; runtime Python; mount N:",
       "scope": "Verificar se o Downloader STRM inicia após falha do Envio e revalidar correções de promoção e montagem.",
@@ -7988,9 +7900,7 @@
       "title": "Nebula: falha do Envio não bloqueia mais a tentativa do Downloader",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log operacional de 16–17/10, fonte C# e testes Release",
       "location": "NebulaHostedService.StartComponentsAsync; Envio FTP 2121; Downloader STRM",
       "scope": "Isolar falha de startup do Envio para que o Downloader STRM ainda seja tentado; preservar cancelamento e mount condicionado ao FTP.",
@@ -8005,9 +7915,7 @@
       "title": "Nebula: evita retry infinito quando runtime morreu ou N: está ocupado",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log operacional de 16–17/10, fonte C#/Python e testes Release focados",
       "location": "NebulaFtpManager.MountDriveNAsync; Tools/mount_drive_n.py; porta FTP 2121 e mount N:",
       "scope": "Corrigir a recuperação do runtime FTP após saída do worker e impedir que a existência de N: em outra sessão seja reportada como montagem saudável.",
@@ -8022,9 +7930,7 @@
       "title": "Nebula: log não comprova acionamento do Downloader STRM",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log operacional de 16–17/10; GET local de versão; testes C# Release e Python 3.10",
       "location": "NebulaHostedService.StartComponentsAsync; NebulaFtp/Actions/StartDownloader; portas 2121/2123",
       "scope": "Separar falha do modo Envio de evidência de início do Downloader e revalidar o comportamento da fonte sem tocar no runtime produtivo.",
@@ -8039,9 +7945,7 @@
       "title": "Nebula: runtime presente, mas log não comprova download",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log histórico anexado; GET de versão e consultas read-only de processos/listeners",
       "location": "NebulaHostedService; NebulaFtpManager; FTP 2121; downloader STRM",
       "scope": "Revalidar o log recebido e distinguir presença de processos de scan/transferência confirmados, sem interromper produção.",
@@ -8056,9 +7960,7 @@
       "title": "GetAvatar limpa arquivo parcial quando a configuração não persiste",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T6.1.25"
-      ],
+      "featureIds": ["T6.1.25"],
       "local": "Fonte GetAvatar e teste Release em diretório temporário",
       "location": "AvatarService.SaveAvatarAsync; catálogo XML e pasta de avatares",
       "scope": "Garantir rollback de arquivo e entrada em memória se a persistência da imagem ou catálogo falhar.",
@@ -8073,9 +7975,7 @@
       "title": "Nebula pausa retries quando outro helper possui o lock de montagem",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula e testes C# Nebula",
       "location": "NebulaFtpManager.MountDriveNAsync; mount_drive_n.py; lock global de N:",
       "scope": "Eliminar o ciclo de tentativas de mount a cada três segundos quando outro helper já possui o lock, sem interferir no processo proprietário.",
@@ -8090,9 +7990,7 @@
       "title": "Nebula/Supabase: admissão auditada, lease órfã não comprovada",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.2"
-      ],
+      "featureIds": ["T4.2"],
       "local": "NebulaPython 3.10 e testes C# de admissão Mongo",
       "location": "NebulaSupabaseSyncService; NebulaMongoContext; mongo_admission.py",
       "scope": "Auditar adiamentos recorrentes do backup sem consultar banco de produção.",
@@ -8124,9 +8022,7 @@
       "title": "Nebula download: suíte do servidor validada; homologação de transferência segue pendente",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Solução .NET Release e teste de integração NartoDrama executado isoladamente",
       "location": "Suítes automatizadas do servidor; fluxo Nebula ainda depende de validação runtime",
       "scope": "Executar regressão ampla do servidor após as correções Nebula e registrar limites de teste sem alegar homologação produtiva.",
@@ -8141,9 +8037,7 @@
       "title": "Log Nebula: montagem do disco iniciou deliberadamente em modo somente streaming",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log anexado de 16/10 e leitura do fluxo de montagem/start da fonte C#",
       "location": "NebulaFtpManager.MountDriveNAsync, StartEnvioAsync e endpoint administrativo de start",
       "scope": "Determinar por que o log não apresenta início da fila de download/upload, distinguindo modo de montagem streaming do modo completo de transferência.",
@@ -8158,9 +8052,7 @@
       "title": "Baseline: nova amostra read-only mostra picos de latência e memória atual",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T0.1"
-      ],
+      "featureIds": ["T0.1"],
       "local": "Servidor local instalado; somente GET público e leitura de métricas do processo",
       "location": "GET /System/Info/Public e processo do servidor",
       "scope": "Repetir baseline em execução real sem concorrência e registrar limites estatísticos e de cobertura.",
@@ -8175,9 +8067,7 @@
       "title": "Nebula: primeira varredura de limpeza agora inicia em background sem esperar 15 minutos",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.6"
-      ],
+      "featureIds": ["T2.6"],
       "local": "Validação local do servidor em Release; sem instalação nem operação de produção",
       "location": "NebulaFtpManager.RunContinuousCleanupLoopAsync e NebulaPeriodicLoop",
       "scope": "Remover a espera inicial de 15 minutos da limpeza sem bloquear o startup ou sobrepor travessias periódicas.",
@@ -8192,9 +8082,7 @@
       "title": "Downloader Nebula: prontidão confirmada após Mongo, antes da descoberta das bibliotecas",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Testes Release focados C# e Python; consulta HTTP local somente leitura",
       "location": "NebulaFtpManager.IsPythonDownloaderReadyOutput e strm_downloader.run_downloader",
       "scope": "Evitar que o timeout de startup encerre um worker válido enquanto ele descobre raízes STRM grandes ou remotas; manter a varredura observável como progresso separado.",
@@ -8209,9 +8097,7 @@
       "title": "Nebula: runtime Python antigo ocupa portas; log não confirma start do Downloader STRM",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Processos/portas e health HTTP local, versão pública e log recebido; testes focados da fonte",
       "location": "Instância MulletaFlix 12.1.21; FTP 2121; HTTP 2123; Downloader STRM",
       "scope": "Reconciliar o log anexado com o runtime atualmente ativo, sem interromper reprodução nem iniciar varredura/download amplo.",
@@ -8226,9 +8112,7 @@
       "title": "Nebula: interface aguarda início; produção ainda está na versão 12.1.21",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Interface Nebula aberta em leitura, rota da ação na fonte, versão pública local e testes C# Release",
       "location": "Painel NebulaFTP; POST NebulaFtp/Actions/StartDownloader; NebulaHostedService",
       "scope": "Verificar se botão, estado visível e ação do Downloader indicam tentativa de início, sem disparar varredura sobre a raiz completa.",
@@ -8243,9 +8127,7 @@
       "title": "Nebula download: log confirma modo streaming e conflito de porta; teste de fonte passa",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log de 16–17/10, processo/portas, API local e testes focados do servidor",
       "location": "NebulaFTP modo streaming/envio, portas 2121/2123 e Downloader STRM",
       "scope": "Atualizar a homologação com nova amostra do log e estado read-only do runtime, sem interromper reprodução nem iniciar varredura ampla.",
@@ -8260,9 +8142,7 @@
       "title": "Nebula: validação ampliada passa; log não comprova chamada do Downloader",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Log de 16–17/10, testes Release da fonte e estrutura do fluxo",
       "location": "Nebula streaming/envio, FTP 2121 e Downloader STRM",
       "scope": "Atualizar evidência de homologação após repetir testes no ambiente Python correto e executar a suíte .NET Release, sem iniciar varredura ou transferência ampla.",
@@ -8277,10 +8157,7 @@
       "title": "Nebula preserva sincronizador Supabase em falha de startup",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Fonte e testes C# do manager Nebula; suíte Implementations",
       "location": "NebulaFtpManager.StartEnvioAsync rollback",
       "scope": "Evitar que falha de promoção para Envio encerre sincronizador Supabase já ativo no runtime anterior.",
@@ -8295,9 +8172,7 @@
       "title": "Nebula: empacotamento agora bloqueia worker STRM sem contrato de prontidão Mongo",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "Gate PowerShell de integridade do stage e testes C# de startup do Downloader",
       "location": "Assert-StageIntegrity.ps1; NebulaFtpManager.StartPythonDownloaderAsync; strm_downloader.py",
       "scope": "Impedir que um pacote de servidor combine manager que aguarda readiness Mongo com worker STRM antigo que não emite o marcador exigido.",
@@ -8312,10 +8187,7 @@
       "title": "Servidor: suítes amplas locais aprovadas; gates externos permanecem abertos",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Suítes Release .NET, pytest Nebula, integridade do pacote e testes do portal",
       "location": "Implementations, API, Providers, NebulaPython, pacote e homologação",
       "scope": "Registrar validação ampla da fonte sem modificar ou reiniciar serviços produtivos.",
@@ -8330,10 +8202,7 @@
       "title": "Nebula: backup inicial conclui, mas runtime antigo adia ciclos e falha no mount",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Log anexado de 516 linhas, fonte atual e testes locais Release",
       "location": "Backup automático Supabase, workers de upload, FTP 2121 e montagem N:",
       "scope": "Separar o sucesso do backup inicial dos adiamentos posteriores e investigar ausência de início/scan STRM sem interferir no runtime produtivo.",
@@ -8348,10 +8217,7 @@
       "title": "Nebula: prontidão do Downloader revalidada; runtime ainda pendente",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Implementations Release 1.499/63 e NebulaPython 595; inspeção read-only do processo",
       "location": "NebulaPythonCacheLeaseHost heartbeat; main.py worker watchdog; StartDownloaderAsync",
       "scope": "Corrigir a retenção das portas por worker órfão e revalidar testes sem interromper streams.",
@@ -8366,12 +8232,7 @@
       "title": "Tag 12.1.24 publicada no Git; workflow falhou antes dos steps",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T3.6",
-        "T9.5.2",
-        "T9.5.5",
-        "T9.5.6"
-      ],
+      "featureIds": ["T3.6", "T9.5.2", "T9.5.5", "T9.5.6"],
       "local": ".NET Release, NebulaPython, frontend, builds, pacotes e GitHub Actions",
       "location": "Validação local e execução remota da release corretiva 12.1.24",
       "scope": "Publicar somente alterações do servidor, acionar tag e acompanhar o workflow de release.",
@@ -8386,10 +8247,7 @@
       "title": "Capas: provider remoto tenta URLs alternativas após erro transitório",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T1.4",
-        "T9.5.2"
-      ],
+      "featureIds": ["T1.4", "T9.5.2"],
       "local": "Jellyfin.Providers.Tests Release; teste de regressão HTTP 502 e falha de transporte",
       "location": "MediaBrowser.Providers.ItemImageProvider.DownloadImage",
       "scope": "Validar o caminho secundário de imagens, que não era coberto pelo retry de MetadataService, sem alegar instalação nem renderização em produção.",
@@ -8434,9 +8292,7 @@
       "title": "Nebula: fallback Mongo de destinos concluídos coberto sem índice em cache",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "NebulaPython 3.10; pytest focal e suíte completa com cobertura",
       "location": "Tools/NebulaPython/tools/feed_ftp.py → is_completed_destination",
       "scope": "Cobrir consultas Mongo diretas quando não há índice de mídias concluídas em cache, incluindo identidade, erro e fechamento do cliente.",
@@ -8451,9 +8307,7 @@
       "title": "Nebula: fallbacks de identidade Mongo e resolução de caminhos revalidados",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "NebulaPython 3.10; pytest focal e suíte completa com cobertura",
       "location": "Tools/NebulaPython/tools/feed_ftp.py → is_completed_destination e mongo_parent_for",
       "scope": "Cobrir indexação por nome/stem, identidade via origem STRM, URI ausente, parsing de URL, falha de Path.resolve e erros Mongo sem alterar o runtime.",
@@ -8468,9 +8322,7 @@
       "title": "Nebula: cobertura por branches dos fallbacks de mídia concluída",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1"
-      ],
+      "featureIds": ["T2.1"],
       "local": "NebulaPython 3.10; pytest focal com coverage de branches",
       "location": "Tools/NebulaPython/tools/feed_ftp.py → is_completed_destination",
       "scope": "Adicionar casos de identidade de episódio no destino, miss no índice e carregamento sob demanda das identidades Mongo.",
@@ -9040,10 +8892,7 @@
       "title": "Servidor: regressão local .NET, web, Nebula e empacotamento",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Windows PowerShell, .NET, Node/Vitest e venv Nebula isolada",
       "location": "Solução .NET, MulletaFlix-web, Tools/NebulaPython e harnesses de packaging",
       "scope": "Registrar cobertura de regressão local e limites conhecidos; sem alterar runtime, instalar produto ou criar release.",
@@ -9073,10 +8922,7 @@
       "title": "Nebula: regressão focal de lifecycle, cache e backup",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Windows, .NET 10 Release; Jellyfin.Server.Implementations.Tests e Node.js",
       "location": "Nebula periodic loop, mount runtime health, cleanup, playback cache, Supabase sync/restore e config page",
       "scope": "Reexecutar regressões dos componentes Nebula alterados no checkout, sem conectar Mongo/MariaDB/Telegram/Supabase reais nem tocar produção.",
@@ -9106,10 +8952,7 @@
       "title": "Nebula: suíte completa de implementações revalidada; gates operacionais pendentes",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Windows, .NET 10 Release; Jellyfin.Server.Implementations.Tests",
       "location": "NebulaFtpManager, downloader startup, fila, cache/playback, refresh e sincronização",
       "scope": "Executar os testes de implementação associados a Nebula sem usar Mongo/Telegram/Supabase reais nem alterar runtime ou produção.",
@@ -9124,10 +8967,7 @@
       "title": "Nebula: suíte completa passou com Mongo isolado, zero skips",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Windows, .NET 10 Release, MongoDB 8.3.7 isolado",
       "location": "NebulaFtpManager, worker startup, filas, cache/playback, refresh, Supabase sync e testes Mongo",
       "scope": "Executar suíte Nebula completa com opt-in Mongo, mantendo o serviço MongoDB preexistente isolado e sem tocar produção.",
@@ -9142,10 +8982,7 @@
       "title": "Release servidor v12.1.25 publicada; validação e limites registrados",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T2.1",
-        "T4.2"
-      ],
+      "featureIds": ["T2.1", "T4.2"],
       "local": "Windows PowerShell, .NET 10 Release, Node/Vitest, NebulaPython 3.10 isolado, build cross-platform Linux x64",
       "location": "Servidor MulletaFlix, Nebula FTP/Download, APIs GetAvatar/ACL, metadata/images, cliente web embarcado e empacotamento Windows/Linux",
       "scope": "Consolidar, testar e publicar a release 12.1.25 do servidor e atualizar o estado público no portal pelo Git, sem instalar em produção.",
@@ -9215,9 +9052,7 @@
       "updatedAt": "2026-10-21T03:21:00-03:00",
       "evidence": "Correção testada com MongoDB 8.3.7 descartável em 127.0.0.1:27099: backup/restore das coleções padrão e customizada 2/2; suíte Nebula Release 730/730; contratos Node de release 23/23; TypeScript sem erros e Vite compilou 5.097 módulos. Produzidos e inspecionados instalador Windows x64 (423.407.491 bytes; SHA-256 9051C923E3E6DEC1F9A43144CC7E6CA1E28A0C192D486ED04B7EFB889C047CA1), ZIP atualizador (388.897.141 bytes; SHA-256 11733C251CF85D201FB6FD57A16C848204A97CECA8AD314A5941E8332246C6B8) e tar.gz Linux x64 (137.183.278 bytes; SHA-256 B93546207199DEC44BEE0C81959B7635DE48B79A146DB5900C4E70038F8B3744). Release v12.1.29 publicada no GitHub. Build Linux cross-published em Windows; CI, Linux nativo, instalação/upgrade, integrações reais e produção não foram homologados. Backup integral continua parcial; nenhuma produção foi alterada.",
       "release": "v12.1.29 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.29 (commit cd8dc8821b74e139c44a3cd1f681f40144ae0bc0)",
-      "links": [
-        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.29"
-      ]
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.29"]
     },
     {
       "id": "server-frontend-vite-security-audit-2026-10-21-0350",
@@ -9234,9 +9069,7 @@
       "updatedAt": "2026-10-21T04:34:24-03:00",
       "evidence": "npm audit inicial: 12 vulnerabilidades somente em dev-dependencies (1 moderada, 11 altas); npm audit --omit=dev: 0. Vite 7.3.6 foi atualizado para 7.3.7 para corrigir advisories de launch-editor no Windows. Após: audit completo 11 dev (1 moderada, 10 altas), produção segue 0. Typecheck passou; Vitest 418/418 em 75 arquivos; build:production e verify:build passaram, 1.926 artefatos e orçamento inicial 294,3 KiB gzip/420 KiB. Suite .NET Release terminou exit 0; Implementations 1.509 aprovados/65 ignorados, Providers 817/817, API 763 aprovados/3 ignorados. Skips incluem Mongo/MariaDB opt-in e plataforma; não são aprovados. Pester do runtime Nebula 1/1 e contratos Node do package builder 2/2. Release GitHub v12.1.30 publicada no commit e5fa14356cf51908c84f62acfcd3515cd6d6f2c5; API confirmou 3 assets e digests: EXE 423.476.625 bytes, ZIP 388.591.700 bytes, Linux tar.gz 137.184.231 bytes. O ZIP foi verificado com DLL, frontend, tray e runtime Nebula, sem .coverage/.ruff_cache. Artefatos cross-published em Windows; Linux nativo, CI remoto, instalação/upgrade, produção e playback não foram verificados. Homologação ampla continua aberta; nenhuma instalação ou alteração em produção nesta sessão.",
       "release": "v12.1.30 — https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.30 (commit e5fa14356cf51908c84f62acfcd3515cd6d6f2c5)",
-      "links": [
-        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.30"
-      ]
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.30"]
     },
     {
       "id": "server-backup-mariadb-roundtrip-2026-10-21-0804",
@@ -9262,9 +9095,7 @@
       "title": "Servidor: preflight de release bloqueado por melhorias pendentes",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.2"
-      ],
+      "featureIds": ["T4.2"],
       "local": "Windows, auditoria read-only de Git, tags e documentação de release",
       "location": "MulletaFlix-master/docs/backup-coverage-audit.md e docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
       "scope": "Verificar prontidão de release de todas as correções do servidor, respeitando a premissa de concluir melhorias planejadas antes de publicar nova versão.",
@@ -9283,9 +9114,7 @@
       "title": "Servidor: suíte completa aprovada; release aguardando melhorias planejadas",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.2"
-      ],
+      "featureIds": ["T4.2"],
       "local": "Windows, .NET 10 Release; testes de solução e auditoria read-only de assets",
       "location": "MulletaFlix-master/tests, MulletaFlix-web-master/src/components/notifications, docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
       "scope": "Reexecutar validação de release do servidor e conferir ícones/identidade MulletaFlix sem tocar na instalação nem na produção.",
@@ -9600,9 +9429,7 @@
       "title": "Restore de backup: abortar falha relacional sem sucesso parcial",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.3"
-      ],
+      "featureIds": ["T4.3"],
       "local": "FullSystemBackup Release e IntroSkipper.Integration.Tests Release",
       "location": "BackupService.RestoreBackupCoreAsync; FileSystemRestoreTransaction; BackupRestoreMariaDbTests",
       "scope": "Fazer falhas de inclusão/persistência abortarem o restore e reverterem alterações relacionais e arquivos já instalados.",
@@ -9676,9 +9503,7 @@
       "title": "Correção local do manifesto e inclusão de PlaybackReports no backup",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.3"
-      ],
+      "featureIds": ["T4.3"],
       "local": "Windows, .NET 10; testes unitários e integração MariaDB opt-in",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; JellyfinDbContext; BackupServiceTests; BackupRestoreMariaDbTests",
       "scope": "Alinhar manifesto, arquivos ZIP, validação e restore pelos nomes físicos de tabelas do modelo EF e incluir PlaybackReports no escopo central de backup/restore.",
@@ -9697,9 +9522,7 @@
       "title": "Implementação local de restore multi-contexto no backup integral",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.3"
-      ],
+      "featureIds": ["T4.3"],
       "local": "Windows, .NET 10; testes unitários e integração MariaDB opt-in",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; providers de banco; BackupServiceTests; BackupRestoreMariaDbTests",
       "scope": "Incluir Movies, Series, Channels e Books no snapshot e no restore sob uma transação relacional, preservando a interface legada do provider.",
@@ -9719,9 +9542,7 @@
       "title": "MariaDB isolado: restore multi-contexto e correção de conexão pooled",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.3"
-      ],
+      "featureIds": ["T4.3"],
       "local": "Windows, .NET 10; MariaDB 11.4.4 descartável em loopback:47251",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Extensions/ServiceCollectionExtensions.cs; MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; testes FullSystemBackup e BackupRestoreMariaDbTests",
       "scope": "Reproduzir e corrigir reutilização de conexão descartada em contextos de domínio após rollback de restore multi-contexto.",
@@ -9781,9 +9602,7 @@
       "title": "Servidor: recuperação idempotente do restore após interrupção",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.3"
-      ],
+      "featureIds": ["T4.3"],
       "local": "Windows, .NET 10 Release; testes unitários com filesystem isolado",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupRestoreRecoveryJournal.cs; BackupService.cs; Jellyfin.Server/Program.cs",
       "scope": "Persistir a identidade SHA-256 do backup integral, retomar a instalação filesystem por sidecars determinísticos e reaplicar o mesmo ZIP antes da inicialização do host principal.",
@@ -9823,9 +9642,7 @@
       "title": "Servidor: auditoria TOCTOU do restore e revalidação focal",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.3"
-      ],
+      "featureIds": ["T4.3"],
       "local": "Windows, .NET 10 Release; auditoria estática de segurança",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs",
       "scope": "Revalidar restore integral e investigar se rejeição de reparse points estáticos elimina a troca concorrente de diretório entre validação e escrita.",
@@ -9842,9 +9659,7 @@
       "title": "Servidor: revalidação dos testes de recuperação do restore",
       "agent": "Codex",
       "front": "server",
-      "featureIds": [
-        "T4.3"
-      ],
+      "featureIds": ["T4.3"],
       "local": "Windows, .NET 10 Release; suíte FullSystemBackup",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupRestoreRecoveryJournal.cs; MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs",
       "scope": "Reexecutar a suíte focal após a implementação local do journal/replay e reconciliar a documentação histórica do risco crash-safe.",
