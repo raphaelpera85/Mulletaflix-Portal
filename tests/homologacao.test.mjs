@@ -5099,6 +5099,23 @@ test('portal reports production on 12.1.36 and keeps the v12.1.37 visual check p
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records published v12.1.38 assets while hosted validation and production homologation remain pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-web-helpbutton-routing-warning-release-2026-10-27-1946');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /421 testes Vitest\/77 arquivos/);
+    assert.match(event.evidence, /validação hospedada não foi confirmada/);
+    assert.match(event.release, /releases\/tag\/v12\.1\.38/);
+    assert.match(event.release, /Instalação e validação visual em produção pendentes/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal publishes the current Windows/.NET regression totals without formal gate credit', () => {
     const event = statusData.events.find(item => item.id === 'server-dotnet-regression-2026-10-27-1831');
     const server = statusData.tracks.find(track => track.id === 'server');

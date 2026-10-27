@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T19:17:15-03:00",
+  "generatedAt": "2026-10-27T19:46:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,28 @@
     }
   ],
   "events": [
+    {
+      "id": "server-web-helpbutton-routing-warning-release-2026-10-27-1946",
+      "title": "Servidor: elimina Routes aninhadas do HelpButton e publica v12.1.38",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release e web Vitest; builds Windows e Linux empacotados localmente",
+      "location": "MulletaFlix-web-master/src/apps/dashboard/components/HelpButton.tsx; MulletaFlix-web-master/src/apps/dashboard/components/HelpButton.test.tsx",
+      "scope": "Remover o aviso de roteamento causado por Routes aninhadas do botão de ajuda e publicar a correção em release de servidor.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-27T19:20:00-03:00",
+      "updatedAt": "2026-10-27T19:46:06-03:00",
+      "evidence": "HelpButton usa a rota atual e matchPath; teste cobre o formulário XMLTV com query e rota sem ajuda. Typecheck, lint alterado, 421 testes Vitest/77 arquivos, build de produção e verify:build passaram (1.927 arquivos; 294,3 KiB gzip). Pacotes Windows x64 (instalador 416.210.048 bytes; ZIP 417.655.643 bytes) e Linux x64 (tar.gz 134.767.680 bytes) foram montados localmente; verificações confirmaram entradas centrais do ZIP e tarball. Commit 55df4b13 e tag v12.1.38 estão em main. Os workflows hospedados CI 40594603001 e Release 40594602877 falharam no primeiro job de validação, antes das etapas; por isso a validação hospedada não foi confirmada. Release publicada manualmente com os três artefatos. O workflow Linux de dependências sem compilador não foi executado localmente no Windows. Sem instalação ou smoke visual em produção; homologação formal permanece 2/7 (28,6%).",
+      "release": "Release v12.1.38 publicada: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.38. Instalação e validação visual em produção pendentes. Workflows hospedados de validação falharam antes das etapas; veja https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40594602877. Não credita gate formal; homologação continua 2/7 (28,6%).",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/releases/12.1.38.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.38",
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40594603001",
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40594602877"
+      ]
+    },
     {
       "id": "server-nebula-tls-sni-restore-audit-2026-10-27-1831",
       "title": "Servidor: auditoria de falhas TLS do Nebula e gates de restore",
