@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T18:13:08-03:00",
+  "generatedAt": "2026-10-27T18:22:32-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-nebula-supabase-log-revalidation-2026-10-27-1822",
+      "title": "Servidor: revalidados erros de inicialização Nebula e backup Supabase",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; três testes focalizados de paginação Supabase; inspeção read-only do esquema e contagens Supabase",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaSupabaseSyncService.cs; MulletaFlix-packaging-master/install-python-if-missing.ps1; tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaSupabaseSyncTests.cs",
+      "scope": "Classificar falhas vistas em log da versão 12.1.35, verificar as correções presentes na release 12.1.36 e conferir se os registros remotos atuais reproduzem o erro de chave login.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-27T18:18:00-03:00",
+      "updatedAt": "2026-10-27T18:22:32-03:00",
+      "evidence": "O log declara servidor 12.1.35. A release 12.1.36 já move a virtualenv Nebula para DataPath gravável pela conta do serviço e envia cursor UUID em formato canônico sem aspas; os três testes focais passaram (3/3). Leitura somente de agregados/esquema no Supabase atual: nebula_users tem 7 linhas, login é chave primária, 0 grupos duplicados e 0 logins vazios; mulletaflix_users tem 16 linhas e id UUID. A repetição de cursor login não foi reproduzida no estado atual. Nenhum registro remoto foi alterado.",
+      "release": "v12.1.36 já publicada com as correções de virtualenv e cursor UUID. Nenhuma nova alteração de servidor foi necessária nesta revalidação; não foi criada outra release. Homologação formal permanece 2/7 (28,6%). CI remota, instalação/serviço e smoke em produção continuam pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.36"
+      ]
+    },
     {
       "id": "server-linux-packaging-ci-coverage-2026-10-23-1306",
       "title": "Servidor: CI agora executa testes de integridade do empacotamento Linux",
