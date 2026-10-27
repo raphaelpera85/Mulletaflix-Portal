@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T16:58:06-03:00",
+  "generatedAt": "2026-10-27T18:13:08-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -10871,6 +10871,27 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/AUDIT-EVIDENCE.md"
+      ]
+    },
+    {
+      "id": "server-release-12-1-36-packaged-2026-10-27-1808",
+      "title": "Servidor 12.1.36 publicada com artefatos Windows e Linux",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [
+        "T2.1",
+        "T4.2"
+      ],
+      "local": "Suíte .NET Release, stage/instalador Windows e pacote Linux x64 cross-publish",
+      "location": "Nebula Python bootstrap/DataPath; sincronização Supabase; pipeline de release",
+      "scope": "Publicar e registrar evidências dos artefatos da versão 12.1.36, preservando os gates formais de homologação.",
+      "status": "completed",
+      "progressPercent": null,
+      "updatedAt": "2026-10-27T18:13:08-03:00",
+      "evidence": "Gate .NET Release sem Integration: 4.417 aprovados, 68 ignorados, 0 falhas; build Release concluído. Stage e integridade passaram. Instalador Windows x64: 452.336.601 bytes, SHA-256 B11F97DA2F34439C774C0CBB593EA3003E8B4AEA702C11BF499FC6311BBDDF03. ZIP atualização Windows: 417.648.937 bytes, SHA-256 00C18CE9BB568B7E92DBF6F0FB364CD6206E122C567481B3EEEE6BD37583A34A. Pacote Linux x64 cross-publish em Windows: 137.191.054 bytes, SHA-256 4A5646A947F40EF343D75CA381E266588792538B995F62DA67D77BB5E819C278; conteúdo esperado conferido. Release GitHub publicada com os três artefatos: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.36. Workflow hospedado da tag falhou antes de expor etapas/logs; causa não confirmada. CI hospedada, Linux nativo, smoke de instalação/serviço e produção não foram verificados. Homologação formal permanece aberta em 2/7 (28,6%); publicação de release não concede crédito de homologação.",
+      "release": "v12.1.36 publicada no GitHub com ZIP de atualização, instalador Windows x64 e pacote Linux x64; homologação formal 2/7 preservada.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.36"
       ]
     }
   ]

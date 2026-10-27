@@ -5046,3 +5046,17 @@ test('portal records full .NET regression without granting formal restore credit
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal publishes server v12.1.36 assets without closing formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-release-12-1-36-packaged-2026-10-27-1808');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /Release GitHub publicada com os três artefatos/);
+    assert.match(event.evidence, /Workflow hospedado da tag falhou/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+});
