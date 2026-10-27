@@ -5081,3 +5081,20 @@ test('portal records the published v12.1.37 live TV provider release while forma
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal reports production on 12.1.36 and keeps the v12.1.37 visual check pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-production-live-tv-release-not-installed-2026-10-27-1907');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'pending');
+    assert.match(event.evidence, /GET \/System\/Info\/Public.*12\.1\.36/);
+    assert.match(event.evidence, /publicada na v12\.1\.37/);
+    assert.match(event.evidence, /Não houve instalação nem smoke visual/);
+    assert.match(event.release, /Instalação e validação visual em produção pendentes/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
