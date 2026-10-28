@@ -5135,3 +5135,19 @@ test('portal publishes the current Windows/.NET regression totals without formal
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records v12.1.39 release without advancing formal homologation', () => {
+    const event = statusData.events.find((item) => item.id === 'server-release-12-1-39-2026-10-27');
+    const server = statusData.tracks.find((track) => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.release, /v12\.1\.39 publicada/);
+    assert.match(event.evidence, /425\/425/);
+    assert.match(event.evidence, /2\/7 \(28,6%\)/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
