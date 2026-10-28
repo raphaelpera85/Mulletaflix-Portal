@@ -5455,12 +5455,13 @@ test('portal reports the Nebula startup timeout fix without claiming production 
 
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
-    assert.match(event.evidence, /dois logs do dia terminam com o watchdog antigo de 45 segundos/i);
-    assert.match(event.evidence, /worker confirmou 28 bots, abriu FTP\/HTTP e iniciou quatro uploads retomados/);
-    assert.match(event.evidence, /candidata na branch aguarda 120 segundos/);
-    assert.match(event.evidence, /rclone-mount\.log.*conexão recusada em 127\.0\.0\.1:2121/);
-    assert.match(event.evidence, /instalação ativa ainda é 12\.1\.45/);
-    assert.match(event.evidence, /Inferência:/);
+    assert.match(event.evidence, /watchdog de 45 s/);
+    assert.match(event.evidence, /abre FTP 127\.0\.0\.1:2121 e HTTP 127\.0\.0\.1:2123 às 14:49:51/);
+    assert.match(event.evidence, /inicia partes de quatro uploads retomados às 14:50:19–20/);
+    assert.match(event.evidence, /fonte solicita parar o worker quando readiness expira/);
+    assert.match(event.evidence, /não havia listeners em 2121\/2123/);
+    assert.match(event.evidence, /Candidata 12\.1\.46 aumenta o timeout para 120 s/);
+    assert.match(event.evidence, /12\.1\.45/);
     assert.match(event.release, /nenhuma release pública/i);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
