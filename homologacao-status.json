@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T22:43:49-03:00",
+  "generatedAt": "2026-10-27T22:57:06-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11335,6 +11335,25 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/39608614450",
         "https://docs.github.com/en/rest/actions/workflow-runs#re-run-failed-jobs-from-a-workflow-run"
+      ]
+    },
+    {
+      "id": "server-latestmedia-movie-dedup-contract-test-2026-10-27-2257",
+      "title": "Teste de contrato LatestMedia confirma deduplicação de filmes antes do limite",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Branch codex/latestmedia-movie-dedup-tests; Windows/.NET 10 Release; EF InMemory",
+      "location": "BaseItemRepository.GetLatestItemList; BaseItemRepositoryLatestItemTests",
+      "scope": "Cobrir deduplicação de cortes de filmes por PresentationUniqueKey antes da aplicação do limite de LatestMedia.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-27T22:49:00-03:00",
+      "updatedAt": "2026-10-27T22:57:06-03:00",
+      "evidence": "Suíte focada Jellyfin.Server.Implementations.Tests: 3/3 aprovados, incluindo caso com seis cortes usando a mesma PresentationUniqueKey e limite 2; o segundo filme distinto preenche a lista. Teste unitário EF InMemory; conexão MariaDB ausente, portanto SQL, plano e desempenho representativo não medidos. Mudança de cobertura/documentação na branch, sem alteração funcional em main. Homologação formal permanece 2/7 (28,6%), sem crédito novo.",
+      "release": "Nenhuma release: somente teste e documentação na branch. Nenhum merge, instalação ou validação de produção.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/latestmedia-movie-dedup-tests"
       ]
     }
   ]

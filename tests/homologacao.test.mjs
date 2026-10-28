@@ -5204,3 +5204,16 @@ test('portal records unavailable Linux CI evidence without crediting tests or fo
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records LatestMedia movie deduplication contract coverage without formal credit', () => {
+    const event = statusData.events.find((item) => item.id === 'server-latestmedia-movie-dedup-contract-test-2026-10-27-2257');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /3\/3 aprovados/);
+    assert.match(event.evidence, /EF InMemory/);
+    assert.match(event.evidence, /desempenho representativo não medidos/);
+    assert.match(event.release, /Nenhuma release/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.serverHomologation.areas.filter((area) => area.status === 'completed').length, 2);
+});
