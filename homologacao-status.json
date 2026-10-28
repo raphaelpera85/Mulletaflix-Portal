@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T17:27:00-03:00",
+  "generatedAt": "2026-10-28T17:30:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11859,13 +11859,14 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-28T17:20:00-03:00",
-      "updatedAt": "2026-10-28T17:27:00-03:00",
-      "evidence": "O log de 28/10 registra o processo Python às 14:49:36, 28 bots ativos às 14:49:48, FTP na porta 2121 às 14:49:51, scanner às 14:50:01 e quatro uploads com quatro partes iniciadas às 14:50:19–20. Às 14:50:25, o supervisor emite timeout antigo de 45 s; logo depois o helper de montagem falha e o rclone encerra com código 1. O trecho prova tentativas de upload, não conclusão das partes; a sequência é compatível com o timeout interrompendo o worker, mas não mostra diretamente o comando de encerramento. A fonte candidata no PR #1 usa timeout de 120 s e inclui a última falha da sonda; testes locais já registrados: NebulaDownloaderStartupTests 35/35 Release, Python focal 77/77 e suíte Python completa 664/664 em execução anterior. GitHub confirma PR #1 aberto para main no head 19ca5e01; latest pública continua v12.1.45 e não há Release v12.1.46. Os 13 checks do run 40762850004 falharam em poucos segundos e retornam zero steps; a evidência anterior do diagnóstico identificou bloqueio de billing, portanto CI não validou nem rejeitou o código. Instalação ativa e smoke de envio pós-correção continuam sem confirmação; homologação formal permanece 2/7 (28,6%).",
+      "updatedAt": "2026-10-28T17:30:00-03:00",
+      "evidence": "O log de 28/10 registra o processo Python às 14:49:36, 28 bots ativos às 14:49:48, FTP na porta 2121 às 14:49:51, scanner às 14:50:01 e quatro uploads com quatro partes iniciadas às 14:50:19–20. Às 14:50:25, o supervisor emite timeout antigo de 45 s; logo depois o helper de montagem falha e o rclone encerra com código 1. O trecho prova tentativas de upload, não conclusão das partes; a sequência é compatível com o timeout interrompendo o worker, mas não mostra diretamente o comando de encerramento. A fonte candidata no PR #1 usa timeout de 120 s e inclui a última falha da sonda; testes locais já registrados: NebulaDownloaderStartupTests 35/35 Release, Python focal 77/77 e suíte Python completa 664/664 em execução anterior. GitHub confirma PR #1 aberto para main no head `b54e70f6` (commit desta sessão só atualizou documentação; código candidato preservado no ancestral `19ca5e01`); latest pública continua v12.1.45 e não há Release v12.1.46. Os 13 checks do run `40763949313` falharam antes de iniciar steps; diagnóstico desta execução confirma `The job was not started because your account is locked due to a billing issue.` CI não validou nem rejeitou o código. Instalação ativa e smoke de envio pós-correção continuam sem confirmação; homologação formal permanece 2/7 (28,6%).",
       "release": "12.1.46 continua indisponível no Centro de Atualizações porque não há tag/Release pública; enviar à branch do PR não publica versão. Não houve instalação nem confirmação operacional em produção.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/19ca5e01f6d0bd2482d937a54fde7880c5b5b19c",
-        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40762850004",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/b54e70f6e30cce0e708d6e621eb8a5da4c9badfe",
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40763949313",
         "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.45"
       ]
     }

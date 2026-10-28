@@ -5485,6 +5485,9 @@ test('portal distinguishes started Telegram upload attempts from a completed pro
     assert.match(event.evidence, /timeout antigo de 45 s/);
     assert.match(event.evidence, /não mostra diretamente o comando de encerramento/);
     assert.match(event.evidence, /NebulaDownloaderStartupTests 35\/35 Release/);
+    assert.match(event.evidence, /head `b54e70f6`/);
+    assert.match(event.evidence, /run `40763949313`/);
+    assert.match(event.evidence, /account is locked due to a billing issue/);
     assert.match(event.release, /não há tag\/Release pública/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
