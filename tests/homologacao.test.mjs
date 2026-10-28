@@ -5264,3 +5264,18 @@ test('portal records restore CI trigger and denied draft PR without claiming hos
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
 });
+
+test('portal records Nebula transient retries without claiming production or formal homologation', () => {
+    const event = statusData.events.find((item) => item.id === 'server-nebula-supabase-retry-and-directory-refresh-2026-10-28-0903');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /NebulaSupabaseSyncTests: 54\/54/);
+    assert.match(event.evidence, /7\/7 aprovados/);
+    assert.match(event.evidence, /HTTP é simulado/);
+    assert.match(event.evidence, /em memória/);
+    assert.match(event.release, /Nenhuma release/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
+});
