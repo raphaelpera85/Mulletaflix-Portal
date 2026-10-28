@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T20:23:25-03:00",
+  "generatedAt": "2026-10-28T20:24:52-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12013,8 +12013,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-28T20:22:03-03:00",
-      "updatedAt": "2026-10-28T20:23:25-03:00",
-      "evidence": "A auditoria `dotnet list MulletaFlix.sln package --vulnerable --include-transitive --no-restore` terminou com exit code 0 e reportou um advisory Moderate único, repetido em projetos que recebem `MySqlConnector 2.4.0` transitivamente. A página oficial do GHSA lista `2.4.0-beta.1` como afetada e `2.6.1` como corrigida, mas não esclarece se a estável `2.4.0` está incluída; a divergência scanner/faixa continua aberta e o alerta não foi suprimido. No código atual, o provider padrão usa loopback e `SslMode=None`; o advisory descreve a captura de senha com `VerifyCA`/`VerifyFull` sem `SslCa`, portanto as opções padrão não satisfazem essa condição. Deployments com banco remoto ou configuração diferente não foram auditados. O registro foi commitado no servidor em `28e8908b0028dcc3237c20c1d345fbcd1893f4a8`; Actions run `40787059410` estava queued na última consulta. Nenhuma dependência foi atualizada, nenhum teste de código/runtime foi executado por esta inspeção, e homologação formal permanece 2/7 (28,6%).",
+      "updatedAt": "2026-10-28T20:24:52-03:00",
+      "evidence": "A auditoria `dotnet list MulletaFlix.sln package --vulnerable --include-transitive --no-restore` terminou com exit code 0 e reportou um advisory Moderate único, repetido em projetos que recebem `MySqlConnector 2.4.0` transitivamente. A página oficial do GHSA lista `2.4.0-beta.1` como afetada e `2.6.1` como corrigida, mas não esclarece se a estável `2.4.0` está incluída; a divergência scanner/faixa continua aberta e o alerta não foi suprimido. No código atual, o provider padrão usa loopback e `SslMode=None`; o advisory descreve a captura de senha com `VerifyCA`/`VerifyFull` sem `SslCa`, portanto as opções padrão não satisfazem essa condição. Deployments com banco remoto ou configuração diferente não foram auditados. O registro foi commitado no servidor em `28e8908b0028dcc3237c20c1d345fbcd1893f4a8`. Actions run `40787059410` terminou com 13/13 checks sem iniciar runners; a anotação do GitHub diz que a conta está bloqueada por problema de cobrança. Nenhum teste hospedado executou. Nenhuma dependência foi atualizada e homologação formal permanece 2/7 (28,6%).",
       "release": "Nenhuma mudança de código ou pacote e nenhuma release. Próximo passo: confirmar com o range oficial de vulnerabilidade se a versão estável 2.4.0 é afetada antes de considerar upgrade; validar compatibilidade MariaDB em teste descartável se atualizar.",
       "links": [
         "https://github.com/mysql-net/MySqlConnector/security/advisories/GHSA-473q-m89c-ghf8",

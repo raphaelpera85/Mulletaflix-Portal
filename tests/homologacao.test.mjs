@@ -5506,7 +5506,8 @@ test('portal records the MySqlConnector advisory without suppressing the scanner
     assert.match(event.evidence, /SslMode=None/);
     assert.match(event.evidence, /divergência scanner\/faixa continua aberta/);
     assert.match(event.release, /Nenhuma mudança de código ou pacote e nenhuma release/);
-    assert.match(event.evidence, /Actions run `40787059410` estava queued/);
+    assert.match(event.evidence, /Actions run `40787059410` terminou com 13\/13 checks sem iniciar runners/);
+    assert.match(event.evidence, /bloqueada por problema de cobrança/);
     assert.ok(event.links.some(link => link.endsWith('/commit/28e8908b0028dcc3237c20c1d345fbcd1893f4a8')));
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
