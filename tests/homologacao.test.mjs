@@ -5386,3 +5386,16 @@ test('portal records updater recovery without claiming a published release or fo
     assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records persistent restore execution history without formal credit or release', () => {
+  const event = statusData.events.find((item) => item.id === 'server-restore-execution-history-2026-10-28-1151');
+  assert.ok(event);
+  assert.equal(event.status, 'completed');
+  assert.match(event.evidence, /150 aprovados, 16 ignorados.*0 falhas/);
+  assert.match(event.evidence, /após criar uma nova instância do serviço/);
+  assert.match(event.evidence, /mensagem persistida é genérica/);
+  assert.ok(event.evidence.includes('Linux/CI hospedada, runtime instalado e produção não validados')); 
+  assert.match(event.release, /Nenhuma release criada/);
+  assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
+  assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
