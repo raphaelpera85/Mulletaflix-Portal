@@ -5394,7 +5394,7 @@ test('portal records persistent restore execution history without formal credit 
   assert.match(event.evidence, /150 aprovados, 16 ignorados.*0 falhas/);
   assert.match(event.evidence, /após criar uma nova instância do serviço/);
   assert.match(event.evidence, /mensagem persistida é genérica/);
-  assert.ok(event.evidence.includes('Linux/CI hospedada, runtime instalado e produção não validados')); 
+  assert.ok(event.evidence.includes('Linux/CI hospedada, runtime instalado e produção não validados'));
   assert.match(event.release, /Nenhuma release criada/);
   assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
   assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
