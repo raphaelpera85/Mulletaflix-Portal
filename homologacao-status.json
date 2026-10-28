@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T11:34:10-03:00",
+  "generatedAt": "2026-10-28T11:40:34-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11515,8 +11515,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-28T10:04:00-03:00",
-      "updatedAt": "2026-10-28T10:29:52-03:00",
-      "evidence": "Log de produção das 10:07:05: após inicialização parcial, faltou carregar Emby.Naming 12.1.40.0; o atualizador iniciou servidor/tray; Robocopy retornou código 11, confirmando cópia incompleta. A correção faz o atualizador lançar erro em código >=8 e manter o pacote para diagnóstico; ApplyUpdateFailure.Tests.ps1 passou e git diff --check passou. Produção foi recuperada reaplicando pacote íntegro 12.1.40: Robocopy código 3; MulletaFlix.dll, Emby.Server.Implementations.dll, MulletaFlix.Server.Implementations.dll e Emby.Naming.dll confirmadas em 12.1.40.0. Revalidação às 10:29 BRT: Emby.Naming.dll existe em Program Files na versão 12.1.40.0, processo MulletaFlix ativo e /System/Info/Public respondeu HTTP 200, Version 12.1.40. O servidor está consistente, porém abaixo da versão-fonte 12.1.41. Homologação formal permanece 2/7 (28,6%), sem crédito. CI hospedada ainda não executada. Testes dos seis scripts de empacotamento Windows passaram; contrato do portal passou 291/291. O commit do portal 9b8b57e chegou a Vercel production READY e o JSON público retornou HTTP 200 contendo este evento.",
+      "updatedAt": "2026-10-28T11:40:34-03:00",
+      "evidence": "Log de produção das 10:07:05: após inicialização parcial, faltou carregar Emby.Naming 12.1.40.0; o atualizador iniciou servidor/tray; Robocopy retornou código 11, confirmando cópia incompleta. A correção faz o atualizador lançar erro em código >=8 e manter o pacote para diagnóstico; ApplyUpdateFailure.Tests.ps1 passou e git diff --check passou. Produção foi recuperada reaplicando pacote íntegro 12.1.40: Robocopy código 3; MulletaFlix.dll, Emby.Server.Implementations.dll, MulletaFlix.Server.Implementations.dll e Emby.Naming.dll confirmadas em 12.1.40.0. Revalidação às 10:29 BRT: Emby.Naming.dll existe em Program Files na versão 12.1.40.0, processo MulletaFlix ativo e /System/Info/Public respondeu HTTP 200, Version 12.1.40. O servidor está consistente, porém abaixo da versão-fonte 12.1.41. Homologação formal permanece 2/7 (28,6%), sem crédito. CI hospedada ainda não executada. Testes dos seis scripts de empacotamento Windows passaram; contrato do portal passou 291/291. O commit do portal 9b8b57e chegou a Vercel production READY e o JSON público retornou HTTP 200 contendo este evento. Rechecagem read-only em 28/10/2026 11:40 BRT, após receber novamente o mesmo recorte de log: processo MulletaFlix ativo, /System/Info/Public HTTP 200 versão 12.1.40 e assembly Emby.Naming 12.1.40.0 presente. Não houve nova falha reproduzida; correção do atualizador continua em branch, sem release integrada/publicada. Homologação formal segue 2/7 (28,6%), sem crédito.",
       "release": "Proposta v12.1.42 commit c6791942 publicada na branch codex/fail-closed-inplace-updater. PR não criado: integração GitHub retornou 403 Resource not accessible by integration; gh não autenticado. Sem merge, tag, assets ou release publicada.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/c6791942",

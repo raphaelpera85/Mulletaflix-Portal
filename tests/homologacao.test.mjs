@@ -5375,6 +5375,9 @@ test('portal records updater recovery without claiming a published release or fo
     assert.match(event.evidence, /Robocopy retornou código 11/);
     assert.match(event.evidence, /Robocopy código 3/);
     assert.match(event.evidence, /Revalidação às 10:29 BRT/);
+    assert.match(event.evidence, /Rechecagem read-only em 28\/10\/2026 11:40 BRT/);
+    assert.match(event.evidence, /processo MulletaFlix ativo.*HTTP 200 versão 12\.1\.40/);
+    assert.match(event.evidence, /sem release integrada\/publicada/);
     assert.match(event.evidence, /Emby\.Naming\.dll existe em Program Files/);
     assert.match(event.evidence, /HTTP 200/);
     assert.match(event.release, /PR não criado/);
