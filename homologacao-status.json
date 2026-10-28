@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T18:07:00-03:00",
+  "generatedAt": "2026-10-28T18:08:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11882,9 +11882,9 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-28T17:48:00-03:00",
-      "updatedAt": "2026-10-28T18:07:00-03:00",
-      "evidence": "Release local: ItemPersistenceServiceTests 26/26, ItemImageProviderTests 54/54, Python test_main_lifecycle.py 14/14 e compileall aprovado. O locale é normalizado para minúsculas, incluindo pt-BR -> pt-br; testes cobrem round-trip, alteração isolada de metadados e cleanup FTP/Mongo/bots sem iniciar upload quando o bind HTTP falha. Commit 935205fc enviado ao PR #1, base main. Actions run 40766397320 para o head concluiu com 13 jobs failure em 5 s, todos sem runner/steps; anotação oficial confirma “The job was not started because your account is locked due to a billing issue.” Assim, não houve execução CI nem falha de teste atribuível ao código. Homologação formal continua 2/7 (28,6%); nenhum teste live de TMDb, refresh de biblioteca, runtime instalado ou produção. Regressão local ampla 28/10 18:02 BRT no candidato: solução .NET Release 5.276 aprovados, 85 ignorados e 0 falhas de 5.361 em 15 assemblies (exit 0; integrações excluídas); Python completa 665/665; Vitest 425/425 em 78 arquivos e build:check aprovados. `npm run build:production` e `dotnet publish` self-contained win-x64/linux-x64 passaram, com cross-publish Linux executado em Windows. Revisão independente focada em backup/restore, updater, imagens e Nebula não achou defeito acionável; não cobriu individualmente os 110 arquivos. Após atualização documental, Actions run 40768657463 repetiu bloqueio nos 13 jobs antes dos runners; GitHub confirmou problema de cobrança. Head da branch f997da20, com código no commit 935205fc; PR #1 aberto. Formal continua 2/7; sem tag/release, arquivos de pacote, Linux nativo, runtime instalado ou produção. Rechecagem do head f997da20: Actions run 40768756511 repetiu o bloqueio de billing em todos os 13 jobs antes de runner; não houve execução CI.",
-      "release": "12.1.46 ainda não publicada: PR #1 continua aberto e a tag remota v12.1.46 não existe; branches/PRs não são consumidos pelo Update Center. Os 13 checks do run 40768657463 não iniciaram por bloqueio de cobrança da conta GitHub. Pacote final e gates de homologação permanecem pendentes.",
+      "updatedAt": "2026-10-28T18:08:00-03:00",
+      "evidence": "Release local: ItemPersistenceServiceTests 26/26, ItemImageProviderTests 54/54, Python test_main_lifecycle.py 14/14 e compileall aprovado. O locale é normalizado para minúsculas, incluindo pt-BR -> pt-br; testes cobrem round-trip, alteração isolada de metadados e cleanup FTP/Mongo/bots sem iniciar upload quando o bind HTTP falha. Commit 935205fc enviado ao PR #1, base main. Actions run 40766397320 para o head concluiu com 13 jobs failure em 5 s, todos sem runner/steps; anotação oficial confirma “The job was not started because your account is locked due to a billing issue.” Assim, não houve execução CI nem falha de teste atribuível ao código. Homologação formal continua 2/7 (28,6%); nenhum teste live de TMDb, refresh de biblioteca, runtime instalado ou produção. Regressão local ampla 28/10 18:02 BRT no candidato: solução .NET Release 5.276 aprovados, 85 ignorados e 0 falhas de 5.361 em 15 assemblies (exit 0; integrações excluídas); Python completa 665/665; Vitest 425/425 em 78 arquivos e build:check aprovados. `npm run build:production` e `dotnet publish` self-contained win-x64/linux-x64 passaram, com cross-publish Linux executado em Windows. Revisão independente focada em backup/restore, updater, imagens e Nebula não achou defeito acionável; não cobriu individualmente os 110 arquivos. Após atualização documental, Actions run 40768657463 repetiu bloqueio nos 13 jobs antes dos runners; GitHub confirmou problema de cobrança. Head da branch f997da20, com código no commit 935205fc; PR #1 aberto. Formal continua 2/7; sem tag/release, arquivos de pacote, Linux nativo, runtime instalado ou produção. Rechecagem do head f997da20: Actions run 40768756511 repetiu o bloqueio de billing em todos os 13 jobs antes de runner; não houve execução CI. Confirmação Vercel às 18:08 BRT: deployment Production READY para Mulletaflix-Portal/main commit 16c5a6d43e666f44eee4af1b9532b10ce4dfdbe8; endpoint público homologacao-status.json respondeu HTTP 200 e contém este snapshot. Estado GitHub rechecado: latest publicada v12.1.45; v12.1.46 não tem tag nem Release; PR #1 continua aberto para main. A publicação da release permanece pendente da integração e dos gates.",
+      "release": "12.1.46 ainda não publicada: PR #1 continua aberto e a tag remota v12.1.46 não existe; branches/PRs não são consumidos pelo Update Center. Os 13 checks do run 40768657463 não iniciaram por bloqueio de cobrança da conta GitHub. Pacote final e gates de homologação permanecem pendentes. O último deployment do portal está confirmado READY em 16c5a6d; a última release do servidor continua v12.1.45.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/935205fc0e2677debd721bcff6c1ecc4eaf8bb75",
@@ -11893,7 +11893,8 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/8eb6c29c6d0db4297f65aa5422fb01d8e4dd9813",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/f997da20431faef07dc8deee7500bea3fc94b03b",
         "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40768657463",
-        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40768756511"
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40768756511",
+        "https://vercel.com/raphaelpera85s-projects/mulletaflix-portal/8j2HJHpM63skAr1SivKcRERNTfmL"
       ]
     }
   ]
