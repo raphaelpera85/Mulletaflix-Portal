@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T21:40:42-03:00",
+  "generatedAt": "2026-10-27T22:00:01-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11254,6 +11254,27 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarFileStore.cs"
+      ]
+    },
+    {
+      "id": "server-release-12-1-41-github-billing-blocked-2026-10-27-2200",
+      "title": "v12.1.41: tag no GitHub; release bloqueada por cobrança do Actions",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "GitHub Actions API pública; validação .NET local reportada no registro da release",
+      "location": "mulletaflix-completo: main, tag v12.1.41 e workflow Release",
+      "scope": "Publicar a correção de exclusão segura de imagens de perfil e informar com precisão o estado da validação/release.",
+      "status": "blocked",
+      "progressPercent": null,
+      "startedAt": "2026-10-27T22:00:01-03:00",
+      "updatedAt": "2026-10-27T22:00:01-03:00",
+      "evidence": "O main público aponta para 8a7796c3 e a tag v12.1.41 foi enviada. A API do GitHub confirma que o job Validate source tag before packaging terminou sem runner (runner_name vazio, zero steps); a anotação diz: “The job was not started because your account is locked due to a billing issue.” Os jobs Linux e publicação foram skipped; a release v12.1.41 ainda retorna 404 e nenhum pacote foi anexado. Isso é bloqueio de infraestrutura da conta, não resultado de teste nem reprovação do código. A validação local documentada no changelog: testes focais 40 aprovados/3 ignorados e Jellyfin.Api.Tests 765 aprovados/3 ignorados, 0 falhas. Auditoria formal permanece 2/7 (28,6%), sem crédito novo; produção não foi alterada. Próximo passo: resolver a cobrança do GitHub Actions e reexecutar a tag/workflow.",
+      "release": "Tag v12.1.41 no GitHub; release e pacotes não publicados porque a conta está bloqueada por cobrança do GitHub Actions.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/8a7796c3cae3efc644721123c6c88d4c05b6fa66",
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40612168389",
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.41"
       ]
     }
   ]
