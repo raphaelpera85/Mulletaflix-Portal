@@ -59,6 +59,22 @@ test('portal records the restore manifest limit fix without formal credit or rel
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
 
+test('portal records rejection of duplicate backup manifests without claiming release or formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-duplicate-manifest-2026-10-28-1110');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /duplicado exato e alias de caixa Windows.*passaram 2\/2/);
+    assert.match(event.evidence, /consulta retorna null e enumeração omite/);
+    assert.match(event.evidence, /150.*16 dependentes.*falhou 0/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.match(event.release, /6d7f9097/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
 test('portal reports Nebula directory refresh retry without claiming release or formal gate credit', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-directory-refresh-retry-2026-10-23-1620');
     const server = statusData.tracks.find(track => track.id === 'server');
