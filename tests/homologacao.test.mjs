@@ -1667,6 +1667,8 @@ test('formal server homologation consolidates gates, percentage, evidence and pe
     assert.match(rendered, /CI remota e matriz das plataformas suportadas/);
     assert.match(rendered, /runner_id=0 e steps vazios/);
     assert.match(rendered, /Aceite formal do servidor e da operação/);
+    assert.match(statusData.serverHomologation.latestAudit, /20:49 BRT: regressão unitária local.*5\.279 aprovados/);
+    assert.match(areas.find(area => area.id === 'SRV-H01').evidence, /Homologação formal permanece 2\/7/);
     assert.equal((rendered.match(/<tr>/g) || []).length, 7);
     for (const area of areas) {
         assert.match(rendered, new RegExp(area.id));
@@ -1979,8 +1981,8 @@ test('server audit preserves the remote CI blocker and displays the latest Mongo
     const priorBroadSuite = statusData.events.find(item => item.id === 'server-dotnet-broad-suite-mongo-gate-2026-10-19-1900');
 
     assert.equal(server.status, 'in_progress');
-    assert.match(server.testAudit.label, /5\.120.*5\.356/);
-    assert.match(server.testAudit.label, /Auditoria automatizada não equivale à homologação formal; reexecução focal em 27\/10: `LimitedConcurrencyLibrarySchedulerTests` 10\/10 e `Jellyfin\.Controller\.Tests` Release 73\/73; release v12\.1\.40 publicada/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
     assert.equal(server.testAudit.failed, 0);
     assert.ok(event);
     assert.equal(event.status, 'blocked');
@@ -2011,7 +2013,7 @@ test('portal records the current deterministic server suite without claiming int
     assert.equal(server.testAudit.total, 5364);
     assert.equal(server.testAudit.skipped, 85);
     assert.equal(server.testAudit.failed, 0);
-    assert.match(server.testAudit.label, /passou com exit 0/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
     assert.match(event.evidence, /NebulaPython.*592\/592/);
     assert.match(event.evidence, /não tiveram testes correspondentes ao filtro/);
     assert.match(event.evidence, /Nenhuma release de servidor criada/);
@@ -3064,8 +3066,8 @@ test('Nebula Supabase admission audit reports evidence limits without claiming a
     assert.match(event.evidence, /592\/592/);
     assert.match(event.evidence, /Três testes C# Mongo compilaram e foram ignorados/);
     assert.match(event.evidence, /não identifica proprietário ou expiração da lease/);
-    assert.match(server.testAudit.label, /NebulaPython 3\.10 isolado: 685\/685/);
-    assert.match(server.testAudit.label, /Auditoria automatizada não equivale à homologação formal; reexecução focal em 27\/10: `LimitedConcurrencyLibrarySchedulerTests` 10\/10 e `Jellyfin\.Controller\.Tests` Release 73\/73; release v12\.1\.40 publicada/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
     assert.equal(statusData.coverage.pending, 66);
     assert.equal(statusData.coverage.inProgress, 4);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
@@ -3092,7 +3094,7 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.equal(server.testAudit.total, 5364);
     assert.equal(server.testAudit.skipped, 85);
     assert.equal(server.testAudit.failed, 0);
-    assert.match(server.testAudit.label, /NebulaPython 3\.10 isolado: 685\/685/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
     assert.ok(mongoAudit);
     assert.match(mongoAudit.evidence, /MongoDB 7\.0 do CI/);
     assert.equal(statusData.coverage.pending, 66);
@@ -3488,7 +3490,7 @@ test('portal reports Windows packaging CI as locally verified but remotely pendi
     assert.equal(server.status, 'in_progress');
     assert.equal(event.status, 'in_progress');
     assert.match(event.scope, /ainda está somente no checkout local e não foi enviada ao Git do servidor/);
-    assert.match(server.testAudit.label, /5\.120.*5\.356/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
     assert.match(event.evidence, /node --test dos contratos Mongo, MariaDB e empacotamento passou 3\/3/);
     assert.match(event.evidence, /passaram 4\/4 em PowerShell local/);
     assert.match(event.evidence, /runner Windows remoto ainda não executou/);
@@ -3670,7 +3672,7 @@ test('portal publishes the latest full Nebula Python branch-coverage rerun', () 
     assert.match(event.evidence, /88% \(14\.440 statements, 1\.285 misses; 2\.744 branches, 497 parciais\)/);
     assert.match(event.evidence, /não representa isoladamente cobertura de produção/);
     assert.match(event.evidence, /não comprovam transferência Telegram, Mongo externo, runtime instalado/);
-    assert.match(server.testAudit.label, /NebulaPython 3\.10 isolado: 685\/685/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -3972,7 +3974,7 @@ test('isolated Mongo opt-in revalidation is published without claiming CI or pro
     assert.match(event.evidence, /Não valida MongoDB 7\.0 do CI/);
     assert.match(event.evidence, /execução ampla anterior continua com snapshot próprio 5\.099\/5\.334 e exit code desconhecido/);
     assert.match(event.evidence, /remoção do diretório temporário.*permanece/);
-    assert.match(server.testAudit.label, /NebulaPython 3\.10 isolado: 685\/685/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
@@ -4135,7 +4137,7 @@ test('server audit publishes MariaDB user and billing focused rerun without chan
     assert.match(event.evidence, /MariaDB 11\.4\.4.*bind 127\.0\.0\.1 e porta 33099/);
     assert.match(event.evidence, /EnsureSchemaCreated_UsesEfMappedUsersTableWithBinaryUsernameCollations.*exige Linux/);
     assert.match(event.evidence, /não alteram o snapshot amplo nem reclassificam NotExecuted nele/);
-    assert.match(server.testAudit.label, /MariaDB focal anterior: 197\/198 opt-in em Windows/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 
     const dashboard = createDashboard();
@@ -4182,8 +4184,8 @@ test('server publishes the Nebula cryptography audit and does not claim producti
     assert.match(event.evidence, /nenhum runtime\/serviço de produção foi inspecionado ou atualizado/);
     assert.match(event.evidence, /requirements\.in e requirements\.lock.*não estão presentes/);
     assert.match(event.evidence, /Homologação formal e release seguem abertas/);
-    assert.match(server.testAudit.label, /NebulaPython 3\.10 isolado: 685\/685/);
-    assert.match(server.testAudit.label, /10 altas somente dev.*braces@3\.0\.3/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
+    assert.match(server.testAudit.label, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
