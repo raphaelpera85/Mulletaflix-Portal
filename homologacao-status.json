@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T14:28:39-03:00",
+  "generatedAt": "2026-10-28T14:42:45-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 98,
         "failed": 0,
         "percent": 98.2,
-        "label": "Atualizado em 27/10: regressão .NET Release Windows/.NET 10 passou com exit 0 em 17 TRX: 5.473 aprovados, 98 NotExecuted, 0 falhas/5.571 resultados. O filtro FullyQualifiedName!~Integration excluiu os casos de integração; os 98 NotExecuted não são aprovações. Isso não valida Linux/ACL, integrações MariaDB/MongoDB, CI hospedada, runtime instalado, produção nem aceite formal. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Auditoria automatizada não equivale à homologação formal; reexecução focal em 27/10: `LimitedConcurrencyLibrarySchedulerTests` 10/10 e `Jellyfin.Controller.Tests` Release 73/73; release v12.1.40 publicada. Os contadores agregados acima pertencem ao snapshot anterior e não foram recalculados nesta rodada. Build Windows/Linux realizado, sem instalação em produção. Contexto histórico separado: NebulaPython 3.14 688/688; NebulaPython 3.10 isolado: 685/685; MariaDB focal anterior: 197/198 opt-in em Windows; regressão ampla de 21/10: 5.120/5.356; auditoria npm anterior encontrou 10 altas somente dev via braces@3.0.3. Esses números não substituem o snapshot .NET atual. Atualização focal de 28/10: NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 em Release, separados do agregado; builds Windows x64, cross-publish Linux x64 e web passaram. PR #1 aberto; CI terminou sem iniciar os jobs porque a conta GitHub está bloqueada por cobrança. Pacotes ainda não publicados. Sem runtime Linux, Telegram real, instalação ou produção; formal permanece 2/7."
+        "label": "Atualizado em 27/10: regressão .NET Release Windows/.NET 10 passou com exit 0 em 17 TRX: 5.473 aprovados, 98 NotExecuted, 0 falhas/5.571 resultados. O filtro FullyQualifiedName!~Integration excluiu os casos de integração; os 98 NotExecuted não são aprovações. Isso não valida Linux/ACL, integrações MariaDB/MongoDB, CI hospedada, runtime instalado, produção nem aceite formal. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Auditoria automatizada não equivale à homologação formal; reexecução focal em 27/10: `LimitedConcurrencyLibrarySchedulerTests` 10/10 e `Jellyfin.Controller.Tests` Release 73/73; release v12.1.40 publicada. Os contadores agregados acima pertencem ao snapshot anterior e não foram recalculados nesta rodada. Build Windows/Linux realizado, sem instalação em produção. Contexto histórico separado: NebulaPython 3.14 688/688; NebulaPython 3.10 isolado: 685/685; MariaDB focal anterior: 197/198 opt-in em Windows; regressão ampla de 21/10: 5.120/5.356; auditoria npm anterior encontrou 10 altas somente dev via braces@3.0.3. Esses números não substituem o snapshot .NET atual. Atualização focal de 28/10: NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 em Release, separados do agregado; builds Windows x64, cross-publish Linux x64 e web passaram. PR #1 aberto; CI terminou sem iniciar os jobs porque a conta GitHub está bloqueada por cobrança. Pacotes ainda não publicados. Sem runtime Linux, Telegram real, instalação ou produção; formal permanece 2/7. Atualização focal 28/10: `NebulaDownloaderEngineTests` passou 45/45 em Release, com regressões para GET sequencial vazio e mídia não vazia sem tamanho conhecido; isso não prova o fluxo completo com MongoDB nem produção."
       }
     },
     {
@@ -3061,17 +3061,17 @@
       "front": "server",
       "featureIds": [],
       "local": "Windows / .NET 10 Release; build web e cross-publish Windows/Linux",
-      "location": "NebulaFtpManager; TmdbUtils; release 12.1.46",
-      "scope": "Corrigir timeout prematuro de startup do Python Nebula, decodificar logs em UTF-8 e buscar imagens TMDb por locale mais idioma base para todos os idiomas.",
+      "location": "NebulaFtpManager; TmdbUtils; release 12.1.46; NebulaDownloaderEngine",
+      "scope": "Corrigir timeout prematuro de startup do Python Nebula, decodificar logs em UTF-8 e buscar imagens TMDb por locale mais idioma base para todos os idiomas. Rejeitar resposta HTTP sequencial vazia para preservar a mídia de origem.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-28T14:07:00-03:00",
-      "updatedAt": "2026-10-28T14:25:28-03:00",
-      "evidence": "NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 passaram em Release; build Windows x64, cross-publish Linux x64, npm run build:check e npm run build:production passaram. Pacotes locais: Windows installer SHA-256 3B3C95E7A7E25DBB12F259F765930C5328FD602CA10EAA53F63623A3CDFAAC5B; ZIP ACCA39A39542C07391D45A57B07BDC657950E5EA81FACE4A098D474595989674; Linux tar FF21CA39C6C5F40288E1CBA3C3035111EA6B05446CE6B12B09E200A1D21775F5. PR #1 aberto; CI sem execução por bloqueio de cobrança da conta GitHub. Sem testes NebulaPython, host Linux, Telegram real, instalação ou produção. Homologação formal continua 2/7.",
-      "release": "Release bloqueada: CI hospedada não iniciou por bloqueio de cobrança da conta GitHub. Aguardar regularização e merge do PR #1 antes da tag; nenhuma release pública.",
+      "updatedAt": "2026-10-28T14:42:45-03:00",
+      "evidence": "NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 passaram em Release; build Windows x64, cross-publish Linux x64, npm run build:check e npm run build:production passaram. Pacotes criados antes da correção do downloader foram invalidados e precisam ser reconstruídos. PR #1 aberto; CI sem execução por bloqueio de cobrança da conta GitHub. Sem testes NebulaPython, host Linux, Telegram real, instalação ou produção. Homologação formal continua 2/7. Atualização de auditoria: o teste `NebulaDownloaderEngineTests` passou 45/45, incluindo duas regressões que demonstraram falha antes da correção e sucesso após ela; GET 200 vazio agora lança erro antes de gravar/enfileirar e o caller existente não apaga o `.strm`. Esse teste não percorre o fluxo Mongo completo. Instalação local lida em 28/10: DLL de servidor 12.1.45; o log apresentado contém o limite antigo de 45 s. A API local estava indisponível. Os pacotes anteriores do candidato ficaram inválidos e precisam ser reconstruídos. Formal continua 2/7 (28,6%), sem novo crédito.",
+      "release": "Release 12.1.46 bloqueada: PR #1 e CI hospedada aguardam regularização da cobrança GitHub. Nenhum pacote anterior ao último fix deve ser publicado; reconstruir os artefatos após o CI. Nenhuma release pública.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
-        "https://github.com/raphaelpera85/mulletaflix-completo/commit/6e53024e5df16d8b8e43880172835d1ea60b1844",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/bdb5216e8fbc968568bfe65829a345c8be2c7f16",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/MulletaFlix-master/docs/releases/12.1.46.md"
       ]
     },
