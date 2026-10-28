@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T22:35:56-03:00",
+  "generatedAt": "2026-10-27T22:43:49-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11315,6 +11315,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/69d81ca4",
         "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/scheduler-callback-cancellation"
+      ]
+    },
+    {
+      "id": "server-actions-run-39608614450-log-unavailable-2026-10-27-2243",
+      "title": "CI Linux do restore segue inconclusiva; reexecução negada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "GitHub Actions API; execução histórica 39608614450",
+      "location": "GitHub Actions, jobs de restore e schema MariaDB Linux",
+      "scope": "Revalidar evidências da CI Linux pendente sem atribuir falhas ao código sem logs.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-27T22:43:49-03:00",
+      "updatedAt": "2026-10-27T22:43:49-03:00",
+      "evidence": "A API listou 13 jobs como completed/failure. Para dois jobs, a API não retornou etapas; o log consultado para o job Linux retornou 404 BlobNotFound. Não foi possível confirmar se os testes chegaram a executar nem determinar a causa. A tentativa de reexecutar os jobs falhos foi negada pela integração GitHub com HTTP 403 Resource not accessible by integration. Nenhum novo teste Linux foi executado. O gate Linux/ACL de restore continua pendente; a homologação formal permanece 2/7 (28,6%), sem crédito novo.",
+      "release": "Nenhuma release criada nesta auditoria. O estado da CI permanece inconclusivo; sem alteração em main ou produção.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/39608614450",
+        "https://docs.github.com/en/rest/actions/workflow-runs#re-run-failed-jobs-from-a-workflow-run"
       ]
     }
   ]

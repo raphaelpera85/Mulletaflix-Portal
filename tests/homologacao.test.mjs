@@ -5184,3 +5184,23 @@ test('portal keeps the profile-image deletion race open and separate from formal
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
+
+test('portal records unavailable Linux CI evidence without crediting tests or formal homologation', () => {
+    const event = statusData.events.find((item) => item.id === 'server-actions-run-39608614450-log-unavailable-2026-10-27-2243');
+    const server = statusData.tracks.find((track) => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /13 jobs como completed\/failure/);
+    assert.match(event.evidence, /404 BlobNotFound/);
+    assert.match(event.evidence, /HTTP 403 Resource not accessible by integration/);
+    assert.match(event.evidence, /Nenhum novo teste Linux foi executado/);
+    assert.match(event.evidence, /2\/7 \(28,6%\), sem crédito novo/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
