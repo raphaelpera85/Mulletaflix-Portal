@@ -42,6 +42,21 @@ test('portal records restore branch validation without awarding formal gate cred
     assert.equal(h03.status, 'in_progress');
 });
 
+test('portal records the restore manifest limit fix without formal credit or release', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-manifest-limit-2026-10-28-1046');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /148.*16 dependentes.*0/);
+    assert.match(event.evidence, /falhando contra o código anterior/);
+    assert.match(event.evidence, /preservação do arquivo existente/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
 test('portal reports Nebula directory refresh retry without claiming release or formal gate credit', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-directory-refresh-retry-2026-10-23-1620');
     const server = statusData.tracks.find(track => track.id === 'server');
