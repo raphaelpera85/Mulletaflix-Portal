@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T11:12:02-03:00",
+  "generatedAt": "2026-10-28T11:24:35-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11536,17 +11536,18 @@
       "featureIds": [],
       "local": "Branch codex/backup-restore-handle-relative-io; Windows/.NET 10 Release",
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/FullSystemBackup/BackupService.cs; BackupServiceTests.cs",
-      "scope": "Alinhar consulta/listagem ao restore quando um ZIP contém manifestos duplicados ou alias de caixa conflitante em Windows.",
+      "scope": "Alinhar consulta, enumeração e restore para rejeitar manifestos duplicados ou alias de caixa conflitante em qualquer sistema.",
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-28T11:04:00-03:00",
-      "updatedAt": "2026-10-28T11:10:49-03:00",
-      "evidence": "Teste de regressão primeiro falhou: GetBackupManifest selecionava o primeiro manifesto e EnumerateBackups incluía o ZIP ambíguo. Após compartilhar GetUniqueManifestEntry entre restore, consulta e enumeração, os casos duplicado exato e alias de caixa Windows passaram 2/2; consulta retorna null e enumeração omite o ZIP. FullyQualifiedName~FullSystemBackup em Windows/.NET 10 Release passou 150, ignorou 16 dependentes de Linux/macOS/mount, falhou 0 (166). git diff --check passou. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Linux/CI, runtime instalado e produção não validados.",
-      "release": "Nenhuma release criada. Servidor commit 9a1d94a6 publicado somente em codex/backup-restore-handle-relative-io. Notas propostas v12.1.42 atualizadas no commit 6d7f9097 em codex/fail-closed-inplace-updater; sem PR/merge para main, tag, assets ou release publicada.",
+      "updatedAt": "2026-10-28T11:24:35-03:00",
+      "evidence": "Teste de regressão primeiro falhou: GetBackupManifest selecionava o primeiro manifesto e EnumerateBackups incluía o ZIP ambíguo. Após compartilhar GetUniqueManifestEntry entre restore, consulta e enumeração, a comparação do nome reservado é OrdinalIgnoreCase em qualquer SO. Casos duplicado exato e alias por caixa passaram 2/2, verificando consulta null, enumeração vazia, restore InvalidDataException, configuração preservada e callback de sidecar não acionado. FullyQualifiedName~FullSystemBackup em Windows/.NET 10 Release passou 150, ignorou 16 dependentes de Linux/macOS/mount, falhou 0 (166). git diff --check passou. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Testes executados localmente em Windows; a execução real em Linux/CI, runtime instalado e produção não foi validada.",
+      "release": "Nenhuma release criada. Correção final publicada somente na branch codex/backup-restore-handle-relative-io, commit 1965ea30. Notas propostas v12.1.42 atualizadas na branch codex/fail-closed-inplace-updater, commit 1756420d; sem PR/merge para main, tag, assets ou release publicada.",
       "links": [
-        "https://github.com/raphaelpera85/mulletaflix-completo/commit/9a1d94a6",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/1965ea30",
         "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/backup-restore-handle-relative-io",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/backup-restore-handle-relative-io/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/1756420d",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/MulletaFlix-master/docs/releases/12.1.42.md"
       ]
     }

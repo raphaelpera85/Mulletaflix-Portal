@@ -65,11 +65,14 @@ test('portal records rejection of duplicate backup manifests without claiming re
 
     assert.ok(event);
     assert.equal(event.status, 'completed');
-    assert.match(event.evidence, /duplicado exato e alias de caixa Windows.*passaram 2\/2/);
-    assert.match(event.evidence, /consulta retorna null e enumeração omite/);
+    assert.match(event.evidence, /duplicado exato e alias por caixa passaram 2\/2/);
+    assert.match(event.evidence, /OrdinalIgnoreCase em qualquer SO/);
+    assert.match(event.evidence, /consulta null, enumeração vazia, restore InvalidDataException/);
+    assert.match(event.evidence, /configuração preservada e callback de sidecar não acionado/);
     assert.match(event.evidence, /150.*16 dependentes.*falhou 0/);
     assert.match(event.release, /Nenhuma release criada/);
-    assert.match(event.release, /6d7f9097/);
+    assert.match(event.release, /1965ea30/);
+    assert.match(event.release, /1756420d/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
