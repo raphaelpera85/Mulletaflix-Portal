@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T22:07:34-03:00",
+  "generatedAt": "2026-10-27T22:35:56-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11295,6 +11295,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40612168389",
         "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.41"
+      ]
+    },
+    {
+      "id": "server-scheduler-callback-cancellation-2026-10-27-2235",
+      "title": "Scheduler de biblioteca propaga cancelamento cooperativo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Branch limpa codex/scheduler-callback-cancellation; Windows/.NET 10 Release",
+      "location": "LimitedConcurrencyLibraryScheduler; Folder.RunTasks; LimitedConcurrencyLibrarySchedulerTests",
+      "scope": "Propagar cancelamento do chamador e do shutdown às operações recursivas de biblioteca e validar o descarte gracioso.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-27T22:21:00-03:00",
+      "updatedAt": "2026-10-27T22:35:56-03:00",
+      "evidence": "Código e documentação publicados nos commits 0813ca64 e 69d81ca4. LimitedConcurrencyLibrarySchedulerTests 12/12, Jellyfin.Controller.Tests 75/75 e teste CallerCancellation_UnblocksEnqueueWaitingOnFullChannel 1/1 em Windows/.NET 10 Release; git diff --check passou. Correção envia CancellationToken a callbacks, interrompe admissão/espera quando caller/host/shutdown cancela e registra exceções de callback sem interromper limpeza. Callbacks que ignoram o token ainda podem prolongar DisposeAsync. Sem validação Linux, CI hospedada, runtime instalado ou produção; homologação formal permanece 2/7 (28,6%), sem crédito novo.",
+      "release": "Nenhuma release. Branch publicada, mas PR não foi criado: integração GitHub respondeu 403 e gh CLI não possui sessão autenticada. Sem merge ou atualização de main.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/69d81ca4",
+        "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/scheduler-callback-cancellation"
       ]
     }
   ]
