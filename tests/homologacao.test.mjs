@@ -5322,6 +5322,8 @@ test('portal records updater recovery without claiming a published release or fo
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /Robocopy retornou código 11/);
     assert.match(event.evidence, /Robocopy código 3/);
+    assert.match(event.evidence, /Revalidação às 10:29 BRT/);
+    assert.match(event.evidence, /Emby\.Naming\.dll existe em Program Files/);
     assert.match(event.evidence, /HTTP 200/);
     assert.match(event.release, /PR não criado/);
     assert.match(event.release, /Sem merge, tag, assets ou release publicada/);
