@@ -5531,8 +5531,12 @@ test('portal records the patched MariaDB driver without changing the database or
     assert.match(event.evidence, /bloqueio da conta por cobrança/);
     assert.match(event.evidence, /deployment Vercel dpl_3rbP584MvPtyM1ZNHHGVazgX7deR ficou READY/);
     assert.match(event.evidence, /homologacao-status\.json respondeu HTTP 200/);
+    assert.match(event.evidence, /5\.279 aprovados, 85 ignorados, 0 falhas\/5\.364 resultados/);
+    assert.match(event.evidence, /Build Release: 0 erros/);
+    assert.match(event.evidence, /não valida integração MariaDB/);
     assert.match(event.release, /Nenhuma release criada/);
     assert.ok(event.links.some(link => link.endsWith('/commit/a17b61db')));
+    assert.ok(event.links.some(link => link.endsWith('/commit/cf1959aa30b056b0141c833bffb19c2f1a73e1e9')));
     assert.ok(event.links.some(link => link.endsWith('/3rbP584MvPtyM1ZNHHGVazgX7deR')));
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
