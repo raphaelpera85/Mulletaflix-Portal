@@ -3072,7 +3072,8 @@
       "release": "Nenhuma Release 12.1.46 publicada. Correção está em PR aberto para main; CI bloqueada por billing e gates formais continuam pendentes.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
-        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40749414922",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/089a7a66e958f7d176c25f1d6d05d9d2f09d05be",
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40750874225",
         "https://github.com/raphaelpera85/mulletaflix-completo/releases/latest"
       ]
     },
