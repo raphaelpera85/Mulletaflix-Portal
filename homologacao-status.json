@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T13:17:54-03:00",
+  "generatedAt": "2026-10-28T13:41:59-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11612,6 +11612,28 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.44",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/4f38fd18",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/MulletaFlix-master/docs/releases/12.1.44.md"
+      ]
+    },
+    {
+      "id": "server-image-language-labels-lowercase-v12-1-45-2026-10-28",
+      "title": "Servidor v12.1.45: rótulos de idioma das imagens em minúsculas para todos os locales",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows x64 / .NET 10 Release; cross-publish Linux x64",
+      "location": "TmdbUtils.AdjustImageLanguage; TmdbClientManager.ConvertToRemoteImageInfo",
+      "scope": "Preservar preferência de idioma e região em todos os locales e retornar rótulos de idioma de imagem em minúsculas; manter maiúsculas exigidas no parâmetro enviado ao TMDb.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-28T13:17:00-03:00",
+      "updatedAt": "2026-10-28T13:41:59-03:00",
+      "evidence": "TmdbUtilsTests Release: 20/20. Regressões cobrem pt-br, en-us, fr-ca e zh-hant, além de idioma base em maiúsculas e imagens sem idioma; transformação é genérica e não fixa preferência em português. Build do servidor Release passou; stage Windows validado; pacotes Windows e Linux cross-publish gerados e validados por tamanho/hash; tar Linux listado. GitHub API confirmou os três assets da v12.1.45 com hashes publicados. Sem API TMDb ao vivo, refresh de mídia persistida, host Linux executado ou inspeção visual em produção. Homologação formal permanece 2/7 (28,6%), sem crédito local.",
+      "release": "GitHub Release v12.1.45 publicada. Tag v12.1.45 aponta para 2c077caf; notas atualizadas na branch codex/fail-closed-inplace-updater em d0bdfeda. Assets: instalador Windows x64, ZIP de atualização Windows x64 e pacote Linux x64.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.45",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/2c077caf",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/d0bdfeda",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/MulletaFlix-master/docs/releases/12.1.45.md"
       ]
     }
   ]

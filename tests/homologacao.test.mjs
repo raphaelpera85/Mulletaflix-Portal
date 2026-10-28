@@ -44,6 +44,22 @@ test('portal publishes server v12.1.44 image-language fix without formal homolog
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
 
+test('portal publishes lowercase image-language labels for every locale in server v12.1.45', () => {
+    const event = statusData.events.find(item => item.id === 'server-image-language-labels-lowercase-v12-1-45-2026-10-28');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.scope, /todos os locales/i);
+    assert.match(event.evidence, /pt-br.*en-us.*fr-ca.*zh-hant/);
+    assert.match(event.release, /v12\.1\.45 publicada/i);
+    assert.ok(event.links.includes('https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.45'));
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
 test('portal records restore branch validation without awarding formal gate credit or a release', () => {
     const event = statusData.events.find(item => item.id === 'server-restore-handle-relative-io-windows-suite-2026-10-27-2327');
     const h03 = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');
