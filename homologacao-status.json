@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T09:16:00-03:00",
+  "generatedAt": "2026-10-28T09:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11459,6 +11459,27 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/d87264dff8e026f3436d64e56c0f0cacb5551f00",
         "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/backup-restore-handle-relative-io",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/backup-restore-handle-relative-io/MulletaFlix-master/docs/nebula-strm-download.md"
+      ]
+    },
+    {
+      "id": "server-nebula-refresh-supabase-backup-2026-10-28-0942",
+      "title": "Backup Supabase preserva a fila durável de refresh do Nebula",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Branch codex/backup-restore-handle-relative-io; Windows/.NET 10 Release",
+      "location": "NebulaSupabaseSyncService; NebulaFtpManager; NebulaSupabaseBackupResultDto; NebulaSupabaseRestoreResultDto",
+      "scope": "Incluir nebula_directory_refreshes no backup/restauração C# do Supabase, validando paths no restore e removendo do espelho remoto os markers que já não estão pendentes.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T09:24:00-03:00",
+      "updatedAt": "2026-10-28T09:42:00-03:00",
+      "evidence": "Suíte Release Windows/.NET 10 FullyQualifiedName~Nebula: 718 aprovados, 26 ignorados, 0 falhas/744. Testes focais de backup/restore/SQL: 57 aprovados, 4 ignorados, 0 falhas/61. HTTP Supabase é simulado; testes Mongo opt-in foram ignorados porque Mongo em 127.0.0.1:27099 não estava disponível. O código gera tabela nebula_directory_refreshes com RLS para service_role, mas schema remoto real não foi aplicado nem validado. Homologação formal preservada em 2/7 (28,6%), sem crédito.",
+      "release": "Nenhuma release criada. Commit 979b09b7 publicado apenas na branch codex/backup-restore-handle-relative-io; sem PR/merge para main. Runtime instalado e produção não validados.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/979b09b7",
+        "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/backup-restore-handle-relative-io",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/backup-restore-handle-relative-io/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]
     }
   ]

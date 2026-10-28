@@ -5295,3 +5295,20 @@ test('portal reports durable Nebula directory refresh recovery without productio
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
 });
+
+test('portal records Supabase backup of durable Nebula refreshes without formal credit or release', () => {
+    const event = statusData.events.find((item) => item.id === 'server-nebula-refresh-supabase-backup-2026-10-28-0942');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /718 aprovados, 26 ignorados, 0 falhas/);
+    assert.match(event.evidence, /57 aprovados, 4 ignorados, 0 falhas/);
+    assert.match(event.evidence, /HTTP Supabase é simulado/);
+    assert.match(event.evidence, /schema remoto real não foi aplicado/);
+    assert.match(event.release, /979b09b7 publicado apenas na branch/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
