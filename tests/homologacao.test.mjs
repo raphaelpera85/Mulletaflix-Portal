@@ -5529,8 +5529,11 @@ test('portal records the patched MariaDB driver without changing the database or
     assert.match(event.evidence, /interrompida.*Providers/);
     assert.match(event.evidence, /GitHub Actions run 40788460057.*antes dos runners/);
     assert.match(event.evidence, /bloqueio da conta por cobrança/);
+    assert.match(event.evidence, /deployment Vercel dpl_3rbP584MvPtyM1ZNHHGVazgX7deR ficou READY/);
+    assert.match(event.evidence, /homologacao-status\.json respondeu HTTP 200/);
     assert.match(event.release, /Nenhuma release criada/);
     assert.ok(event.links.some(link => link.endsWith('/commit/a17b61db')));
+    assert.ok(event.links.some(link => link.endsWith('/3rbP584MvPtyM1ZNHHGVazgX7deR')));
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
