@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T16:44:00-03:00",
+  "generatedAt": "2026-10-28T17:00:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11782,6 +11782,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/e23bb90c5030431d85818c9c71ef64637523fb66",
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40755999512"
+      ]
+    },
+    {
+      "id": "server-update-archive-selector-2026-10-28-1700",
+      "title": "Atualizadores do servidor selecionam o pacote oficial da release",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows / .NET 10 Release",
+      "location": "MediaBrowser.Common.Updates.ServerUpdateArchiveSelector; UpdateInfoController; ServerUpdateTask",
+      "scope": "Unificar a escolha do ZIP nos dois fluxos de atualização: pacote oficial primeiro, ZIP legado somente se único e rejeição de assets ambíguos.",
+      "status": "in_progress",
+      "progressPercent": 90,
+      "startedAt": "2026-10-28T16:45:00-03:00",
+      "updatedAt": "2026-10-28T17:00:00-03:00",
+      "evidence": "UpdateInfoControllerTests Release: 9/9; InsecureDeserializationAuditTests: 2/2; build Release de Emby.Server.Implementations aprovado (1 aviso XML preexistente). A suíte ampla Jellyfin.Server.Implementations.Tests ficou sem progresso e foi interrompida, logo permanece inconclusiva. Correção ainda local, sem push/merge/release. CI 40755999512 não iniciou runners por bloqueio de cobrança; latest continua 12.1.45 e homologação formal 2/7 (28,6%).",
+      "release": "Nenhuma release 12.1.46 publicada. Aguardam desbloqueio e execução do CI, conclusão da homologação formal, validação dos pacotes e publicação estável.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
         "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40755999512"
       ]
     }
