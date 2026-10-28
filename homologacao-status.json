@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T14:46:00-03:00",
+  "generatedAt": "2026-10-28T14:59:05-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 98,
         "failed": 0,
         "percent": 98.2,
-        "label": "Atualizado em 27/10: regressão .NET Release Windows/.NET 10 passou com exit 0 em 17 TRX: 5.473 aprovados, 98 NotExecuted, 0 falhas/5.571 resultados. O filtro FullyQualifiedName!~Integration excluiu os casos de integração; os 98 NotExecuted não são aprovações. Isso não valida Linux/ACL, integrações MariaDB/MongoDB, CI hospedada, runtime instalado, produção nem aceite formal. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Auditoria automatizada não equivale à homologação formal; reexecução focal em 27/10: `LimitedConcurrencyLibrarySchedulerTests` 10/10 e `Jellyfin.Controller.Tests` Release 73/73; release v12.1.40 publicada. Os contadores agregados acima pertencem ao snapshot anterior e não foram recalculados nesta rodada. Build Windows/Linux realizado, sem instalação em produção. Contexto histórico separado: NebulaPython 3.14 688/688; NebulaPython 3.10 isolado: 685/685; MariaDB focal anterior: 197/198 opt-in em Windows; regressão ampla de 21/10: 5.120/5.356; auditoria npm anterior encontrou 10 altas somente dev via braces@3.0.3. Esses números não substituem o snapshot .NET atual. Atualização focal de 28/10: NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 em Release, separados do agregado; builds Windows x64, cross-publish Linux x64 e web passaram. PR #1 aberto; CI terminou sem iniciar os jobs porque a conta GitHub está bloqueada por cobrança. Pacotes ainda não publicados. Sem runtime Linux, Telegram real, instalação ou produção; formal permanece 2/7. Atualização focal 28/10: `NebulaDownloaderEngineTests` passou 45/45 em Release, com regressões para GET sequencial vazio e mídia não vazia sem tamanho conhecido; isso não prova o fluxo completo com MongoDB nem produção."
+        "label": "Atualizado em 27/10: regressão .NET Release Windows/.NET 10 passou com exit 0 em 17 TRX: 5.473 aprovados, 98 NotExecuted, 0 falhas/5.571 resultados. O filtro FullyQualifiedName!~Integration excluiu os casos de integração; os 98 NotExecuted não são aprovações. Isso não valida Linux/ACL, integrações MariaDB/MongoDB, CI hospedada, runtime instalado, produção nem aceite formal. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Auditoria automatizada não equivale à homologação formal; reexecução focal em 27/10: `LimitedConcurrencyLibrarySchedulerTests` 10/10 e `Jellyfin.Controller.Tests` Release 73/73; release v12.1.40 publicada. Os contadores agregados acima pertencem ao snapshot anterior e não foram recalculados nesta rodada. Build Windows/Linux realizado, sem instalação em produção. Contexto histórico separado: NebulaPython 3.14 688/688; NebulaPython 3.10 isolado: 685/685; MariaDB focal anterior: 197/198 opt-in em Windows; regressão ampla de 21/10: 5.120/5.356; auditoria npm anterior encontrou 10 altas somente dev via braces@3.0.3. Esses números não substituem o snapshot .NET atual. Atualização focal de 28/10: NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 em Release, separados do agregado; builds Windows x64, cross-publish Linux x64 e web passaram. PR #1 aberto; CI terminou sem iniciar os jobs porque a conta GitHub está bloqueada por cobrança. Pacotes ainda não publicados. Sem runtime Linux, Telegram real, instalação ou produção; formal permanece 2/7. Atualização focal 28/10: `NebulaDownloaderEngineTests` passou 45/45 em Release, com regressões para GET sequencial vazio e mídia não vazia sem tamanho conhecido; isso não prova o fluxo completo com MongoDB nem produção. Atualização focal 28/10: NebulaDownloaderStartupTests 35/35 e NebulaUploadEngineTests 225/225 em Release; esses resultados não alteram o agregado histórico nem equivalem a homologação formal."
       }
     },
     {
@@ -11674,6 +11674,26 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/2c077caf",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/d0bdfeda",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/MulletaFlix-master/docs/releases/12.1.45.md"
+      ]
+    },
+    {
+      "id": "server-nebula-startup-timeout-2026-10-28",
+      "title": "Nebula: watchdog de inicialização excede o tempo necessário ao worker",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; log da instalação 12.1.45 analisado",
+      "location": "NebulaFtpManager.StartPythonStreamServiceAsync; NebulaPython /health",
+      "scope": "Evitar falso erro de startup quando a inicialização de bots/FTP/HTTP ultrapassa 45 segundos e registrar a causa da última sonda.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T14:00:00-03:00",
+      "updatedAt": "2026-10-28T14:59:05-03:00",
+      "evidence": "Dois logs do dia terminam com o watchdog antigo de 45 segundos; consulta local /System/Info/Public confirmou que a instalação ativa ainda é 12.1.45. O worker confirmou 28 bots, abriu FTP/HTTP e iniciou quatro uploads retomados. O rclone-mount.log de 14:51:10 registra conexão recusada em 127.0.0.1:2121. Inferência: a falha do supervisor pelo limite antigo encerra ou perde o worker antes de a montagem se conectar; os logs não registram diretamente o comando de parada. A candidata na branch aguarda 120 segundos, exige o PID do worker em /health e registra a causa da última sonda. Testes locais Release: NebulaDownloaderStartupTests 35/35, NebulaUploadEngineTests 225/225, NebulaDownloaderEngineTests 45/45 e TmdbUtilsTests 27/27. Nenhum teste usa Telegram/Mongo de produção.",
+      "release": "Candidata 12.1.46 no PR #1; nenhuma release pública ou pacote instalável foi criado. CI do GitHub continua bloqueada por cobrança. A instalação reportada permanece na v12.1.45 até atualização de pacote validado.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/92640a39"
       ]
     }
   ]

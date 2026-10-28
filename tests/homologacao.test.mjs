@@ -5448,3 +5448,22 @@ test('portal records persistent restore execution history without formal credit 
   assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
   assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
+
+test('portal reports the Nebula startup timeout fix without claiming production readiness', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-startup-timeout-2026-10-28');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /dois logs do dia terminam com o watchdog antigo de 45 segundos/i);
+    assert.match(event.evidence, /worker confirmou 28 bots, abriu FTP\/HTTP e iniciou quatro uploads retomados/);
+    assert.match(event.evidence, /candidata na branch aguarda 120 segundos/);
+    assert.match(event.evidence, /rclone-mount\.log.*conexão recusada em 127\.0\.0\.1:2121/);
+    assert.match(event.evidence, /instalação ativa ainda é 12\.1\.45/);
+    assert.match(event.evidence, /Inferência:/);
+    assert.match(event.release, /nenhuma release pública/i);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
