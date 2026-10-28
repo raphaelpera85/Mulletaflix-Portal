@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T21:33:15-03:00",
+  "generatedAt": "2026-10-27T21:39:04-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11214,6 +11214,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/releases/12.1.39.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.39"
+      ]
+    },
+    {
+      "id": "server-release-12-1-40-scheduler-cleanup-2026-10-27",
+      "title": "Servidor 12.1.40: limpeza do scheduler aguarda o encerramento real dos workers",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; builds self-contained Windows x64 e cross-build Linux x64",
+      "location": "MulletaFlix-master/MediaBrowser.Controller/LibraryTaskScheduler/LimitedConcurrencyLibraryScheduler.cs",
+      "scope": "Corrigir o ciclo de cancelamento e espera dos workers do scheduler e registrar a release estável, sem creditar homologação formal.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-27T21:31:33-03:00",
+      "updatedAt": "2026-10-27T21:39:04-03:00",
+      "evidence": "LimitedConcurrencyLibrarySchedulerTests passou 10/10 e Jellyfin.Controller.Tests em Release passou 73/73; após bump da versão, os casos principais passaram 2/2. Formatter, git diff --check, build Windows self-contained, build web/typecheck e cross-build Linux x64 concluídos. Pacotes foram verificados; npm audit isolado encontrou 0 vulnerabilidades conhecidas. Estes resultados validam a correção focada e os artefatos, mas não CI hospedada, runtime instalado, produção nem aceite formal. Homologação formal permanece 2/7 (28,6%).",
+      "release": "v12.1.40 publicada no GitHub: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.40. A release não instala nem reinicia o servidor de produção.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/releases/12.1.40.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.40"
       ]
     }
   ]
