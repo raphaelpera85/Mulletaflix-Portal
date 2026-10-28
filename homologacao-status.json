@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T13:41:59-03:00",
+  "generatedAt": "2026-10-28T13:48:17-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3054,6 +3054,25 @@
     }
   ],
   "events": [
+    {
+      "id": "server-image-cdn-runtime-version-recheck-2026-10-28-1348",
+      "title": "Imagens: CDN TMDb respondeu com JPEG; runtime local ainda está na 12.1.43",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; testes focados de imagem e verificações HTTP read-only",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/RemoteImagePayloadValidator.cs; localhost:8096/System/Info/Public",
+      "scope": "Revalidar payload de imagem, CDN e versão instalada sem modificar mídia ou estado de homologação formal.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T13:48:17-03:00",
+      "updatedAt": "2026-10-28T13:48:17-03:00",
+      "evidence": "RemoteImagePayloadValidatorTests + ProviderManagerRemoteImageValidationTests Release: 10/10, 0 falhas. Um recurso público do CDN TMDb respondeu HTTP 200, Content-Type image/jpeg, 154.888 bytes e assinatura JPEG FF-D8-FF; isso não exercita seleção de idioma nem o provider completo. GET localhost:8096/System/Info/Public respondeu HTTP 200 e versão 12.1.43, abaixo da fonte/release 12.1.45. Não houve refresh ou escrita de mídia; o runtime observado ainda não valida a correção mais recente.",
+      "release": "Nenhuma release adicional nesta reauditoria; v12.1.45 já está publicada. Instalação/refresh controlado em janela segura permanece pendente.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.45"
+      ]
+    },
     {
       "id": "server-restore-handle-audit-2026-10-28-1134",
       "title": "Restore: mutações relativas a handles revisadas; Linux pendente",

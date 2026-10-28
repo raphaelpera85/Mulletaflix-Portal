@@ -60,6 +60,21 @@ test('portal publishes lowercase image-language labels for every locale in serve
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
 
+test('portal records real image CDN check while installed server remains behind v12.1.45', () => {
+    const event = statusData.events.find(item => item.id === 'server-image-cdn-runtime-version-recheck-2026-10-28-1348');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /HTTP 200.*image\/jpeg.*154\.888 bytes.*FF-D8-FF/);
+    assert.match(event.evidence, /12\.1\.43.*12\.1\.45/);
+    assert.match(event.release, /Nenhuma release adicional/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
 test('portal records restore branch validation without awarding formal gate credit or a release', () => {
     const event = statusData.events.find(item => item.id === 'server-restore-handle-relative-io-windows-suite-2026-10-27-2327');
     const h03 = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');
