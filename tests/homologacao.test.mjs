@@ -5168,3 +5168,19 @@ test('portal records v12.1.40 scheduler worker shutdown fix without advancing fo
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal keeps the profile-image deletion race open and separate from formal homologation', () => {
+    const event = statusData.events.find((item) => item.id === 'server-avatar-profile-delete-race-audit-2026-10-27');
+    const server = statusData.tracks.find((track) => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /IsPathWithinRoot.*File\.Delete/);
+    assert.match(event.evidence, /ACL.*TOCTOU/);
+    assert.match(event.release, /Nenhuma/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});

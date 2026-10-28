@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T21:39:04-03:00",
+  "generatedAt": "2026-10-27T21:40:42-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11234,6 +11234,26 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/releases/12.1.40.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.40"
+      ]
+    },
+    {
+      "id": "server-avatar-profile-delete-race-audit-2026-10-27",
+      "title": "Auditoria GetAvatar: remoção de imagem de perfil ainda valida caminho antes de excluir",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Inspeção somente leitura da fonte e testes existentes em Windows/.NET",
+      "location": "MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarFileStore.cs",
+      "scope": "Determinar se a exclusão de imagens de perfil usa a mesma proteção contra troca concorrente de caminho que o armazenamento de avatares.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-27T21:40:42-03:00",
+      "updatedAt": "2026-10-27T21:40:42-03:00",
+      "evidence": "A inspeção encontrou IsPathWithinRoot seguido por File.Delete em TryDeleteObsoleteProfileImage e no fluxo de remoção do profile image. AvatarFileStore usa handles relativos à raiz e não segue reparse points para arquivos de seu próprio catálogo, mas essa garantia não cobre os caminhos de perfil em AvatarService. Os testes existentes cobrem links estáveis, não uma troca entre validação e exclusão. ACLs reais dos diretórios de usuários e a explorabilidade da janela TOCTOU não foram verificadas; isso é uma lacuna de auditoria, não uma vulnerabilidade confirmada nem correção aplicada. Próximo passo: verificar ACLs e desenhar um teste determinístico de troca antes de escolher uma exclusão relativa segura.",
+      "release": "Nenhuma. Não houve alteração de código nem crédito para a homologação formal.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarFileStore.cs"
       ]
     }
   ]
