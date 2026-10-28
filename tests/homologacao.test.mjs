@@ -5231,3 +5231,21 @@ test('portal records LatestMedia movie deduplication contract coverage without f
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.equal(statusData.serverHomologation.areas.filter((area) => area.status === 'completed').length, 2);
 });
+test('portal publishes ZIP restore limits without granting formal homologation or release', () => {
+    const event = statusData.events.find((item) => item.id === 'server-restore-zip-expansion-bounds-2026-10-28-0833');
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /147 aprovados, 16 ignorados.*0 falhas/);
+    assert.match(event.evidence, /100\.000 entradas/);
+    assert.match(event.evidence, /tamanho compactado\/expandido adulterados/);
+    assert.match(event.evidence, /ZIP64 básico válido testado/);
+    assert.match(event.evidence, /limita o manifesto expandido a 16 MiB/);
+    assert.match(event.evidence, /Crc32Tests: 8\/8/);
+    assert.match(event.evidence, /IntroSkipper.*1\/1/);
+    assert.match(event.evidence, /286\/286/);
+    assert.match(event.evidence, /Revisão independente não encontrou P1/);
+    assert.match(event.release, /80609ab9/);
+    assert.match(event.release, /Nenhuma release/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
+});

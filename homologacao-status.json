@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T23:27:50-03:00",
+  "generatedAt": "2026-10-28T08:52:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11375,6 +11375,27 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/4ac651ef",
         "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/backup-restore-handle-relative-io",
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/new/codex/backup-restore-handle-relative-io"
+      ]
+    },
+    {
+      "id": "server-restore-zip-expansion-bounds-2026-10-28-0833",
+      "title": "Restore limita entradas ZIP e expansão antes de alterar dados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Branch codex/backup-restore-handle-relative-io; Windows/.NET 10 Release; FullSystemBackup, Crc32Tests, IntroSkipper focal",
+      "location": "BackupService.ValidateArchiveIntegrityAsync/GetManifest, MediaBrowser.Common.Crc32, IntroSkipperBackupParticipant.ReadAndValidateSnapshotAsync",
+      "scope": "Limitar custo de parsing e descompressão de arquivos ZIP recebidos pelo restore, antes de qualquer mutação.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T08:15:00-03:00",
+      "updatedAt": "2026-10-28T08:52:00-03:00",
+      "evidence": "FullSystemBackup Windows/.NET 10 Release: 147 aprovados, 16 ignorados por plataforma Linux/macOS/mount e 0 falhas (163). Crc32Tests: 8/8; rejeição de snapshot IntroSkipper acima do teto de leitura: 1/1. Preflight aplica limites antes de ZipArchive: arquivo 257 GiB, diretório central 32 MiB, 100.000 entradas; ZIP64 básico válido testado. Expansão por item 64 GiB, total 256 GiB e razão 1.000:1 medida pelos bytes lidos em blocos de até 4 KiB; ZIPs com tamanho compactado/expandido adulterados são recusados. GetManifest/EnumerateBackups usa preflight e limita o manifesto expandido a 16 MiB. IntroSkipper limita snapshot a 64 MiB declarados e a 32 Mi caracteres UTF-16 acumulados. Revisão independente não encontrou P1. Contrato do portal: 286/286. Homologação formal permanece 2/7 (28,6%), sem crédito. Linux/CI, maior backup real, runtime instalado e produção não validados.",
+      "release": "Nenhuma release. Commit 80609ab9 está publicado apenas na branch codex/backup-restore-handle-relative-io, sem merge em main; versão 12.1.41 preservada. Limites podem recusar backups acima dos tetos. ZIPs SFX/com prefixo e assinatura digital opcional do diretório central não foram validados; razão tem tolerância de leitura antecipada de até 4 KiB. Linux/CI, backups reais, runtime e produção seguem pendentes.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/80609ab92d585eb248376f2fe32ffd04fa29dfe9",
+        "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/backup-restore-handle-relative-io",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/backup-restore-handle-relative-io/MulletaFlix-master/docs/backup-coverage-audit.md"
       ]
     }
   ]
