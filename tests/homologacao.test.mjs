@@ -5474,3 +5474,20 @@ test('portal reports the Nebula startup timeout fix without claiming production 
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
+
+test('portal distinguishes started Telegram upload attempts from a completed production transfer', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-startup-log-recheck-2026-10-28-1727');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /quatro uploads.*14:50:19–20/);
+    assert.match(event.evidence, /timeout antigo de 45 s/);
+    assert.match(event.evidence, /não mostra diretamente o comando de encerramento/);
+    assert.match(event.evidence, /NebulaDownloaderStartupTests 35\/35 Release/);
+    assert.match(event.release, /não há tag\/Release pública/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
