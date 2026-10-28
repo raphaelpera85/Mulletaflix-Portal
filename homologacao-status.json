@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T16:04:00-03:00",
+  "generatedAt": "2026-10-28T16:17:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 98,
         "failed": 0,
         "percent": 98.2,
-        "label": "Atualizado em 27/10: regressão .NET Release Windows/.NET 10 passou com exit 0 em 17 TRX: 5.473 aprovados, 98 NotExecuted, 0 falhas/5.571 resultados. O filtro FullyQualifiedName!~Integration excluiu os casos de integração; os 98 NotExecuted não são aprovações. Isso não valida Linux/ACL, integrações MariaDB/MongoDB, CI hospedada, runtime instalado, produção nem aceite formal. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Auditoria automatizada não equivale à homologação formal; reexecução focal em 27/10: `LimitedConcurrencyLibrarySchedulerTests` 10/10 e `Jellyfin.Controller.Tests` Release 73/73; release v12.1.40 publicada. Os contadores agregados acima pertencem ao snapshot anterior e não foram recalculados nesta rodada. Build Windows/Linux realizado, sem instalação em produção. Contexto histórico separado: NebulaPython 3.14 688/688; NebulaPython 3.10 isolado: 685/685; MariaDB focal anterior: 197/198 opt-in em Windows; regressão ampla de 21/10: 5.120/5.356; auditoria npm anterior encontrou 10 altas somente dev via braces@3.0.3. Esses números não substituem o snapshot .NET atual. Atualização focal de 28/10: NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 em Release, separados do agregado; builds Windows x64, cross-publish Linux x64 e web passaram. PR #1 segue aberto. O run mais recente (40743410951) lista 13 jobs falhos, sem runner nem steps expostos; a causa não está disponível e isso não comprova falha nos testes. Pacotes ainda não publicados. Sem runtime Linux, Telegram real, instalação ou produção; formal permanece 2/7. Atualização focal 28/10: `NebulaDownloaderEngineTests` passou 45/45 em Release, com regressões para GET sequencial vazio e mídia não vazia sem tamanho conhecido; isso não prova o fluxo completo com MongoDB nem produção. Atualização focal 28/10: NebulaDownloaderStartupTests 35/35 e NebulaUploadEngineTests 225/225 em Release; esses resultados não alteram o agregado histórico nem equivalem a homologação formal."
+        "label": "Atualizado em 27/10: regressão .NET Release Windows/.NET 10 passou com exit 0 em 17 TRX: 5.473 aprovados, 98 NotExecuted, 0 falhas/5.571 resultados. O filtro FullyQualifiedName!~Integration excluiu os casos de integração; os 98 NotExecuted não são aprovações. Isso não valida Linux/ACL, integrações MariaDB/MongoDB, CI hospedada, runtime instalado, produção nem aceite formal. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Auditoria automatizada não equivale à homologação formal; reexecução focal em 27/10: `LimitedConcurrencyLibrarySchedulerTests` 10/10 e `Jellyfin.Controller.Tests` Release 73/73; release v12.1.40 publicada. Os contadores agregados acima pertencem ao snapshot anterior e não foram recalculados nesta rodada. Build Windows/Linux realizado, sem instalação em produção. Contexto histórico separado: NebulaPython 3.14 688/688; NebulaPython 3.10 isolado: 685/685; MariaDB focal anterior: 197/198 opt-in em Windows; regressão ampla de 21/10: 5.120/5.356; auditoria npm anterior encontrou 10 altas somente dev via braces@3.0.3. Esses números não substituem o snapshot .NET atual. Atualização focal de 28/10: NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 em Release, separados do agregado; builds Windows x64, cross-publish Linux x64 e web passaram. PR #1 segue aberto. O run mais recente (40743410951) lista 13 jobs falhos, sem runner nem steps expostos; a causa não está disponível e isso não comprova falha nos testes. Pacotes ainda não publicados. Sem runtime Linux, Telegram real, instalação ou produção; formal permanece 2/7. Atualização focal 28/10: `NebulaDownloaderEngineTests` passou 45/45 em Release, com regressões para GET sequencial vazio e mídia não vazia sem tamanho conhecido; isso não prova o fluxo completo com MongoDB nem produção. Atualização focal 28/10: NebulaDownloaderStartupTests 35/35 e NebulaUploadEngineTests 225/225 em Release; esses resultados não alteram o agregado histórico nem equivalem a homologação formal. Atualização focal 28/10: seleção de migrações de startup passou 5/5 e CheckForUnappliedMigrations_MySql passou 1/1 após gerar a migração AddImageProviderLanguage; estes testes locais não alteram o agregado histórico nem validam produção. CI Actions run 40752861156 iniciou os runners para o head a6af6dbb e segue em execução."
       }
     },
     {
@@ -3055,6 +3055,28 @@
     }
   ],
   "events": [
+    {
+      "id": "server-migration-startup-image-schema-2026-10-28",
+      "title": "12.1.46: seleção de migrações e persistência de idioma da imagem",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows / .NET 10 Release; migração EF Core MySQL",
+      "location": "JellyfinMigrationService; AddImageProviderLanguage; MigrationStartupSelectionTests",
+      "scope": "Corrigir seleção de migrações no primeiro startup e alinhar schema MySQL aos campos ProviderName/Language das imagens.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T16:04:00-03:00",
+      "updatedAt": "2026-10-28T16:17:00-03:00",
+      "evidence": "Teste reproduziu e cobriu a comparação incorreta entre IDs de migrações: testes focais de migrações passaram 5/5. O teste CheckForUnappliedMigrations_MySql revelou que ProviderName e Language não tinham migração; foi criada AddImageProviderLanguage com colunas nullable e o teste passou 1/1. Testes locais Windows/.NET 10 Release; nenhuma migração foi executada em produção. Commit a6af6dbb749376620c5d4971c4b3f16be3788f5e enviado à branch codex/fail-closed-inplace-updater do PR #1. Actions run 40752861156 iniciou os runners e continua em andamento; ainda sem resultado final. Homologação formal permanece 2/7 (28,6%).",
+      "release": "Incluído nas notas candidatas v12.1.46. Sem tag/Release pública; aguardando conclusão CI e demais gates formais.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/a6af6dbb749376620c5d4971c4b3f16be3788f5e",
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40752861156",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/MulletaFlix-master/docs/releases/12.1.46.md"
+      ]
+    },
     {
       "id": "server-update-center-branch-prerelease-2026-10-28",
       "title": "Update Center: 12.1.46 em PR; correção do filtro enviada",
