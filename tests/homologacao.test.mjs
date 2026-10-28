@@ -28,6 +28,20 @@ test('portal reports latest local server regression separately from formal homol
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records restore branch validation without awarding formal gate credit or a release', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-handle-relative-io-windows-suite-2026-10-27-2327');
+    const h03 = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.match(event.evidence, /141 aprovados, 16 ignorados.*0 falhas/);
+    assert.match(event.evidence, /limites de tamanho\/quantidade\/expansão do ZIP/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.equal(statusData.tracks.find(track => track.id === 'server').homologation.completed, 2);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(h03.status, 'in_progress');
+});
+
 test('portal reports Nebula directory refresh retry without claiming release or formal gate credit', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-directory-refresh-retry-2026-10-23-1620');
     const server = statusData.tracks.find(track => track.id === 'server');

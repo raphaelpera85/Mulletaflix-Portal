@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T22:57:06-03:00",
+  "generatedAt": "2026-10-27T23:27:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -77,7 +77,7 @@
   "serverHomologation": {
     "source": "Roadmap tecnológico do servidor e auditoria de cobertura do backup/restauração",
     "sourceUrl": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
-    "backupAuditUrl": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/backup-coverage-audit.md",
+    "backupAuditUrl": "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/backup-restore-handle-relative-io/MulletaFlix-master/docs/backup-coverage-audit.md",
     "scopeNote": "A matriz tem 7 gates igualmente ponderados. O percentual é gates com evidência técnica local validada ÷ 7, arredondado a uma casa decimal; estados em andamento, pendentes ou bloqueados não recebem crédito parcial. Não representa percentual de testes nem aceite de produção.",
     "formalSignoff": "pending",
     "areas": [
@@ -97,7 +97,7 @@
         "id": "SRV-H03",
         "name": "Consistência e recuperação integral entre domínios",
         "status": "in_progress",
-        "evidence": "Journal durável e replay após crash agora foram exercitados com MariaDB 11.4.4 descartável no teste integrado de H02. H03 permanece em andamento: faltam consistência temporal, domínios IntroSkipper/DetectionCache, MongoDB/Supabase, propriedade/criptografia de chaves e mitigação/teste determinístico de TOCTOU por pathname em Windows/Linux; TOCTOU por pathname permanece P0. H03 não recebe crédito parcial; homologação técnica global 2/7 (28,6%), sem release, instalação ou aceite de produção."
+        "evidence": "Journal durável e replay após crash agora foram exercitados com MariaDB 11.4.4 descartável no teste integrado de H02. H03 permanece em andamento: faltam consistência temporal, domínios IntroSkipper/DetectionCache, MongoDB/Supabase, propriedade/criptografia de chaves e mitigação/teste determinístico de TOCTOU por pathname em Windows/Linux; TOCTOU por pathname permanece P0. H03 não recebe crédito parcial; homologação técnica global 2/7 (28,6%), sem release, instalação ou aceite de produção. Revalidação em 27/10/2026: branch codex/backup-restore-handle-relative-io passou FullSystemBackup 141/157 em Windows/.NET 10 Release, com 16 skips de Linux/macOS/mount e zero falhas; a branch foi publicada para revisão. Não cobre limites de expansão ZIP nem valida execução Linux/CI; H03 continua em andamento e formal global em 2/7 (28,6%), sem release."
       },
       {
         "id": "SRV-H04",
@@ -11354,6 +11354,27 @@
       "release": "Nenhuma release: somente teste e documentação na branch. Nenhum merge, instalação ou validação de produção.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/latestmedia-movie-dedup-tests"
+      ]
+    },
+    {
+      "id": "server-restore-handle-relative-io-windows-suite-2026-10-27-2327",
+      "title": "Restore reforçado publicado em branch para revisão e CI",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Branch codex/backup-restore-handle-relative-io; Windows/.NET 10 Release; FullyQualifiedName~FullSystemBackup",
+      "location": "BackupService, BackupRestoreAclValidator, BackupRestoreDirectory, BackupRestoreRecoveryJournal, Program e participante IntroSkipper",
+      "scope": "Portar a implementação transacional do restore e seus testes para uma branch limpa baseada no main remoto; preservar versão e publicar evidência sem declarar release.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-27T23:27:50-03:00",
+      "updatedAt": "2026-10-27T23:27:50-03:00",
+      "evidence": "Commit 4ac651ef publicado no GitHub. FullSystemBackup Windows/.NET 10 Release: 141 aprovados, 16 ignorados por dependência de Linux/macOS/mounts, 0 falhas (157); dois testes de regressão após sincronização do modelo passaram 2/2. git diff --check passou. Riscos pendentes: limites de tamanho/quantidade/expansão do ZIP, ACL/syscalls Linux e execução da CI hospedada; runtime instalado e produção não validados. A homologação formal segue 2/7 (28,6%); esta rodada não concede crédito.",
+      "release": "Nenhuma release criada; commit está somente na branch codex/backup-restore-handle-relative-io, sem merge em main. Versão preservada em 12.1.41.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/4ac651ef",
+        "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/backup-restore-handle-relative-io",
+        "https://github.com/raphaelpera85/mulletaflix-completo/pull/new/codex/backup-restore-handle-relative-io"
       ]
     }
   ]
