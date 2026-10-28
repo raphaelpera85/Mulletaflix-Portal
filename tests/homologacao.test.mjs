@@ -5463,6 +5463,12 @@ test('portal reports the Nebula startup timeout fix without claiming production 
     assert.match(event.evidence, /Candidata 12\.1\.46 aumenta o timeout para 120 s/);
     assert.match(event.evidence, /12\.1\.45/);
     assert.match(event.release, /nenhuma release pública/i);
+    assert.match(event.evidence, /PR #1 segue aberto, base main.*head c63fc5c0/);
+    assert.match(event.evidence, /v12.1.46 retorna HTTP 404/);
+    assert.match(event.evidence, /13 jobs como failure sem runner ou steps/);
+    assert.match(event.release, /latest é v12.1.45/);
+    assert.match(event.evidence, /head do PR passou a `a5ae4ff4`.*código candidato permanece em `c63fc5c0`/);
+    assert.match(event.release, /head atual a5ae4ff4/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
