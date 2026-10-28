@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T16:40:00-03:00",
+  "generatedAt": "2026-10-28T16:44:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11776,9 +11776,9 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-28T16:40:00-03:00",
-      "updatedAt": "2026-10-28T16:40:00-03:00",
-      "evidence": "No run 40754861514, o build falhou porque o ProjectReference usava tools/ em minúsculas, embora a pasta versionada seja Tools/; em Windows isso passava, em Linux não. O Playwright falhou porque o Bash interpretou playlist como comando separado no filtro Wizard|playlist. Corrigido no commit e23bb90c: capitalização do caminho e filtro passado entre aspas como argumento único. Teste local do IntroSkipper.Integration.Tests compilou; os 8 testes de migração foram ignorados por falta de MariaDB configurado. Nova CI 40755999512 foi criada para o head e está queued; aguardando execução. Homologação formal permanece 2/7 (28,6%).",
-      "release": "Ainda sem tag ou GitHub Release v12.1.46; latest pública continua v12.1.45. PR #1 aberto para main. O Update Center só recebe versão após integração e publicação estável com artefatos.",
+      "updatedAt": "2026-10-28T16:44:00-03:00",
+      "evidence": "No run 40754861514, o build falhou porque o ProjectReference usava tools/ em minúsculas, embora a pasta versionada seja Tools/; em Windows isso passava, em Linux não. O Playwright falhou porque o Bash interpretou playlist como comando separado no filtro Wizard|playlist. Corrigido no commit e23bb90c. O teste local do projeto IntroSkipper.Integration.Tests compilou; os 8 testes de migração foram ignorados por MariaDB não configurado. A nova CI 40755999512 terminou sem iniciar runners: os 13 jobs têm runner_id=0 e zero etapas. A anotação do GitHub confirma bloqueio da conta por cobrança; portanto não houve validação remota das correções. Homologação formal permanece 2/7 (28,6%).",
+      "release": "Ainda sem tag ou GitHub Release v12.1.46; latest pública continua v12.1.45. PR #1 aberto para main. O Update Center só recebe versão após integração e publicação estável com artefatos. A CI segue bloqueada antes dos runners por cobrança da conta GitHub.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/e23bb90c5030431d85818c9c71ef64637523fb66",
