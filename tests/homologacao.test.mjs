@@ -5258,8 +5258,10 @@ test('portal keeps the profile-image deletion race open and separate from formal
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.equal(event.progressPercent, null);
-    assert.match(event.evidence, /IsPathWithinRoot.*File\.Delete/);
-    assert.match(event.evidence, /ACL.*TOCTOU/);
+    assert.match(event.evidence, /AvatarFileStore/);
+    assert.match(event.evidence, /janela entre a comparação final e unlinkat/);
+    assert.match(event.evidence, /ancestrais não são percorridos\/pinados/);
+    assert.match(event.evidence, /2\/7 \(28,6%\)/);
     assert.match(event.release, /Nenhuma/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);

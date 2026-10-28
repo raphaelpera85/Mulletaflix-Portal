@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T13:09:35-03:00",
+  "generatedAt": "2026-10-28T13:17:54-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11258,19 +11258,19 @@
     },
     {
       "id": "server-avatar-profile-delete-race-audit-2026-10-27",
-      "title": "Auditoria GetAvatar: remoção de imagem de perfil ainda valida caminho antes de excluir",
+      "title": "Auditoria GetAvatar: janela Linux entre validação do inode e unlinkat permanece aberta",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Inspeção somente leitura da fonte e testes existentes em Windows/.NET",
-      "location": "MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarFileStore.cs",
-      "scope": "Determinar se a exclusão de imagens de perfil usa a mesma proteção contra troca concorrente de caminho que o armazenamento de avatares.",
+      "local": "Revisão estática independente de AvatarService, AvatarFileStore e AvatarFileStoreTests; nenhuma execução Linux nesta sessão",
+      "location": "MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs; MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarFileStore.cs; tests/Jellyfin.Api.Tests/Controllers/AvatarFileStoreTests.cs",
+      "scope": "Confirmar o fluxo atual de remoção de imagem de perfil e validar o risco residual entre revalidação do inode e unlinkat no Linux.",
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-27T21:40:42-03:00",
-      "updatedAt": "2026-10-27T21:40:42-03:00",
-      "evidence": "A inspeção encontrou IsPathWithinRoot seguido por File.Delete em TryDeleteObsoleteProfileImage e no fluxo de remoção do profile image. AvatarFileStore usa handles relativos à raiz e não segue reparse points para arquivos de seu próprio catálogo, mas essa garantia não cobre os caminhos de perfil em AvatarService. Os testes existentes cobrem links estáveis, não uma troca entre validação e exclusão. ACLs reais dos diretórios de usuários e a explorabilidade da janela TOCTOU não foram verificadas; isso é uma lacuna de auditoria, não uma vulnerabilidade confirmada nem correção aplicada. Próximo passo: verificar ACLs e desenhar um teste determinístico de troca antes de escolher uma exclusão relativa segura.",
-      "release": "Nenhuma. Não houve alteração de código nem crédito para a homologação formal.",
+      "updatedAt": "2026-10-28T13:17:54-03:00",
+      "evidence": "Reauditoria independente confirmou que os caminhos de substituição, limpeza órfã e remoção de perfil delegam a AvatarFileStore; o antigo achado de File.Delete no caminho de profile image está superado. No Windows, a exclusão usa o handle aberto. No Linux, TryDelete reabre e compara dispositivo/inode, depois chama unlinkat pelo nome; existe janela entre a comparação final e unlinkat para processo com o mesmo UID efetivo que possa escrever no diretório. O teste Linux altera o nome no callback antes da comparação final e não cobre essa janela. O diretório raiz exige ownership do UID efetivo e não permite escrita por grupo/outros, mas ancestrais não são percorridos/pinados e permissões efetivas da instalação Linux não foram verificadas. Nenhum bypass foi reproduzido; risco estático permanece sem mitigação comprovada. Sem alteração de runtime ou crédito formal; homologação continua 2/7 (28,6%). Próximo gate: validar política de permissões e ABI/runtime em Linux nativo e definir mitigação compatível com o modelo de confiança.",
+      "release": "Nenhuma release: esta sessão foi auditoria e documentação, sem alteração de código runtime.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarService.cs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/MulletaFlix.Plugin.GetAvatar/Services/AvatarFileStore.cs"
