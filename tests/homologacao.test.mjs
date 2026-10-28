@@ -5249,3 +5249,18 @@ test('portal publishes ZIP restore limits without granting formal homologation o
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
 });
+
+test('portal records restore CI trigger and denied draft PR without claiming hosted validation', () => {
+    const event = statusData.events.find((item) => item.id === 'server-restore-ci-trigger-audit-2026-10-28-0858');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /push apenas em main\/master e pull_request/);
+    assert.match(event.evidence, /não lista execução/);
+    assert.match(event.evidence, /HTTP 403 Resource not accessible by integration/);
+    assert.match(event.evidence, /não validados/);
+    assert.match(event.release, /Nenhuma release/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
+});
