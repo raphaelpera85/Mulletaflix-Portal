@@ -5313,3 +5313,19 @@ test('portal records validated Supabase backup of durable Nebula refreshes witho
     assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records updater recovery without claiming a published release or formal credit', () => {
+    const event = statusData.events.find((item) => item.id === 'server-inplace-updater-recovery-2026-10-28-1015');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Robocopy retornou código 11/);
+    assert.match(event.evidence, /Robocopy código 3/);
+    assert.match(event.evidence, /HTTP 200/);
+    assert.match(event.release, /PR não criado/);
+    assert.match(event.release, /Sem merge, tag, assets ou release publicada/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

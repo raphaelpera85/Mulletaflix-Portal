@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T09:57:49-03:00",
+  "generatedAt": "2026-10-28T10:15:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11481,6 +11481,27 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/backup-restore-handle-relative-io",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/backup-restore-handle-relative-io/MulletaFlix-master/docs/backup-coverage-audit.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/backup-restore-handle-relative-io/MulletaFlix-master/supabase/migrations/20261028125319_nebula_directory_refreshes.sql"
+      ]
+    },
+    {
+      "id": "server-inplace-updater-recovery-2026-10-28-1015",
+      "title": "Atualizador interrompe após falha de cópia e produção recuperada",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows; instalação local MulletaFlix 12.1.40; PowerShell",
+      "location": "MulletaFlix-packaging-master/MulletaFlix-ux-custom/nsis/apply-update.ps1; commit c6791942",
+      "scope": "Interromper atualização in-place quando Robocopy falha e recuperar o servidor a partir do pacote íntegro preservado.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-28T10:04:00-03:00",
+      "updatedAt": "2026-10-28T10:15:00-03:00",
+      "evidence": "Log de produção: Robocopy retornou código 11, mas o atualizador iniciou servidor e tray; o servidor falhou ao carregar Emby.Naming por mistura de versões. Correção faz o atualizador lançar erro em código >=8 e manter pacote para diagnóstico; ApplyUpdateFailure.Tests.ps1 passou e git diff --check passou. Produção foi recuperada reaplicando pacote íntegro 12.1.40: Robocopy código 3, MulletaFlix.dll, Emby.Server.Implementations.dll, MulletaFlix.Server.Implementations.dll e Emby.Naming.dll confirmadas em 12.1.40.0; /System/Info/Public respondeu HTTP 200, Version 12.1.40. O servidor está consistente, porém abaixo da versão-fonte 12.1.41. Homologação formal permanece 2/7 (28,6%), sem crédito. CI hospedada ainda não executada.",
+      "release": "Proposta v12.1.42 commit c6791942 publicada na branch codex/fail-closed-inplace-updater. PR não criado: integração GitHub retornou 403 Resource not accessible by integration; gh não autenticado. Sem merge, tag, assets ou release publicada.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/c6791942",
+        "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/fail-closed-inplace-updater",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/MulletaFlix-master/docs/releases/12.1.42.md"
       ]
     }
   ]
