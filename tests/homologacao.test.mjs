@@ -5279,3 +5279,19 @@ test('portal records Nebula transient retries without claiming production or for
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
 });
+
+test('portal reports durable Nebula directory refresh recovery without production or Mongo evidence', () => {
+    const event = statusData.events.find((item) => item.id === 'server-nebula-durable-refresh-recovery-2026-10-28-0916');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /716 aprovados, 26 ignorados, 0 falhas/);
+    assert.match(event.evidence, /Mongo opt-in/);
+    assert.match(event.evidence, /só é removido após sucesso/);
+    assert.match(event.evidence, /backup\/restore nativo C#.*ainda não inclui/);
+    assert.match(event.release, /sem release/);
+    assert.match(event.release, /d87264dff8e026f3436d64e56c0f0cacb5551f00 publicado na branch/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.tracks.find((track) => track.id === 'server').homologation.completed, 2);
+});
