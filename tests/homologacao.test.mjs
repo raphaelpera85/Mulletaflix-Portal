@@ -78,6 +78,22 @@ test('portal records rejection of duplicate backup manifests without claiming re
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
 
+test('portal records the restore handle audit without treating Windows tests as Linux validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-handle-audit-2026-10-28-1134');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /operações relativas a BackupRestoreDirectory\/handles/);
+    assert.match(event.evidence, /WSL2 não inicia.*virtualização está desativada/);
+    assert.match(event.evidence, /Linux\/ACL POSIX.*não foram executados/);
+    assert.match(event.evidence, /150.*16 de Linux\/macOS\/mount.*falhou 0\/166/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
 test('portal reports Nebula directory refresh retry without claiming release or formal gate credit', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-directory-refresh-retry-2026-10-23-1620');
     const server = statusData.tracks.find(track => track.id === 'server');
