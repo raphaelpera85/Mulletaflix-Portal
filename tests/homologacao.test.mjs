@@ -28,6 +28,22 @@ test('portal reports latest local server regression separately from formal homol
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal publishes server v12.1.44 image-language fix without formal homologation credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-image-language-priority-v12-1-44-2026-10-28');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /pt-br.*pt-BR/i);
+    assert.match(event.release, /v12\.1\.44.*publicada/i);
+    assert.ok(event.links.includes('https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.44'));
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
 test('portal records restore branch validation without awarding formal gate credit or a release', () => {
     const event = statusData.events.find(item => item.id === 'server-restore-handle-relative-io-windows-suite-2026-10-27-2327');
     const h03 = statusData.serverHomologation.areas.find(area => area.id === 'SRV-H03');

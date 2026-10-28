@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T11:53:00-03:00",
+  "generatedAt": "2026-10-28T13:09:35-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11591,6 +11591,27 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/backup-restore-handle-relative-io",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/13fb8924",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/MulletaFlix-master/docs/releases/12.1.42.md"
+      ]
+    },
+    {
+      "id": "server-image-language-priority-v12-1-44-2026-10-28",
+      "title": "Servidor v12.1.44: imagens priorizam o idioma e a variante regional configurados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows x64 / .NET 10 Release",
+      "location": "ProviderManager.GetAvailableRemoteImages; ItemImageProvider.RefreshFromProvider; EnumerableExtensions.OrderByLanguageDescending",
+      "scope": "Priorizar em todas as mídias imagens no idioma efetivo da biblioteca/servidor, com variante regional exata antes das demais variantes; inglês e imagens sem idioma permanecem fallback.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-28T12:48:00-03:00",
+      "updatedAt": "2026-10-28T13:09:35-03:00",
+      "evidence": "Testes focados: EnumerableExtensionsTests 14/14; provedores de imagem, ordenação e TMDb 72/72. Cobertura inclui pt-br/pt-BR sem distinção de caixa, outras variantes regionais em diferentes línguas, fallback inglês regional e seleção de backdrop. Build Release Windows x64 e integridade do estágio passaram. Instalador (452.384.286 bytes) e pacote de atualização (417.697.823 bytes; SHA-256 AB62B637B848E69EBD7B3492D442953302B673CA0B3331F979222816B620C77E) foram gerados e a API pública confirmou ambos. Sem suíte completa da solução, Linux, CI hospedada, provider real ou instalação em produção nesta rodada. Capas já persistidas precisam de refresh com substituição habilitada. Homologação formal segue 2/7 (28,6%), sem crédito.",
+      "release": "Release v12.1.44 publicada no GitHub; commit 4f38fd18 e tag v12.1.44 estão na branch codex/fail-closed-inplace-updater. Artefatos: instalador e ZIP Windows x64. Release: https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.44. CI hospedada e pacote Linux não validados.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.44",
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/4f38fd18",
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/MulletaFlix-master/docs/releases/12.1.44.md"
       ]
     }
   ]
