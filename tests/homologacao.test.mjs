@@ -5514,3 +5514,25 @@ test('portal records the MySqlConnector advisory without suppressing the scanner
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
+
+test('portal records the patched MariaDB driver without changing the database or formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-driver-ghsa-remediation-2026-10-28');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /faixa oficial.*<2\.6\.1/);
+    assert.match(event.evidence, /MySqlConnector é o driver \.NET/);
+    assert.match(event.evidence, /MariaDB/);
+    assert.match(event.evidence, /7\/7/);
+    assert.match(event.evidence, /interrompida.*Providers/);
+    assert.match(event.evidence, /GitHub Actions run 40788460057.*antes dos runners/);
+    assert.match(event.evidence, /bloqueio da conta por cobrança/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.ok(event.links.some(link => link.endsWith('/commit/a17b61db')));
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
