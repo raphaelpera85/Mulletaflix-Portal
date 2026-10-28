@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T10:56:44-03:00",
+  "generatedAt": "2026-10-28T11:02:09-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11516,10 +11516,11 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-28T10:30:00-03:00",
-      "updatedAt": "2026-10-28T10:56:44-03:00",
-      "evidence": "O teste usa JSON válido e incompressível acima de 16 MiB e foi confirmado primeiro falhando no código antigo, que só falhava mais tarde ao desserializar; após reutilizar o leitor limitado, teste focal passou 1/1 verificando InvalidDataException, arquivo existente preservado e callback de sidecar não acionado. FullyQualifiedName~FullSystemBackup em Windows/.NET 10 Release passou 148, ignorou 16 dependentes de Linux/macOS/mount e falhou 0 (164). git diff --check passou. Limite residual: validação geral percorre/descomprime o conteúdo antes do teto específico do manifesto, respeitando os tetos globais de entrada/arquivo/razão. Homologação formal permanece 2/7 (28,6%), sem crédito novo. CI hospedada, Linux, runtime instalado e produção não foram validados.",
-      "release": "Nenhuma release criada. Correção e teste final do servidor nos commits ef1d5986 e be464b62, publicados apenas na branch codex/backup-restore-handle-relative-io. Notas propostas da v12.1.42 atualizadas no commit 7414f449 da branch codex/fail-closed-inplace-updater. Sem PR/merge para main, tag, assets ou release publicada; homologação geral pendente.",
+      "updatedAt": "2026-10-28T11:02:09-03:00",
+      "evidence": "Uma tentativa preliminar contra o código antigo usou JSON inválido acima do limite e alcançou JsonException; não a tratamos como prova do caso JSON válido. O teste final usa BackupManifest válido com padding aleatório incompressível acima de 16 MiB e verifica rejeição InvalidDataException, preservação da configuração e callback de sidecar não acionado (focal 1/1). FullyQualifiedName~FullSystemBackup em Windows/.NET 10 Release passou 148, ignorou 16 dependentes de Linux/macOS/mount e falhou 0 (164). git diff --check passou. Limite residual: validação geral percorre/descomprime o conteúdo antes do teto específico do manifesto, respeitando os tetos globais de entrada/arquivo/razão. Homologação formal permanece 2/7 (28,6%), sem crédito novo. CI hospedada, Linux, runtime instalado e produção não foram validados.",
+      "release": "Nenhuma release criada. Correção e teste final do servidor nos commits 1da107e1, ef1d5986 e be464b62, publicados apenas na branch codex/backup-restore-handle-relative-io. Notas propostas da v12.1.42 atualizadas no commit 7414f449 da branch codex/fail-closed-inplace-updater. Sem PR/merge para main, tag, assets ou release publicada; homologação geral pendente.",
       "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/commit/1da107e1",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/ef1d5986",
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/be464b62",
         "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/backup-restore-handle-relative-io",
