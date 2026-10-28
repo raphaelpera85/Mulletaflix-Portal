@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T14:42:45-03:00",
+  "generatedAt": "2026-10-28T14:46:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3066,8 +3066,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-28T14:07:00-03:00",
-      "updatedAt": "2026-10-28T14:42:45-03:00",
-      "evidence": "NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 passaram em Release; build Windows x64, cross-publish Linux x64, npm run build:check e npm run build:production passaram. Pacotes criados antes da correção do downloader foram invalidados e precisam ser reconstruídos. PR #1 aberto; CI sem execução por bloqueio de cobrança da conta GitHub. Sem testes NebulaPython, host Linux, Telegram real, instalação ou produção. Homologação formal continua 2/7. Atualização de auditoria: o teste `NebulaDownloaderEngineTests` passou 45/45, incluindo duas regressões que demonstraram falha antes da correção e sucesso após ela; GET 200 vazio agora lança erro antes de gravar/enfileirar e o caller existente não apaga o `.strm`. Esse teste não percorre o fluxo Mongo completo. Instalação local lida em 28/10: DLL de servidor 12.1.45; o log apresentado contém o limite antigo de 45 s. A API local estava indisponível. Os pacotes anteriores do candidato ficaram inválidos e precisam ser reconstruídos. Formal continua 2/7 (28,6%), sem novo crédito.",
+      "updatedAt": "2026-10-28T14:46:00-03:00",
+      "evidence": "NebulaDownloaderStartupTests 31/31 e TmdbUtilsTests 27/27 passaram em Release; build Windows x64, cross-publish Linux x64, npm run build:check e npm run build:production passaram. Pacotes criados antes da correção do downloader foram invalidados e precisam ser reconstruídos. PR #1 aberto; CI sem execução por bloqueio de cobrança da conta GitHub. Sem testes NebulaPython, host Linux, Telegram real, instalação ou produção. Homologação formal continua 2/7. Atualização de auditoria: o teste `NebulaDownloaderEngineTests` passou 45/45, incluindo duas regressões que demonstraram falha antes da correção e sucesso após ela; GET 200 vazio agora lança erro antes de gravar/enfileirar e o caller existente não apaga o `.strm`. Esse teste não percorre o fluxo Mongo completo. Instalação local lida em 28/10: DLL de servidor 12.1.45; o log apresentado contém o limite antigo de 45 s. A API local estava indisponível. Os pacotes anteriores do candidato ficaram inválidos e precisam ser reconstruídos. Formal continua 2/7 (28,6%), sem novo crédito. CI do head `bdb5216e` executou workflow #40738272317, mas o check anotou que os jobs não começaram porque a conta GitHub está bloqueada por cobrança; resultado não valida código.",
       "release": "Release 12.1.46 bloqueada: PR #1 e CI hospedada aguardam regularização da cobrança GitHub. Nenhum pacote anterior ao último fix deve ser publicado; reconstruir os artefatos após o CI. Nenhuma release pública.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/1",
