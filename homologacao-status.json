@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T22:00:01-03:00",
+  "generatedAt": "2026-10-27T22:07:34-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -11273,6 +11273,26 @@
       "release": "Tag v12.1.41 no GitHub; release e pacotes não publicados porque a conta está bloqueada por cobrança do GitHub Actions.",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/commit/8a7796c3cae3efc644721123c6c88d4c05b6fa66",
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40612168389",
+        "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.41"
+      ]
+    },
+    {
+      "id": "server-scheduler-nebula-working-tree-audit-2026-10-27-2207",
+      "title": "Auditoria focal scheduler e Nebula: testes passaram; limite de shutdown segue em análise",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; working tree compartilhado, sem publicação de código",
+      "location": "LimitedConcurrencyLibraryScheduler; NebulaDownloaderStartupTests; NebulaSupabaseSyncTests",
+      "scope": "Validar alterações locais existentes e registrar limite de encerramento observado em revisão independente.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-27T22:07:34-03:00",
+      "updatedAt": "2026-10-27T22:07:34-03:00",
+      "evidence": "LimitedConcurrencyLibrarySchedulerTests passou 4/4; NebulaDownloaderStartupTests + NebulaSupabaseSyncTests passaram 100/100, sem falhas. Revisor independente não encontrou problema concreto nos diffs Nebula. Revisão do scheduler confirmou que DisposeAsync espera os enqueues admitidos drenarem antes de cancelar runners. Um callback que nunca conclua pode atrasar o descarte indefinidamente; isto não foi reproduzido, e o callback atualmente não recebe token de cancelamento do scheduler. Classificado como limite de shutdown gracioso pendente de decisão, não como falha de teste confirmada. Testes focalizados no working tree não são regressão completa nem validação Linux, CI hospedada, runtime instalado ou produção. Homologação formal permanece 2/7 (28,6%), sem crédito novo. Nenhum código foi commitado ou publicado nesta sessão.",
+      "release": "Nenhuma release: alterações locais ainda não publicadas. v12.1.41 continua bloqueada pelo billing do GitHub Actions.",
+      "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40612168389",
         "https://github.com/raphaelpera85/mulletaflix-completo/releases/tag/v12.1.41"
       ]
