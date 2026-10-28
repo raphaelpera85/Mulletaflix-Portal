@@ -49,8 +49,9 @@ test('portal records the restore manifest limit fix without formal credit or rel
     assert.ok(event);
     assert.equal(event.status, 'completed');
     assert.match(event.evidence, /148.*16 dependentes.*0/);
-    assert.match(event.evidence, /falhando contra o código anterior/);
-    assert.match(event.evidence, /preservação do arquivo existente/);
+    assert.match(event.evidence, /falhando no código antigo/);
+    assert.match(event.evidence, /arquivo existente preservado/);
+    assert.match(event.evidence, /validação geral percorre\/descomprime.*tetos globais/);
     assert.match(event.release, /Nenhuma release criada/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
