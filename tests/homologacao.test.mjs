@@ -7452,3 +7452,24 @@ test('portal records Nebula scanner transient retry without changing broad or fo
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal keeps real production STRM playback evidence partial until webOS symptom is reproduced', () => {
+    const playback = statusData.events.find(item => item.id === 'server-player-view-background-audio-2026-10-29-1907');
+    const backup = statusData.events.find(item => item.id === 'server-supabase-snapshot-integrity-2026-10-29-2007');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(playback);
+    assert.equal(playback.status, 'in_progress');
+    assert.match(playback.evidence, /STRM real.*Nebula original ativo.*vídeo visível por mais de um minuto/);
+    assert.match(playback.evidence, /não está confirmada como corrigida/);
+    assert.ok(backup);
+    assert.equal(backup.status, 'completed');
+    assert.equal(backup.testOnly, true);
+    assert.match(backup.evidence, /50\/50.*701\/701.*não foram exercitados/);
+    assert.match(backup.release, /sem release publicada.*2\/7/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(playback.updatedAt) <= Date.parse(statusData.generatedAt));
+    assert.ok(Date.parse(backup.updatedAt) <= Date.parse(statusData.generatedAt));
+});

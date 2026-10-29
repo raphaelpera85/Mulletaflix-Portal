@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T19:13:27-03:00",
+  "generatedAt": "2026-10-29T20:07:25-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3085,8 +3085,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-29T19:02:00-03:00",
-      "updatedAt": "2026-10-29T19:07:18-03:00",
-      "evidence": "A causa compatível na fonte era o catch de viewshow ocultar a exceção e chamar goHome, enquanto o player podia continuar com áudio. A candidata agora registra o erro e mantém a tela do player. Vitest 425/425, TypeScript build:check, build production e verify:build passaram. A exceção original não foi reproduzida/capturada nesta rodada; mídia real, webOS, instalação e produção da candidata não foram validados. Produção permanece 12.1.45.",
+      "updatedAt": "2026-10-29T20:07:25-03:00",
+      "evidence": "A causa compatível na fonte era o catch de viewshow ocultar a exceção e chamar goHome, enquanto o player podia continuar com áudio. A candidata agora registra o erro e mantém a tela do player. Vitest 425/425, TypeScript build:check, build production e verify:build passaram. A exceção original não foi reproduzida/capturada nesta rodada; mídia real, webOS, instalação e produção da candidata não foram validados. Produção permanece 12.1.45. Reteste em produção local 29/10: Moriarty the Patriot — S1:E1, arquivo STRM real da biblioteca, Nebula original ativo; vídeo visível por mais de um minuto, player permaneceu aberto e não retornou à Home. Áudio foi ouvido, mas não medido instrumentalmente. O sintoma não foi reproduzido no Chrome; webOS e o dispositivo/título relatado ainda aguardam identificação e teste. A falha não está confirmada como corrigida.",
       "release": "Candidata 12.1.46; sem publicação/instalação. Homologação formal 2/7 (28,6%).",
       "links": [],
       "testOnly": true
@@ -14038,6 +14038,24 @@
       "updatedAt": "2026-10-29T14:17:00-03:00",
       "evidence": "Regressão ampla .NET Release: 17 assemblies, 5.377 aprovados, 261 ignorados, 0 falhas/5.638. NebulaPython 682/682; frontend Vitest 425/425; testes Node do runner 16/16; typecheck, build production e verify:build passaram (1.929 artefatos, payload inicial 298,2 KB gzip). Produção apenas GET: HTTP 200 em /System/Info/Public e /web/, versão 12.1.45. E2E navegador com binário de stage 28/10 não executado por ser anterior à fonte atual. Ignorados não são aprovados; CI hospedada, Linux, E2E com fonte atual e instalação/upgrade pendentes. Homologação formal permanece 2/7 (28,6%).",
       "release": "Somente validação local e GETs; nenhuma escrita em produção, release ou gate formal. Release pública 12.1.45; homologação formal permanece 2/7 (28,6%). E2E com fonte atual, Linux nativo, CI hospedada e instalação/upgrade permanecem pendentes.",
+      "testOnly": true
+    },
+    {
+      "id": "server-supabase-snapshot-integrity-2026-10-29-2007",
+      "title": "Recusar snapshots incompletos do backup Supabase",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [],
+      "local": "Suíte local Nebula Python e testes focais do serviço de sincronização; sem conexão ao MongoDB ou Supabase operacional.",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/supabase_sync.py; tests/test_supabase_sync.py",
+      "scope": "Evitar declarar backup completo quando a leitura do MongoDB foi truncada e impedir que restauração integral apague dados com snapshot incompleto ou filtrado.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T19:50:00-03:00",
+      "updatedAt": "2026-10-29T20:07:25-03:00",
+      "evidence": "Snapshot v2 registra contagem e documentos; a restauração valida formato/contagem antes de alterar MongoDB e só remove extras depois de todos os upserts. Backups legados permanecem disponíveis para restauração seletiva sem exclusão. Testes focais: 50/50; suíte Nebula Python: 701/701; git diff --check passou. MongoDB/Supabase reais, produção e limite real de payload não foram exercitados.",
+      "release": "Correção candidata 12.1.46; sem release publicada. Produção 12.1.45; homologação formal permanece 2/7 (28,6%).",
       "testOnly": true
     }
   ]
