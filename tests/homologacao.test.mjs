@@ -6016,17 +6016,19 @@ test('portal records Nebula integrity regression without formal or release credi
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
-test('portal records image persistence idempotency without database, release or formal credit', () => {
+test('portal records MariaDB-validated image persistence without release or formal credit', () => {
     const event = statusData.events.find(item => item.id === 'server-image-persistence-idempotency-2026-10-29-0120');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.ok(event);
-    assert.equal(event.status, 'in_progress');
-    assert.equal(event.progressPercent, null);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /ItemPersistenceServiceTests: 28\/28 aprovados/);
-    assert.match(event.evidence, /foi ignorado pois MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não está configurada/);
-    assert.match(event.evidence, /agregado amplo 5\.291\/5\.376 não foi reexecutado/);
-    assert.match(event.release, /Nenhuma release, instalação ou alteração de produção/);
+    assert.match(event.evidence, /passou 1\/1 contra MariaDB 11\.4\.4 descartável/);
+    assert.match(event.evidence, /preserva IDs e que a mudança de idioma é persistida/);
+    assert.match(event.evidence, /processo e datadir temporários foram encerrados\/removidos/);
+    assert.match(event.evidence, /Agregado amplo 5\.291\/5\.376 não foi reexecutado/);
+    assert.match(event.release, /sem release, instalação ou alteração de produção/);
     assert.equal(server.testAudit.passed, 5291);
     assert.equal(server.testAudit.total, 5376);
     assert.equal(server.homologation.completed, 2);
