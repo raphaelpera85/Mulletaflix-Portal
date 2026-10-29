@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:49:00-03:00",
+  "generatedAt": "2026-10-29T07:51:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13378,6 +13378,23 @@
       "updatedAt": "2026-10-29T07:49:00-03:00",
       "evidence": "Os 13 jobs do run 40795733017 aparecem como failure, sem steps executados. Annotation do Server build & unit tests e Nebula Python unit tests (windows-latest) diz que jobs não iniciaram porque a conta está locked due to billing. Status não indica falha de teste; nenhum runner executou.",
       "release": "Bloqueio de infraestrutura a resolver na conta GitHub. Evidências locais seguem disponíveis; CI hospedada, gate formal e integração permanecem pendentes. Não há crédito de homologação nem release. MariaDB é o único banco relacional."
+    },
+    {
+      "id": "server-nebula-venv-gitignore-2026-10-29-0751",
+      "front": "server",
+      "title": "Evitar incluir virtualenv Python no conteúdo do servidor",
+      "scope": "Impedir que o ambiente virtual local criado para executar a suíte Nebula apareça como arquivo do projeto em commits futuros.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": ".gitignore",
+      "local": "Regra `**/.venv/` verificada com `git check-ignore -v` para a virtualenv Nebula local.",
+      "startedAt": "2026-10-29T07:51:00-03:00",
+      "updatedAt": "2026-10-29T07:51:00-03:00",
+      "evidence": "O Git agora ignora virtualenvs aninhadas. A regra foi confirmada para MulletaFlix-master/Tools/NebulaPython/.venv/pyvenv.cfg. Não altera runtime, dependências ou resultado dos testes.",
+      "release": "Melhoria de higiene do repositório, sem alteração funcional ou de banco. Não concede gate formal nem cria release. MariaDB é o único banco relacional."
     }
   ]
 }
