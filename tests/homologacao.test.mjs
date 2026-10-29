@@ -6281,3 +6281,18 @@ test('portal records isolated IntroSkipper fixture lifecycle without formal cred
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal reports the current server audit as in progress without estimating completion', () => {
+    const event = statusData.events.find(item => item.id === 'server-audit-continuation-2026-10-29-0412');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /três inspeções read-only/);
+    assert.match(event.release, /Sem release.*Homologação formal permanece 2\/7/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
