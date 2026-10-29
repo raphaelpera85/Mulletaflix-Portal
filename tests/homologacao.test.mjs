@@ -5658,6 +5658,7 @@ test('portal records portable POSIX ACL parser coverage without claiming Linux v
     const h03 = statusData.serverHomologation.areas.find(item => item.id === 'SRV-H03');
 
     assert.ok(event);
+    assert.match(statusData.serverHomologation.latestAudit, /premissa operacional MariaDB-only/);
     assert.equal(event.status, 'completed');
     assert.match(event.evidence, /ValidateLinuxAclBytes puro passou 2\/2/);
     assert.match(event.evidence, /não valida fgetxattr.*syscalls Linux/);
