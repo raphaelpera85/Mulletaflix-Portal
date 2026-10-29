@@ -38,6 +38,7 @@ test('portal records the updater, Nebula and media-request audit batch without f
     assert.match(event.evidence, /5\.288 aprovados, 85 ignorados, 0 falhas/);
     assert.match(event.evidence, /Nebula Python: 672\/672/);
     assert.match(event.evidence, /Não executados CI hospedada.*Linux nativo ou produção/);
+    assert.match(event.evidence, /sem encerrar processos de outras instalações pelo nome/);
     assert.match(event.release, /sem release publicada/i);
     assert.equal(server.testAudit.passed, 5288);
     assert.equal(server.testAudit.total, 5373);
