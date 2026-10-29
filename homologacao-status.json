@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T02:58:14-03:00",
+  "generatedAt": "2026-10-29T02:59:36-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12676,6 +12676,23 @@
       "updatedAt": "2026-10-29T02:58:14-03:00",
       "evidence": "dotnet test em Release com FullyQualifiedName!~Integration passou 1.659 testes, 82 ignorados e 0 falhas/1.741 em 1m13s. Os ignorados não contam como aprovados; a execução local exclui integração externa e não valida MariaDB, MongoDB, Linux, CI hospedada, runtime instalado ou produção. A regressão nova de manifesto Trickplay foi encontrada, mas ignorada sem MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING e segue pendente.",
       "release": "Sem release, instalação ou alteração em produção. Esta fatia local não concede crédito formal; homologação continua 2/7 (28,6%), e o agregado publicado 5.291/5.376 permanece inalterado.",
+      "links": []
+    },
+    {
+      "id": "server-core-test-slices-2026-10-29-0259",
+      "title": "Servidor: três suítes locais concluídas sem dependências externas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Tests, Jellyfin.Providers.Tests e Jellyfin.MediaEncoding.Tests",
+      "scope": "Executar três assemblies independentes em paralelo usando binários Release já construídos, acelerando a validação por fatias sem integrações externas.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T02:59:15-03:00",
+      "updatedAt": "2026-10-29T02:59:36-03:00",
+      "evidence": "Jellyfin.Server.Tests passou 91/91 em 2 s; Jellyfin.Providers.Tests passou 823/823 em 6 s com filtro FullyQualifiedName!~Integration; Jellyfin.MediaEncoding.Tests passou 71/71 em 223 ms. Total desta fatia: 985 aprovados, 0 ignorados, 0 falhas. Testes externos, MariaDB, MongoDB, CI hospedada, Linux nativo, runtime instalado e produção não foram validados.",
+      "release": "Sem release, instalação ou alteração de produção. Evidência local não concede crédito formal; homologação permanece 2/7 (28,6%) e o agregado de auditoria publicado 5.291/5.376 não foi recalculado.",
       "links": []
     }
   ]

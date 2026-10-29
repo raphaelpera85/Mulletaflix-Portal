@@ -6200,3 +6200,24 @@ test('portal records the Server Implementations slice without treating skips as 
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records three server test slices independently of integration and formal gates', () => {
+    const event = statusData.events.find(item => item.id === 'server-core-test-slices-2026-10-29-0259');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Server\.Tests passou 91\/91/);
+    assert.match(event.evidence, /Providers\.Tests passou 823\/823/);
+    assert.match(event.evidence, /MediaEncoding\.Tests passou 71\/71/);
+    assert.match(event.evidence, /985 aprovados, 0 ignorados, 0 falhas/);
+    assert.match(event.evidence, /MariaDB, MongoDB, CI hospedada, Linux nativo, runtime instalado e produção não foram validados/);
+    assert.match(event.release, /Sem release.*homologação permanece 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
