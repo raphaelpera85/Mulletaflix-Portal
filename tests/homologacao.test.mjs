@@ -6563,3 +6563,22 @@ test('portal records backup unit regression and keeps skipped cases pending', ()
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the full Server Implementations suite and its skipped tests', () => {
+    const event = statusData.events.find(item => item.id === 'server-implementations-full-test-suite-2026-10-29-0539');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /passou 1\.659, ignorou 83.*falhou 0/);
+    assert.match(event.evidence, /Os ignorados seguem pendentes/);
+    assert.match(event.release, /38\/38/);
+    assert.match(event.release, /1\.659\/1\.742, com 83 ignorados/);
+    assert.match(event.release, /Formal 2\/7/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

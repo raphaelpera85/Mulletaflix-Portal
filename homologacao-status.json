@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:37:26-03:00",
+  "generatedAt": "2026-10-29T05:39:25-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12983,6 +12983,23 @@
       "links": [],
       "updatedAt": "2026-10-29T05:37:26-03:00",
       "front": "server"
+    },
+    {
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T05:37:00-03:00",
+      "front": "server",
+      "scope": "Executar a suíte inteira de implementações do servidor além da regressão filtrada de backup.",
+      "evidence": "Jellyfin.Server.Implementations.Tests passou 1.659, ignorou 83 por requisitos/opt-in, falhou 0 (1.742 casos), Windows/.NET 10 Release, 1m12s. Os ignorados seguem pendentes. Nenhum banco operacional foi acessado nesta execução.",
+      "release": "Além do inventário MariaDB central 38/38 com fixtures de linha, a suíte completa Server Implementations passou 1.659/1.742, com 83 ignorados e zero falhas; não cobre todos os serviços/ambientes. Matriz ampla 5.291/5.376 não recalculada. Formal 2/7. Sem release. MariaDB é o único banco relacional operacional.",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests",
+      "id": "server-implementations-full-test-suite-2026-10-29-0539",
+      "updatedAt": "2026-10-29T05:39:25-03:00",
+      "status": "completed",
+      "agent": "Codex",
+      "title": "Servidor: suíte completa Server Implementations",
+      "links": []
     }
   ]
 }
