@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:36:00-03:00",
+  "generatedAt": "2026-10-29T07:39:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13308,6 +13308,23 @@
       "updatedAt": "2026-10-29T07:36:00-03:00",
       "evidence": "O workflow separa validação .NET, testes Nebula Python, typecheck/testes Web e build Linux em quatro jobs independentes. O job de publicação Windows depende explicitamente dos quatro. Contratos release/CI locais passaram 14/14; parse YAML confirmou grafo. Revisão crítica do diff: sem achados. Menor caminho crítico é esperado, mas duração não foi medida em runner hospedado; concorrência pode elevar minutos de runner.",
       "release": "Mudança de workflow apenas na branch/worktree local, sem execução hospedada ou release. Homologação formal não recebe crédito. Medição de CI hospedada e validação runtime/instalação/produção continuam pendentes. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-implementation-test-duration-profile-2026-10-29-0739",
+      "front": "server",
+      "title": "Medir duração da suíte Server Implementations",
+      "scope": "Capturar resultados TRX por teste e priorizar otimização somente com evidência de duração.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs; TRX local temporário",
+      "local": "Windows; .NET 10 Release; --no-build; sem bancos operacionais.",
+      "startedAt": "2026-10-29T07:36:00-03:00",
+      "updatedAt": "2026-10-29T07:39:00-03:00",
+      "evidence": "Jellyfin.Server.Implementations.Tests passou 1.659, ignorou 82 e teve 0 falhas, total 1.741 em 29 s. Topo do TRX: RestoreBackupAsync_RecoversAfterRestoreProcessIsTerminated 5,56 s; Run_WhenConfigAlreadyMatches 2,57 s; SearchMediaSuggestions_IndexesSmall... 1,52 s. Nenhum teste passou de 5,56 s nesta suite; não foi removida cobertura nem alterado runtime. O TRX foi gravado em TEMP para inspeção.",
+      "release": "Perfil local de uma única suíte, não caracteriza o tempo total da solução nem prova velocidade da CI. Sem crédito formal, release, execução hospedada, MariaDB real ou produção. MariaDB é o único banco relacional operacional."
     }
   ]
 }
