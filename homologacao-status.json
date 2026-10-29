@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T22:03:00-03:00",
+  "generatedAt": "2026-10-28T22:12:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12224,6 +12224,25 @@
       "updatedAt": "2026-10-28T22:03:00-03:00",
       "evidence": "O teste agora exige que o histórico do restore registre TaskCompletionStatus.Completed e EndTimeUtc posterior a StartTimeUtc. Build Release do projeto IntroSkipper.Integration.Tests passou com 0 erros e 81 avisos. O teste focal foi descoberto, mas ignorado porque MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não está configurada; nenhum banco foi acessado, portanto o round-trip e a nova asserção ainda não foram executados nesta rodada. MariaDB é o único banco relacional operacional; os nomes MySql* são técnicos.",
       "release": "Sem release. T4.3 e homologação formal permanecem abertas; é necessário executar contra uma instância MariaDB descartável.",
+      "links": []
+    },
+    {
+      "id": "server-mariadb-restore-history-roundtrip-2026-10-28-2212",
+      "title": "MariaDB descartável: restore 4/4 com histórico de duração",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [
+        "SRV-H03"
+      ],
+      "local": "BackupRestoreMariaDbTests / T4.3",
+      "location": "Integração relacional do backup/restauração",
+      "scope": "Validar round-trip de backup/restauração MariaDB e persistência do status e intervalo de execução no histórico.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-28T22:07:00-03:00",
+      "updatedAt": "2026-10-28T22:12:00-03:00",
+      "evidence": "A nova asserção seleciona o restore pelo tipo, caminho do arquivo e status Completed, evitando tentativas com falha injetadas no mesmo histórico. Build Release IntroSkipper.Integration.Tests: 0 erros, 81 avisos. BackupRestoreMariaDbTests passou 4/4 em 1m12s contra MariaDB 11.4.4 descartável em 127.0.0.1:34782; EndTimeUtc > StartTimeUtc e consultas de entidades restauradas passaram. Datadir em TEMP, mysqld iniciado com --no-defaults; processo, porta e diretório temporário removidos. MariaDB operacional em 3306 não foi usado. MariaDB é o único banco relacional operacional.",
+      "release": "Sem release de produto. T4.3 permanece parcial: este resultado cobre os casos da suíte, não todas as tabelas/linhas nem o restore integral multi-backend. Homologação formal segue 2/7.",
       "links": []
     }
   ]

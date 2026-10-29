@@ -5739,3 +5739,27 @@ test('portal records the MariaDB restore history assertion without claiming the 
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB restore: verificar status e duração/);
 });
+test('portal records the disposable MariaDB restore round-trip without closing T4.3 or formal homologation', async () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-restore-history-roundtrip-2026-10-28-2212');
+    const server = statusData.tracks.find(item => item.id === 'server');
+    const h03 = statusData.serverHomologation.areas.find(item => item.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests passou 4\/4 em 1m12s/);
+    assert.match(event.evidence, /11\.4\.4 descartável em 127\.0\.0\.1:34782/);
+    assert.match(event.evidence, /EndTimeUtc > StartTimeUtc/);
+    assert.match(event.evidence, /MariaDB operacional em 3306 não foi usado/);
+    assert.match(event.release, /T4\.3 permanece parcial/);
+    assert.equal(h03.status, 'in_progress');
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB descartável: restore 4\/4/);
+});
