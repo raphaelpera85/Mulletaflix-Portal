@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T04:35:44-03:00",
+  "generatedAt": "2026-10-29T04:36:43-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12809,8 +12809,8 @@
       "status": "in_progress",
       "progressPercent": null,
       "startedAt": "2026-10-29T04:28:00-03:00",
-      "updatedAt": "2026-10-29T04:35:44-03:00",
-      "evidence": "Assert-UpdatePackageIntegrity: 5 cenários PowerShell passaram (ZIP válido, hash divergente, traversal, path duplicado e runtime obrigatório ausente). Contrato Node do workflow passou 7/7; git diff --check passou. O fluxo chama esses gates antes do publish, mas ZIP/EXE reais não foram construídos nem instalados nesta sessão.",
+      "updatedAt": "2026-10-29T04:36:43-03:00",
+      "evidence": "Assert-UpdatePackageIntegrity: 5 cenários PowerShell passaram (ZIP válido, hash divergente, traversal, path duplicado e runtime obrigatório ausente). A suíte Windows de packaging passou 8/8 scripts; contrato Node do workflow passou 7/7; git diff --check passou. O fluxo chama os gates de artefato antes do publish, mas ZIP/EXE reais não foram construídos nem instalados nesta sessão.",
       "release": "Sem release ou execução em produção. CI hospedada Windows ainda deve provar a validação dos artefatos e o smoke real. Homologação formal permanece 2/7; agregado de testes não foi recalculado. MariaDB é o único banco relacional operacional.",
       "links": []
     }
