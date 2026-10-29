@@ -6036,16 +6036,18 @@ test('portal records MariaDB-validated image persistence without release or form
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
-test('portal keeps trailer persistence in progress until MariaDB integration passes', () => {
+test('portal records MariaDB-validated trailer persistence without release or formal credit', () => {
     const event = statusData.events.find(item => item.id === 'server-trailer-persistence-idempotency-2026-10-29-0130');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.ok(event);
-    assert.equal(event.status, 'in_progress');
-    assert.equal(event.progressPercent, 65);
-    assert.match(event.evidence, /TrailerTypeCollectionsMatch passou 1\/1 em Release/);
-    assert.match(event.evidence, /foi ignorado sem MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
-    assert.match(event.evidence, /Execução integrada MariaDB e medição de SQL ainda pendentes/);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /TrailerTypeCollectionsMatch passou 1\/1/);
+    assert.match(event.evidence, /ItemPersistenceServiceTests passou 29\/29/);
+    assert.match(event.evidence, /passou 1\/1 contra MariaDB 11\.4\.4 descartável/);
+    assert.match(event.evidence, /revarredura com ordem invertida manteve o conjunto/);
+    assert.match(event.evidence, /Medição de SQL\/carga.*não validados/);
     assert.match(event.release, /Sem release/);
     assert.equal(server.testAudit.passed, 5291);
     assert.equal(server.testAudit.total, 5376);
