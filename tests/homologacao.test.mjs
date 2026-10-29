@@ -6361,13 +6361,14 @@ test('portal records MariaDB auxiliary media restore fixtures after disposable d
     assert.ok(event);
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.evidence, /MovieMetadata, MovieUserData, SeriesUserData e BookUserData/);
+    assert.match(event.evidence, /MovieMetadata, MovieUserData, SeriesUserData, BookUserData, Seasons, Episodes e Programs/);
     assert.match(event.evidence, /BackupRestoreMariaDbTests passou 4\/5, 1 ignorado, 0 falhas/);
-    assert.match(event.evidence, /MariaDB 11\.4\.4 descartável/);
+    assert.match(event.evidence, /MariaDB 11\.4\.4 descartável em 127\.0\.0\.1:46735/);
     assert.match(event.evidence, /único caso ignorado requer MongoDB/);
     assert.match(event.evidence, /dotnet format whitespace.*passou/);
     assert.match(event.evidence, /dotnet format completo ainda reporta EF1002/);
     assert.match(event.release, /Sem release ou crédito formal/);
+    assert.match(event.release, /Permanecem pendentes 33 tabelas centrais/);
     assert.match(event.release, /permanece 2\/7/i);
     assert.equal(server.testAudit.passed, 5291);
     assert.equal(server.testAudit.total, 5376);
