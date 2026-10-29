@@ -7397,3 +7397,23 @@ test('portal keeps the 12.1.46 release audit blocked until CI and runtime gates 
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records Nebula scanner transient retry without changing broad or formal totals', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-scanner-transient-staging-retry-2026-10-29-1846');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.testOnly, true);
+    assert.match(event.evidence, /aguarda cinco segundos antes de nova reivindicação/);
+    assert.match(event.evidence, /4\/4.*Nebula Python: 684\/684/);
+    assert.match(event.evidence, /recuperação pendente em memória se o Mongo não aceitar a liberação/);
+    assert.match(event.evidence, /sem MongoDB\/Telegram real ou tráfego de produção/);
+    assert.equal(server.testAudit.passed, 5377);
+    assert.equal(server.testAudit.total, 5638);
+    assert.equal(server.testAudit.skipped, 261);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
