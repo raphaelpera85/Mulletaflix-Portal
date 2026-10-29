@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T04:54:00-03:00",
+  "generatedAt": "2026-10-29T05:00:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12829,6 +12829,23 @@
       "updatedAt": "2026-10-29T04:54:00-03:00",
       "evidence": "A bateria BackupRestoreMariaDbTests passou 4/5, 1 ignorado, 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:46735. O round-trip das fixtures MovieMetadata, MovieUserData, SeriesUserData, BookUserData, Seasons, Episodes e Programs foi executado, incluindo relações Series→Season→Episode e Channel→Program; o único caso ignorado requer MongoDB. A instância descartável encerrou normalmente. dotnet format whitespace verify passou; dotnet format completo ainda reporta EF1002 no SQL de trigger preexistente. Nenhum banco operacional foi acessado.",
       "release": "Sem release ou crédito formal. Permanecem pendentes 33 tabelas centrais. Homologação formal permanece 2/7; MariaDB é o único banco relacional operacional.",
+      "links": []
+    },
+    {
+      "id": "server-backup-core-user-audit-mariadb-2026-10-29-0500",
+      "title": "Backup MariaDB: restore de agenda de acesso e auditoria de ações",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "scope": "Adicionar e validar round-trip de AccessSchedules e ActionLogs no restore do backup MariaDB.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T04:55:00-03:00",
+      "updatedAt": "2026-10-29T05:00:00-03:00",
+      "evidence": "A bateria BackupRestoreMariaDbTests passou 4/5, 1 ignorado, 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:51424. O round-trip restaurou AccessSchedules ligada ao usuário com dia e horários e ActionLogs com tipo, entidade, identificador, usuário e detalhes. O caso ignorado requer MongoDB; o serviço descartável encerrou normalmente. Nenhum banco operacional foi acessado. Formatação whitespace focal e git diff --check passaram.",
+      "release": "Sem release ou crédito formal. Cobertura de tabelas centrais agora 7/38, com 31 pendentes; 7 tabelas auxiliares de domínio e IntroSkipper 8/8 cobertas. Homologação formal permanece 2/7 e auditoria ampla 5.291/5.376 não foi recalculada. MariaDB é o único banco relacional.",
       "links": []
     }
   ]

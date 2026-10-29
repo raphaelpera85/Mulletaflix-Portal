@@ -6377,3 +6377,26 @@ test('portal records MariaDB auxiliary media restore fixtures after disposable d
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records AccessSchedules and ActionLogs MariaDB restore coverage without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-core-user-audit-mariadb-2026-10-29-0500');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests passou 4\/5, 1 ignorado, 0 falhas/);
+    assert.match(event.evidence, /AccessSchedules ligada ao usuário.*ActionLogs/);
+    assert.match(event.evidence, /MariaDB 11\.4\.4 descartável em 127\.0\.0\.1:51424/);
+    assert.match(event.evidence, /Nenhum banco operacional foi acessado/);
+    assert.match(event.release, /7\/38, com 31 pendentes/);
+    assert.match(event.release, /Homologação formal permanece 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.testAudit.skipped, 85);
+    assert.equal(server.testAudit.failed, 0);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
