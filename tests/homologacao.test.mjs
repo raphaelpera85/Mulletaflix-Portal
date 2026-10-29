@@ -7229,3 +7229,19 @@ test('portal records server-owned default intro lookup without formal credit', (
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records Playwright media scan deadlock without formal or release credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-playwright-media-fixtures-mariadb-scan-2026-10-29-1214');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'blocked');
+    assert.equal(event.progressPercent, 0);
+    assert.match(event.evidence, /fixtures locais.*13\/13/i);
+    assert.match(event.evidence, /deadlock MariaDB em BaseItemImageInfos/);
+    assert.match(event.evidence, /ainda não resolveu o E2E/);
+    assert.match(event.release, /2\/7.*candidata, não publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

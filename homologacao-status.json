@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T11:47:00-03:00",
+  "generatedAt": "2026-10-29T12:14:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13773,6 +13773,23 @@
       "updatedAt": "2026-10-29T11:47:00-03:00",
       "evidence": "NativeIntroProviderTests: 8 aprovados, 0 ignorados/falhas. Jellyfin.Server.Implementations.Tests excluindo Integration: 1.661 aprovados, 82 ignorados, 0 falhas/1.743, exit 0. git diff --check sem erro de whitespace. Não houve regressão completa da solução nesta rodada.",
       "release": "Não concede gate formal. Homologação permanece 2/7 (28,6%); 12.1.46 continua candidata, não publicada. Linux nativo, CI hospedada, instalação/upgrade e produção pendentes."
+    },
+    {
+      "id": "server-playwright-media-fixtures-mariadb-scan-2026-10-29-1214",
+      "front": "server",
+      "title": "Homologar reconhecimento de mídia nas fixtures Playwright",
+      "scope": "Preparar mídia local/NFO, criar bibliotecas isoladas e validar os fluxos de acessibilidade e detalhes no servidor de stage.",
+      "status": "blocked",
+      "progressPercent": 0,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-web-master/scripts/playwright; tests/playwright/support/media-library.mjs; specs 31 e 33",
+      "local": "Windows; stage 12.1.46 e MariaDB descartável em loopback. Nenhum acesso à instalação/porta de produção 8096.",
+      "startedAt": "2026-10-29T12:04:00-03:00",
+      "updatedAt": "2026-10-29T12:14:00-03:00",
+      "evidence": "Fixtures locais: quatro filmes e um episódio com NFO; testes Node de stage/fixture 13/13. Duas execuções focadas de acessibilidade/detalhes terminaram 0/2: a biblioteca não retornou títulos mesmo com os diretórios monitorados. O log do stage registra deadlock MariaDB em BaseItemImageInfos durante a varredura e tentativas de retry. Foi alterado o helper para adiar refresh até criar todas as bibliotecas e pedir uma única varredura; essa mudança ainda não resolveu o E2E. Não classificar como defeito de produção até separar concorrência do harness e regressão real.",
+      "release": "Sem crédito formal ou release. Homologação permanece 2/7 (28,6%); 12.1.46 candidata, não publicada. Repetir após corrigir o reconhecimento da mídia e depois executar a suíte completa."
     }
   ]
 }
