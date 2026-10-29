@@ -6341,7 +6341,7 @@ test('portal reports the Windows release artifact gates as local progress only',
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
     assert.equal(event.progressPercent, null);
-    assert.match(event.evidence, /5 cenários PowerShell/);
+    assert.match(event.evidence, /6 cenários PowerShell/);
     assert.match(event.evidence, /Node do workflow passou 7\/7/);
     assert.match(event.evidence, /su[ií]te Windows de packaging passou 8\/8/);
     assert.match(event.evidence, /ZIP\/EXE reais não foram construídos/);
