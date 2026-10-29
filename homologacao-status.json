@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T01:11:00-03:00",
+  "generatedAt": "2026-10-29T01:14:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12486,8 +12486,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-29T01:07:00-03:00",
-      "updatedAt": "2026-10-29T01:11:00-03:00",
-      "evidence": "NebulaPython completa: 672/672 em Python 3.10.11 (9,22 s); três módulos focais: 121/121. NebulaMediaSuggestionTests Release/.NET 10: 11/11. Cobertos HTTP 206 sem Content-Range mantendo destino anterior, substituição de mídia obsoleta em resposta 200, série diferente com mesmo S01E01, mesma identidade ativa, booleanos inválidos e processo feeder que encerra durante startup. Primeira tentativa com Python global 3.13 não tinha pytest; repetição no venv passou. Nenhum Mongo/MariaDB operacional, Telegram, mídia, serviço ou runtime de produção foi acessado. Sem Linux nativo, CI hospedada, benchmark ou transferência real. MariaDB é o único banco relacional operacional.",
+      "updatedAt": "2026-10-29T01:14:00-03:00",
+      "evidence": "NebulaPython completa: 672/672 em Python 3.10.11 (9,22 s); suíte C# FullyQualifiedName~Nebula em Release/.NET 10: 726 aprovados, 26 ignorados, 0 falhas/752; três módulos Python focais: 121/121; NebulaMediaSuggestionTests: 11/11. Os 26 casos Mongo opt-in foram ignorados sem Mongo descartável. Cobertos HTTP 206 sem Content-Range mantendo destino anterior, substituição de mídia obsoleta em resposta 200, série diferente com mesmo S01E01, mesma identidade ativa, booleanos inválidos e processo feeder que encerra durante startup. Primeira tentativa com Python global 3.13 não tinha pytest; repetição no venv passou. Nenhum Mongo/MariaDB operacional, Telegram, mídia, serviço ou runtime de produção foi acessado. Sem Linux nativo, CI hospedada, benchmark ou transferência real. MariaDB é o único banco relacional operacional.",
       "release": "Sem release, instalação ou mudança de produção. Agregado histórico da solução permanece 5.291/5.376, 85 ignorados, 0 falhas; não foi reexecutado nesta fatia. Homologação formal permanece 2/7 (28,6%); este teste local não recebe crédito formal.",
       "links": []
     },

@@ -6004,7 +6004,8 @@ test('portal records Nebula integrity regression without formal or release credi
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /NebulaPython completa: 672\/672/);
-    assert.match(event.evidence, /NebulaMediaSuggestionTests Release\/.NET 10: 11\/11/);
+    assert.match(event.evidence, /suíte C# FullyQualifiedName~Nebula.*726 aprovados, 26 ignorados, 0 falhas\/752/);
+    assert.match(event.evidence, /NebulaMediaSuggestionTests: 11\/11/);
     assert.match(event.evidence, /Nenhum Mongo\/MariaDB operacional.*produção/);
     assert.match(event.release, /Sem release/);
     assert.equal(server.testAudit.passed, 5291);
