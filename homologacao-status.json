@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:29:19-03:00",
+  "generatedAt": "2026-10-29T07:31:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13231,7 +13231,9 @@
       "progressPercent": 100,
       "agent": "Codex",
       "featureIds": [],
-      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"],
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"
+      ],
       "location": "homologacao-status.json; homologacao.js; tests/homologacao.test.mjs",
       "local": "Contagem reconciliada diretamente contra origin/main 8a7796c3cae3efc644721123c6c88d4c05b6fa66",
       "startedAt": "2026-10-29T07:08:00-03:00",
@@ -13283,11 +13285,11 @@
       "agent": "Codex",
       "featureIds": [],
       "links": [],
-      "location": "MulletaFlix-master/docs/testing-mariadb.md; MulletaFlix-master/MediaBrowser.Controller/Webhooks/IWebhookDispatcher.cs; MulletaFlix-master/Jellyfin.Api/Caching/StreamStateCache.cs; MulletaFlix-master/Jellyfin.Api/Middleware/SecurityHeadersMiddleware.cs; MulletaFlix-master/Emby.Server.Implementations/AppBase/BaseConfigurationManager.cs; tools/Prepare-AndroidDeveloperVerification.Tests.ps1",
+      "location": "MulletaFlix-master/docs/testing-mariadb.md; MulletaFlix-master/MediaBrowser.Controller/Webhooks/IWebhookDispatcher.cs; MulletaFlix-master/Jellyfin.Api/Caching/StreamStateCache.cs; MulletaFlix-master/Jellyfin.Api/Middleware/SecurityHeadersMiddleware.cs; MulletaFlix-master/Emby.Server.Implementations/AppBase/BaseConfigurationManager.cs; tools/Prepare-AndroidDeveloperVerification.Tests.ps1; MulletaFlix-android/tools/*Tests.ps1",
       "local": "Windows; .NET 10; Node 26; Python 3.13; execução local, sem acesso ao banco ou produção",
       "startedAt": "2026-10-29T07:17:00-03:00",
-      "updatedAt": "2026-10-29T07:29:19-03:00",
-      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~LiveIntegrationTests --verbosity quiet` terminou exit 0 sem falhas; o runner não forneceu agregado global. Resultados visíveis: Server.Tests 95/95; Server.Implementations 1.659 aprovados/83 ignorados; API 793/796; Providers 824/824; Naming 681/681. Nebula Python 681/681. Web: Vitest 425/425 em 78 arquivos, `build:check`, build de produção e `verify:build` passaram; payload inicial 298,1 KB gzip/420 KB. Node release + portal 102/102; checkout do portal independente 372/372. PowerShell focado 10/10; 3 builds C# afetados passaram com 0 avisos/0 erros. Android Gradle não iniciou por falta do Android SDK; Swift/iOS não está disponível no host. Sem conexão MariaDB de teste; integrações reais não executadas.",
+      "updatedAt": "2026-10-29T07:31:00-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~LiveIntegrationTests --verbosity quiet` terminou exit 0 sem falhas; o runner não forneceu agregado global. Resultados visíveis: Server.Tests 95/95; Server.Implementations 1.659 aprovados/83 ignorados; API 793/796; Providers 824/824; Naming 681/681. Nebula Python 681/681. Web: Vitest 425/425 em 78 arquivos, `build:check`, build de produção e `verify:build` passaram; payload inicial 298,1 KB gzip/420 KB. Node release + portal 102/102; checkout do portal independente 372/372. PowerShell focado 10/10; 3 builds C# afetados passaram com 0 avisos/0 erros. Android Gradle não iniciou por falta do Android SDK; Swift/iOS não está disponível no host. Sem conexão MariaDB de teste; integrações reais não executadas. Android host-tool unit tests: Pester 3.4, 51/51 passed; they use mocks/temp evidence and do not require an emulator. Android Gradle build/instrumentation remains blocked by missing SDK.",
       "release": "Primeiro lote de validação; não representa leitura ou homologação completa do projeto. Nenhum crédito formal ou release. Homologação formal permanece 2/7; agregado oficial de testes não foi recalculado. Linux, CI hospedada, Android SDK, iOS, integração MariaDB descartável, instalação, runtime e produção seguem pendentes. MariaDB é o único banco relacional operacional."
     }
   ]
