@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T21:12:10-03:00",
+  "generatedAt": "2026-10-28T21:22:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3055,6 +3055,23 @@
     }
   ],
   "events": [
+    {
+      "id": "server-mariadb-backup-row-roundtrip-2026-10-28-2119",
+      "title": "Round-trip de backup relacional validado em MariaDB",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows / .NET 10 Release; MariaDB 11.4.13 descartável somente em 127.0.0.1:60338",
+      "location": "BackupRestoreMariaDbTests.RestoreBackupAsync_RestoresDatabaseRowsOnDisposableMariaDb",
+      "scope": "Confirmar backup e restauração de linhas relacionais representativas usando exclusivamente MariaDB.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-28T21:14:00-03:00",
+      "updatedAt": "2026-10-28T21:22:00-03:00",
+      "evidence": "O teste cria User, ApiKey e DeviceOptions, executa backup, altera os valores e confirma que o restore recupera os registros originais. Caso focal 1/1 e classe BackupRestoreMariaDbTests 4/4 em MariaDB 11.4.13 descartável; instância encerrada e porta 60338 fechada. FullSystemBackup Release: 153 aprovados, 16 ignorados por requisitos de plataforma, 0 falhas/169. MariaDB é o único servidor relacional usado; MySqlConnector é somente o nome do driver .NET. Round-trip cobre três tipos representativos, não todas as tabelas/linhas. Nenhum banco operacional foi acessado. Linux, CI hospedada, runtime instalado e produção continuam pendentes.",
+      "release": "Nenhuma release criada. Homologação formal permanece 2/7 (28,6%); este resultado não altera nem substitui os gates formais.",
+      "links": []
+    },
     {
       "id": "server-mariadb-only-backup-entity-coverage-2026-10-28-2111",
       "title": "Premissa MariaDB-only e cobertura de backup revalidadas",

@@ -5583,3 +5583,23 @@ test('portal records MariaDB-only relational deployment and backup entity covera
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
+
+test('portal records MariaDB-only backup row round-trip without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-backup-row-roundtrip-2026-10-28-2119');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.local, /MariaDB 11\.4\.13 descartável/);
+    assert.match(event.evidence, /User, ApiKey e DeviceOptions/);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests 4\/4/);
+    assert.match(event.evidence, /MySqlConnector é somente o nome do driver/);
+    assert.match(event.evidence, /Nenhum banco operacional foi acessado/);
+    assert.match(event.evidence, /não todas as tabelas\/linhas/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
