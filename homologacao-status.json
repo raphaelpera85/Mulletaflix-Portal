@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:39:00-03:00",
+  "generatedAt": "2026-10-29T07:42:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13325,6 +13325,23 @@
       "updatedAt": "2026-10-29T07:39:00-03:00",
       "evidence": "Jellyfin.Server.Implementations.Tests passou 1.659, ignorou 82 e teve 0 falhas, total 1.741 em 29 s. Topo do TRX: RestoreBackupAsync_RecoversAfterRestoreProcessIsTerminated 5,56 s; Run_WhenConfigAlreadyMatches 2,57 s; SearchMediaSuggestions_IndexesSmall... 1,52 s. Nenhum teste passou de 5,56 s nesta suite; não foi removida cobertura nem alterado runtime. O TRX foi gravado em TEMP para inspeção.",
       "release": "Perfil local de uma única suíte, não caracteriza o tempo total da solução nem prova velocidade da CI. Sem crédito formal, release, execução hospedada, MariaDB real ou produção. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-windows-native-filesystem-tests-2026-10-29-0742",
+      "front": "server",
+      "title": "Adicionar teste de restore e ACL no runner Windows",
+      "scope": "Executar em Windows os testes nativos BackupRestoreDirectoryTests e BackupServiceTests, que não são exercitados nos runners Linux.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": ".github/workflows/ci.yml; tools/release/tests/ci-packaging-coverage.test.mjs; docs/AUDIT-EVIDENCE.md",
+      "local": "Windows; .NET 10 Release; sem MariaDB/MongoDB; execução local.",
+      "startedAt": "2026-10-29T07:39:00-03:00",
+      "updatedAt": "2026-10-29T07:42:00-03:00",
+      "evidence": "Execução local Windows do filtro CI passou 145, ignorou 16 e falhou 0 de 161 em 10 s. Job CI independente adicionado com restore + execução dos dois grupos, timeout de 20 min, sem serviços DB nem needs. Contratos CI/release 15/15; YAML parse e estrutura do job aprovados. O job hospedado ainda não executou esta revisão.",
+      "release": "Gate de CI local, sem crédito formal ou release. Linux/produção/runtime instalado e execução hospedada seguem sem confirmação nesta sessão. MariaDB é o único banco relacional operacional; sem MySQL."
     }
   ]
 }
