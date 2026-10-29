@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T04:22:00-03:00",
+  "generatedAt": "2026-10-29T04:27:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12778,6 +12778,23 @@
       "updatedAt": "2026-10-29T04:22:00-03:00",
       "evidence": "Refresh considera idioma do item, pais, pasta da coleção, opções da biblioteca e servidor; pt + país BR normaliza para pt-BR. Regressão do resolvedor e suite Jellyfin.Providers.Tests: 824/824. Bootstrap rejeita datadir novo sem mysql_install_db.exe; quatro testes de requisito e suite Jellyfin.Server.Tests: 95/95. Format focais e git diff --check aprovados. Nenhuma conexão MariaDB ou mídia de produção usada.",
       "release": "Sem release ou instalação. Homologação formal permanece 2/7 (28,6%); agregado local permanece 5.291/5.376 e não foi recalculado. TMDb real, MariaDB CI/Linux, runtime instalado e produção seguem pendentes. MariaDB é o único banco relacional operacional.",
+      "links": []
+    },
+    {
+      "id": "server-integration-coverage-saveimages-2026-10-29-0427",
+      "title": "Auditoria: suíte de integração ampliada e round-trip de imagens MariaDB",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release",
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests e .github/workflows/ci.yml",
+      "scope": "Fazer o job Linux executar a suíte completa IntroSkipper com os serviços isolados provisionados e adicionar round-trip de SaveImagesAsync.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T04:23:00-03:00",
+      "updatedAt": "2026-10-29T04:27:00-03:00",
+      "evidence": "Suíte local IntroSkipper.Integration.Tests: 26 aprovados, 31 ignorados, 0 falhas/57; os casos que dependem de MariaDB/MongoDB foram ignorados porque não havia instâncias descartáveis configuradas. Contrato do job Linux completo passou 3/3; o teste MariaDB de SaveImagesAsync compila e está integrado à suíte.",
+      "release": "Sem release ou crédito formal. Execução hospedada Linux com MariaDB/Mongo, round-trip real de SaveImagesAsync, runtime instalado e produção permanecem pendentes. Homologação formal 2/7; agregado permanece 5.291/5.376 sem recálculo. MariaDB é o único banco relacional operacional.",
       "links": []
     }
   ]

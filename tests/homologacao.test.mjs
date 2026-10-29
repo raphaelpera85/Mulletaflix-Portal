@@ -6316,3 +6316,20 @@ test('portal records server image locale and MariaDB initializer coverage withou
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records expanded integration CI while keeping skipped database cases pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-integration-coverage-saveimages-2026-10-29-0427');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /26 aprovados, 31 ignorados, 0 falhas\/57/);
+    assert.match(event.evidence, /instâncias descartáveis configuradas/);
+    assert.match(event.evidence, /Contrato do job Linux completo passou 3\/3/);
+    assert.match(event.release, /Sem release ou crédito formal/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
