@@ -6813,3 +6813,22 @@ test('portal records faster Nebula timing tests without changing production dela
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the repeat validation of the Nebula failure paths', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-failure-tests-revalidated-2026-10-29-0700');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /TRX anterior registrava 15,05 s.*15,04 s/);
+    assert.match(event.evidence, /passou 2\/2 em 412 ms/);
+    assert.match(event.evidence, /timeout público Mongo permanece 15 s/);
+    assert.match(event.evidence, /retries públicos preservam 5 s\/10 s/);
+    assert.match(event.release, /não concede crédito formal/);
+    assert.match(event.release, /Homologação formal 2\/7; sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

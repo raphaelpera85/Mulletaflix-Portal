@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T06:55:55-03:00",
+  "generatedAt": "2026-10-29T07:01:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13170,6 +13170,23 @@
       "updatedAt": "2026-10-29T06:55:55-03:00",
       "evidence": "O teste existente RestoreBackupAsync_RecoversAfterRestoreProcessIsTerminated foi executado quatro vezes em sequência: a primeira execução passou 1/1 em 4 s e a repetição passou 3/3, cada uma em 4 s. O cenário mata o processo filho durante a escrita do staging, inicia novo processo e verifica conteúdo restaurado de 64 MiB, limpeza do journal e ausência de arquivos temporários/sidecars residuais. Os limites de 60 s/30 s são guardas de falha, não sleeps. O teste usa filesystem temporário e mocks para dependências; não conectou ao MongoDB operacional, que permaneceu sem acesso. MariaDB é o único banco relacional operacional; não havia endpoint descartável configurado. CI hospedada, Linux nativo, runtime instalado e produção não foram verificados. FullSystemBackup filter `FullyQualifiedName~FullSystemBackup`: 154 passed, 16 skipped, 0 failed of 170 in 8 s. `BackupServiceTests` alone: 98 passed, 5 skipped, 0 failed of 103 in 8 s.",
       "release": "FullSystemBackup passed 154, skipped 16, failed 0 of 170 in 8 s on Windows/.NET 10 Release. Skips are platform-specific Linux/macOS filesystem, ACL and mount cases and remain pending. This test run gives no formal homologation credit. Formal remains 2/7; no release. Linux-native CI, installed runtime and production remain unverified. MariaDB is the only operational relational database."
+    },
+    {
+      "id": "server-nebula-failure-tests-revalidated-2026-10-29-0700",
+      "front": "server",
+      "title": "Nebula: revalidação dos testes de timeout e retentativa",
+      "scope": "Reexecutar testes Nebula que tinham aparecido com cerca de 15 segundos no TRX e confirmar comportamento determinístico rápido sem mudar tempos de produção.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaStreamEngineTests.cs; NebulaHostedServiceConfigurationTests.cs",
+      "local": "Windows; .NET 10; Release; MongoDB indisponível simulado em loopback",
+      "startedAt": "2026-10-29T07:00:00-03:00",
+      "updatedAt": "2026-10-29T07:01:00-03:00",
+      "evidence": "TRX anterior registrava 15,05 s em MongoUploadQueueSummary_FailureIsRecordedWithoutSensitiveDetails e 15,04 s em EnvioFailure_DoesNotPreventIndependentDownloaderStartup_AndSkipsDriveMount. A reexecução focal de ambos passou 2/2 em 412 ms. O construtor interno limita a seleção Mongo somente no teste e o atraso de retry é controlado; o timeout público Mongo permanece 15 s e os retries públicos preservam 5 s/10 s. As assertions continuam verificando falha segura/telemetria sem dados sensíveis, duas retentativas do envio, início independente do downloader e ausência de montagem do disco após falha. Nenhuma mudança de código foi feita nesta revalidação. MariaDB é o único banco relacional operacional; nenhum banco operacional foi acessado.",
+      "release": "É apenas revalidação local de testes já controlados; não concede crédito formal. CI hospedada, Linux, runtime instalado e produção continuam pendentes. Homologação formal 2/7; sem release. MariaDB é o único banco relacional operacional."
     }
   ]
 }
