@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T00:16:00-03:00",
+  "generatedAt": "2026-10-29T00:29:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "2 de 7 gates com evidência técnica local validada; 1 em andamento, 3 pendentes e 1 bloqueado. SRV-H02 validado em MariaDB descartável; aceite formal de produção permanece pendente."
       },
       "testAudit": {
-        "passed": 5288,
-        "total": 5373,
+        "passed": 5289,
+        "total": 5374,
         "skipped": 85,
         "failed": 0,
         "percent": 98.4,
-        "label": "Regressão unitária local Windows/.NET 10 em 29/10: 5.288 aprovados, 85 ignorados e 0 falhas/5.373 resultados em 15 assemblies selecionados pelo filtro FullyQualifiedName!~Integration. Nebula Python 672/672 e sete scripts PowerShell de empacotamento/integridade passaram em rodadas separadas; esses resultados não são somados ao agregado. Skips não contam como aprovados; testes de integração, Linux, CI hospedada, runtime instalado e produção ainda não estão validados. Homologação formal permanece 2/7 (28,6%)."
+        "label": "Matriz unitária local Windows/.NET 10 Release em 29/10: 5.289 aprovados, 85 ignorados, 0 falhas/5.374 resultados em 15 assemblies (FullyQualifiedName!~Integration). Nebula Python 672/672 e compileall passaram em rodada separada. Skips não contam como aprovados; testes de integração, Linux, CI hospedada, runtime instalado e produção não estão validados. Homologação formal permanece 2/7 (28,6%)."
       }
     },
     {
@@ -12419,6 +12419,25 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/docs/releases/12.1.46.md"
+      ]
+    },
+    {
+      "id": "server-audit-latest-movie-duplicate-limit-2026-10-29-0020",
+      "title": "Cobertura incremental: prateleira de filmes recentes com apresentações duplicadas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Item/BaseItemRepositoryLatestTvShowTests.cs",
+      "location": "T3.2 - regressão local de consulta/paginação",
+      "scope": "Verificar que múltiplos arquivos/cortes da mesma obra não consomem o limite de títulos distintos na prateleira de filmes recentes.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T00:20:00-03:00",
+      "updatedAt": "2026-10-29T00:29:00-03:00",
+      "evidence": "Regressão Release Windows/.NET 10 concluiu em 15 assemblies: 5.289 aprovados, 85 ignorados, 0 falhas/5.374 resultados; testes de integração foram excluídos pelo filtro FullyQualifiedName!~Integration. Jellyfin.Server.Implementations.Tests: 1.654/1.736 (82 skips), API: 774/777 (3 skips). O teste novo verifica que 12 variantes recentes de um filme não consomem o limite de três títulos únicos; a classe passou 3/3. Nebula Python: 672/672 e compileall aprovados. Um primeiro no-build usou recurso embutido antigo; após rebuild Release, UpdateInfoControllerTests passou 1/1. Não executados CI hospedada, integração com DB/Mongo, Linux, runtime instalado ou produção.",
+      "release": "Etapa de auditoria e cobertura concluída localmente, sem alteração de comportamento em produção e sem release publicada. Homologação formal permanece 2/7 (28,6%); esta evidência não recebe crédito formal.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Item/BaseItemRepositoryLatestTvShowTests.cs"
       ]
     }
   ]
