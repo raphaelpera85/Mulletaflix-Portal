@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:52:51-03:00",
+  "generatedAt": "2026-10-29T05:54:20-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13068,6 +13068,23 @@
       "updatedAt": "2026-10-29T05:52:51-03:00",
       "evidence": "A leitura de `stage_paths.json` agora ignora entradas inválidas ou vazias individualmente, preservando raízes válidas e deduplicando as que também vieram de STAGING_DIRS/STAGING_DIR. Teste focal `test_strm_downloader_helpers.py`: 76 passed in 0.42s. Suíte completa Nebula: 676 passed in 7.22s; compileall passou. O teste usa caminhos temporários, sem acessar filesystem de mídia ou produção.",
       "release": "Teste local cobre raízes configuradas e resiliência a JSON parcialmente inválido. FTP, rede, Linux, CI hospedada, instalação e produção permanecem pendentes. Homologação formal 2/7; sem release ou mudança de produção. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-nebula-stage-paths-fallback-only-when-empty-2026-10-29-0554",
+      "front": "server",
+      "title": "Nebula: fallback de stage somente sem raiz configurada válida",
+      "scope": "Cobrir cenário em que ambiente ausente e JSON inválido/vazio escolhem fallback stage; validar que configuração existente impede fallback.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/Tools/NebulaPython/tests/test_strm_downloader_helpers.py",
+      "local": "Windows; Python 3.10 do ambiente virtual do repositório",
+      "startedAt": "2026-10-29T05:53:00-03:00",
+      "updatedAt": "2026-10-29T05:54:20-03:00",
+      "evidence": "Novo teste confirma que o diretório padrão só é selecionado quando `STAGING_DIRS`/`STAGING_DIR` estão ausentes e `stage_paths.json` não contém raiz válida; os outros casos verificam roots configuradas e JSON parcialmente inválido. Teste focal: 77 passed in 0.35s. Suíte Nebula: 677 passed in 7.18s. `compileall` passed. Usa somente diretórios temporários.",
+      "release": "Resiliência e precedência das raízes de stage foram testadas localmente; pastas reais, disco, rede, FTP, Linux, CI, runtime instalado e produção continuam pendentes. Homologação formal 2/7; sem release ou mudança de produção. MariaDB é o único banco relacional operacional."
     }
   ]
 }

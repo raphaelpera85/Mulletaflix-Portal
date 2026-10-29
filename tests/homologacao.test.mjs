@@ -6662,3 +6662,21 @@ test('portal records resilience when one invalid Nebula staging path is configur
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records that Nebula uses the default stage only when configured roots are absent', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-stage-paths-fallback-only-when-empty-2026-10-29-0554');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /77 passed in 0\.35s/);
+    assert.match(event.evidence, /677 passed in 7\.18s/);
+    assert.match(event.evidence, /`compileall` passed/);
+    assert.match(event.release, /2\/7/);
+    assert.match(event.release, /sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
