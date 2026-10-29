@@ -5694,3 +5694,25 @@ test('portal records the Linux restore race within the trusted ACL boundary with
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /Revisão da corrida Linux no restore/);
 });
+
+test('portal reports the unavailable Linux CI runner without awarding H03 or formal-gate credit', async () => {
+    const event = statusData.events.find(item => item.id === 'server-ci-linux-runner-billing-block-2026-10-28-2157');
+    const server = statusData.tracks.find(item => item.id === 'server');
+    const h03 = statusData.serverHomologation.areas.find(item => item.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'blocked');
+    assert.match(event.evidence, /40795733017/);
+    assert.match(event.evidence, /job was not started because your account is locked due to a billing issue/);
+    assert.match(event.evidence, /não executou nem validou o código/);
+    assert.equal(h03.status, 'in_progress');
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /CI do servidor e runner Linux bloqueados/);
+});

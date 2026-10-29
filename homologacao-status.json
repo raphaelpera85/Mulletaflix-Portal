@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T21:53:52-03:00",
+  "generatedAt": "2026-10-28T21:57:54-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12182,6 +12182,28 @@
       "release": "Nenhuma mudança de produto ou release. H03 continua pendente de validação Linux e decisão operacional documentada; homologação formal permanece 2/7 (28,6%).",
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/0328e4c1036011830ddff16d749b6ad0651bc309/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/pull/1"
+      ]
+    },
+    {
+      "id": "server-ci-linux-runner-billing-block-2026-10-28-2157",
+      "title": "CI do servidor e runner Linux bloqueados antes dos testes",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [
+        "SRV-H03"
+      ],
+      "local": "GitHub Actions run 40795733017; diagnósticos de Server build & unit tests e Nebula Python unit tests (ubuntu-latest)",
+      "location": "PR #1 / codex/fail-closed-inplace-updater; GitHub Actions",
+      "scope": "Verificar se a CI do head 0328e4c executou os testes Linux necessários para o gate de restore.",
+      "status": "blocked",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T21:56:00-03:00",
+      "updatedAt": "2026-10-28T21:57:54-03:00",
+      "evidence": "O run 40795733017 terminou com os 13 jobs em failure. Os diagnósticos dos checks Server build & unit tests e Nebula Python unit tests (ubuntu-latest) confirmam: “The job was not started because your account is locked due to a billing issue.” Não houve runner, steps ou logs disponíveis; a CI não executou nem validou o código. Portanto, este run não fecha a lacuna Linux de SRV-H03. PR #1 segue aberta, mergeable e no head 0328e4c1036011830ddff16d749b6ad0651bc309. Homologação formal permanece 2/7 (28,6%); MariaDB é o único banco operacional.",
+      "release": "Sem mudança de produto e sem release. Execução de CI depende do desbloqueio de cobrança; Linux local e produção continuam não validados.",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40795733017",
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/1"
       ]
     }
