@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:55:00-03:00",
+  "generatedAt": "2026-10-29T07:57:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13406,11 +13406,11 @@
       "agent": "Codex",
       "featureIds": [],
       "links": [],
-      "location": "MulletaFlix-master/tests/Jellyfin.Providers.Tests/LiveProviderIntegrationTestEnvironment.cs; Plugins/*/*LiveIntegrationTests.cs; docs/AUDIT-EVIDENCE.md",
+      "location": "MulletaFlix-master/tests/Jellyfin.Providers.Tests/LiveProviderIntegrationTestEnvironment.cs; Plugins/*/*LiveIntegrationTests.cs; MulletaFlix-master/docs/testing-live-providers.md; docs/AUDIT-EVIDENCE.md",
       "local": "Windows; .NET 10 Release; suite Jellyfin.Providers.Tests completa; nenhum serviço externo acessado após a correção.",
       "startedAt": "2026-10-29T07:55:00-03:00",
       "updatedAt": "2026-10-29T07:55:00-03:00",
-      "evidence": "Blame da execução sem opt-in identificou DramaBoxLiveIntegrationTests.RebuildIndex_FindsTheRealCatalogueAndMatchesRealLibraryTitles como teste ativo após 785 aprovados; watchdog de 30 s anulou a suite em 38,3 s, total desconhecido. 13 métodos em cinco classes agora chamam Assert.SkipUnless antes de criar cliente HTTP; o opt-in exige valor exato 1. Suite após mudança: 829 aprovados, 13 ignorados, 0 falhas/842 em 6 s. Cinco assertions do helper passaram dentro do total. Inventário não encontrou outras chamadas live nas suítes testadas.",
+      "evidence": "Blame da execução sem opt-in identificou DramaBoxLiveIntegrationTests.RebuildIndex_FindsTheRealCatalogueAndMatchesRealLibraryTitles como teste ativo após 785 aprovados; watchdog de 30 s anulou a suite em 38,3 s, total desconhecido. 13 métodos em cinco classes agora chamam Assert.SkipUnless antes de criar cliente HTTP; o opt-in exige valor exato 1. Suite após mudança: 829 aprovados, 13 ignorados, 0 falhas/842 em 6 s. Cinco assertions do helper passaram dentro do total. Inventário não encontrou outras chamadas live nas suítes testadas. O uso deliberado está documentado em testing-live-providers.md com o comando PowerShell para executar esse grupo.",
       "release": "Correção de infraestrutura de testes sem alterar produção, metadata providers ou banco. Integrações live ficam disponíveis por opt-in. Não concede gate formal ou release. Homologação permanece 2/7; CI hospedada está bloqueada por billing no run 40795733017. MariaDB é o único banco relacional."
     }
   ]
