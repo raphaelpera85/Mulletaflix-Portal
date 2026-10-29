@@ -6700,3 +6700,24 @@ test('portal records Mongo-routed upload folder matching coverage and updated Ne
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records upload cancellation during a Mongo checkpoint retry without losing source files', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-checkpoint-retry-cancel-cleanup-2026-10-29-0601');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /`test_main_upload_worker\.py`: 11 passed/);
+    assert.match(event.evidence, /Full suite: 681 passed in 8\.22s/);
+    assert.match(event.evidence, /source file preserved/);
+    assert.match(event.evidence, /producer cancelled.*queue task completed.*admission closed/);
+    assert.match(event.evidence, /MongoDB mock/);
+    assert.match(event.release, /indisponibilidade real do Mongo/);
+    assert.match(event.release, /2\/7/);
+    assert.match(event.release, /sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
