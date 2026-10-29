@@ -6060,3 +6060,21 @@ test('portal records MariaDB-validated trailer persistence without release or fo
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records fast Providers slice without external integration credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-provider-test-slicing-2026-10-29-0158');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /FullyQualifiedName!~Integration passou 823\/823 em 6 segundos/);
+    assert.match(event.evidence, /quatro classes \*LiveIntegrationTests/);
+    assert.match(event.evidence, /execução foi interrompida e não conta como resultado/);
+    assert.match(event.evidence, /A execução rápida exclui integrações externas, não as valida/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
