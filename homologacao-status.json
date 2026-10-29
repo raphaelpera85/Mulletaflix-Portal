@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T22:16:00-03:00",
+  "generatedAt": "2026-10-28T22:27:30-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12260,6 +12260,23 @@
       "updatedAt": "2026-10-28T22:12:00-03:00",
       "evidence": "A nova asserção seleciona o restore pelo tipo, caminho do arquivo e status Completed, evitando tentativas com falha injetadas no mesmo histórico. Build Release IntroSkipper.Integration.Tests: 0 erros, 81 avisos. BackupRestoreMariaDbTests passou 4/4 em 1m12s contra MariaDB 11.4.4 descartável em 127.0.0.1:34782; EndTimeUtc > StartTimeUtc e consultas de entidades restauradas passaram. Datadir em TEMP, mysqld iniciado com --no-defaults; processo, porta e diretório temporário removidos. MariaDB operacional em 3306 não foi usado. MariaDB é o único banco relacional operacional.",
       "release": "Sem release de produto. T4.3 permanece parcial: este resultado cobre os casos da suíte, não todas as tabelas/linhas nem o restore integral multi-backend. Homologação formal segue 2/7.",
+      "links": []
+    },
+    {
+      "id": "server-t44-full-exercise-dashboard-audit-2026-10-28-2224",
+      "title": "T4.4: painel não possui resultado agregado do exercício completo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "MulletaFlix-web-master/src/apps/dashboard/features/backups/components/BackupCoverageSummary.tsx; MulletaFlix-web-master/src/apps/dashboard/features/backups/api/useBackupHistory.ts; MulletaFlix-master/Jellyfin.Api/Controllers/BackupController.cs",
+      "location": "T4.4.15 / status do exercício integrado de recuperação",
+      "scope": "Reauditar se o painel pode apresentar o último exercício completo envolvendo MariaDB, MongoDB e arquivos.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T22:24:00-03:00",
+      "updatedAt": "2026-10-28T22:27:30-03:00",
+      "evidence": "O painel já informa que não há registro de exercício isolado e distingue restore operacional de recuperação ponta a ponta. GET /System/Backup/History registra operações individuais; GET /NebulaFtp/Supabase/Status expõe backup/restore operacional, sem resultado agregado de exercício envolvendo MariaDB, MongoDB e arquivos. BackupCoverageSummary.test.tsx passou 6/6. MariaDB é o único banco relacional operacional; nomes MySql* são técnicos. A interface não declara homologação completa.",
+      "release": "Sem alteração de produto ou release. T4.4.15 continua pendente até existir execução integrada e resultado persistido/verificável; homologação formal permanece 2/7 (28,6%).",
       "links": []
     }
   ]

@@ -5787,3 +5787,20 @@ test('portal records the MariaDB inventory version correction without homologati
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB-only confirmado/);
 });
+
+test('portal records the pending integrated backup exercise without overstating homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-t44-full-exercise-dashboard-audit-2026-10-28-2224');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /não há registro de exercício isolado/);
+    assert.match(event.evidence, /sem resultado agregado/);
+    assert.match(event.evidence, /MariaDB é o único banco relacional operacional/);
+    assert.match(event.release, /T4\.4\.15 continua pendente/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
