@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:16:00-03:00",
+  "generatedAt": "2026-10-29T07:29:19-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13272,6 +13272,23 @@
       "updatedAt": "2026-10-29T07:16:00-03:00",
       "evidence": "`MariaDbFixtureCleanupTests` passou 5/5 e `JellyfinApplicationFactoryCleanupTests` passou 4/4. Os casos confirmam tentativa de todas as ações/SQL de cleanup, preservação do erro inicial e rethrow sem aggregate quando há uma falha. A variável `MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING` estava ausente; não houve conexão, criação ou remoção de schemas, nem acesso a banco operacional. A bateria do portal continua separando estes unitários de integração real MariaDB.",
       "release": "Revalidação local de teardown, sem crédito formal; integração real, runtime/instalação e produção não validados. Homologação formal 2/7; sem release. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-project-multicomponent-validation-2026-10-29-0729",
+      "front": "server",
+      "title": "Validação inicial multi-componente do projeto",
+      "scope": "Executar regressões locais .NET, Nebula/Python, web, portal, release e verificações PowerShell; registrar os gates indisponíveis no host Windows.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/docs/testing-mariadb.md; MulletaFlix-master/MediaBrowser.Controller/Webhooks/IWebhookDispatcher.cs; MulletaFlix-master/Jellyfin.Api/Caching/StreamStateCache.cs; MulletaFlix-master/Jellyfin.Api/Middleware/SecurityHeadersMiddleware.cs; MulletaFlix-master/Emby.Server.Implementations/AppBase/BaseConfigurationManager.cs; tools/Prepare-AndroidDeveloperVerification.Tests.ps1",
+      "local": "Windows; .NET 10; Node 26; Python 3.13; execução local, sem acesso ao banco ou produção",
+      "startedAt": "2026-10-29T07:17:00-03:00",
+      "updatedAt": "2026-10-29T07:29:19-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~LiveIntegrationTests --verbosity quiet` terminou exit 0 sem falhas; o runner não forneceu agregado global. Resultados visíveis: Server.Tests 95/95; Server.Implementations 1.659 aprovados/83 ignorados; API 793/796; Providers 824/824; Naming 681/681. Nebula Python 681/681. Web: Vitest 425/425 em 78 arquivos, `build:check`, build de produção e `verify:build` passaram; payload inicial 298,1 KB gzip/420 KB. Node release + portal 102/102; checkout do portal independente 372/372. PowerShell focado 10/10; 3 builds C# afetados passaram com 0 avisos/0 erros. Android Gradle não iniciou por falta do Android SDK; Swift/iOS não está disponível no host. Sem conexão MariaDB de teste; integrações reais não executadas.",
+      "release": "Primeiro lote de validação; não representa leitura ou homologação completa do projeto. Nenhum crédito formal ou release. Homologação formal permanece 2/7; agregado oficial de testes não foi recalculado. Linux, CI hospedada, Android SDK, iOS, integração MariaDB descartável, instalação, runtime e produção seguem pendentes. MariaDB é o único banco relacional operacional."
     }
   ]
 }
