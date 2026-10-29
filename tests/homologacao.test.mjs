@@ -6036,3 +6036,21 @@ test('portal records MariaDB-validated image persistence without release or form
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+test('portal keeps trailer persistence in progress until MariaDB integration passes', () => {
+    const event = statusData.events.find(item => item.id === 'server-trailer-persistence-idempotency-2026-10-29-0130');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, 65);
+    assert.match(event.evidence, /TrailerTypeCollectionsMatch passou 1\/1 em Release/);
+    assert.match(event.evidence, /foi ignorado sem MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
+    assert.match(event.evidence, /Execução integrada MariaDB e medição de SQL ainda pendentes/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
