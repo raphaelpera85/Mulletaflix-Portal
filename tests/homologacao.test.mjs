@@ -5822,3 +5822,21 @@ test('portal records the composed MariaDB MongoDB and files exercise as pending'
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the local integrated recovery exercise without closing formal sign-off', () => {
+    const event = statusData.events.find(item => item.id === 'server-t44-integrated-recovery-local-2026-10-28-2259');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /1 aprovado, 0 falhas, 0 ignorados/);
+    assert.match(event.evidence, /MariaDB 11\.4\.4.*MongoDB 8\.3\.7/);
+    assert.match(event.evidence, /3306.*27017.*não foram usados/);
+    assert.match(event.release, /T4\.4\.15 continua pendente/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.match(statusData.serverHomologation.latestAudit, /RecoveryExercise.*1\/1/);
+});
