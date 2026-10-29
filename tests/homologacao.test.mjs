@@ -5885,6 +5885,7 @@ test('portal records MariaDB mutex thread-affinity fix without claiming producti
     assert.match(event.evidence, /exceção não tratada.*12\.1\.43/);
     assert.match(event.evidence, /MariaDbStartupMutexLeaseTests 5\/5.*Jellyfin\.Server\.Tests Release\/\.NET 10 91\/91/);
     assert.match(event.evidence, /hash do caminho normalizado do datadir.*fallback com escopo local de sessão/);
+    assert.match(event.evidence, /regressão filtrada da solução.*exit code 0, sem falhas/i);
     assert.match(event.evidence, /MariaDB é o único banco relacional operacional; MySql\* são identificadores técnicos/);
     assert.match(event.evidence, /Não houve alteração de produção/);
     assert.match(event.release, /Não publicada em release nem instalada/);

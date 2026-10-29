@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T23:44:00-03:00",
+  "generatedAt": "2026-10-28T23:47:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12396,8 +12396,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-28T23:34:00-03:00",
-      "updatedAt": "2026-10-28T23:44:00-03:00",
-      "evidence": "O log Windows mostra exceção não tratada em ReleaseMutex durante StopMariaDbAsync na versão 12.1.43. Candidata corrigida com lease e thread proprietária dedicada. O mutex global agora usa hash do caminho normalizado do datadir; removido fallback com escopo local de sessão e espera infinita, que poderia permitir dois processos no mesmo datadir. MariaDbStartupMutexLeaseTests 5/5 e Jellyfin.Server.Tests Release/.NET 10 91/91, Windows. Testes cobrem afinidade de thread, timeout, abandono e nomes isolados por diretório. Regressão filtrada da solução reiniciada após a mudança segue em execução. Não houve alteração de produção, instalação, smoke do runtime, Linux nativo ou CI hospedada. MariaDB é o único banco relacional operacional; MySql* são identificadores técnicos.",
+      "updatedAt": "2026-10-28T23:47:00-03:00",
+      "evidence": "O log Windows mostra exceção não tratada em ReleaseMutex durante StopMariaDbAsync na versão 12.1.43. Candidata corrigida com lease e thread proprietária dedicada. O mutex global agora usa hash do caminho normalizado do datadir; removido fallback com escopo local de sessão e espera infinita, que poderia permitir dois processos no mesmo datadir. MariaDbStartupMutexLeaseTests 5/5 e Jellyfin.Server.Tests Release/.NET 10 91/91, Windows. Regressão filtrada da solução (FullyQualifiedName!~Integration) terminou exit code 0, sem falhas; Server.Implementations.Tests: 1.652 aprovados, 82 ignorados. Casos de plataforma e integrações opt-in MariaDB/MongoDB permanecem sem validação. Não houve alteração de produção, instalação, smoke do runtime, Linux nativo ou CI hospedada. MariaDB é o único banco relacional operacional; MySql* são identificadores técnicos.",
       "release": "Correção local validada. Não publicada em release nem instalada; 12.1.46 segue sem publicação e homologação formal permanece 2/7 (28,6%). Runtime atual e causa do estado atual de inicialização não confirmados.",
       "links": []
     }
