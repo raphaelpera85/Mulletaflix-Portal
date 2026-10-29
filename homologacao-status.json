@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T08:57:00-03:00",
+  "generatedAt": "2026-10-29T09:11:17-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13535,6 +13535,23 @@
       "updatedAt": "2026-10-29T08:57:00-03:00",
       "evidence": "Teste RED comprovou que HTTP 206 sem Content-Range era tratado como arquivo completo. Agora resposta parcial exige Content-Range numérico compatível; fallback sequencial só aceita HTTP 200 e status inesperado falha. Destino anterior permanece íntegro. SaveImagesAsync agora compartilha a faixa de lock por ID com SaveItems. Foi incluído teste MariaDB concorrente para duas coleções de imagens do mesmo item; recompilou, porém foi ignorado sem conexão descartável. Teste feeder 87/87; suíte Nebula Python 682/682; compileall passou. Solução .NET Release: 17 assemblies, 5.363 aprovados, 274 ignorados, 0 falhas/5.637 resultados, exit 0. Avisos de analisadores/estilo preexistentes apareceram no build.",
       "release": "Sem release. CI hospedada, MariaDB integrado, Linux nativo, runtime instalado e produção não foram validados. Homologação formal continua 2/7 (28,6%). MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-validation-batch-multipart-and-winps51-2026-10-29-0911",
+      "front": "server",
+      "title": "Corrigir retomada multipart e validar gates locais do servidor",
+      "scope": "Preservar partes Nebula concluídas quando uma faixa falha e tornar o harness do atualizador compatível com Windows PowerShell 5.1 e PowerShell 7.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; MulletaFlix-packaging-master/scripts/tests/ApplyUpdateFailClosed.Tests.ps1",
+      "local": "Windows; .NET 10 Release; Nebula Python 3.10 virtualenv; mocks/arquivos temporários; sem conexão a MariaDB, MongoDB ou produção.",
+      "startedAt": "2026-10-29T08:58:00-03:00",
+      "updatedAt": "2026-10-29T09:11:17-03:00",
+      "evidence": "Solução .NET Release filtrada para excluir testes live: exit 0 em 17 assemblies; saídas observadas incluem Server.Implementations 1.659 aprovados/83 ignorados, API 794/3, Providers 829, Server.Integration 8/143 e IntroSkipper.Integration 26/32. Nebula Python 682/682, compileall passou e a regressão multipart passou 20/20 repetições. Web 425/425; typecheck, build de produção e verificação de artefatos passaram: 1.927 arquivos e payload inicial 298,1 KB gzip/420 KB. Nove scripts de packaging e 15 contratos Node passaram; teste fail-closed passou em Windows PowerShell 5.1 e 7. Smoke E2E local não executado porque a porta 8096 estava ocupada e já havia stage no workspace; ambos preservados.",
+      "release": "Correções e evidência registradas na candidata 12.1.46; nenhuma release publicada. Sem crédito formal: homologação continua 2/7 (28,6%). CI hospedada, MariaDB/Mongo integrados, Linux nativo, runtime instalado, E2E isolado e produção continuam pendentes. MariaDB é o único banco relacional operacional."
     }
   ]
 }
