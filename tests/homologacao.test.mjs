@@ -6582,3 +6582,23 @@ test('portal records the full Server Implementations suite and its skipped tests
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the rebuilt solution test matrix without granting formal signoff', () => {
+    const event = statusData.events.find(item => item.id === 'server-solution-release-test-matrix-2026-10-29-0545');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /recompilou.*exit code 0.*nenhum teste falhou/);
+    assert.match(event.evidence, /Server\.Integration\.Tests 8 aprovados\/143 ignorados/);
+    assert.match(event.evidence, /IntroSkipper\.Integration\.Tests 26 aprovados\/31 ignorados/);
+    assert.match(event.evidence, /não forneceu soma global confiável/);
+    assert.match(event.release, /LiveIntegrationTests/);
+    assert.match(event.release, /continua 2\/7/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

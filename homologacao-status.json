@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:39:25-03:00",
+  "generatedAt": "2026-10-29T05:45:46-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13000,6 +13000,23 @@
       "agent": "Codex",
       "title": "Servidor: suíte completa Server Implementations",
       "links": []
+    },
+    {
+      "id": "server-solution-release-test-matrix-2026-10-29-0545",
+      "front": "server",
+      "title": "Servidor: matriz recompilada da solução em Release",
+      "scope": "Registrar resultado da execução da solução com build habilitado, mantendo skips e gates ambientais como pendências.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/MulletaFlix.sln",
+      "local": "Windows/.NET 10 Release; build habilitado; --no-restore",
+      "startedAt": "2026-10-29T05:42:00-03:00",
+      "updatedAt": "2026-10-29T05:45:46-03:00",
+      "evidence": "dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~LiveIntegrationTests --verbosity quiet recompilou a solução e terminou com exit code 0; nenhum teste falhou. Resultados individuais confirmados: Server.Tests 95/95; Server.Integration.Tests 8 aprovados/143 ignorados; IntroSkipper.Integration.Tests 26 aprovados/31 ignorados; Providers 824/824; API 793 aprovados/3 ignorados; Server Implementations 1.659 aprovados/83 ignorados. O runner não forneceu soma global confiável; não se infere total. Os skips permanecem pendentes. Build com avisos de documentação/analisadores, sem erros. O filtro excluiu LiveIntegrationTests; nenhum banco operacional nem runtime de produção acessado.",
+      "release": "Cobertura da fixture MariaDB central: 38/38 tabelas com dados/assertions no round-trip; não representa todas as linhas de produção. Esta matriz recompilada concluiu sem falhas, mas contém skips e exclui LiveIntegrationTests; não prova Linux nativo, CI hospedada, instalação, smoke em produção ou gates formais. Homologação formal continua 2/7 (28,6%); skips sem crédito. Sem release ou alteração de produção. MariaDB é o único banco relacional operacional."
     }
   ]
 }
