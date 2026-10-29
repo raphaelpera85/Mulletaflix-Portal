@@ -6411,9 +6411,10 @@ test('portal records user preference restore coverage and corrected central tabl
     assert.match(event.evidence, /BackupRestoreMariaDbTests passou 4\/5, 1 ignorado, 0 falhas/);
     assert.match(event.evidence, /Preference .*DisplayPreferences .*ItemDisplayPreferences/);
     assert.match(event.evidence, /MariaDB 11\.4\.4 descartável em 127\.0\.0\.1:51425/);
-    assert.match(event.evidence, /Reexecução isolada com prontidão SQL confirmada também passou 1\/1/);
-    assert.match(event.evidence, /tentativa anterior falhou ao criar trigger/);
-    assert.match(event.release, /10\/38 tabelas, com 28 pendentes/);
+    assert.match(event.evidence, /Reexecução isolada com prontidão SQL confirmada passou 1\/1/);
+    assert.match(event.evidence, /tentativa inicial falhou ao criar trigger/);
+    assert.match(event.evidence, /UserLicense, TrickplayInfo e MidiaStorageOnlineMediaMetadata/);
+    assert.match(event.release, /13\/38 tabelas, com 25 pendentes/);
     assert.match(event.release, /Homologação formal permanece 2\/7/);
     assert.equal(server.testAudit.passed, 5291);
     assert.equal(server.testAudit.total, 5376);
