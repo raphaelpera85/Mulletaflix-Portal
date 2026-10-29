@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T04:37:54-03:00",
+  "generatedAt": "2026-10-29T04:42:09-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12812,6 +12812,23 @@
       "updatedAt": "2026-10-29T04:37:54-03:00",
       "evidence": "Assert-UpdatePackageIntegrity: 6 cenários PowerShell passaram (ZIP válido, hash divergente, traversal, caminho absoluto, path duplicado e runtime obrigatório ausente). A suíte Windows de packaging passou 8/8 scripts; contrato Node do workflow passou 7/7; git diff --check passou. O fluxo chama os gates de artefato antes do publish, mas ZIP/EXE reais não foram construídos nem instalados nesta sessão.",
       "release": "Sem release ou execução em produção. CI hospedada Windows ainda deve provar a validação dos artefatos e o smoke real. Homologação formal permanece 2/7; agregado de testes não foi recalculado. MariaDB é o único banco relacional operacional.",
+      "links": []
+    },
+    {
+      "id": "server-backup-media-auxiliary-roundtrip-2026-10-29-0442",
+      "title": "Backup MariaDB: fixtures de restore para tabelas auxiliares de mídia",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; teste focal compilado",
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "scope": "Ampliar o round-trip de restore com metadados e dados de usuário ligados a filmes, séries e livros.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-29T04:38:00-03:00",
+      "updatedAt": "2026-10-29T04:42:09-03:00",
+      "evidence": "A fixture do teste MariaDB agora semeia e verifica MovieMetadata, MovieUserData, SeriesUserData e BookUserData. dotnet test compilou em Release, mas 1 teste foi ignorado porque não há conexão MariaDB descartável configurada. Nenhum round-trip real dessas linhas foi confirmado nesta sessão.",
+      "release": "Sem release ou crédito formal. 33 tabelas centrais, Seasons, Episodes e Programs e a execução real das novas fixtures permanecem pendentes. Homologação formal permanece 2/7; MariaDB é o único banco relacional operacional.",
       "links": []
     }
   ]

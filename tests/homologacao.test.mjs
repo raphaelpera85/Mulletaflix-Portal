@@ -6353,3 +6353,23 @@ test('portal reports the Windows release artifact gates as local progress only',
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records MariaDB auxiliary media restore fixtures as unvalidated when service is absent', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-media-auxiliary-roundtrip-2026-10-29-0442');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /MovieMetadata, MovieUserData, SeriesUserData e BookUserData/);
+    assert.match(event.evidence, /1 teste foi ignorado/);
+    assert.match(event.evidence, /não há conexão MariaDB descartável/);
+    assert.match(event.release, /Sem release ou crédito formal/);
+    assert.match(event.release, /permanece 2\/7/i);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
