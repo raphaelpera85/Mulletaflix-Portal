@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T08:41:22-03:00",
+  "generatedAt": "2026-10-29T08:52:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "2 de 7 gates com evidência técnica local validada; 1 em andamento, 3 pendentes e 1 bloqueado. SRV-H02 validado em MariaDB descartável; aceite formal de produção permanece pendente."
       },
       "testAudit": {
-        "passed": 5324,
-        "total": 5409,
-        "skipped": 85,
+        "passed": 5363,
+        "total": 5636,
+        "skipped": 273,
         "failed": 0,
-        "percent": 98.4,
-        "label": "Regressão local Windows/.NET 10 Release em 29/10: 5.324 aprovados, 85 ignorados, 0 falhas/5.409 resultados em 15 assemblies (FullyQualifiedName!~Integration). A suíte API refeita passou 794/797 (3 ignorados); restante da regressão preservou resultados anteriores. Suíte Providers completa separada 829/842, com 13 integrações live ignoradas por opt-in. Nebula Python 681/681 e C# Nebula 726/752 passaram em rodadas separadas; C# Nebula é subconjunto de Implementations. Integração MariaDB real, CI hospedada, Linux nativo, runtime instalado e produção seguem pendentes. Skips não são aprovados. Homologação formal permanece 2/7 (28,6%). Novo cenário de crash do restore MariaDB foi recompilado, mas ignorado localmente por falta de instância descartável configurada; não entra nos totais e aguarda execução em CI com MariaDB isolado."
+        "percent": 95.2,
+        "label": "Regressão completa da solução Windows/.NET 10 Release em 29/10: 5.363 aprovados, 273 ignorados, 0 falhas/5.636 resultados em 17 assemblies; exit 0. Nebula Python 682/682 e compileall aprovados em execução separada. Os ignorados incluem opt-in e dependências de ambiente, inclusive integração MariaDB sem instância descartável configurada. CI hospedada, Linux nativo, runtime instalado e produção permanecem pendentes. MariaDB é o único banco relacional operacional. Homologação formal permanece 2/7 (28,6%); não é derivada da porcentagem dos testes."
       }
     },
     {
@@ -13518,6 +13518,23 @@
       "updatedAt": "2026-10-29T08:41:22-03:00",
       "evidence": "Removido `Task.Delay(50)` executado após duas chamadas de `DisposeAsync`. O método aguarda `_heartbeatTask`, então a conclusão já é a sincronização determinística para afirmar que nenhuma renovação adicional ocorrerá. `NebulaMongoAdmissionLeaseTests` passou 3/3 em 94 ms; formatação e `git diff --check` passaram. As afirmações de renovação e liberação únicas continuam presentes.",
       "release": "Otimização de teste, sem mudança de runtime. Sem crédito formal: homologação permanece 2/7 (28,6%). Sem release. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-full-suite-nebula-partial-range-and-image-locks-2026-10-29-0852",
+      "front": "server",
+      "title": "Rejeitar downloads parciais sem Content-Range e serializar persistência de imagens",
+      "scope": "Corrigir arquivo final potencialmente truncado no feeder Nebula e alinhar a gravação de imagens com a trava de metadados por item.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/feed_ftp.py; MulletaFlix-master/Jellyfin.Server.Implementations/Item/ItemPersistenceService.cs",
+      "local": "Windows; .NET 10 Release; Nebula Python em virtualenv; testes com mocks e arquivos temporários, sem acesso a mídia, banco ou produção.",
+      "startedAt": "2026-10-29T08:45:00-03:00",
+      "updatedAt": "2026-10-29T08:52:00-03:00",
+      "evidence": "Teste RED comprovou que HTTP 206 sem Content-Range era tratado como arquivo completo. Após a correção, resposta parcial exige Content-Range numérico compatível; fallback sequencial só aceita HTTP 200 e códigos inesperados falham. Destino anterior permanece íntegro. SaveImagesAsync agora compartilha a faixa de lock por ID com SaveItems. Teste feeder 87/87; suíte Nebula Python 682/682; compileall passou. Solução .NET Release: 17 assemblies, 5.363 aprovados, 273 ignorados, 0 falhas/5.636 resultados, exit 0. Avisos de analisadores/estilo preexistentes apareceram no build.",
+      "release": "Sem release. CI hospedada, MariaDB integrado, Linux nativo, runtime instalado e produção não foram validados. Homologação formal continua 2/7 (28,6%). MariaDB é o único banco relacional operacional."
     }
   ]
 }
