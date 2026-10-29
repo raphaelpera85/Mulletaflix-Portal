@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T21:57:54-03:00",
+  "generatedAt": "2026-10-28T22:03:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12206,6 +12206,25 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/actions/runs/40795733017",
         "https://github.com/raphaelpera85/mulletaflix-completo/pull/1"
       ]
+    },
+    {
+      "id": "server-mariadb-restore-duration-history-2026-10-28-2203",
+      "title": "MariaDB restore: verificar status e duração no histórico",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [
+        "SRV-H03"
+      ],
+      "local": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "location": "T4.3 / round-trip integral de backup e restore em MariaDB descartável",
+      "scope": "Adicionar asserção para estado concluído e duração positiva persistidos pelo restore relacional.",
+      "status": "blocked",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T22:01:00-03:00",
+      "updatedAt": "2026-10-28T22:03:00-03:00",
+      "evidence": "O teste agora exige que o histórico do restore registre TaskCompletionStatus.Completed e EndTimeUtc posterior a StartTimeUtc. Build Release do projeto IntroSkipper.Integration.Tests passou com 0 erros e 81 avisos. O teste focal foi descoberto, mas ignorado porque MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não está configurada; nenhum banco foi acessado, portanto o round-trip e a nova asserção ainda não foram executados nesta rodada. MariaDB é o único banco relacional operacional; os nomes MySql* são técnicos.",
+      "release": "Sem release. T4.3 e homologação formal permanecem abertas; é necessário executar contra uma instância MariaDB descartável.",
+      "links": []
     }
   ]
 }

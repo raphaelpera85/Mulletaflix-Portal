@@ -5716,3 +5716,26 @@ test('portal reports the unavailable Linux CI runner without awarding H03 or for
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /CI do servidor e runner Linux bloqueados/);
 });
+test('portal records the MariaDB restore history assertion without claiming the skipped integration passed', async () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-restore-duration-history-2026-10-28-2203');
+    const server = statusData.tracks.find(item => item.id === 'server');
+    const h03 = statusData.serverHomologation.areas.find(item => item.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'blocked');
+    assert.match(event.evidence, /TaskCompletionStatus\.Completed/);
+    assert.match(event.evidence, /EndTimeUtc posterior a StartTimeUtc/);
+    assert.match(event.evidence, /foi descoberto, mas ignorado/);
+    assert.match(event.evidence, /MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING não está configurada/);
+    assert.match(event.evidence, /nenhum banco foi acessado/);
+    assert.equal(h03.status, 'in_progress');
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB restore: verificar status e duração/);
+});
