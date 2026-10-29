@@ -7261,5 +7261,22 @@ test('portal records the focused E2E pass and incomplete broad-suite audit witho
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.generatedAt, '2026-10-29T12:41:00-03:00');
+    assert.ok(Date.parse(statusData.generatedAt) >= Date.parse(event.updatedAt));
+});
+
+test('portal records the isolated concurrent-playback E2E pass without formal homologation credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-playwright-multiuser-direct-playback-2026-10-29-1256');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.testOnly, true);
+    assert.match(event.evidence, /16\/16/);
+    assert.match(event.evidence, /E2E de reprodução simultânea: 1\/1 aprovado/);
+    assert.match(event.evidence, /Não valida transcodificação HEVC nem suíte Playwright ampla/);
+    assert.match(event.release, /Não concede crédito formal/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
