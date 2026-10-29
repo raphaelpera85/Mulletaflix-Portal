@@ -1092,8 +1092,10 @@ test('Nebula transient startup retry validates its five-second policy without re
     assert.match(event.evidence, /TransientStartupTimeout_IsRetriedBeforeStartingDownloader/);
     assert.match(event.evidence, /foi reduzido de 5,014 s para 155 ms e continua afirmando o retry de 5 s/);
     assert.match(event.evidence, /StartContinuousSync_DoesNotStartAnotherCycleWhilePreviousCallbackIsStillRunning` caiu de 10,318 s para 505 ms/);
-    assert.match(event.evidence, /1\.659 aprovados, 83 ignorados, 0 falhas \(1\.742 casos\), 33 s/);
+    assert.match(event.evidence, /CleanupTimeout_PreservesResourcesUntilTheTaskCompletes` caiu de 5,014 s para 183 ms/);
+    assert.match(event.evidence, /1\.659 aprovados, 83 ignorados, 0 falhas \(1\.742 casos\), 29 s/);
     assert.match(event.release, /espera de encerramento Supabase de 5 s/);
+    assert.match(event.release, /timeout de cleanup de 5 s/);
     assert.match(event.release, /Homologação formal 2\/7; sem release/);
 });
 
