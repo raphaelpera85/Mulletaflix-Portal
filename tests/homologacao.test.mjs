@@ -6889,3 +6889,17 @@ test('portal roadmap counts match the published source and stay separate from ho
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
 });
+
+test('portal records MariaDB startup unit results without claiming a live database run', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-startup-unit-tests-2026-10-29-0715');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /focais .* passaram 9\/9/);
+    assert.match(event.evidence, /Jellyfin.Server.Tests` completo passou 95\/95/);
+    assert.match(event.evidence, /não iniciam daemon nem conectam ao MariaDB/);
+    assert.match(event.release, /não concede crédito formal/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+});

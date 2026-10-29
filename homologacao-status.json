@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:14:00-03:00",
+  "generatedAt": "2026-10-29T07:15:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13238,6 +13238,23 @@
       "updatedAt": "2026-10-29T07:14:00-03:00",
       "evidence": "A contagem da fonte publicada em GitHub main (origin/main 8a7796c3cae3efc644721123c6c88d4c05b6fa66) encontrou 338 checkboxes marcados e 74 desmarcados. Quatro dos desmarcados têm tarefa ativa e são classificados em execução; portanto o painel mostra 338 concluídos, 70 pendentes, 4 em execução, total 412. O status antigo indicava 331/66/4, total 401. O percentual de checklist concluído arredonda para 82%. Isso não mede aprovação de testes, homologação formal ou prontidão de produção. A homologação formal do servidor segue 2/7 (28,6%).",
       "release": "Correção de dados e regressão contratual do portal; sem mudança no servidor ou no runtime. Homologação formal permanece 2/7. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-mariadb-startup-unit-tests-2026-10-29-0715",
+      "front": "server",
+      "title": "MariaDB: revalidar inicialização do diretório e mutex",
+      "scope": "Executar os testes focais do bootstrap MariaDB e a bateria completa de Jellyfin.Server.Tests, separando unitários locais da integração real ao banco.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Tests/Helpers/MariaDbDataDirectoryInitializationTests.cs; MariaDbStartupMutexLeaseTests.cs",
+      "local": "Windows; .NET 10; Release; filesystem temporário e mutex do SO; sem instância MariaDB",
+      "startedAt": "2026-10-29T07:14:00-03:00",
+      "updatedAt": "2026-10-29T07:15:00-03:00",
+      "evidence": "Os focais `FullyQualifiedName~MariaDbDataDirectoryInitializationTests|FullyQualifiedName~MariaDbStartupMutexLeaseTests` passaram 9/9; depois `Jellyfin.Server.Tests` completo passou 95/95, zero skips/falhas, duração 2 s. São unitários de inicialização de diretório e lease de mutex; não iniciam daemon nem conectam ao MariaDB. A integração e migrations reais seguem pendentes para instância MariaDB descartável. Nenhum serviço ou banco operacional foi acessado.",
+      "release": "Revalidação local unitária; não concede crédito formal nem valida runtime/instalação/produção. Homologação formal do servidor permanece 2/7; sem release. MariaDB é o único banco relacional operacional."
     }
   ]
 }
