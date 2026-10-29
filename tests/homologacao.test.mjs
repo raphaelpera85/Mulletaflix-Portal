@@ -7245,3 +7245,21 @@ test('portal records Playwright media scan deadlock without formal or release cr
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the focused E2E pass and incomplete broad-suite audit without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-playwright-focused-and-full-partial-2026-10-29-1241');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'blocked');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /15\/15.*build:check passou.*2\/2/);
+    assert.match(event.evidence, /39 casos foi interrompida antes do relatório agregado/);
+    assert.match(event.evidence, /esperou 2 sessões e observou 0/);
+    assert.match(event.local, /runner atualizado rejeita 8096/i);
+    assert.match(event.release, /2\/7.*Nenhuma release criada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.generatedAt, '2026-10-29T12:41:00-03:00');
+});
