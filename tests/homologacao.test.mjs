@@ -6400,3 +6400,25 @@ test('portal records AccessSchedules and ActionLogs MariaDB restore coverage wit
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records user preference restore coverage and corrected central table count', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-core-user-preferences-mariadb-2026-10-29-0506');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests passou 4\/5, 1 ignorado, 0 falhas/);
+    assert.match(event.evidence, /Preference .*DisplayPreferences .*ItemDisplayPreferences/);
+    assert.match(event.evidence, /MariaDB 11\.4\.4 descartável em 127\.0\.0\.1:51425/);
+    assert.match(event.release, /10\/38 tabelas, com 28 pendentes/);
+    assert.match(event.release, /Homologação formal permanece 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.testAudit.skipped, 85);
+    assert.equal(server.testAudit.failed, 0);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
