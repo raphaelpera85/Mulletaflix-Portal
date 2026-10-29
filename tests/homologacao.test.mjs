@@ -5763,3 +5763,27 @@ test('portal records the disposable MariaDB restore round-trip without closing T
     await settleDashboard();
     assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB descartável: restore 4\/4/);
 });
+
+
+test('portal records the MariaDB inventory version correction without homologation credit', async () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-inventory-version-correction-2026-10-28-2216');
+    const server = statusData.tracks.find(item => item.id === 'server');
+    const h03 = statusData.serverHomologation.areas.find(item => item.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /MariaDB 11\.4\.4/);
+    assert.match(event.evidence, /único banco relacional operacional/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(h03.status, 'in_progress');
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /MariaDB-only confirmado/);
+});
