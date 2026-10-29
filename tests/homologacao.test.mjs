@@ -6933,3 +6933,19 @@ test('portal reports updater readiness and rollback evidence without formal homo
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
+
+test('portal records both MariaDB restore crash windows and keeps skipped integration pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-restore-precommit-crash-test-2026-10-29');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /antes de CommitAsync e depois do commit relacional/);
+    assert.match(event.evidence, /recompilou.*integração MariaDB foi ignorada/);
+    assert.match(event.release, /sem crédito formal.*2\/7/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
