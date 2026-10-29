@@ -6544,3 +6544,22 @@ test('portal reports all central backup tables with restore fixtures but preserv
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records backup unit regression and keeps skipped cases pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-unit-regression-2026-10-29-0537');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /passou 154, ignorou 16.*falhou 0/);
+    assert.match(event.evidence, /não contam como aprovados/);
+    assert.match(event.release, /38\/38 tabelas/);
+    assert.match(event.release, /154\/170.*16 skips/);
+    assert.match(event.release, /formal 2\/7/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

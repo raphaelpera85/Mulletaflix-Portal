@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:36:24-03:00",
+  "generatedAt": "2026-10-29T05:37:26-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12966,6 +12966,23 @@
       "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
       "release": "O inventário de fixture/assertions alcança 38/38 tabelas centrais do JellyfinDbContext; isso não cobre cada linha em produção nem outros participantes/bancos/arquivos. Matriz ampla 5.291/5.376 não recalculada. Homologação formal 2/7. Sem release. MariaDB é o único banco relacional operacional.",
       "startedAt": "2026-10-29T05:34:00-03:00"
+    },
+    {
+      "agent": "Codex",
+      "status": "completed",
+      "progressPercent": 100,
+      "title": "Backup MariaDB: regressão unitária adjacente",
+      "evidence": "dotnet test Jellyfin.Server.Implementations.Tests filtrada em FullyQualifiedName~FullSystemBackup passou 154, ignorou 16 por plataforma/ambiente, falhou 0 (170) em Windows/.NET 10 Release. Os ignorados não contam como aprovados. Nenhum banco operacional foi acessado.",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release",
+      "id": "server-backup-unit-regression-2026-10-29-0537",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests",
+      "release": "O inventário MariaDB central tem fixtures/assertions em 38/38 tabelas; esta bateria unitária adjacente passou 154/170 e manteve 16 skips. Nenhuma validação de todas as linhas de produção. Matriz 5.291/5.376 não recalculada; homologação formal 2/7. Sem release. MariaDB é o único banco relacional operacional.",
+      "scope": "Executar os testes unitários filtrados FullSystemBackup junto da validação de restore em MariaDB descartável.",
+      "startedAt": "2026-10-29T05:36:00-03:00",
+      "links": [],
+      "updatedAt": "2026-10-29T05:37:26-03:00",
+      "front": "server"
     }
   ]
 }
