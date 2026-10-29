@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T08:37:42-03:00",
+  "generatedAt": "2026-10-29T08:41:22-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13501,6 +13501,23 @@
       "updatedAt": "2026-10-29T08:37:42-03:00",
       "evidence": "A espera fixa de 50 ms foi substituída por ajuste explícito do LastWriteTimeUtc após alterar o conteúdo mantendo o mesmo tamanho. `DotIgnoreIgnoreRuleTest` recompilou e passou 35/35 em 270 ms. A execução inicial detectou apenas um using removido indevidamente durante a edição; ele foi restaurado e a execução final passou. `git diff --check` passou; avisos de analisadores preexistentes na compilação não foram tratados nesta fatia.",
       "release": "Otimização determinística de teste, sem mudança no comportamento de produção. Não altera auditoria agregada nem dá crédito à homologação formal: permanece 2/7 (28,6%). Sem release. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-nebula-lease-test-no-delay-2026-10-29-0841",
+      "front": "server",
+      "title": "Remover espera após descarte da lease Mongo do Nebula",
+      "scope": "Eliminar espera fixa redundante após DisposeAsync e preservar as verificações de encerramento do heartbeat e liberação única.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Nebula/NebulaMongoAdmissionLeaseTests.cs",
+      "local": "Windows; .NET 10 Release; testes unitários com callbacks locais; sem conexão MongoDB ou acesso à produção.",
+      "startedAt": "2026-10-29T08:39:00-03:00",
+      "updatedAt": "2026-10-29T08:41:22-03:00",
+      "evidence": "Removido `Task.Delay(50)` executado após duas chamadas de `DisposeAsync`. O método aguarda `_heartbeatTask`, então a conclusão já é a sincronização determinística para afirmar que nenhuma renovação adicional ocorrerá. `NebulaMongoAdmissionLeaseTests` passou 3/3 em 94 ms; formatação e `git diff --check` passaram. As afirmações de renovação e liberação únicas continuam presentes.",
+      "release": "Otimização de teste, sem mudança de runtime. Sem crédito formal: homologação permanece 2/7 (28,6%). Sem release. MariaDB é o único banco relacional operacional."
     }
   ]
 }

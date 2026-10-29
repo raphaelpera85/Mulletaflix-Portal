@@ -6965,3 +6965,20 @@ test('portal records deterministic .ignore cache invalidation test without homol
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records Nebula Mongo lease test without redundant delay or formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-lease-test-no-delay-2026-10-29-0841');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Removido `Task\.Delay\(50\)`/);
+    assert.match(event.evidence, /passou 3\/3 em 94 ms/);
+    assert.match(event.release, /Sem crédito formal.*2\/7 \(28,6%\).*Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
