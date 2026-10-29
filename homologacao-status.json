@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:26:09-03:00",
+  "generatedAt": "2026-10-29T05:29:08-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12881,6 +12881,23 @@
       "scope": "Validar round-trip de PricingPlans, DiscountCoupons, PaymentGatewayConfigs e PaymentTransactions, incluindo FKs e cupom opcional.",
       "title": "Backup MariaDB: restore das tabelas de cobrança",
       "id": "server-backup-billing-roundtrip-mariadb-2026-10-29-0525"
+    },
+    {
+      "scope": "Validar round-trip de BaseItems e UserData, incluindo vínculo com usuário/item e estado de reprodução.",
+      "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "evidence": "BackupRestoreMariaDbTests passou 4/5, 1 ignorado (caso que requer MongoDB), 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:60104. Após restore, foram conferidos os campos do BaseItem e UserData (rating, posição, contagem, favorito, datas, flags de reprodução e vínculos ItemId/UserId). O serviço descartável encerrou normalmente; nenhum banco operacional foi acessado. dotnet format whitespace --verify-no-changes e git diff --check passaram.",
+      "featureIds": [],
+      "status": "completed",
+      "release": "Cobertura central reconciliada em 24/38 tabelas com linhas restauradas e assertions; 14 pendentes. As tabelas auxiliares de domínio e participante IntroSkipper são contagens separadas. Matriz ampla 5.291/5.376 não recalculada; homologação formal 2/7. Sem release. MariaDB é o único banco relacional operacional.",
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "front": "server",
+      "title": "Backup MariaDB: restore de BaseItems e UserData",
+      "startedAt": "2026-10-29T05:26:00-03:00",
+      "links": [],
+      "updatedAt": "2026-10-29T05:29:08-03:00",
+      "id": "server-backup-coreitem-userdata-roundtrip-mariadb-2026-10-29-0528"
     }
   ]
 }

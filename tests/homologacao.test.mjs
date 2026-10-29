@@ -6445,3 +6445,22 @@ test('portal records billing table restore coverage without changing formal sign
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records BaseItems and UserData restore coverage without changing formal signoff', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-coreitem-userdata-roundtrip-mariadb-2026-10-29-0528');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests passou 4\/5, 1 ignorado \(caso que requer MongoDB\), 0 falhas/);
+    assert.match(event.evidence, /BaseItem/);
+    assert.match(event.evidence, /UserData/);
+    assert.match(event.release, /24\/38 tabelas.*14 pendentes/);
+    assert.match(event.release, /formal 2\/7/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
