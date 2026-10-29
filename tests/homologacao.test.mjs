@@ -6709,10 +6709,11 @@ test('portal records upload cancellation during a Mongo checkpoint retry without
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /`test_main_upload_worker\.py`: 11 passed/);
-    assert.match(event.evidence, /Full suite: 681 passed in 7\.15s/);
+    assert.match(event.evidence, /Full suite: 681 passed in 7\.37s/);
     assert.match(event.evidence, /arquivo fonte preservado/);
     assert.match(event.evidence, /Cancelamento do producer observado.*queue task_done.*admissão fechada/);
     assert.match(event.evidence, /MongoDB mock/);
+    assert.match(event.evidence, /somente MariaDB; nenhum serviço MySQL separado configurado/);
     assert.match(event.release, /indisponibilidade real do Mongo/);
     assert.match(event.release, /2\/7/);
     assert.match(event.release, /sem release/);
