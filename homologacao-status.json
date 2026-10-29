@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:04:00-03:00",
+  "generatedAt": "2026-10-29T07:07:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13204,6 +13204,23 @@
       "updatedAt": "2026-10-29T07:04:00-03:00",
       "evidence": "TRX anterior registrava 12,71 s em GetLatestItemList_TvShows_DoesNotMergeDifferentSeriesWithTheSameName. A classe foi reexecutada no assembly Release existente, com --no-build --no-restore, e passou 3/3 em 1 s. TRX focal novo mediu 0,055 s, 0,075 s e 1,037 s; o caso de nomes repetidos não reproduziu 12,7 s e não há espera fixa nos três testes. Sem alteração de produção ou dos testes. O resultado aponta variação de ambiente/JIT como hipótese, não causa comprovada. MariaDB é o único banco relacional operacional; esta fixture usa EF Core InMemory.",
       "release": "Revalidação local não concede crédito formal. A variação de duração não foi atribuída a uma causa definitiva; não foi feita alteração de algoritmo sem reprodução. CI hospedada, Linux, runtime instalado e produção continuam pendentes. Homologação formal 2/7; sem release. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-backup-directory-tests-recheck-2026-10-29-0707",
+      "front": "server",
+      "title": "Restore: revalidar operações de diretório no Windows",
+      "scope": "Reexecutar a bateria focal do restore e registrar claramente os limites da validação Windows frente aos testes Linux ignorados.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupRestoreDirectoryTests.cs",
+      "local": "Windows; .NET 10; Release; sem WSL/distro, Docker ou Podman disponíveis",
+      "startedAt": "2026-10-29T07:05:00-03:00",
+      "updatedAt": "2026-10-29T07:07:00-03:00",
+      "evidence": "`BackupRestoreDirectoryTests` foi executado com `dotnet test ... --configuration Release --no-build --no-restore --filter FullyQualifiedName~BackupRestoreDirectoryTests --verbosity quiet`: 47 aprovados, 11 ignorados, 0 falhas/58, em 318 ms. Skips de Linux/macOS/mount continuam pendentes. A revisão estática confirma uma janela condicional entre validar tipo Linux com statx e mutar pelo nome com renameat/renameat2/unlinkat, para ator capaz de escrever no diretório protegido. Nenhum bypass da ACL por usuário não confiável foi demonstrado. Não houve correção de código nem acesso a banco. MariaDB é o único banco relacional operacional.",
+      "release": "Apenas revalidação Windows; não concede crédito formal. Linux nativo, syscalls/ACL POSIX, CI hospedada, runtime instalado e produção continuam pendentes. H03 aberto; homologação formal 2/7; sem release. MariaDB é o único banco relacional operacional."
     }
   ]
 }

@@ -6851,3 +6851,21 @@ test('portal records the latest TV query duration recheck without claiming a fix
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records focused restore directory test results without claiming Linux validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-directory-tests-recheck-2026-10-29-0707');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /47 aprovados, 11 ignorados, 0 falhas\/58, em 318 ms/);
+    assert.match(event.evidence, /janela condicional entre validar tipo Linux com statx e mutar pelo nome/);
+    assert.match(event.evidence, /Nenhum bypass da ACL por usuário não confiável foi demonstrado/);
+    assert.match(event.release, /Linux nativo, syscalls\/ACL POSIX.*continuam pendentes/);
+    assert.match(event.release, /H03 aberto; homologação formal 2\/7; sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
