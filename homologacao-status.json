@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T10:16:52-03:00",
+  "generatedAt": "2026-10-29T10:21:40-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 274,
         "failed": 0,
         "percent": 95.1,
-        "label": "Regressão completa da solução Windows/.NET 10 Release em 29/10: 5.363 aprovados, 274 ignorados, 0 falhas/5.637 resultados em 17 assemblies; exit 0. Nebula Python 682/682 e compileall aprovados separadamente. Os ignorados incluem opt-in e dependências de ambiente; o novo teste concorrente de persistência MariaDB foi compilado, mas ignorado sem conexão descartável. CI hospedada, Linux nativo, runtime instalado e produção permanecem pendentes. MariaDB é o único banco relacional operacional. Homologação formal permanece 2/7 (28,6%), separada da taxa de testes. Atualização focada 29/10 09:21 BRT: testes MariaDB/startup 9/9 e preferência de idioma de imagem 2/2 em Windows/.NET 10 Release; restore direcionado do projeto Mongo passou. Esses focais não alteram o agregado, nem concedem crédito formal. Regressão repetida após o lote em 29/10: filtro FullyQualifiedName!~Integration, 15 assemblies, 5.329 aprovados, 85 ignorados, 0 falhas, exit 0. Não substitui a agregação anterior de suíte completa e não conta como homologação formal. Confirmação final 29/10 09:37 BRT: reexecução da mesma regressão após preservar o nome histórico do mutex terminou exit 0, sem falhas; 5.329 aprovados, 85 ignorados em 15 assemblies. Atualização local 29/10 10:16 BRT: ciclo MariaDB start/stop serializado no processo; testes focados 13/13 e Jellyfin.Server.Tests 103/103, Windows/.NET 10. O teste combinado MariaDB+MongoDB+arquivos, CI hospedada, Linux, runtime/instalação e produção continuam pendentes; formal segue 2/7."
+        "label": "Regressão completa da solução Windows/.NET 10 Release em 29/10: 5.363 aprovados, 274 ignorados, 0 falhas/5.637 resultados em 17 assemblies; exit 0. Nebula Python 682/682 e compileall aprovados separadamente. Os ignorados incluem opt-in e dependências de ambiente; o novo teste concorrente de persistência MariaDB foi compilado, mas ignorado sem conexão descartável. CI hospedada, Linux nativo, runtime instalado e produção permanecem pendentes. MariaDB é o único banco relacional operacional. Homologação formal permanece 2/7 (28,6%), separada da taxa de testes. Atualização focada 29/10 09:21 BRT: testes MariaDB/startup 9/9 e preferência de idioma de imagem 2/2 em Windows/.NET 10 Release; restore direcionado do projeto Mongo passou. Esses focais não alteram o agregado, nem concedem crédito formal. Regressão repetida após o lote em 29/10: filtro FullyQualifiedName!~Integration, 15 assemblies, 5.329 aprovados, 85 ignorados, 0 falhas, exit 0. Não substitui a agregação anterior de suíte completa e não conta como homologação formal. Confirmação final 29/10 09:37 BRT: reexecução da mesma regressão após preservar o nome histórico do mutex terminou exit 0, sem falhas; 5.329 aprovados, 85 ignorados em 15 assemblies. Atualização local 29/10 10:16 BRT: ciclo MariaDB start/stop serializado no processo; testes focados 13/13 e Jellyfin.Server.Tests 103/103, Windows/.NET 10. O teste combinado MariaDB+MongoDB+arquivos, CI hospedada, Linux, runtime/instalação e produção continuam pendentes; formal segue 2/7. Auditoria CI 29/10 10:21 BRT: run 40872202840 do commit e3425131 consta como failure em 16 jobs, mas todos terminaram sem steps; os logs retornam 404. Nenhum teste foi comprovado como executado e a causa do runner não foi determinada. Não contar como aprovação nem reprovação de código; homologação continua 2/7."
       }
     },
     {
@@ -13620,6 +13620,23 @@
       "updatedAt": "2026-10-29T10:16:52-03:00",
       "evidence": "A análise do fluxo estático confirmou o risco: o catch de uma segunda inicialização podia chamar Stop e atingir o processo compartilhado da primeira. Start/stop agora são serializados por SemaphoreSlim no processo; limpeza interna não reentra na trava. A lease verifica cancelamento após posse e libera pelo thread proprietário. MariaDbStartupMutexLeaseTests 13/13; Jellyfin.Server.Tests 103/103; 0 falhas.",
       "release": "Correção local candidata 12.1.46, sem release publicada. Não concede crédito formal; homologação permanece 2/7. Pendente exercício combinado MariaDB+MongoDB+arquivos em serviços descartáveis, CI hospedada, Linux, instalação/runtime e produção."
+    },
+    {
+      "id": "server-ci-run-40872202840-unexecuted-2026-10-29-1021",
+      "front": "server",
+      "title": "Auditar CI sem steps executados",
+      "scope": "Verificar se o run remoto do commit base executou testes e classificar a evidência antes de atualizar homologação.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": ".github/workflows/ci.yml; GitHub Actions run 40872202840; run jobs 123441833975–123441834604",
+      "local": "Leitura de estado via integração GitHub; sem alterações ou comandos em serviços de produção.",
+      "startedAt": "2026-10-29T10:21:40-03:00",
+      "updatedAt": "2026-10-29T10:21:40-03:00",
+      "evidence": "Para o commit e3425131826a8d0573267878b0766f910588b34c, a integração reporta CI concluída com conclusão failure e 16 jobs. Os 16 jobs aparecem failure; o job Full recovery exercise não tem steps e o endpoint de logs devolve 404; amostragem dos jobs Server Integration, Server Build e Nebula Mongo também não recuperou logs. A evidência disponível indica que os testes não foram comprovados como executados; a causa do runner não está estabelecida. O run é inconclusivo para o código.",
+      "release": "Nenhum crédito formal e nenhuma nova release. Homologação permanece 2/7; aguardam-se uma CI executada com steps e o exercício integrado em MariaDB/Mongo descartáveis."
     }
   ]
 }
