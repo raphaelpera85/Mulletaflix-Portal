@@ -6242,3 +6242,22 @@ test('portal records the complete server integration suite on isolated MariaDB w
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+test('portal records MariaDB fixture cleanup hardening without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-integration-fixture-cleanup-2026-10-29-0342');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Jellyfin\.Server\.Integration\.Tests passou 151\/151 em 1m55s/);
+    assert.match(event.evidence, /MariaDB 11\.4\.4 descartável/);
+    assert.match(event.evidence, /zero schemas.*zero contas/);
+    assert.match(event.evidence, /CI usa 11\.4\.13.*Linux hospedada permanecem pendentes/);
+    assert.match(event.release, /Sem release.*homologação permanece 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

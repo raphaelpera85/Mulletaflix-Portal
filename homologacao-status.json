@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T03:22:00-03:00",
+  "generatedAt": "2026-10-29T03:42:37-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12710,6 +12710,23 @@
       "updatedAt": "2026-10-29T03:22:00-03:00",
       "evidence": "A primeira execução opt-in identificou que o fixture criava schema temporário do IntroSkipper, mas o plugin continuava usando o schema operacional fixo. O override agora só é aceito em ambiente Testing e valida prefixo mfx_intro_test_. Testes focais StartupBackupRecoveryTests e ImageControllerProfileUploadTests: 2/2. Suíte Jellyfin.Server.Integration.Tests completa: 146/146 em 1m54s contra MariaDB 11.4.13 descartável em loopback/porta não padrão. Build Release passou; contrato Node CI MariaDB: 2/2; diff check passou. Serviço parado e porta fechada. O formatter focal passou; o formatter de todo o projeto já aponta charset/imports em diversos arquivos existentes.",
       "release": "Sem release, instalação ou mudança em produção. Esta evidência local não recebe crédito formal; homologação segue 2/7 (28,6%) e o agregado de auditoria 5.291/5.376 não foi recalculado. CI hospedada/Linux continuam pendentes. MariaDB é o único banco relacional operacional; nomes MySql* permanecem por compatibilidade técnica do driver/provedor.",
+      "links": []
+    },
+    {
+      "id": "server-integration-fixture-cleanup-2026-10-29-0342",
+      "title": "Servidor: teardown da fixture MariaDB agora falha explicitamente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Integration.Tests",
+      "scope": "Reportar falhas ao remover schemas/contas de teste e preservar erros de operação e teardown; assegurar limpeza mesmo quando Dispose do host falha.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T03:22:00-03:00",
+      "updatedAt": "2026-10-29T03:42:37-03:00",
+      "evidence": "Jellyfin.Server.Integration.Tests passou 151/151 em 1m55s, Windows/.NET 10 Release, contra MariaDB 11.4.4 descartável em 127.0.0.1:60416. Verificação pós-teste encontrou zero schemas mulletaflix_test_*/mfx_intro_test_* e zero contas mfx_test_*; processo encerrado e porta fechada. Helpers validam tentativas de todos os DROP e preservação das exceções; dotnet format focal e git diff --check passaram. Contrato Node da CI MariaDB passou 2/2. CI usa 11.4.13, portanto paridade de versão e execução Linux hospedada permanecem pendentes. A base operacional não foi acessada.",
+      "release": "Sem release, instalação ou mudança em produção. Teste local isolado não recebe crédito formal; homologação permanece 2/7 (28,6%), aceite formal pendente e agregado de auditoria 5.291/5.376 não recalculado. CI Linux hospedada pendente. MariaDB é o único banco relacional operacional; MySql* são identificadores técnicos do driver/provedor.",
       "links": []
     }
   ]
