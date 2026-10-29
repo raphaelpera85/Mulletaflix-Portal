@@ -5651,3 +5651,21 @@ test('portal names MariaDB as the only operational relational database', () => {
     assert.match(skipped.local, /30 MariaDB isolado/);
     assert.doesNotMatch(skipped.local, /MySQL/);
 });
+
+test('portal records portable POSIX ACL parser coverage without claiming Linux validation', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-posix-acl-parser-2026-10-28-2141');
+    const server = statusData.tracks.find(item => item.id === 'server');
+    const h03 = statusData.serverHomologation.areas.find(item => item.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /ValidateLinuxAclBytes puro passou 2\/2/);
+    assert.match(event.evidence, /não valida fgetxattr.*syscalls Linux/);
+    assert.match(event.evidence, /não encontrou workflow\/status associados/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.equal(h03.status, 'in_progress');
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
