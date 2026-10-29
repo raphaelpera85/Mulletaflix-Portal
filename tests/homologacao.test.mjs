@@ -7039,3 +7039,23 @@ test('portal records MariaDB isolation and image locale fixes without homologati
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records disposable MariaDB integration suites without formal homologation credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-disposable-integrations-2026-10-29-1006');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Server\.Integration\.Tests 151\/151/);
+    assert.match(event.evidence, /IntroSkipper\.Integration\.Tests 57 aprovados, 1 ignorado/);
+    assert.match(event.evidence, /Server\.Implementations\.Tests 30 aprovados, 1 ignorado/);
+    assert.match(event.evidence, /238 aprovados, 2 ignorados, 0 falhas/);
+    assert.match(event.evidence, /lower_case_table_names=0/);
+    assert.match(event.release, /sem crédito formal \(2\/7\).*sem release publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
