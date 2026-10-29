@@ -7011,6 +7011,7 @@ test('portal records MariaDB isolation and image locale fixes without homologati
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /MariaDbStartupMutexLeaseTests 9\/9/);
     assert.match(event.evidence, /GetPreferredImageLanguage 2\/2/);
+    assert.match(event.evidence, /15 assemblies, 5\.329 aprovados, 85 ignorados, 0 falhas, exit 0/);
     assert.match(event.release, /Sem release publicada/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
