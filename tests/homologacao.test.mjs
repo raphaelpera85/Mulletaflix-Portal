@@ -6333,3 +6333,22 @@ test('portal records expanded integration CI while keeping skipped database case
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal reports the Windows release artifact gates as local progress only', () => {
+    const event = statusData.events.find(item => item.id === 'server-release-artifact-gates-2026-10-29-0434');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /5 cenários PowerShell/);
+    assert.match(event.evidence, /Node do workflow passou 7\/7/);
+    assert.match(event.evidence, /ZIP\/EXE reais não foram construídos/);
+    assert.match(event.release, /Sem release.*Homologação formal permanece 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

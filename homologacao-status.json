@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T04:27:00-03:00",
+  "generatedAt": "2026-10-29T04:35:44-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12795,6 +12795,23 @@
       "updatedAt": "2026-10-29T04:27:00-03:00",
       "evidence": "Suíte local IntroSkipper.Integration.Tests: 26 aprovados, 31 ignorados, 0 falhas/57; os casos que dependem de MariaDB/MongoDB foram ignorados porque não havia instâncias descartáveis configuradas. Contrato do job Linux completo passou 3/3; o teste MariaDB de SaveImagesAsync compila e está integrado à suíte.",
       "release": "Sem release ou crédito formal. Execução hospedada Linux com MariaDB/Mongo, round-trip real de SaveImagesAsync, runtime instalado e produção permanecem pendentes. Homologação formal 2/7; agregado permanece 5.291/5.376 sem recálculo. MariaDB é o único banco relacional operacional.",
+      "links": []
+    },
+    {
+      "id": "server-release-artifact-gates-2026-10-29-0434",
+      "title": "Release Windows: validação do ZIP e smoke do instalador",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows PowerShell, Node.js 26; testes locais",
+      "location": "MulletaFlix-packaging-master/scripts e .github/workflows/release.yml",
+      "scope": "Adicionar gate para comparar o ZIP de atualização com o stage e executar smoke do instalador limpo antes da publicação.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-29T04:28:00-03:00",
+      "updatedAt": "2026-10-29T04:35:44-03:00",
+      "evidence": "Assert-UpdatePackageIntegrity: 5 cenários PowerShell passaram (ZIP válido, hash divergente, traversal, path duplicado e runtime obrigatório ausente). Contrato Node do workflow passou 7/7; git diff --check passou. O fluxo chama esses gates antes do publish, mas ZIP/EXE reais não foram construídos nem instalados nesta sessão.",
+      "release": "Sem release ou execução em produção. CI hospedada Windows ainda deve provar a validação dos artefatos e o smoke real. Homologação formal permanece 2/7; agregado de testes não foi recalculado. MariaDB é o único banco relacional operacional.",
       "links": []
     }
   ]
