@@ -6120,3 +6120,23 @@ test('portal records segmented server regression without claiming a complete sol
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the PeopleValidationTask regression as awaiting MariaDB execution', () => {
+    const event = statusData.events.find(item => item.id === 'server-people-validation-regression-test-2026-10-29-0240');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, 50);
+    assert.match(event.evidence, /projeto IntroSkipper\.Integration\.Tests compilou em Release/);
+    assert.match(event.evidence, /terminou como ignorada.*não conta como aprovada/);
+    assert.match(event.evidence, /não havia MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
+    assert.match(event.evidence, /não simula corrida concorrente/);
+    assert.match(event.release, /Nenhuma release.*formal permanece 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
