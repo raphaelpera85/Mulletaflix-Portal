@@ -22,6 +22,25 @@ test('portal distinguishes full local regression from formal server homologation
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
 
+test('portal records cancellable MariaDB startup mutex acquisition without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-startup-mutex-cancellation-2026-10-29-0949');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.scope, /CancellationToken.*mutexes/i);
+    assert.match(event.evidence, /10\/10/);
+    assert.match(event.evidence, /5\.330 aprovados, 85 ignorados e 0 falhas/);
+    assert.match(event.evidence, /exit code agregado/);
+    assert.match(event.release, /12\.1\.46 candidata; sem release publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 const statusData = JSON.parse(readFileSync(new URL('../homologacao-status.json', import.meta.url), 'utf8'));
 const dashboardSource = readFileSync(new URL('../homologacao.js', import.meta.url), 'utf8');
 const dashboardHtml = readFileSync(new URL('../homologacao.html', import.meta.url), 'utf8');
