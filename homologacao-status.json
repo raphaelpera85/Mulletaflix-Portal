@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T10:21:40-03:00",
+  "generatedAt": "2026-10-29T10:28:41-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -33,7 +33,7 @@
         "skipped": 274,
         "failed": 0,
         "percent": 95.1,
-        "label": "Regressão completa da solução Windows/.NET 10 Release em 29/10: 5.363 aprovados, 274 ignorados, 0 falhas/5.637 resultados em 17 assemblies; exit 0. Nebula Python 682/682 e compileall aprovados separadamente. Os ignorados incluem opt-in e dependências de ambiente; o novo teste concorrente de persistência MariaDB foi compilado, mas ignorado sem conexão descartável. CI hospedada, Linux nativo, runtime instalado e produção permanecem pendentes. MariaDB é o único banco relacional operacional. Homologação formal permanece 2/7 (28,6%), separada da taxa de testes. Atualização focada 29/10 09:21 BRT: testes MariaDB/startup 9/9 e preferência de idioma de imagem 2/2 em Windows/.NET 10 Release; restore direcionado do projeto Mongo passou. Esses focais não alteram o agregado, nem concedem crédito formal. Regressão repetida após o lote em 29/10: filtro FullyQualifiedName!~Integration, 15 assemblies, 5.329 aprovados, 85 ignorados, 0 falhas, exit 0. Não substitui a agregação anterior de suíte completa e não conta como homologação formal. Confirmação final 29/10 09:37 BRT: reexecução da mesma regressão após preservar o nome histórico do mutex terminou exit 0, sem falhas; 5.329 aprovados, 85 ignorados em 15 assemblies. Atualização local 29/10 10:16 BRT: ciclo MariaDB start/stop serializado no processo; testes focados 13/13 e Jellyfin.Server.Tests 103/103, Windows/.NET 10. O teste combinado MariaDB+MongoDB+arquivos, CI hospedada, Linux, runtime/instalação e produção continuam pendentes; formal segue 2/7. Auditoria CI 29/10 10:21 BRT: run 40872202840 do commit e3425131 consta como failure em 16 jobs, mas todos terminaram sem steps; os logs retornam 404. Nenhum teste foi comprovado como executado e anotação GitHub confirma bloqueio da conta por cobrança e que os jobs não iniciaram. Não contar como aprovação nem reprovação de código; homologação continua 2/7."
+        "label": "Regressão completa da solução Windows/.NET 10 Release em 29/10: 5.363 aprovados, 274 ignorados, 0 falhas/5.637 resultados em 17 assemblies; exit 0. Nebula Python 682/682 e compileall aprovados separadamente. Os ignorados incluem opt-in e dependências de ambiente; o novo teste concorrente de persistência MariaDB foi compilado, mas ignorado sem conexão descartável. CI hospedada, Linux nativo, runtime instalado e produção permanecem pendentes. MariaDB é o único banco relacional operacional. Homologação formal permanece 2/7 (28,6%), separada da taxa de testes. Atualização focada 29/10 09:21 BRT: testes MariaDB/startup 9/9 e preferência de idioma de imagem 2/2 em Windows/.NET 10 Release; restore direcionado do projeto Mongo passou. Esses focais não alteram o agregado, nem concedem crédito formal. Regressão repetida após o lote em 29/10: filtro FullyQualifiedName!~Integration, 15 assemblies, 5.329 aprovados, 85 ignorados, 0 falhas, exit 0. Não substitui a agregação anterior de suíte completa e não conta como homologação formal. Confirmação final 29/10 09:37 BRT: reexecução da mesma regressão após preservar o nome histórico do mutex terminou exit 0, sem falhas; 5.329 aprovados, 85 ignorados em 15 assemblies. Atualização local 29/10 10:16 BRT: ciclo MariaDB start/stop serializado no processo; testes focados 13/13 e Jellyfin.Server.Tests 103/103, Windows/.NET 10. O teste combinado MariaDB+MongoDB+arquivos, CI hospedada, Linux, runtime/instalação e produção continuam pendentes; formal segue 2/7. Auditoria CI 29/10 10:21 BRT: run 40872202840 do commit e3425131 consta como failure em 16 jobs, mas todos terminaram sem steps; os logs retornam 404. Nenhum teste foi comprovado como executado e anotação GitHub confirma bloqueio da conta por cobrança e que os jobs não iniciaram. Não contar como aprovação nem reprovação de código; homologação continua 2/7. Regressão local 29/10 10:28 BRT: solução .NET Release em 17 assemblies, filtro FullyQualifiedName!~LiveIntegrationTests, 5.372 aprovados, 261 ignorados, 0 falhas/5.633, exit 0. Ignorados dependem de DB opt-in/plataforma e não são aprovados; MariaDB+Mongo+arquivos integrado continua sem execução. Formal segue 2/7."
       }
     },
     {
@@ -13637,6 +13637,23 @@
       "updatedAt": "2026-10-29T10:21:40-03:00",
       "evidence": "Para o commit e3425131826a8d0573267878b0766f910588b34c, a integração reporta CI concluída como failure em 16 jobs. As anotações GitHub de Full recovery exercise, Server build e Server integration informam explicitamente: a conta está bloqueada por cobrança e o job não iniciou. O job Full recovery exercise não tem steps; os logs retornam 404. Os testes não foram executados; este run não reprova o código e é inconclusivo para homologação.",
       "release": "Nenhum crédito formal e nenhuma nova release. A execução CI depende da liberação do bloqueio de cobrança; o exercício MariaDB+Mongo+arquivos também pode ser validado localmente com serviços descartáveis. Homologação permanece 2/7."
+    },
+    {
+      "id": "server-solution-regression-after-mariadb-lifecycle-2026-10-29-1028",
+      "front": "server",
+      "title": "Reexecutar regressão .NET após correção do ciclo MariaDB",
+      "scope": "Verificar a solução .NET Release no estado atualizado, excluindo somente LiveIntegrationTests, e contar skips separadamente.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/MulletaFlix.sln; 17 assemblies de teste .NET",
+      "local": "Windows/.NET 10 Release; sem variáveis opt-in MariaDB/Mongo; nenhum banco operacional ou serviço de produção acessado.",
+      "startedAt": "2026-10-29T10:28:41-03:00",
+      "updatedAt": "2026-10-29T10:28:41-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-build --no-restore --filter FullyQualifiedName!~LiveIntegrationTests --verbosity quiet` terminou exit 0. Agregação dos resumos dos 17 assemblies: 5.372 aprovados, 261 ignorados, 0 falhas, 5.633 resultados. Exemplos: Server.Tests 103/103; Server.Implementations 1.659 aprovados/83 ignorados; Server.Integration 8 aprovados/143 ignorados; IntroSkipper Integration 26 aprovados/32 ignorados. Skips exigem banco opt-in/plataforma e não contam como aprovados.",
+      "release": "Regressão local somente. Não concede homologação formal; permanece 2/7. Teste MariaDB+Mongo+arquivos, CI hospedada bloqueada por cobrança, Linux nativo, runtime/instalação e produção continuam pendentes. Sem nova release."
     }
   ]
 }

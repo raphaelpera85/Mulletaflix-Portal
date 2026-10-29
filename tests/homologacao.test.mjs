@@ -7094,3 +7094,21 @@ test('portal classifies CI without executed steps as inconclusive and keeps form
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+
+test('portal records the current filtered .NET solution regression without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-solution-regression-after-mariadb-lifecycle-2026-10-29-1028');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /17 assemblies/);
+    assert.match(event.evidence, /5\.372 aprovados, 261 ignorados, 0 falhas, 5\.633 resultados/);
+    assert.match(event.evidence, /Server\.Integration 8 aprovados\/143 ignorados/);
+    assert.match(event.release, /Sem nova release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
