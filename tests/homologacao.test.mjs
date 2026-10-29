@@ -5564,3 +5564,22 @@ test('portal records the patched MariaDB driver without changing the database or
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
+
+test('portal records MariaDB-only relational deployment and backup entity coverage without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-only-backup-entity-coverage-2026-10-28-2111');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.scope, /MariaDB/);
+    assert.match(event.evidence, /MariaDB.*único servidor relacional/);
+    assert.match(event.evidence, /153 aprovados, 16 ignorados.*0 falhas\/169/);
+    assert.match(event.evidence, /não comprova round-trip/);
+    assert.match(event.evidence, /Linux.*CI hospedada.*MariaDB real/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
