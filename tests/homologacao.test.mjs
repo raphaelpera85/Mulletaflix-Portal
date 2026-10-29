@@ -6524,3 +6524,23 @@ test('portal records chapter, stream and keyframe restore coverage without forma
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal reports all central backup tables with restore fixtures but preserves open homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-central-38-tables-roundtrip-mariadb-2026-10-29-0535');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests passou 4\/5, 1 ignorado \(caso que requer MongoDB\), 0 falhas/);
+    assert.match(event.evidence, /AncestorIds/);
+    assert.match(event.evidence, /PeopleBaseItemMap/);
+    assert.match(event.release, /38\/38 tabelas centrais/);
+    assert.match(event.release, /não cobre cada linha em produção/);
+    assert.match(event.release, /Homologação formal 2\/7/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

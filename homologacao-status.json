@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:34:26-03:00",
+  "generatedAt": "2026-10-29T05:36:24-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12949,6 +12949,23 @@
       "front": "server",
       "agent": "Codex",
       "id": "server-backup-playback-metadata-roundtrip-mariadb-2026-10-29-0534"
+    },
+    {
+      "status": "completed",
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "agent": "Codex",
+      "evidence": "BackupRestoreMariaDbTests passou 4/5, 1 ignorado (caso que requer MongoDB), 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:57572. Foram verificadas após restore as últimas tabelas: AncestorIds, LinkedChildren, ItemValues, ItemValuesMap, Peoples e PeopleBaseItemMap, além das tabelas anteriores. Instância descartável encerrou normalmente; nenhum banco operacional acessado. Format whitespace focal e git diff --check passaram.",
+      "scope": "Completar o round-trip de linhas nas tabelas centrais do JellyfinDbContext e verificar relações entre itens.",
+      "progressPercent": 100,
+      "updatedAt": "2026-10-29T05:36:24-03:00",
+      "links": [],
+      "title": "Backup MariaDB: cobertura de restore das 38 tabelas centrais",
+      "front": "server",
+      "id": "server-backup-central-38-tables-roundtrip-mariadb-2026-10-29-0535",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
+      "release": "O inventário de fixture/assertions alcança 38/38 tabelas centrais do JellyfinDbContext; isso não cobre cada linha em produção nem outros participantes/bancos/arquivos. Matriz ampla 5.291/5.376 não recalculada. Homologação formal 2/7. Sem release. MariaDB é o único banco relacional operacional.",
+      "startedAt": "2026-10-29T05:34:00-03:00"
     }
   ]
 }
