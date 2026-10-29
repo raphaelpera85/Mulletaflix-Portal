@@ -1099,6 +1099,27 @@ test('Nebula transient startup retry validates its five-second policy without re
     assert.match(event.release, /Homologação formal 2\/7; sem release/);
 });
 
+test('portal records repeated restore recovery after forced process termination without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-restore-process-recovery-repeat-2026-10-29-0653');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /foi executado quatro vezes em sequência/);
+    assert.match(event.evidence, /passou 3\/3, cada uma em 4 s/);
+    assert.match(event.evidence, /mata o processo filho durante a escrita do staging/);
+    assert.match(event.evidence, /FullSystemBackup filter.*154 passed, 16 skipped, 0 failed of 170 in 8 s/);
+    assert.match(event.evidence, /BackupServiceTests` alone: 98 passed, 5 skipped, 0 failed of 103 in 8 s/);
+    assert.match(event.evidence, /MariaDB é o único banco relacional operacional/);
+    assert.match(event.release, /Formal remains 2\/7; no release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('update center recheck publishes the branch and GitHub Release distinction with current assets', async () => {
     const event = statusData.events.find(item => item.id === 'server-update-center-branch-release-recheck-2026-10-19-1036');
 

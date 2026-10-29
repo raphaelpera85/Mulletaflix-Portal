@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T06:48:15-03:00",
+  "generatedAt": "2026-10-29T06:55:55-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13153,6 +13153,23 @@
       "updatedAt": "2026-10-29T06:48:15-03:00",
       "evidence": "A análise de TRX encontrou dois testes gastando cerca de 15 s cada. Construtores internos permitem timeout de seleção Mongo curto e atraso assíncrono controlado apenas nos testes; os construtores públicos mantêm 15 s no Mongo e retries de startup de 5 s/10 s. Testes focais: 2/2 em 426 ms; classes Nebula: 86/86 em 6 s. `TransientStartupTimeout_IsRetriedBeforeStartingDownloader` foi reduzido de 5,014 s para 155 ms e continua afirmando o retry de 5 s. `StartContinuousSync_DoesNotStartAnotherCycleWhilePreviousCallbackIsStillRunning` caiu de 10,318 s para 505 ms usando limite de espera interno de 100 ms somente no teste; o default público continua 5 s e o callback bloqueado ainda prova que um segundo ciclo não inicia. `CleanupTimeout_PreservesResourcesUntilTheTaskCompletes` caiu de 5,014 s para 183 ms com timeout injetado apenas no teste; mantém assertion do timeout e dos recursos até finalizar cleanup, enquanto runtime continua 5 s. Regressão mais recente do projeto Jellyfin.Server.Implementations.Tests: 1.659 aprovados, 83 ignorados, 0 falhas (1.742 casos), 29 s. Build Release focal teve avisos preexistentes de analisadores/documentação e zero erros. Nenhum banco operacional foi acessado. Portal Git main no início desta atualização `129aa1111a3144100f1199b54af25490f942156b`; criação Vercel manual havia retornado HTTP 402 por cota diária. O último deployment Vercel observado `dpl_FEB8txzNbYwY9VhLk2xBbxqCB3bW` permanece READY no SHA anterior `9be0169471e625ff32469a521398894fa3403320`, cujo endpoint público respondeu HTTP 200 com evento anterior. Não há deployment para os commits Git mais recentes; o snapshot público ainda tem texto antigo de quota.",
       "release": "Os construtores públicos mantêm timeout Mongo de 15 s, delays de retry 5 s/10 s, espera de encerramento Supabase de 5 s e timeout de cleanup de 5 s; os valores curtos existem só nos testes. Os 83 skips não contam como aprovados. Git portal main atualizado; deployment público observado READY no SHA anterior, ainda sem deployment para o commit Git mais novo. Linux, CI hospedada, instalação, runtime e produção do servidor seguem pendentes. MariaDB é o único banco relacional operacional. Homologação formal 2/7; sem release."
+    },
+    {
+      "id": "server-backup-restore-process-recovery-repeat-2026-10-29-0653",
+      "front": "server",
+      "title": "Backup: recuperação após encerramento forçado do processo",
+      "scope": "Validar que o journal e o staging sobrevivem ao encerramento do processo de restore e são recuperados numa nova execução.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/FullSystemBackup/BackupServiceTests.cs",
+      "local": "Windows; .NET 10; Release; filesystem temporário; processos filhos; sem acesso a banco operacional",
+      "startedAt": "2026-10-29T06:50:00-03:00",
+      "updatedAt": "2026-10-29T06:55:55-03:00",
+      "evidence": "O teste existente RestoreBackupAsync_RecoversAfterRestoreProcessIsTerminated foi executado quatro vezes em sequência: a primeira execução passou 1/1 em 4 s e a repetição passou 3/3, cada uma em 4 s. O cenário mata o processo filho durante a escrita do staging, inicia novo processo e verifica conteúdo restaurado de 64 MiB, limpeza do journal e ausência de arquivos temporários/sidecars residuais. Os limites de 60 s/30 s são guardas de falha, não sleeps. O teste usa filesystem temporário e mocks para dependências; não conectou ao MongoDB operacional, que permaneceu sem acesso. MariaDB é o único banco relacional operacional; não havia endpoint descartável configurado. CI hospedada, Linux nativo, runtime instalado e produção não foram verificados. FullSystemBackup filter `FullyQualifiedName~FullSystemBackup`: 154 passed, 16 skipped, 0 failed of 170 in 8 s. `BackupServiceTests` alone: 98 passed, 5 skipped, 0 failed of 103 in 8 s.",
+      "release": "FullSystemBackup passed 154, skipped 16, failed 0 of 170 in 8 s on Windows/.NET 10 Release. Skips are platform-specific Linux/macOS filesystem, ACL and mount cases and remain pending. This test run gives no formal homologation credit. Formal remains 2/7; no release. Linux-native CI, installed runtime and production remain unverified. MariaDB is the only operational relational database."
     }
   ]
 }
