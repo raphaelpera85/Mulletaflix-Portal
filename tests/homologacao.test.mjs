@@ -48,6 +48,27 @@ const portalConfig = JSON.parse(readFileSync(new URL('../vercel.json', import.me
 const sitemapSource = readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records the player return-to-home fix and sparse Nebula retry without formal credit', () => {
+    const playback = statusData.events.find(item => item.id === 'server-player-view-background-audio-2026-10-29-1907');
+    const upload = statusData.events.find(item => item.id === 'server-nebula-sparse-upload-resume-2026-10-29-1907');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(playback);
+    assert.equal(playback.status, 'in_progress');
+    assert.match(playback.evidence, /não foi reproduzida\/capturada nesta rodada/);
+    assert.match(playback.release, /sem publicação\/instalação/);
+    assert.ok(upload);
+    assert.equal(upload.status, 'completed');
+    assert.match(upload.evidence, /688\/688/);
+    assert.match(upload.release, /formal 2\/7/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(playback.updatedAt) <= Date.parse(statusData.generatedAt));
+    assert.ok(Date.parse(upload.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal reports latest local server regression separately from formal homologation', () => {
     const event = statusData.events.find(item => item.id === 'server-full-regression-python-rerun-2026-10-23-1549');
     const server = statusData.tracks.find(track => track.id === 'server');
