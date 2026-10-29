@@ -7329,7 +7329,7 @@ test('portal publishes all isolated Mongo opt-in tests without formal or release
     assert.equal(event.testOnly, true);
     assert.match(event.evidence, /26 aprovados, 0 ignorados, 0 falhas/);
     assert.match(event.local, /127\.0\.0\.1:27099.*serviço MongoDB existente.*não foram usados/i);
-    assert.match(event.release, /2\/7.*Vercel aguarda liberação do limite diário/);
+    assert.match(event.release, /2\/7.*Vercel Production está READY no commit cb7bc604/);
     assert.equal(server.testAudit.passed, 5377);
     assert.equal(server.testAudit.total, 5651);
     assert.equal(server.testAudit.skipped, 274);
@@ -7357,5 +7357,6 @@ test('portal publishes focused server regression without changing the broad audi
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
+    assert.match(event.release, /Git main .*bb640833.*Vercel.*cb7bc604.*não inclui esta execução/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
