@@ -38,7 +38,8 @@ test('portal records the updater, Nebula and media-request audit batch without f
     assert.match(event.evidence, /5\.288 aprovados, 85 ignorados, 0 falhas/);
     assert.match(event.evidence, /Nebula Python: 672\/672/);
     assert.match(event.evidence, /Não executados CI hospedada.*Linux nativo ou produção/);
-    assert.match(event.evidence, /sem encerrar processos de outras instalações pelo nome/);
+    assert.match(event.evidence, /Reauditoria posterior refutou essa evidência/);
+    assert.match(event.evidence, /server-updater-process-scope-regression-2026-10-29-0208/);
     assert.match(event.release, /sem release publicada/i);
     assert.equal(server.testAudit.passed, 5291);
     assert.equal(server.testAudit.total, 5376);
