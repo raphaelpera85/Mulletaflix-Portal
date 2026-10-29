@@ -1070,15 +1070,17 @@ test('cross-area server audit publishes focused verification and unresolved rele
     assert.match(dashboard.getElement('event-list').innerHTML, /Auditoria do servidor: atualização, capas, GetAvatar e web/);
 });
 
-test('Nebula retry timing event reports the Vercel deployment quota block precisely', () => {
+test('Nebula retry timing event reports production deployment and public evidence', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-test-latency-2026-10-29-0628');
 
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.evidence, /Git main do portal \(635dfaa5bdb7ffa235c8891f1248780c42de957c\)/);
-    assert.match(event.evidence, /HTTP 402 por exceder 100 deployments gratuitos por dia/);
-    assert.match(event.release, /deployment público Vercel bloqueado/);
+    assert.match(event.evidence, /estado READY, SHA `9be0169471e625ff32469a521398894fa3403320`/);
+    assert.match(event.evidence, /criação manual respondeu HTTP 402 por cota diária/);
+    assert.match(event.evidence, /dpl_FEB8txzNbYwY9VhLk2xBbxqCB3bW.*estado READY/);
+    assert.match(event.evidence, /endpoint público `\/homologacao-status\.json` respondeu HTTP 200/);
+    assert.match(event.release, /último deployment Vercel verificado READY/);
     assert.match(event.release, /Homologação formal 2\/7; sem release/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
