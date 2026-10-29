@@ -7339,3 +7339,23 @@ test('portal publishes all isolated Mongo opt-in tests without formal or release
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+
+test('portal publishes focused server regression without changing the broad audit or formal gates', () => {
+    const event = statusData.events.find(item => item.id === 'server-focused-server-regression-windows-2026-10-29-1400');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.testOnly, true);
+    assert.match(event.evidence, /SystemControllerTests: 3\/3.*NativeIntroProviderTests: 8\/8.*19\/19.*Total: 30 aprovados, 0 ignorados\/falhas/);
+    assert.match(event.local, /produção consultada somente por GET: 12\.1\.45/i);
+    assert.match(event.evidence, /WSL1 sem distro.*não tem Docker Engine/);
+    assert.equal(server.testAudit.passed, 5377);
+    assert.equal(server.testAudit.total, 5651);
+    assert.equal(server.testAudit.skipped, 274);
+    assert.equal(server.testAudit.failed, 0);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
