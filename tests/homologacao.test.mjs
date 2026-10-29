@@ -6602,3 +6602,22 @@ test('portal records the rebuilt solution test matrix without granting formal si
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the Nebula Python suite and keeps runtime integration pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-python-suite-2026-10-29-0547');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /674 passed in 10\.36s/);
+    assert.match(event.evidence, /compileall -q main\.py tools tests.*sem erros/);
+    assert.match(event.evidence, /Python global não tem pytest/);
+    assert.match(event.release, /produção/);
+    assert.match(event.release, /permanece 2\/7/);
+    assert.match(event.release, /sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
