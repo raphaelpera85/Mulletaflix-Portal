@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:32:49-03:00",
+  "generatedAt": "2026-10-29T05:34:26-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12932,6 +12932,23 @@
       "startedAt": "2026-10-29T05:30:00-03:00",
       "updatedAt": "2026-10-29T05:32:49-03:00",
       "status": "completed"
+    },
+    {
+      "release": "Cobertura central reconciliada em 32/38 tabelas com registros e assertions pós-restore; 6 pendentes. Inventários auxiliares são separados. Matriz ampla 5.291/5.376 não recalculada; formal 2/7. Sem release. MariaDB é o único banco relacional operacional.",
+      "evidence": "BackupRestoreMariaDbTests passou 4/5, 1 ignorado (caso que requer MongoDB), 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:53605. O restore verificou Chapters (índice, posição e imagem), MediaStreamInfos (codec, idioma, canais, bitrate, resolução e campos de cor) e KeyframeData (duração e coleção de keyframes). Processo descartável encerrou normalmente; nenhum banco operacional foi acessado. Format whitespace focal e git diff --check passaram.",
+      "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "startedAt": "2026-10-29T05:32:00-03:00",
+      "updatedAt": "2026-10-29T05:34:26-03:00",
+      "title": "Backup MariaDB: restore de capítulos, streams e keyframes",
+      "scope": "Validar Chapters, MediaStreamInfos e KeyframeData associados a BaseItem no round-trip do backup.",
+      "progressPercent": 100,
+      "status": "completed",
+      "front": "server",
+      "agent": "Codex",
+      "id": "server-backup-playback-metadata-roundtrip-mariadb-2026-10-29-0534"
     }
   ]
 }
