@@ -6269,7 +6269,7 @@ test('portal records isolated IntroSkipper fixture lifecycle without formal cred
     assert.ok(event);
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.evidence, /53 aprovados, 1 ignorado, 0 falhas\/54/);
+    assert.match(event.evidence, /55 aprovados, 1 ignorado, 0 falhas\/56/);
     assert.match(event.evidence, /schema mfx_intro_test_<guid>/);
     assert.match(event.evidence, /zero schemas.*zero contas/);
     assert.match(event.evidence, /MariaDB 11\.4\.4 descartável/);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T04:03:56-03:00",
+  "generatedAt": "2026-10-29T04:07:34-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12741,8 +12741,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-29T03:42:00-03:00",
-      "updatedAt": "2026-10-29T04:03:45-03:00",
-      "evidence": "A revisão encontrou risco de colisão entre execuções e inicialização assíncrona ainda ativa no teardown. Cada fixture agora usa schema mfx_intro_test_<guid>; o host de teste aguarda as duas gates de inicialização antes de limpar; testes de cleanup confirmam que todas as ações são tentadas e as falhas mantêm a ordem. IntroSkipper.Integration.Tests: 53 aprovados, 1 ignorado, 0 falhas/54, em MariaDB 11.4.4 descartável de loopback, autenticação normal. Pós-teste: zero schemas mfx_intro_test_* e zero contas mfx_test_*; processo encerrado e porta 60419 fechada. Formatter focal aprovado. A CI usa MariaDB 11.4.13; Linux hospedado e produção não foram executados nesta rodada.",
+      "updatedAt": "2026-10-29T04:07:25-03:00",
+      "evidence": "A revisão encontrou risco de colisão entre execuções e inicialização assíncrona ainda ativa no teardown. Cada fixture agora usa schema mfx_intro_test_<guid>; o host de teste aguarda as duas gates de inicialização antes de limpar; testes de cleanup confirmam que todas as ações são tentadas, que a falha original continua primeiro e que falhas de limpeza ficam agregadas. IntroSkipper.Integration.Tests: 55 aprovados, 1 ignorado, 0 falhas/56, em MariaDB 11.4.4 descartável de loopback, autenticação normal (35s). Pós-teste: zero schemas mfx_intro_test_* e zero contas mfx_test_*; processo encerrado e porta 60419 fechada. Formatter focal aprovado. A CI usa MariaDB 11.4.13; Linux hospedado e produção não foram executados nesta rodada.",
       "release": "Sem release, instalação ou mudança em produção. Sem crédito formal; homologação permanece 2/7 (28,6%) e auditoria agregada 5.291/5.376 não foi recalculada. MariaDB é o único banco relacional operacional; nomes MySql* continuam sendo termos técnicos do driver/provedor.",
       "links": []
     }
