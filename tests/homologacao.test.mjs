@@ -6224,3 +6224,21 @@ test('portal records three server test slices independently of integration and f
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the complete server integration suite on isolated MariaDB without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-integration-suite-2026-10-29-0322');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Jellyfin\.Server\.Integration\.Tests completa: 146\/146 em 1m54s/);
+    assert.match(event.evidence, /MariaDB 11\.4\.13 descartável/);
+    assert.match(event.release, /Sem release.*homologação segue 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
