@@ -1083,6 +1083,16 @@ test('Nebula retry timing event reports the Vercel deployment quota block precis
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('Nebula transient startup retry validates its five-second policy without real waiting', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-test-latency-2026-10-29-0628');
+
+    assert.ok(event);
+    assert.match(event.evidence, /TransientStartupTimeout_IsRetriedBeforeStartingDownloader/);
+    assert.match(event.evidence, /espera fixa de retry de 5 s foi substituída por delay injetável e o caso passou em 155 ms/);
+    assert.match(event.evidence, /1\.659, ignorou 83 e falhou 0, em 43 s/);
+    assert.match(event.release, /Homologação formal 2\/7; sem release/);
+});
+
 test('update center recheck publishes the branch and GitHub Release distinction with current assets', async () => {
     const event = statusData.events.find(item => item.id === 'server-update-center-branch-release-recheck-2026-10-19-1036');
 
