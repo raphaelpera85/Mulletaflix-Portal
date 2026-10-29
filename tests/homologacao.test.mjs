@@ -7319,3 +7319,23 @@ test('portal publishes isolated MariaDB user and billing retest while preserving
     assert.equal(server.homologation.percent, 28.6);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+
+test('portal publishes all isolated Mongo opt-in tests without formal or release credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-mongodb-optin-tests-isolated-2026-10-29-1354');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.testOnly, true);
+    assert.match(event.evidence, /26 aprovados, 0 ignorados, 0 falhas/);
+    assert.match(event.local, /127\.0\.0\.1:27099.*serviço MongoDB existente.*não foram usados/i);
+    assert.match(event.release, /2\/7.*Vercel aguarda liberação do limite diário/);
+    assert.equal(server.testAudit.passed, 5377);
+    assert.equal(server.testAudit.total, 5651);
+    assert.equal(server.testAudit.skipped, 274);
+    assert.equal(server.testAudit.failed, 0);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
