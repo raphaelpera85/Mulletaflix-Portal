@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T13:21:00-03:00",
+  "generatedAt": "2026-10-29T13:39:14-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3055,6 +3055,23 @@
     }
   ],
   "events": [
+    {
+      "id": "server-admin-logs-current-build-and-production-baseline-2026-10-29-1334",
+      "title": "Servidor: suites locais aprovadas; produção observada em 12.1.45",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; stage descartável em loopback; produção somente leitura",
+      "location": "MulletaFlix-master/Jellyfin.Api; MulletaFlix-web-master/src/apps/dashboard/routes/logs",
+      "scope": "Revalidar a rota administrativa de logs com o build atual e conferir disponibilidade/versão da produção sem alterar dados.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-29T13:29:00-03:00",
+      "updatedAt": "2026-10-29T13:39:14-03:00",
+      "evidence": "Build Jellyfin.Server Release da fonte atual: 0 avisos/0 erros. Regressão .NET da solução: 17 projetos, 5.377 aprovados, 274 ignorados, 0 falhas/5.651. Nebula Python: 682/682. Vitest web: 425/425 em 78 arquivos. npm run build:check passou; build web production passou; verify:build aprovou 1.929 artefatos e payload inicial 298,2 KB gzip. SystemControllerTests: 3/3. Playwright do painel administrativo/logs: 1/1, com servidor compilado da fonte atual e bundle web atual em stage isolado, MariaDB descartável porta 33100, stage loopback 18096. A tentativa anterior com stage 12.1.44 expirou no seletor ausente; não representa falha do build atual. Produção recebeu somente GETs a /System/Info/Public e /web/: HTTP 200, versão 12.1.45, StartupWizardCompleted=true; sem alteração de dados/configuração. Os 274 testes ignorados não são aprovados.",
+      "release": "Nenhuma release ou instalação do servidor nesta etapa. A candidata 12.1.46 não está publicada. Homologação formal permanece 2/7 (28,6%); Selenium, E2E amplo, integrações opt-in/serviços reais, CI hospedada, Linux e instalação continuam pendentes. Os resultados locais não concedem crédito formal.",
+      "links": []
+    },
     {
       "id": "server-nebula-disk-probe-fail-closed-2026-10-29-0216",
       "title": "Nebula pausa downloads quando não consegue validar o espaço em disco",
