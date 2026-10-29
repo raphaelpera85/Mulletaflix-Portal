@@ -69,6 +69,20 @@ test('portal records the player return-to-home fix and sparse Nebula retry witho
     assert.ok(Date.parse(upload.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records scanner claim recovery after restart and retry backoff without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-scanner-restart-recovery-2026-10-29-1912');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /recuperação de claim de processo anterior/);
+    assert.match(event.evidence, /backoff de cinco segundos/);
+    assert.match(event.evidence, /690\/690/);
+    assert.match(event.evidence, /não foram usados/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
 test('portal reports latest local server regression separately from formal homologation', () => {
     const event = statusData.events.find(item => item.id === 'server-full-regression-python-rerun-2026-10-23-1549');
     const server = statusData.tracks.find(track => track.id === 'server');
