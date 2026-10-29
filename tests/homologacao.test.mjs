@@ -6354,16 +6354,17 @@ test('portal reports the Windows release artifact gates as local progress only',
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
-test('portal records MariaDB auxiliary media restore fixtures as unvalidated when service is absent', () => {
+test('portal records MariaDB auxiliary media restore fixtures after disposable database validation', () => {
     const event = statusData.events.find(item => item.id === 'server-backup-media-auxiliary-roundtrip-2026-10-29-0442');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.ok(event);
-    assert.equal(event.status, 'in_progress');
-    assert.equal(event.progressPercent, null);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /MovieMetadata, MovieUserData, SeriesUserData e BookUserData/);
-    assert.match(event.evidence, /1 teste foi ignorado/);
-    assert.match(event.evidence, /não há conexão MariaDB descartável/);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests passou 4\/5, 1 ignorado, 0 falhas/);
+    assert.match(event.evidence, /MariaDB 11\.4\.4 descartável/);
+    assert.match(event.evidence, /único caso ignorado requer MongoDB/);
     assert.match(event.evidence, /dotnet format whitespace.*passou/);
     assert.match(event.evidence, /dotnet format completo ainda reporta EF1002/);
     assert.match(event.release, /Sem release ou crédito formal/);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T04:45:15-03:00",
+  "generatedAt": "2026-10-29T04:49:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12820,15 +12820,15 @@
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
-      "local": "Windows/.NET 10 Release; teste focal compilado",
+      "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
       "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
       "scope": "Ampliar o round-trip de restore com metadados e dados de usuário ligados a filmes, séries e livros.",
-      "status": "in_progress",
-      "progressPercent": null,
+      "status": "completed",
+      "progressPercent": 100,
       "startedAt": "2026-10-29T04:38:00-03:00",
-      "updatedAt": "2026-10-29T04:45:15-03:00",
-      "evidence": "A fixture do teste MariaDB agora semeia e verifica MovieMetadata, MovieUserData, SeriesUserData e BookUserData. dotnet test compilou em Release, mas 1 teste foi ignorado porque não há conexão MariaDB descartável configurada. dotnet format whitespace verify passou; dotnet format completo ainda reporta EF1002 em ExecuteSqlRawAsync usado pelo teste de trigger. Nenhum round-trip real dessas linhas foi confirmado nesta sessão.",
-      "release": "Sem release ou crédito formal. 33 tabelas centrais, Seasons, Episodes e Programs e a execução real das novas fixtures permanecem pendentes. Homologação formal permanece 2/7; MariaDB é o único banco relacional operacional.",
+      "updatedAt": "2026-10-29T04:49:00-03:00",
+      "evidence": "A bateria BackupRestoreMariaDbTests passou 4/5, 1 ignorado, 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:44949. O round-trip das fixtures MovieMetadata, MovieUserData, SeriesUserData e BookUserData foi executado; o único caso ignorado requer MongoDB. A instância descartável encerrou normalmente. dotnet format whitespace verify passou; dotnet format completo ainda reporta EF1002 no SQL de trigger preexistente. Nenhum banco operacional foi acessado.",
+      "release": "Sem release ou crédito formal. Permanecem pendentes 33 tabelas centrais, Seasons, Episodes e Programs. Homologação formal permanece 2/7; MariaDB é o único banco relacional operacional.",
       "links": []
     }
   ]
