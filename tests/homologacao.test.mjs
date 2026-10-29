@@ -6412,7 +6412,8 @@ test('portal records user preference restore coverage and corrected central tabl
     assert.match(event.evidence, /Preference, DisplayPreferences, ItemDisplayPreferences/);
     assert.match(event.evidence, /MariaDB 11\.4\.4 descartável em 127\.0\.0\.1:51432/);
     assert.match(event.evidence, /Teste focal passou 1\/1/);
-    assert.match(event.evidence, /Tentativa anterior falhou antes das asserções/);
+    assert.match(event.evidence, /arquivo temporário \.TRN~ durante CREATE TRIGGER \(Errcode 2\)/);
+    assert.match(event.evidence, /causa dessa ocorrência não está confirmada/);
     assert.match(event.evidence, /UserLicense, TrickplayInfo, MidiaStorageOnlineMediaMetadata, ImageInfo e MediaSegment/);
     assert.match(event.release, /15\/38 tabelas, com 23 pendentes/);
     assert.match(event.release, /Homologação formal permanece 2\/7/);
