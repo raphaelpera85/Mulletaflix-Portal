@@ -6680,3 +6680,23 @@ test('portal records that Nebula uses the default stage only when configured roo
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records Mongo-routed upload folder matching coverage and updated Nebula metrics', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-media-parent-routing-tests-2026-10-29-0558');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /`test_main_helpers\.py`: 57 passed/);
+    assert.match(event.evidence, /Suíte Nebula: 680 passed in 7\.40s/);
+    assert.match(event.evidence, /Coverage JSON:.*81\.24%.*`main\.py` 76\.83%/);
+    assert.match(event.evidence, /MongoDB mock only/);
+    assert.match(event.release, /real MongoDB/);
+    assert.match(event.release, /2\/7/);
+    assert.match(event.release, /sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

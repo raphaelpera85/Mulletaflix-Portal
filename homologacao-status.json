@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:54:20-03:00",
+  "generatedAt": "2026-10-29T05:57:57-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13085,6 +13085,23 @@
       "updatedAt": "2026-10-29T05:54:20-03:00",
       "evidence": "Novo teste confirma que o diretório padrão só é selecionado quando `STAGING_DIRS`/`STAGING_DIR` estão ausentes e `stage_paths.json` não contém raiz válida; os outros casos verificam roots configuradas e JSON parcialmente inválido. Teste focal: 77 passed in 0.35s. Suíte Nebula: 677 passed in 7.18s. `compileall` passed. Usa somente diretórios temporários.",
       "release": "Resiliência e precedência das raízes de stage foram testadas localmente; pastas reais, disco, rede, FTP, Linux, CI, runtime instalado e produção continuam pendentes. Homologação formal 2/7; sem release ou mudança de produção. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-nebula-media-parent-routing-tests-2026-10-29-0558",
+      "front": "server",
+      "title": "Nebula: roteamento de uploads para pastas de filmes existentes",
+      "scope": "Cobrir busca exata, fuzzy match e criação de diretório somente depois de não encontrar filme existente.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/Tools/NebulaPython/main.py; tests/test_main_helpers.py",
+      "local": "Windows; Python 3.10 do ambiente virtual; MongoDB mock",
+      "startedAt": "2026-10-29T05:55:00-03:00",
+      "updatedAt": "2026-10-29T05:57:57-03:00",
+      "evidence": "Acrescentados testes de roteamento de upload em `resolve_media_parent`: escolhe o diretório exato de menor profundidade, reutiliza pasta existente por fuzzy match e só cria pasta de filme depois de não encontrar correspondência. `test_main_helpers.py`: 57 passed. Suíte Nebula: 680 passed in 7.40s; compileall passou. Coverage JSON: 3.980/4.899 statements (81.24%); `main.py` 76.83%, `feed_ftp.py` 81.01%, `strm_downloader.py` 81.54%, `supabase_sync.py` 90.47%. MongoDB mock only; sem acesso a serviço real.",
+      "release": "Testes cobrem correspondência e criação de diretórios com MongoDB simulado; real MongoDB, filesystem de biblioteca, Linux, CI hospedada, instalação e produção permanecem pendentes. Homologação formal 2/7; sem release ou mudança de produção. MariaDB é o único banco relacional operacional."
     }
   ]
 }
