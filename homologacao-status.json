@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:30:52-03:00",
+  "generatedAt": "2026-10-29T05:32:49-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12915,6 +12915,23 @@
       "release": "Cobertura central reconciliada em 25/38 tabelas com linhas e assertions de restore; 13 pendentes. A contagem auxiliar de domínio/IntroSkipper é separada. Matriz ampla 5.291/5.376 não recalculada; formal 2/7. Sem release. MariaDB é o único banco relacional operacional.",
       "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
       "front": "server"
+    },
+    {
+      "progressPercent": 100,
+      "release": "Cobertura central reconciliada em 29/38 tabelas com registros restaurados e assertions; 9 pendentes. Auxiliares de domínio e IntroSkipper são contagens separadas. Matriz ampla 5.291/5.376 não recalculada; formal 2/7. Sem release. MariaDB é o único banco relacional operacional.",
+      "id": "server-backup-baseitem-relations-roundtrip-mariadb-2026-10-29-0532",
+      "front": "server",
+      "title": "Backup MariaDB: restore das relações de metadados do item",
+      "featureIds": [],
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "links": [],
+      "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
+      "scope": "Validar BaseItemProviders, BaseItemImageInfos, BaseItemMetadataFields e BaseItemTrailerTypes no round-trip.",
+      "agent": "Codex",
+      "evidence": "BackupRestoreMariaDbTests passou 4/5, 1 ignorado (caso que requer MongoDB), 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:50413. O restore conferiu BaseItemProviders (provider/valor), BaseItemImageInfos (path/type/dimensions/blurhash/language), BaseItemMetadataFields e BaseItemTrailerTypes. Processo descartável encerrou normalmente; nenhum banco operacional foi acessado. Format whitespace focal e git diff --check passaram.",
+      "startedAt": "2026-10-29T05:30:00-03:00",
+      "updatedAt": "2026-10-29T05:32:49-03:00",
+      "status": "completed"
     }
   ]
 }

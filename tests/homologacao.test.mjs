@@ -6483,3 +6483,24 @@ test('portal records AttachmentStreamInfo restore coverage without changing form
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records BaseItem metadata relation restore coverage without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-backup-baseitem-relations-roundtrip-mariadb-2026-10-29-0532');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /BackupRestoreMariaDbTests passou 4\/5, 1 ignorado \(caso que requer MongoDB\), 0 falhas/);
+    assert.match(event.evidence, /BaseItemProviders/);
+    assert.match(event.evidence, /BaseItemImageInfos/);
+    assert.match(event.evidence, /BaseItemMetadataFields/);
+    assert.match(event.evidence, /BaseItemTrailerTypes/);
+    assert.match(event.release, /29\/38 tabelas.*9 pendentes/);
+    assert.match(event.release, /formal 2\/7/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
