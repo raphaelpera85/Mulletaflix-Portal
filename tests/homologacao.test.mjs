@@ -5883,7 +5883,7 @@ test('portal records MariaDB mutex thread-affinity fix without claiming producti
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /exceção não tratada.*12\.1\.43/);
-    assert.match(event.evidence, /Jellyfin\.Server\.Tests Release\/\.NET 10 87\/87/);
+    assert.match(event.evidence, /MariaDbStartupMutexLeaseTests 3\/3.*Jellyfin\.Server\.Tests Release\/\.NET 10 89\/89/);
     assert.match(event.evidence, /Não houve alteração de produção/);
     assert.match(event.release, /Não publicada em release nem instalada/);
     assert.equal(server.homologation.completed, 2);
