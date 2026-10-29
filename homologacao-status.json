@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T06:01:06-03:00",
+  "generatedAt": "2026-10-29T06:02:32-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13116,8 +13116,8 @@
       "location": "MulletaFlix-master/Tools/NebulaPython/tests/test_main_upload_worker.py",
       "local": "Windows; Python 3.10 do ambiente virtual; MongoDB mock",
       "startedAt": "2026-10-29T06:00:00-03:00",
-      "updatedAt": "2026-10-29T06:01:06-03:00",
-      "evidence": "Novo teste executa `upload_worker_parallel` com falha repetida em `persist_upload_checkpoint`, cancela o worker enquanto aguarda retry e confirma source file preserved, producer cancelled, queue task completed e admission closed. `test_main_upload_worker.py`: 11 passed in 7.92s. Full suite: 681 passed in 8.22s; compileall passed. MongoDB mock; nenhuma instância real acessada.",
+      "updatedAt": "2026-10-29T06:02:32-03:00",
+      "evidence": "Atualizado: arquivo de 10 partes mantém producer bloqueado pela fila bounded enquanto o checkpoint Mongo falha; o teste observa explicitamente CancelledError do producer ao cancelar o worker. Cancelamento do producer observado; queue task_done executado, admissão fechada e arquivo fonte preservado. `test_main_upload_worker.py`: 11 passed in 3.32s. Full suite: 681 passed in 7.15s; compileall passou. MongoDB mock; nenhuma instância real acessada.",
       "release": "A regressão valida cancelamento e retenção do arquivo com MongoDB simulado; indisponibilidade real do Mongo, restart do processo, Linux, CI hospedada, instalação e produção permanecem pendentes. Homologação formal 2/7; sem release. MariaDB é o único banco relacional operacional."
     }
   ]

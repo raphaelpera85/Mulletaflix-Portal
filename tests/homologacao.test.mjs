@@ -6709,9 +6709,9 @@ test('portal records upload cancellation during a Mongo checkpoint retry without
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /`test_main_upload_worker\.py`: 11 passed/);
-    assert.match(event.evidence, /Full suite: 681 passed in 8\.22s/);
-    assert.match(event.evidence, /source file preserved/);
-    assert.match(event.evidence, /producer cancelled.*queue task completed.*admission closed/);
+    assert.match(event.evidence, /Full suite: 681 passed in 7\.15s/);
+    assert.match(event.evidence, /arquivo fonte preservado/);
+    assert.match(event.evidence, /Cancelamento do producer observado.*queue task_done.*admissão fechada/);
     assert.match(event.evidence, /MongoDB mock/);
     assert.match(event.release, /indisponibilidade real do Mongo/);
     assert.match(event.release, /2\/7/);
