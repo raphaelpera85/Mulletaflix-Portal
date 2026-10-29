@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T06:28:19-03:00",
+  "generatedAt": "2026-10-29T06:32:13-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13150,9 +13150,9 @@
       "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Nebula/NebulaMongoContext.cs; NebulaHostedService.cs; tests/Jellyfin.Server.Implementations.Tests/Nebula/",
       "local": "Windows; .NET 10; Release; teste de falha Mongo em porta local fechada",
       "startedAt": "2026-10-29T06:21:00-03:00",
-      "updatedAt": "2026-10-29T06:28:19-03:00",
-      "evidence": "A análise de TRX encontrou dois testes gastando cerca de 15 s cada. Construtores internos permitem timeout de seleção Mongo curto e atraso assíncrono controlado apenas nos testes; os construtores públicos mantêm 15 s no Mongo e retries de startup de 5 s/10 s. O teste confere explicitamente ambos intervalos. Testes focais: 2/2 em 426 ms; classes Nebula: 86/86 em 6 s; projeto Jellyfin.Server.Implementations.Tests completo: 1.659 aprovados, 83 ignorados, 0 falhas (1.742 casos), 42 s. A compilação Release focal terminou com avisos de analisadores/documentação preexistentes e sem erros. Nenhum serviço de banco foi acessado.",
-      "release": "Só as seams internas e testes mudaram; timeout padrão de seleção MongoDB permanece 15 s e as retentativas de startup permanecem 5 s/10 s. Os 83 skips não contam como aprovados. Linux, CI hospedada, instalação, runtime e produção seguem pendentes. MariaDB é o único banco relacional operacional. Homologação formal 2/7; sem release."
+      "updatedAt": "2026-10-29T06:32:13-03:00",
+      "evidence": "A análise de TRX encontrou dois testes gastando cerca de 15 s cada. Construtores internos permitem timeout de seleção Mongo curto e atraso assíncrono controlado apenas nos testes; os construtores públicos mantêm 15 s no Mongo e retries de startup de 5 s/10 s. O teste confere explicitamente ambos intervalos. Testes focais: 2/2 em 426 ms; classes Nebula: 86/86 em 6 s; projeto Jellyfin.Server.Implementations.Tests completo: 1.659 aprovados, 83 ignorados, 0 falhas (1.742 casos), 42 s. A compilação Release focal terminou com avisos de analisadores/documentação preexistentes e sem erros. Nenhum serviço de banco foi acessado. O evento foi publicado no Git main do portal (635dfaa5bdb7ffa235c8891f1248780c42de957c). Vercel não criou deployment para este SHA: a API retornou HTTP 402 por exceder 100 deployments gratuitos por dia; CLI Vercel não está instalada neste host. O conteúdo está no Git, mas a publicação pública ainda não foi confirmada.",
+      "release": "Só as seams internas e testes mudaram; timeout padrão de seleção MongoDB permanece 15 s e as retentativas de startup permanecem 5 s/10 s. Os 83 skips não contam como aprovados. Git do portal atualizado; deployment público Vercel bloqueado por limite diário do plano e CLI indisponível. Linux, CI hospedada, instalação, runtime e produção seguem pendentes. MariaDB é o único banco relacional operacional. Homologação formal 2/7; sem release."
     }
   ]
 }

@@ -1070,6 +1070,19 @@ test('cross-area server audit publishes focused verification and unresolved rele
     assert.match(dashboard.getElement('event-list').innerHTML, /Auditoria do servidor: atualização, capas, GetAvatar e web/);
 });
 
+test('Nebula retry timing event reports the Vercel deployment quota block precisely', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-test-latency-2026-10-29-0628');
+
+    assert.ok(event);
+    assert.equal(event.front, 'server');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Git main do portal \(635dfaa5bdb7ffa235c8891f1248780c42de957c\)/);
+    assert.match(event.evidence, /HTTP 402 por exceder 100 deployments gratuitos por dia/);
+    assert.match(event.release, /deployment público Vercel bloqueado/);
+    assert.match(event.release, /Homologação formal 2\/7; sem release/);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('update center recheck publishes the branch and GitHub Release distinction with current assets', async () => {
     const event = statusData.events.find(item => item.id === 'server-update-center-branch-release-recheck-2026-10-19-1036');
 
