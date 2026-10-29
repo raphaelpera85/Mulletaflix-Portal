@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T01:47:00-03:00",
+  "generatedAt": "2026-10-29T01:50:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12537,8 +12537,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-29T01:27:00-03:00",
-      "updatedAt": "2026-10-29T01:47:00-03:00",
-      "evidence": "TrailerTypeCollectionsMatch passou 1/1 e ItemPersistenceServiceTests passou 29/29 em Release/.NET 10. SaveItems_RescanningTrailerWithSameTypes_PreservesTheStoredTypeSet passou 1/1 contra MariaDB 11.4.4 descartável em loopback/porta dinâmica. Triggers de auditoria comprovaram zero INSERT/DELETE na revarredura com ordem invertida; ao alterar a coleção, foram registrados INSERT/DELETE e os novos tipos persistiram. A regressão completa dotnet test MulletaFlix.sln --configuration Release --no-restore terminou com código 0 e zero falhas; MariaDB/Mongo opt-in e testes específicos de Linux/macOS foram ignorados quando seus ambientes não estavam disponíveis. NebulaPython passou 672/672 no venv Python 3.10. dotnet format whitespace --verify-no-changes e git diff --check passaram. MariaDB descartável encerrou e a porta fechou; datadirs temporários permanecem em Temp porque a remoção recursiva foi bloqueada. Nenhum banco instalado foi acessado. Medição de carga, Linux nativo, CI hospedada, runtime instalado, instalação e produção não validados.",
+      "updatedAt": "2026-10-29T01:50:00-03:00",
+      "evidence": "TrailerTypeCollectionsMatch passou 1/1 e ItemPersistenceServiceTests passou 29/29 em Release/.NET 10. SaveItems_RescanningTrailerWithSameTypes_PreservesTheStoredTypeSet passou 1/1 contra MariaDB 11.4.4 descartável em loopback/porta dinâmica. Triggers de auditoria comprovaram zero INSERT/DELETE na revarredura com ordem invertida; ao alterar a coleção, foram registrados INSERT/DELETE e os novos tipos persistiram. A regressão completa dotnet test MulletaFlix.sln --configuration Release --no-restore terminou com código 0 e zero falhas; MariaDB/Mongo opt-in e testes específicos de Linux/macOS foram ignorados quando seus ambientes não estavam disponíveis. A tentativa posterior de executar toda a suíte opt-in MariaDB foi bloqueada pela política local antes de iniciar dotnet test; não conta como teste executado. A instância descartável foi encerrada e a porta fechada. NebulaPython passou 672/672 no venv Python 3.10. dotnet format whitespace --verify-no-changes e git diff --check passaram. Datadirs temporários permanecem em Temp porque a remoção recursiva foi bloqueada. Nenhum banco instalado foi acessado. Medição de carga, Linux nativo, CI hospedada, runtime instalado, instalação e produção não validados.",
       "release": "Sem release, instalação ou alteração em produção. A evidência local não recebe crédito formal; homologação permanece 2/7 (28,6%).",
       "links": []
     }

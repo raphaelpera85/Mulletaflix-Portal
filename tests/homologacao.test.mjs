@@ -6050,6 +6050,7 @@ test('portal records MariaDB-validated trailer persistence without release or fo
     assert.match(event.evidence, /alterar a coleção, foram registrados INSERT\/DELETE/);
     assert.match(event.evidence, /regressão completa dotnet test MulletaFlix\.sln.*código 0 e zero falhas/);
     assert.match(event.evidence, /NebulaPython passou 672\/672/);
+    assert.match(event.evidence, /suíte opt-in MariaDB foi bloqueada pela política local antes de iniciar/);
     assert.match(event.evidence, /Medição de carga, Linux nativo.*não validados/);
     assert.match(event.release, /Sem release/);
     assert.equal(server.testAudit.passed, 5291);
