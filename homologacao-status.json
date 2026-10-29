@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T21:43:47-03:00",
+  "generatedAt": "2026-10-28T21:53:52-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12161,6 +12161,28 @@
         "https://github.com/raphaelpera85/mulletaflix-completo/tree/codex/fail-closed-inplace-updater",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/tools/release/tests/windows-duckdns-token-transport.test.mjs",
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/codex/fail-closed-inplace-updater/tools/release/tests/configure-https-credential.tests.ps1"
+      ]
+    },
+    {
+      "id": "server-restore-h03-trusted-writer-review-2026-10-28-2153",
+      "title": "Revisão da corrida Linux no restore sob a política ACL de confiança",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [
+        "SRV-H03"
+      ],
+      "local": "Revisão independente dos caminhos de restore e teste focal Windows/.NET 10 Release",
+      "location": "BackupRestoreDirectory.Rename; GetLinuxEntryType; renameat/renameat2; FileSystemRestoreTransaction.Rollback",
+      "scope": "Separar risco a usuários não confiáveis da corrida restrita ao UID do serviço/root e revalidar a cobertura focal disponível.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-28T21:43:00-03:00",
+      "updatedAt": "2026-10-28T21:53:52-03:00",
+      "evidence": "Revisão independente estática não confirmou bypass da política por identidade não confiável: escrita continua restrita ao UID do serviço e root/administradores. No Linux, BackupRestoreDirectory.Rename consulta o tipo com statx(..., AT_SYMLINK_NOFOLLOW) e depois renomeia por nome; processo concorrente com UID do serviço ou root pode trocar a entrada por symlink, que o rename move sem seguir. Isso pode deixar o rollback incapaz de restaurar o sidecar e preservar o journal de recuperação. O ator necessário já pertence à identidade explicitamente confiável, portanto não foi demonstrada escalada entre usuários. BackupRestoreDirectoryTests Release no Windows/.NET 10: 47 aprovados, 11 ignorados por plataforma, 0 falhas (58 total). WSL sem distribuição Linux e Docker ausente: não foram executados testes Linux, ACL efetiva Linux nem corrida determinística. H03 permanece em andamento; formal 2/7 (28,6%), sem crédito. MariaDB é o único banco operacional; nomes MySql* são identificadores técnicos.",
+      "release": "Nenhuma mudança de produto ou release. H03 continua pendente de validação Linux e decisão operacional documentada; homologação formal permanece 2/7 (28,6%).",
+      "links": [
+        "https://github.com/raphaelpera85/mulletaflix-completo/blob/0328e4c1036011830ddff16d749b6ad0651bc309/MulletaFlix-master/docs/backup-coverage-audit.md",
+        "https://github.com/raphaelpera85/mulletaflix-completo/pull/1"
       ]
     }
   ]

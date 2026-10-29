@@ -5670,3 +5670,27 @@ test('portal records portable POSIX ACL parser coverage without claiming Linux v
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the Linux restore race within the trusted ACL boundary without closing H03', async () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-h03-trusted-writer-review-2026-10-28-2153');
+    const server = statusData.tracks.find(item => item.id === 'server');
+    const h03 = statusData.serverHomologation.areas.find(item => item.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /47 aprovados, 11 ignorados.*0 falhas/);
+    assert.match(event.evidence, /58 total/);
+    assert.match(event.evidence, /não confirmou bypass.*identidade não confiável/);
+    assert.match(event.evidence, /não foram executados testes Linux, ACL efetiva Linux nem corrida determinística/);
+    assert.match(event.release, /Nenhuma mudança de produto ou release/);
+    assert.equal(h03.status, 'in_progress');
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Revisão da corrida Linux no restore/);
+});
