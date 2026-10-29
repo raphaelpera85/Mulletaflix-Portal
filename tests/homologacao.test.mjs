@@ -6163,16 +6163,18 @@ test('portal records updater archive host and credential isolation without relea
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
-test('portal records the Trickplay manifest invalidation integration as awaiting MariaDB', () => {
+test('portal records the Trickplay manifest invalidation MariaDB integration without formal credit', () => {
     const event = statusData.events.find(item => item.id === 'server-trickplay-manifest-cache-invalidation-mariadb-2026-10-29-0255');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.ok(event);
-    assert.equal(event.status, 'in_progress');
-    assert.equal(event.progressPercent, 50);
-    assert.match(event.evidence, /teste foi ignorado porque não havia MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
-    assert.match(event.evidence, /não valida o comportamento do DELETE\/cache e não conta como aprovado/);
-    assert.match(event.evidence, /MariaDB descartável para fechar a lacuna/);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /teste focal passou 1\/1 em MariaDB 11\.4\.13 descartável/);
+    assert.match(event.evidence, /item excluído desaparece do manifesto e das resoluções/);
+    assert.match(event.evidence, /processo foi encerrado e a porta fechada/);
+    assert.match(event.evidence, /datadir temporário permanece em %TEMP%.*política bloqueou a exclusão recursiva/);
+    assert.match(event.release, /esta integração local isolada não recebe crédito formal/);
     assert.match(event.release, /Sem release.*formal permanece 2\/7/);
     assert.equal(server.testAudit.passed, 5291);
     assert.equal(server.testAudit.total, 5376);

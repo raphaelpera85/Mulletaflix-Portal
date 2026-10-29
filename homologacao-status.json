@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T02:59:36-03:00",
+  "generatedAt": "2026-10-29T03:04:16-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12653,12 +12653,12 @@
       "local": "Windows/.NET 10 Release; integração MariaDB opt-in",
       "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Trickplay/TrickplayManagerDeleteMariaDbTests.cs",
       "scope": "Estender a regressão de exclusão para consultar os manifestos antes/depois e assegurar que o item preservado continue no cache.",
-      "status": "in_progress",
-      "progressPercent": 50,
+      "status": "completed",
+      "progressPercent": 100,
       "startedAt": "2026-10-29T02:53:00-03:00",
-      "updatedAt": "2026-10-29T02:55:45-03:00",
-      "evidence": "A classe compilou em Release e encontrou o teste focal; o teste foi ignorado porque não havia MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING configurada. Portanto, não valida o comportamento do DELETE/cache e não conta como aprovado. A implementação existente remove o cache do manifesto e o de resoluções; o novo cenário precisa executar em MariaDB descartável para fechar a lacuna. Formatador focal passou. Não acessado MariaDB operacional ou de produção.",
-      "release": "Sem release, instalação ou mudança de produção. Homologação formal permanece 2/7 (28,6%); não há crédito formal para teste ignorado. MariaDB é o único banco relacional operacional.",
+      "updatedAt": "2026-10-29T03:04:16-03:00",
+      "evidence": "O teste focal passou 1/1 em MariaDB 11.4.13 descartável, Windows/.NET 10 Release, loopback 127.0.0.1:60307. Confirmou que o item excluído desaparece do manifesto e das resoluções, enquanto outro item continua visível; a fixture também confirmou ausência de registros Trickplay do removido. O processo foi encerrado e a porta fechada. O datadir temporário permanece em %TEMP% porque a política bloqueou a exclusão recursiva. A base operacional não foi acessada. Formatter focal passou.",
+      "release": "Sem release, instalação ou mudança de produção. Homologação formal permanece 2/7 (28,6%); esta integração local isolada não recebe crédito formal. MariaDB é o único banco relacional operacional.",
       "links": []
     },
     {
