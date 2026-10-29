@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T08:31:30-03:00",
+  "generatedAt": "2026-10-29T08:37:42-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13484,6 +13484,23 @@
       "updatedAt": "2026-10-29T08:31:30-03:00",
       "evidence": "O cenário de subprocesso agora cobre dois pontos de interrupção: antes de CommitAsync e depois do commit relacional, antes do commit de arquivos. Antes do commit, uma conexão independente deve ver o estado anteriormente confirmado. Depois do encerramento, RecoverInterruptedRestoreAsync deve convergir MariaDB e arquivos para o backup e limpar journal/sidecars. A execução local recompilou o projeto; a integração MariaDB foi ignorada por falta de instância descartável configurada. Não conta nos totais de teste nem como validação de banco.",
       "release": "Aumento de cobertura de teste, sem mudança de comportamento de produção. CI com MariaDB descartável e homologação formal continuam pendentes; sem crédito formal, formal 2/7, sem release. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-dotignore-cache-test-no-sleep-2026-10-29-0837",
+      "front": "server",
+      "title": "Remover espera artificial do teste de invalidação .ignore",
+      "scope": "Manter a verificação de reparse quando o arquivo .ignore muda, sem depender de sleep nem da resolução temporal do filesystem.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Library/DotIgnoreIgnoreRuleCacheTests.cs",
+      "local": "Windows; .NET 10 Release; teste unitário isolado com diretório temporário; nenhuma biblioteca real, banco ou produção acessados.",
+      "startedAt": "2026-10-29T08:35:00-03:00",
+      "updatedAt": "2026-10-29T08:37:42-03:00",
+      "evidence": "A espera fixa de 50 ms foi substituída por ajuste explícito do LastWriteTimeUtc após alterar o conteúdo mantendo o mesmo tamanho. `DotIgnoreIgnoreRuleTest` recompilou e passou 35/35 em 270 ms. A execução inicial detectou apenas um using removido indevidamente durante a edição; ele foi restaurado e a execução final passou. `git diff --check` passou; avisos de analisadores preexistentes na compilação não foram tratados nesta fatia.",
+      "release": "Otimização determinística de teste, sem mudança no comportamento de produção. Não altera auditoria agregada nem dá crédito à homologação formal: permanece 2/7 (28,6%). Sem release. MariaDB é o único banco relacional operacional."
     }
   ]
 }

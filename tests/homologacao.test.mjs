@@ -6949,3 +6949,19 @@ test('portal records both MariaDB restore crash windows and keeps skipped integr
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
+
+test('portal records deterministic .ignore cache invalidation test without homologation credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-dotignore-cache-test-no-sleep-2026-10-29-0837');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /espera fixa de 50 ms foi substituída.*passou 35\/35 em 270 ms/);
+    assert.match(event.release, /nem dá crédito.*2\/7 \(28,6%\).*Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
