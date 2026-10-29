@@ -1076,11 +1076,11 @@ test('Nebula retry timing event reports production deployment and public evidenc
     assert.ok(event);
     assert.equal(event.front, 'server');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.evidence, /estado READY, SHA `9be0169471e625ff32469a521398894fa3403320`/);
-    assert.match(event.evidence, /criação manual respondeu HTTP 402 por cota diária/);
-    assert.match(event.evidence, /dpl_FEB8txzNbYwY9VhLk2xBbxqCB3bW.*estado READY/);
-    assert.match(event.evidence, /endpoint público `\/homologacao-status\.json` respondeu HTTP 200/);
-    assert.match(event.release, /último deployment Vercel verificado READY/);
+    assert.match(event.evidence, /permanece READY no SHA anterior `9be0169471e625ff32469a521398894fa3403320`/);
+    assert.match(event.evidence, /HTTP 402 por cota diária/);
+    assert.match(event.evidence, /dpl_FEB8txzNbYwY9VhLk2xBbxqCB3bW` permanece READY/);
+    assert.match(event.evidence, /endpoint público respondeu HTTP 200/);
+    assert.match(event.release, /deployment público observado READY/);
     assert.match(event.release, /Homologação formal 2\/7; sem release/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
@@ -1090,8 +1090,10 @@ test('Nebula transient startup retry validates its five-second policy without re
 
     assert.ok(event);
     assert.match(event.evidence, /TransientStartupTimeout_IsRetriedBeforeStartingDownloader/);
-    assert.match(event.evidence, /espera fixa de retry de 5 s foi substituída por delay injetável e o caso passou em 155 ms/);
-    assert.match(event.evidence, /1\.659, ignorou 83 e falhou 0, em 43 s/);
+    assert.match(event.evidence, /foi reduzido de 5,014 s para 155 ms e continua afirmando o retry de 5 s/);
+    assert.match(event.evidence, /StartContinuousSync_DoesNotStartAnotherCycleWhilePreviousCallbackIsStillRunning` caiu de 10,318 s para 505 ms/);
+    assert.match(event.evidence, /1\.659 aprovados, 83 ignorados, 0 falhas \(1\.742 casos\), 33 s/);
+    assert.match(event.release, /espera de encerramento Supabase de 5 s/);
     assert.match(event.release, /Homologação formal 2\/7; sem release/);
 });
 
@@ -6779,8 +6781,8 @@ test('portal records faster Nebula timing tests without changing production dela
     assert.equal(event.progressPercent, 100);
     assert.match(event.evidence, /Testes focais: 2\/2 em 426 ms/);
     assert.match(event.evidence, /classes Nebula: 86\/86 em 6 s/);
-    assert.match(event.evidence, /projeto Jellyfin\.Server\.Implementations\.Tests completo: 1\.659 aprovados, 83 ignorados, 0 falhas/);
-    assert.match(event.release, /MongoDB.*15 s.*5 s\/10 s/);
+    assert.match(event.evidence, /Regressão mais recente do projeto Jellyfin\.Server\.Implementations\.Tests: 1\.659 aprovados, 83 ignorados, 0 falhas/);
+    assert.match(event.release, /timeout Mongo de 15 s.*delays de retry 5 s\/10 s/);
     assert.match(event.release, /83 skips não contam como aprovados/);
     assert.match(event.release, /Homologação formal 2\/7; sem release/);
     assert.equal(server.homologation.completed, 2);
