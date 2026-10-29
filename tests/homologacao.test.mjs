@@ -7280,3 +7280,22 @@ test('portal records the isolated concurrent-playback E2E pass without formal ho
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records repaired administrative log routes without changing formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-web-admin-logs-routes-2026-10-29-1316');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.scope, /dashboard\/logs.*dashboard\/logs\/:file/);
+    assert.match(event.evidence, /build:check passou.*build:production concluiu.*1\/1\)/);
+    assert.match(event.local, /127\.0\.0\.1:18096.*8096 não foram acessadas/);
+    assert.match(event.release, /sem release criada\/publicada.*2\/7 \(28,6%\)/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(server.testAudit.passed, 5373);
+    assert.equal(server.testAudit.total, 5634);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
