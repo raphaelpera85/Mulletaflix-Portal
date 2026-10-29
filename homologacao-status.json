@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T22:12:00-03:00",
+  "generatedAt": "2026-10-28T22:16:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3055,6 +3055,23 @@
     }
   ],
   "events": [
+    {
+      "id": "server-mariadb-inventory-version-correction-2026-10-28-2216",
+      "title": "MariaDB-only confirmado; versão do restore corrigida",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Auditoria documental; binário MariaDB lido sem conectar ao serviço",
+      "location": "docs/inventario-dados-e-recuperacao.md; teste BackupRestoreMariaDbTests",
+      "scope": "Corrigir a versão do MariaDB registrada para o teste de restore e confirmar a premissa operacional MariaDB-only.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T22:16:00-03:00",
+      "updatedAt": "2026-10-28T22:16:00-03:00",
+      "evidence": "A nota de sessão de 28/10/2026 22:12 registra BackupRestoreMariaDbTests 4/4 em MariaDB 11.4.4 descartável em 127.0.0.1:34782. O inventário dizia 11.4.13; corrigido para 11.4.4. O binário local também informa 11.4.4, sem conexão à instância operacional. A instância padrão/porta 3306 não foi acessada. MariaDB é o único banco relacional operacional; nomes MySql* são legados/técnicos.",
+      "release": "Sem release ou alteração de runtime/produção. T4.3 e homologação formal permanecem parciais em 2/7.",
+      "links": []
+    },
     {
       "id": "server-restore-posix-acl-parser-2026-10-28-2141",
       "title": "Restore: teste portátil da política de escrita ACL POSIX",
