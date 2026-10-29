@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:20:00-03:00",
+  "generatedAt": "2026-10-29T05:26:09-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12864,6 +12864,23 @@
       "evidence": "A bateria BackupRestoreMariaDbTests passou 4/5, 1 ignorado, 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:51432. O restore verifica Preference, DisplayPreferences, ItemDisplayPreferences, UserLicense, TrickplayInfo, MidiaStorageOnlineMediaMetadata, ImageInfo e MediaSegment, entre outras tabelas. O único caso ignorado requer MongoDB. O processo MariaDB descartável foi encerrado; nenhum banco operacional foi acessado. Teste focal passou 1/1 e a reexecução da classe completa passou 4/5. Uma tentativa anterior falhou antes das asserções ao gravar arquivo temporário .TRN~ durante CREATE TRIGGER (Errcode 2); o log da instância também diz “ready for connections”, então a causa dessa ocorrência não está confirmada. Repetições posteriores passaram; essa falha não recebe crédito.",
       "release": "Cobertura central corrigida para 15/38 tabelas, com 23 pendentes; sete tabelas auxiliares de domínio e IntroSkipper durável 8/8 cobertas. Homologação formal permanece 2/7; a auditoria ampla continua em 5.291/5.376, sem recálculo. Sem release. MariaDB é o único banco relacional.",
       "links": []
+    },
+    {
+      "evidence": "BackupRestoreMariaDbTests passou 4/5, 1 ignorado (caso que requer MongoDB), 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:55871. O restore validou plano, cupom, gateway com dados sintéticos e duas transações ligadas ao usuário/plano: uma com CouponId e outra nula. A instância descartável encerrou normalmente; nenhum banco operacional foi acessado. dotnet format whitespace --verify-no-changes e git diff --check passaram.",
+      "release": "Cobertura central reconciliada em 22/38 tabelas com linhas restauradas e assertions; 16 pendentes. As sete auxiliares de domínio e tabelas do participante IntroSkipper são inventários separados. Matriz ampla 5.291/5.376 não recalculada; homologação formal permanece 2/7. Sem release. MariaDB é o único banco relacional operacional.",
+      "front": "server",
+      "featureIds": [],
+      "updatedAt": "2026-10-29T05:26:09-03:00",
+      "progressPercent": 100,
+      "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/BackupRestoreMariaDbTests.cs",
+      "startedAt": "2026-10-29T05:20:00-03:00",
+      "status": "completed",
+      "links": [],
+      "agent": "Codex",
+      "scope": "Validar round-trip de PricingPlans, DiscountCoupons, PaymentGatewayConfigs e PaymentTransactions, incluindo FKs e cupom opcional.",
+      "title": "Backup MariaDB: restore das tabelas de cobrança",
+      "id": "server-backup-billing-roundtrip-mariadb-2026-10-29-0525"
     }
   ]
 }
