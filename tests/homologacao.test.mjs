@@ -5978,3 +5978,20 @@ test('portal records isolated MariaDB validation of Trickplay deletion without p
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records remote search filename normalization without formal or release credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-provider-title-normalization-2026-10-29-0102');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /ProviderManagerSearchNormalizationTests: 5\/5/);
+    assert.match(event.evidence, /Jellyfin\.Providers\.Tests Release\/.NET 10: 836\/836/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T00:52:00-03:00",
+  "generatedAt": "2026-10-29T01:06:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12472,6 +12472,23 @@
       "updatedAt": "2026-10-29T00:52:00-03:00",
       "evidence": "TrickplayManagerDeleteMariaDbTests: 1/1 aprovado contra MariaDB 11.4.4 isolado e temporário; criou dois itens, aqueceu o cache, excluiu um e confirmou banco/cache vazios para o alvo e preservação do segundo. O schema temporário foi removido; a instância descartável e o datadir foram encerrados/removidos. O MariaDB operacional em 3306 não foi usado e permaneceu ativo. TrickplayManagerResolutionCacheTests: 2/2. Build Release do projeto de testes: 0 erros (438 avisos existentes de analisadores/compiler); dotnet format whitespace e git diff --check passaram. MariaDB é o único banco relacional operacional.",
       "release": "Sem release ou alteração em produção. Homologação formal permanece 2/7 (28,6%); o teste isolado não recebe crédito formal.",
+      "links": []
+    },
+    {
+      "id": "server-provider-title-normalization-2026-10-29-0102",
+      "title": "Busca remota normaliza anos e tags em nomes de arquivo",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ProviderManager.cs; tests/Jellyfin.Providers.Tests/Manager/ProviderManagerSearchNormalizationTests.cs",
+      "scope": "Extrair ano e remover tags técnicas em nomes com separadores de arquivo, preservando títulos numéricos puros.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T00:58:00-03:00",
+      "updatedAt": "2026-10-29T01:06:00-03:00",
+      "evidence": "ProviderManagerSearchNormalizationTests: 5/5; Jellyfin.Providers.Tests Release/.NET 10: 836/836 aprovados em 3m16s. Reprodução inicial encontrou _1080p retido no título; normalizar separadores antes das tags corrigiu o caso. Também verificados anos com ponto/sublinhado, ano fornecido, título numérico 1984 e Model2024 sem separador. dotnet format whitespace --verify-no-changes passou. Sem alterações de score, API pública, schema ou dependências. MariaDB é o único banco relacional operacional.",
+      "release": "Sem release ou alteração em produção. Homologação formal permanece 2/7 (28,6%); teste local de providers não recebe crédito formal. Solução completa, provider externo ao vivo, Linux, CI hospedada, runtime instalado e benchmark não foram validados nesta fatia.",
       "links": []
     }
   ]
