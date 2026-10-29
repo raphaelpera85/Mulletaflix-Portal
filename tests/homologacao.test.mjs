@@ -6108,6 +6108,7 @@ test('portal records segmented server regression without claiming a complete sol
     assert.match(event.evidence, /Implementations\.Tests 1\.659 aprovados, 82 ignorados/);
     assert.match(event.evidence, /Api\.Tests 774 aprovados, 3 ignorados/);
     assert.match(event.evidence, /Server\.Tests 91\/91; Jellyfin\.Providers\.Tests 823\/823; Jellyfin\.MediaEncoding\.Tests 71\/71/);
+    assert.match(event.evidence, /IntroSkipper\.Integration\.Tests passou 21 aprovados\/29 ignorados\/0 falhas/);
     assert.match(event.evidence, /Nebula Python 3\.10 passou 674\/674; contratos do portal 330\/330 e testes de release\/packaging 26\/26/);
     assert.match(event.evidence, /execução completa da solução foi interrompida/);
     assert.match(event.evidence, /MariaDB é o único banco relacional operacional/);

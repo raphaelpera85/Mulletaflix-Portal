@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T02:26:10-03:00",
+  "generatedAt": "2026-10-29T02:30:13-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12605,8 +12605,8 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-29T02:21:30-03:00",
-      "updatedAt": "2026-10-29T02:26:10-03:00",
-      "evidence": "Windows/.NET 10 Release: Jellyfin.Server.Implementations.Tests 1.659 aprovados, 82 ignorados, 0 falhas; Jellyfin.Api.Tests 774 aprovados, 3 ignorados, 0 falhas; Jellyfin.Server.Tests 91/91; Jellyfin.Providers.Tests 823/823; Jellyfin.MediaEncoding.Tests 71/71. Nebula Python 3.10 passou 674/674; contratos do portal 330/330 e testes de release/packaging 26/26. A execução completa da solução foi interrompida sem resultado agregado após silêncio prolongado; uma execução paralela anterior teve conflitos de arquivo MSBuild e foi repetida em sequência. Testes ignorados por Linux, MongoDB/MariaDB opt-in e plataforma não recebem crédito. Não testados CI hospedada, produção, instalação, rede real ou Linux nativo. MariaDB é o único banco relacional operacional.",
+      "updatedAt": "2026-10-29T02:30:13-03:00",
+      "evidence": "Windows/.NET 10 Release: Jellyfin.Server.Implementations.Tests 1.659 aprovados, 82 ignorados, 0 falhas; Jellyfin.Api.Tests 774 aprovados, 3 ignorados, 0 falhas; Jellyfin.Server.Tests 91/91; Jellyfin.Providers.Tests 823/823; Jellyfin.MediaEncoding.Tests 71/71. Nebula Python 3.10 passou 674/674; contratos do portal 330/330 e testes de release/packaging 26/26. A execução completa da solução foi interrompida sem resultado agregado após silêncio prolongado; uma execução paralela anterior teve conflitos de arquivo MSBuild e foi repetida em sequência. Testes ignorados por Linux, MongoDB/MariaDB opt-in e plataforma não recebem crédito. Não testados CI hospedada, produção, instalação, rede real ou Linux nativo. IntroSkipper.Integration.Tests passou 21 aprovados/29 ignorados/0 falhas; sem endpoint MariaDB opt-in, os casos reais ficaram ignorados e não foram homologados. MariaDB é o único banco relacional operacional.",
       "release": "Sem release, instalação ou alteração de produção. A auditoria agregada permanece 5.291/5.376 e a homologação formal 2/7 (28,6%); esta execução segmentada não altera esses totais.",
       "links": []
     }
