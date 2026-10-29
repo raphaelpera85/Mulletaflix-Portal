@@ -6621,3 +6621,24 @@ test('portal records the Nebula Python suite and keeps runtime integration pendi
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records Nebula line coverage and the explicit asyncio fixture scope', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-python-coverage-and-loop-scope-2026-10-29-0550');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /80\.5% aggregate coverage/);
+    assert.match(event.evidence, /main\.py 75\.6%/);
+    assert.match(event.evidence, /feed_ftp\.py 81\.0%/);
+    assert.match(event.evidence, /strm_downloader\.py 80\.4%/);
+    assert.match(event.evidence, /asyncio_default_fixture_loop_scope = function/);
+    assert.match(event.evidence, /674 passed in 13\.23s.*sem aviso de depreciação/);
+    assert.match(event.release, /segue 2\/7/);
+    assert.match(event.release, /sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

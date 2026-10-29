@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:47:52-03:00",
+  "generatedAt": "2026-10-29T05:50:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13034,6 +13034,23 @@
       "updatedAt": "2026-10-29T05:47:52-03:00",
       "evidence": "`.venv\\Scripts\\python.exe -m pytest tests -q`: 674 passed in 10.36s. `python -m compileall -q main.py tools tests` pelo mesmo ambiente virtual terminou sem erros. O Python global não tem pytest; a suíte foi executada pelo ambiente virtual do repositório. Pytest reportou aviso de depreciação do escopo default de fixtures asyncio. Os testes usam doubles/mocks e não comprovam FTP, Telegram, MongoDB, filesystem sob falha real, Linux, carga, runtime instalado ou produção.",
       "release": "Suíte local rápida do Nebula aprovada (674/674) e compileall aprovado; isso não valida integração com FTP/Telegram/MongoDB reais, disco/rede, Linux, CI hospedada, instalação ou produção. Homologação formal permanece 2/7; sem release ou alteração de produção. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-nebula-python-coverage-and-loop-scope-2026-10-29-0550",
+      "front": "server",
+      "title": "Nebula: cobertura de linhas e configuração estável de asyncio",
+      "scope": "Medir cobertura real da suíte Python e eliminar o aviso de mudança futura no loop das fixtures.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/Tools/NebulaPython/pytest.ini",
+      "local": "Windows; Python 3.10 do ambiente virtual do repositório",
+      "startedAt": "2026-10-29T05:47:00-03:00",
+      "updatedAt": "2026-10-29T05:50:00-03:00",
+      "evidence": "Relatório coverage JSON temporário: 80.5% aggregate coverage (3.940/4.894 statements). main.py 75.6%; tools/feed_ftp.py 81.0%; tools/strm_downloader.py 80.4%; tools/supabase_sync.py 90.5%; tools/check_deps.py 92.9%; tools/mongo_admission.py 100%. Adicionado pytest.ini com `asyncio_default_fixture_loop_scope = function`. Após a alteração: 674 passed in 13.23s, sem aviso de depreciação do pytest-asyncio; compileall passou. A cobertura vem de doubles/mocks; não prova integrações reais, Linux, carga ou produção. O comando de coverage roda a suíte completa uma segunda vez, portanto levou ~11 s adicional.",
+      "release": "Relatório local Python indica 80.5% de cobertura agregada, com main.py em 75.6%; não se configurou limite de cobertura por causa da margem pequena sobre 80%. Escopo default das fixtures asyncio foi fixado, suíte 674/674 e compileall passaram sem warning de depreciação. MariaDB permanece o único banco relacional operacional. Homologação formal segue 2/7; sem release ou mudança de produção."
     }
   ]
 }
