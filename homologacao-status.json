@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T00:29:00-03:00",
+  "generatedAt": "2026-10-29T00:45:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -28,12 +28,12 @@
         "label": "2 de 7 gates com evidência técnica local validada; 1 em andamento, 3 pendentes e 1 bloqueado. SRV-H02 validado em MariaDB descartável; aceite formal de produção permanece pendente."
       },
       "testAudit": {
-        "passed": 5289,
-        "total": 5374,
+        "passed": 5291,
+        "total": 5376,
         "skipped": 85,
         "failed": 0,
         "percent": 98.4,
-        "label": "Matriz unitária local Windows/.NET 10 Release em 29/10: 5.289 aprovados, 85 ignorados, 0 falhas/5.374 resultados em 15 assemblies (FullyQualifiedName!~Integration). Nebula Python 672/672 e compileall passaram em rodada separada. Skips não contam como aprovados; testes de integração, Linux, CI hospedada, runtime instalado e produção não estão validados. Homologação formal permanece 2/7 (28,6%)."
+        "label": "Matriz unitária local Windows/.NET 10 Release em 29/10: 5.291 aprovados, 85 ignorados, 0 falhas/5.376 resultados em 15 assemblies (FullyQualifiedName!~Integration). Nebula Python 672/672 e compileall passaram em rodada separada. Skips não contam como aprovados; testes de integração, Linux, CI hospedada, runtime instalado e produção não estão validados. Homologação formal permanece 2/7 (28,6%)."
       }
     },
     {
@@ -12439,6 +12439,23 @@
       "links": [
         "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Item/BaseItemRepositoryLatestTvShowTests.cs"
       ]
+    },
+    {
+      "id": "server-trickplay-cache-single-flight-2026-10-29-0043",
+      "title": "Trickplay evita consultas duplicadas no cache frio concorrente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; testes unitários EF InMemory",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Trickplay/TrickplayManager.cs; tests/Jellyfin.Server.Implementations.Tests/Trickplay/TrickplayManagerResolutionCacheTests.cs",
+      "scope": "Serializar cache misses simultâneos de resoluções e manifestos por título e evitar repopulação de cache obsoleto durante gravação/exclusão.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T00:32:00-03:00",
+      "updatedAt": "2026-10-29T00:45:00-03:00",
+      "evidence": "TrickplayManagerResolutionCacheTests 2/2: 16 chamadas concorrentes criam um único contexto; gravação invalida resoluções em cache. Jellyfin.Server.Implementations.Tests: 1.656 aprovados, 82 ignorados, 0 falhas/1.738. Solução Release: 15 assemblies, 5.291 aprovados, 85 ignorados, 0 falhas/5.376; filtro FullyQualifiedName!~Integration; exit code 0. MariaDB é o único banco relacional operacional. O provider EF InMemory não suporta ExecuteDeleteAsync, portanto invalidação após exclusão aguarda teste de integração MariaDB descartável. Não medidos benchmark/carga, CI hospedada, Linux, runtime instalado ou produção.",
+      "release": "Sem release ou mudança em produção. Homologação formal permanece 2/7 (28,6%); a evidência unitária não recebe crédito formal.",
+      "links": []
     }
   ]
 }
