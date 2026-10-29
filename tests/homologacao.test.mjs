@@ -3419,7 +3419,7 @@ test('server regression skipped-test audit distinguishes database setup from pla
 
     assert.ok(event);
     assert.equal(event.status, 'in_progress');
-    assert.match(event.local, /30 MySQL\/MariaDB isolado; 24 Mongo opt-in/);
+    assert.match(event.local, /30 MariaDB isolado; 24 Mongo opt-in/);
     assert.match(event.evidence, /passado separadamente 24\/24 em Mongo 8\.3\.7/);
     assert.match(event.evidence, /não em Mongo 7\.0/);
     assert.match(event.evidence, /33099 não tem listener/);
@@ -5621,4 +5621,33 @@ test('portal records DuckDNS installer token transport as local evidence only', 
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+});
+
+test('portal records focused restore and startup tests without Linux or formal-gate credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-restore-startup-focused-regression-2026-10-28-2136');
+    const server = statusData.tracks.find(item => item.id === 'server');
+    const h03 = statusData.serverHomologation.areas.find(item => item.id === 'SRV-H03');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /144\/160, 16 ignorados.*0 falhas/);
+    assert.match(event.evidence, /ProgramStartupRecoveryTests passou 9\/9/);
+    assert.match(event.evidence, /não roda Program\.Main/);
+    assert.match(event.evidence, /Linux, ACL POSIX e corrida determinística.*não foram testados/);
+    assert.match(event.release, /Nenhuma release criada/);
+    assert.equal(h03.status, 'in_progress');
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal names MariaDB as the only operational relational database', () => {
+    const migration = statusData.events.find(item => item.id === 'server-migration-startup-image-schema-2026-10-28');
+    const skipped = statusData.events.find(item => item.id === 'server-dotnet-skipped-tests-audit-2026-10-19-1457');
+
+    assert.match(migration.local, /migração EF Core MariaDB/);
+    assert.match(migration.scope, /schema MariaDB/);
+    assert.match(skipped.local, /30 MariaDB isolado/);
+    assert.doesNotMatch(skipped.local, /MySQL/);
 });
