@@ -6079,3 +6079,21 @@ test('portal records fast Providers slice without external integration credit', 
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records fail-closed Nebula disk checks without formal or release credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-disk-probe-fail-closed-2026-10-29-0216');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /focais 4\/4 e suíte Nebula Python 674\/674/);
+    assert.match(event.evidence, /sem Range verifica a reserva antes do GET e antes de gravar blocos/);
+    assert.match(event.evidence, /Não executados rede real.*runtime instalado ou produção/);
+    assert.match(event.evidence, /MariaDB é o único banco relacional operacional/);
+    assert.match(event.release, /não houve release, instalação ou alteração de produção/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
