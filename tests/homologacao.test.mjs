@@ -5995,3 +5995,23 @@ test('portal records remote search filename normalization without formal or rele
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records Nebula integrity regression without formal or release credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-integrity-smoke-2026-10-29-0111');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /NebulaPython completa: 672\/672/);
+    assert.match(event.evidence, /NebulaMediaSuggestionTests Release\/.NET 10: 11\/11/);
+    assert.match(event.evidence, /Nenhum Mongo\/MariaDB operacional.*produção/);
+    assert.match(event.release, /Sem release/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
