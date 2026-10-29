@@ -6140,3 +6140,25 @@ test('portal records the PeopleValidationTask regression as awaiting MariaDB exe
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records updater archive host and credential isolation without release credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-updater-archive-host-isolation-2026-10-29-0251');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Jellyfin\.Api\.Tests em Release passou 793\/796/);
+    assert.match(event.evidence, /3 ignorados, 0 falhas/);
+    assert.match(event.evidence, /remoção do cabeçalho Authorization/);
+    assert.match(event.evidence, /Não foram executados rede externa.*produção/);
+    assert.match(event.release, /Sem release, instalação ou mudança de produção/);
+    assert.match(event.release, /homologação formal continua 2\/7 \(28,6%\)/);
+    assert.match(event.release, /MariaDB é o único banco relacional operacional/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

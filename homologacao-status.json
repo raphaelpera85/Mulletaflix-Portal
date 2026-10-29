@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T02:40:40-03:00",
+  "generatedAt": "2026-10-29T02:52:54-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12625,6 +12625,23 @@
       "updatedAt": "2026-10-29T02:40:40-03:00",
       "evidence": "O projeto IntroSkipper.Integration.Tests compilou em Release e o filtro PeopleValidationTask encontrou o teste. Execução terminou como ignorada porque não havia MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING para uma instância MariaDB descartável; não conta como aprovada. Tentativa de iniciar datadir temporário nesta sessão foi bloqueada antes de criar processo. O teste exige uma leitura catalog por DatabaseTelemetryMetrics, verifica uma linha por grupo e limpa os próprios registros com token independente limitado a 10 segundos. O caso não simula corrida concorrente que impeça DELETE. MariaDB é o único banco relacional operacional.",
       "release": "Nenhuma release, instalação ou alteração de produção. Homologação formal permanece 2/7 (28,6%); integração MariaDB real segue pendente.",
+      "links": []
+    },
+    {
+      "id": "server-updater-archive-host-isolation-2026-10-29-0251",
+      "title": "Atualizador: validação de pacote e isolamento do token GitHub",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release",
+      "location": "MulletaFlix-master/Jellyfin.Api/Controllers/UpdateInfoController.cs",
+      "scope": "Restringir pacotes de atualização aos assets oficiais e impedir que o token GitHub seja enviado durante o download, inclusive após redirecionamentos.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T02:43:00-03:00",
+      "updatedAt": "2026-10-29T02:52:54-03:00",
+      "evidence": "A suíte Jellyfin.Api.Tests em Release passou 793/796: 793 aprovados, 3 ignorados, 0 falhas. Os casos novos cobrem rejeição de hosts não aprovados, URLs canônicas, traversal, redirecionamento e remoção do cabeçalho Authorization do cliente de download. dotnet format whitespace --verify-no-changes passou nos dois arquivos alterados; git diff --check passou. Não foram executados rede externa, empacotamento/instalação, Linux, CI hospedada ou produção.",
+      "release": "Sem release, instalação ou mudança de produção. A auditoria agregada continua 5.291/5.376; homologação formal continua 2/7 (28,6%), sem crédito formal para estes testes locais. MariaDB é o único banco relacional operacional.",
       "links": []
     }
   ]
