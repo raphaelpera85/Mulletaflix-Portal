@@ -5840,3 +5840,20 @@ test('portal records the local integrated recovery exercise without closing form
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.match(statusData.serverHomologation.latestAudit, /RecoveryExercise.*1\/1/);
 });
+
+test('portal records the FullSystemBackup regression without changing formal homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-fullsystembackup-regression-2026-10-28-2307');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /154 aprovados, 16 ignorados, 0 falhas\/170/);
+    assert.match(event.evidence, /MariaDB é o único banco relacional operacional/);
+    assert.match(event.release, /T4\.4\.15 segue parcial/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
