@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T06:06:32-03:00",
+  "generatedAt": "2026-10-29T06:11:50-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13119,6 +13119,23 @@
       "updatedAt": "2026-10-29T06:06:32-03:00",
       "evidence": "Atualizado: arquivo de 10 partes mantém producer bloqueado pela fila bounded enquanto o checkpoint Mongo falha; o teste observa explicitamente CancelledError do producer ao cancelar o worker. Cancelamento do producer observado; queue task_done executado, admissão fechada e arquivo fonte preservado. `test_main_upload_worker.py`: 11 passed in 3.32s. Full suite: 681 passed in 7.37s; compileall passou. MongoDB mock; nenhuma instância real acessada. Premissa operacional relacional: somente MariaDB; nenhum serviço MySQL separado configurado.",
       "release": "A regressão valida cancelamento e retenção do arquivo com MongoDB simulado; indisponibilidade real do Mongo, restart do processo, Linux, CI hospedada, instalação e produção permanecem pendentes. Homologação formal 2/7; sem release. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-solution-release-regression-2026-10-29-0607",
+      "front": "server",
+      "title": "Regressão Release da solução .NET após as alterações locais",
+      "scope": "Recompilar e executar a suíte da solução, separar resultados por assembly e manter skips de integração fora da contagem aprovada.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/MulletaFlix.sln",
+      "local": "Windows; .NET 10; Release",
+      "startedAt": "2026-10-29T06:07:00-03:00",
+      "updatedAt": "2026-10-29T06:11:50-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter 'FullyQualifiedName!~LiveIntegrationTests' --verbosity quiet` recompilou a solução e terminou exit code 0. Assemblies observados: Providers 824/824; API 793 aprovados, 3 ignorados; Server.Tests 95/95; Server.Implementations 1.659 aprovados, 83 ignorados; Server.Integration 8 aprovados, 143 ignorados; IntroSkipper.Integration 26 aprovados, 31 ignorados. Outros resultados foram emitidos pelo runner; não foi retida soma global e ela não é inferida. MariaDB é o único banco relacional operacional.",
+      "release": "Regressão local sem falhas; `LiveIntegrationTests` foi filtrado. Integrações que requerem MariaDB descartável não foram configuradas, e os skips não contam como aprovados. Linux, CI hospedada, runtime instalado e produção seguem pendentes. Homologação formal 2/7; sem release."
     }
   ]
 }

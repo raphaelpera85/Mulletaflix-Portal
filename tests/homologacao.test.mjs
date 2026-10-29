@@ -6722,3 +6722,22 @@ test('portal records upload cancellation during a Mongo checkpoint retry without
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the rebuilt .NET regression and keeps skipped integrations pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-solution-release-regression-2026-10-29-0607');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /recompilou a solução e terminou exit code 0/);
+    assert.match(event.evidence, /Server\.Integration 8 aprovados, 143 ignorados/);
+    assert.match(event.evidence, /IntroSkipper\.Integration 26 aprovados, 31 ignorados/);
+    assert.match(event.evidence, /não foi retida soma global e ela não é inferida/);
+    assert.match(event.release, /MariaDB descartável não foram configuradas/);
+    assert.match(event.release, /Homologação formal 2\/7; sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
