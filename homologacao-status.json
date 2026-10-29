@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T03:42:37-03:00",
+  "generatedAt": "2026-10-29T04:03:56-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12727,6 +12727,23 @@
       "updatedAt": "2026-10-29T03:42:37-03:00",
       "evidence": "Jellyfin.Server.Integration.Tests passou 151/151 em 1m55s, Windows/.NET 10 Release, contra MariaDB 11.4.4 descartável em 127.0.0.1:60416. Verificação pós-teste encontrou zero schemas mulletaflix_test_*/mfx_intro_test_* e zero contas mfx_test_*; processo encerrado e porta fechada. Helpers validam tentativas de todos os DROP e preservação das exceções; dotnet format focal e git diff --check passaram. Contrato Node da CI MariaDB passou 2/2. CI usa 11.4.13, portanto paridade de versão e execução Linux hospedada permanecem pendentes. A base operacional não foi acessada.",
       "release": "Sem release, instalação ou mudança em produção. Teste local isolado não recebe crédito formal; homologação permanece 2/7 (28,6%), aceite formal pendente e agregado de auditoria 5.291/5.376 não recalculado. CI Linux hospedada pendente. MariaDB é o único banco relacional operacional; MySql* são identificadores técnicos do driver/provedor.",
+      "links": []
+    },
+    {
+      "id": "server-introskipper-fixture-isolation-2026-10-29-0403",
+      "title": "Servidor: isolamento e conclusão do cleanup da fixture IntroSkipper",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; MariaDB 11.4.4 descartável",
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests",
+      "scope": "Dar schema exclusivo a cada fixture, aguardar toda inicialização compartilhada antes do drop e testar a execução independente de todas as ações de cleanup.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T03:42:00-03:00",
+      "updatedAt": "2026-10-29T04:03:45-03:00",
+      "evidence": "A revisão encontrou risco de colisão entre execuções e inicialização assíncrona ainda ativa no teardown. Cada fixture agora usa schema mfx_intro_test_<guid>; o host de teste aguarda as duas gates de inicialização antes de limpar; testes de cleanup confirmam que todas as ações são tentadas e as falhas mantêm a ordem. IntroSkipper.Integration.Tests: 53 aprovados, 1 ignorado, 0 falhas/54, em MariaDB 11.4.4 descartável de loopback, autenticação normal. Pós-teste: zero schemas mfx_intro_test_* e zero contas mfx_test_*; processo encerrado e porta 60419 fechada. Formatter focal aprovado. A CI usa MariaDB 11.4.13; Linux hospedado e produção não foram executados nesta rodada.",
+      "release": "Sem release, instalação ou mudança em produção. Sem crédito formal; homologação permanece 2/7 (28,6%) e auditoria agregada 5.291/5.376 não foi recalculada. MariaDB é o único banco relacional operacional; nomes MySql* continuam sendo termos técnicos do driver/provedor.",
       "links": []
     }
   ]

@@ -6261,3 +6261,23 @@ test('portal records MariaDB fixture cleanup hardening without formal credit', (
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records isolated IntroSkipper fixture lifecycle without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-introskipper-fixture-isolation-2026-10-29-0403');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /53 aprovados, 1 ignorado, 0 falhas\/54/);
+    assert.match(event.evidence, /schema mfx_intro_test_<guid>/);
+    assert.match(event.evidence, /zero schemas.*zero contas/);
+    assert.match(event.evidence, /MariaDB 11\.4\.4 descartável/);
+    assert.match(event.release, /Sem release.*homologação permanece 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
