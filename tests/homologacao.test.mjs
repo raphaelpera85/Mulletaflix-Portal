@@ -6730,7 +6730,10 @@ test('portal records the rebuilt .NET regression and keeps skipped integrations 
     assert.ok(event);
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.evidence, /recompilou a solução e terminou exit code 0/);
+    assert.match(event.evidence, /recompilou e terminou exit code 0/);
+    assert.match(event.evidence, /Controller\.Tests: 73\/73 em 346 ms/);
+    assert.match(event.evidence, /65,12 s numa janela de limpeza de produção de 60 s/);
+    assert.match(event.release, /atraso público de limpeza permanece 60 s/);
     assert.match(event.evidence, /Server\.Integration 8 aprovados, 143 ignorados/);
     assert.match(event.evidence, /IntroSkipper\.Integration 26 aprovados, 31 ignorados/);
     assert.match(event.evidence, /não foi retida soma global e ela não é inferida/);
