@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T02:52:54-03:00",
+  "generatedAt": "2026-10-29T02:55:45-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12642,6 +12642,23 @@
       "updatedAt": "2026-10-29T02:52:54-03:00",
       "evidence": "A suíte Jellyfin.Api.Tests em Release passou 793/796: 793 aprovados, 3 ignorados, 0 falhas. Os casos novos cobrem rejeição de hosts não aprovados, URLs canônicas, traversal, redirecionamento e remoção do cabeçalho Authorization do cliente de download. dotnet format whitespace --verify-no-changes passou nos dois arquivos alterados; git diff --check passou. Não foram executados rede externa, empacotamento/instalação, Linux, CI hospedada ou produção.",
       "release": "Sem release, instalação ou mudança de produção. A auditoria agregada continua 5.291/5.376; homologação formal continua 2/7 (28,6%), sem crédito formal para estes testes locais. MariaDB é o único banco relacional operacional.",
+      "links": []
+    },
+    {
+      "id": "server-trickplay-manifest-cache-invalidation-mariadb-2026-10-29-0255",
+      "title": "Trickplay: cobertura de invalidação do cache de manifesto aguarda MariaDB",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release; integração MariaDB opt-in",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Trickplay/TrickplayManagerDeleteMariaDbTests.cs",
+      "scope": "Estender a regressão de exclusão para consultar os manifestos antes/depois e assegurar que o item preservado continue no cache.",
+      "status": "in_progress",
+      "progressPercent": 50,
+      "startedAt": "2026-10-29T02:53:00-03:00",
+      "updatedAt": "2026-10-29T02:55:45-03:00",
+      "evidence": "A classe compilou em Release e encontrou o teste focal; o teste foi ignorado porque não havia MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING configurada. Portanto, não valida o comportamento do DELETE/cache e não conta como aprovado. A implementação existente remove o cache do manifesto e o de resoluções; o novo cenário precisa executar em MariaDB descartável para fechar a lacuna. Formatador focal passou. Não acessado MariaDB operacional ou de produção.",
+      "release": "Sem release, instalação ou mudança de produção. Homologação formal permanece 2/7 (28,6%); não há crédito formal para teste ignorado. MariaDB é o único banco relacional operacional.",
       "links": []
     }
   ]

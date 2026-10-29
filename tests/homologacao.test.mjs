@@ -6162,3 +6162,22 @@ test('portal records updater archive host and credential isolation without relea
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the Trickplay manifest invalidation integration as awaiting MariaDB', () => {
+    const event = statusData.events.find(item => item.id === 'server-trickplay-manifest-cache-invalidation-mariadb-2026-10-29-0255');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, 50);
+    assert.match(event.evidence, /teste foi ignorado porque não havia MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
+    assert.match(event.evidence, /não valida o comportamento do DELETE\/cache e não conta como aprovado/);
+    assert.match(event.evidence, /MariaDB descartável para fechar a lacuna/);
+    assert.match(event.release, /Sem release.*formal permanece 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
