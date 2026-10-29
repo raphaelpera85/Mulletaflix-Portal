@@ -7001,3 +7001,20 @@ test('portal records Nebula Mongo lease test without redundant delay or formal c
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records MariaDB isolation and image locale fixes without homologation credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-dir-port-lock-image-locale-mongo-restore-2026-10-29-0921');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /MariaDbStartupMutexLeaseTests 9\/9/);
+    assert.match(event.evidence, /GetPreferredImageLanguage 2\/2/);
+    assert.match(event.release, /Sem release publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
