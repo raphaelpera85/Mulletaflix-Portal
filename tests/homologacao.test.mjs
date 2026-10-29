@@ -1402,7 +1402,9 @@ test('renders every roadmap item and matching coverage counters', async () => {
     assert.equal(dashboard.getElement('coverage-total').textContent, statusData.coverage.total);
     assert.equal(dashboard.getElement('coverage-completed').textContent, statusData.coverage.completed);
     assert.equal(dashboard.getElement('coverage-pending').textContent, statusData.coverage.pending);
-    assert.match(dashboard.getElement('coverage-clarification').textContent, /331\/401.*não mede aprovação de testes, homologação formal nem prontidão de produção/);
+    assert.equal(statusData.coverage.completed + statusData.coverage.pending + statusData.coverage.inProgress, statusData.coverage.total);
+    assert.deepEqual(dashboard.percentElements.map(element => element.textContent), ['82%', '82%']);
+    assert.match(dashboard.getElement('coverage-clarification').textContent, /338\/412.*não mede aprovação de testes, homologação formal nem prontidão de produção/);
     assert.match(dashboardHtml, /Itens concluídos no checklist do roadmap/);
     assert.match(dashboardHtml, /Não representa homologação formal/);
     assert.match(dashboard.getElement('feature-count').textContent, new RegExp(`^${statusData.features.length} tarefas`));
@@ -3146,9 +3148,9 @@ test('GetAvatar user visibility source regression is complete while production a
     assert.ok(rollback);
     assert.equal(rollback.status, 'completed');
     assert.match(rollback.name, /12\/12/);
-    assert.equal(statusData.coverage.completed, 331);
-    assert.equal(statusData.coverage.pending, 66);
-    assert.equal(statusData.coverage.total, 401);
+    assert.equal(statusData.coverage.completed, 338);
+    assert.equal(statusData.coverage.pending, 70);
+    assert.equal(statusData.coverage.total, 412);
     assert.ok(Date.parse(statusData.generatedAt) >= Date.parse('2026-10-18T07:11:36-03:00'));
 });
 
@@ -3178,7 +3180,7 @@ test('Nebula Supabase admission audit reports evidence limits without claiming a
     assert.match(event.evidence, /não identifica proprietário ou expiração da lease/);
     assert.match(server.testAudit.label, /5\.291 aprovados, 85 ignorados, 0 falhas\/5\.376/);
     assert.match(server.testAudit.label, /5\.291 aprovados, 85 ignorados, 0 falhas\/5\.376/);
-    assert.equal(statusData.coverage.pending, 66);
+    assert.equal(statusData.coverage.pending, 70);
     assert.equal(statusData.coverage.inProgress, 4);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
@@ -3207,7 +3209,7 @@ test('Nebula download audit distinguishes historical streaming/FTP failure from 
     assert.match(server.testAudit.label, /5\.291 aprovados, 85 ignorados, 0 falhas\/5\.376/);
     assert.ok(mongoAudit);
     assert.match(mongoAudit.evidence, /MongoDB 7\.0 do CI/);
-    assert.equal(statusData.coverage.pending, 66);
+    assert.equal(statusData.coverage.pending, 70);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -3224,7 +3226,7 @@ test('portal records broad server validation without claiming a production downl
     assert.match(event.evidence, /passou 1\/1 isoladamente/);
     assert.match(event.evidence, /Nenhuma instalação, reinicialização, configuração ou transferência produtiva/);
     assert.equal(server.status, 'in_progress');
-    assert.equal(statusData.coverage.pending, 66);
+    assert.equal(statusData.coverage.pending, 70);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -3262,7 +3264,7 @@ test('Nebula follow-up log records the unavailable API and preserves the live Py
     assert.match(event.evidence, /54\/54 aprovados/);
     assert.match(event.evidence, /pytest ausente/);
     assert.match(event.evidence, /nenhum restart ou transferência foi feito/);
-    assert.equal(statusData.coverage.pending, 66);
+    assert.equal(statusData.coverage.pending, 70);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -3280,9 +3282,9 @@ test('server roadmap coverage includes the 18 October baseline resample and curr
     assert.match(incident.evidence, /worker órfão/);
     assert.match(incident.evidence, /não contém marcador STRM/);
     assert.match(incident.evidence, /Nenhuma ação de parada foi feita/);
-    assert.equal(statusData.coverage.completed, 331);
-    assert.equal(statusData.coverage.pending, 66);
-    assert.equal(statusData.coverage.total, 401);
+    assert.equal(statusData.coverage.completed, 338);
+    assert.equal(statusData.coverage.pending, 70);
+    assert.equal(statusData.coverage.total, 412);
     assert.equal(statusData.coverage.completed + statusData.coverage.pending + statusData.coverage.inProgress, statusData.coverage.total);
 });
 
@@ -3298,7 +3300,7 @@ test('server baseline publishes short live samples without claiming T0.1 complet
     assert.match(event.evidence, /excedeu timeout de 5 s/);
     assert.match(event.evidence, /Baselines? T0\.1 segue parcial/);
     assert.equal(feature.status, 'in_progress');
-    assert.equal(statusData.coverage.pending, 66);
+    assert.equal(statusData.coverage.pending, 70);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -3314,7 +3316,7 @@ test('Nebula cleanup documents an immediate background first pass and periodic f
     assert.match(event.evidence, /loop\/refresh\/checkpoint\/lifecycle 33\/33/);
     assert.match(event.evidence, /Não houve instalação\/restart em produção/);
     assert.equal(statusData.features.find(item => item.id === 'T2.6').status, 'completed');
-    assert.equal(statusData.coverage.pending, 66);
+    assert.equal(statusData.coverage.pending, 70);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
@@ -6868,4 +6870,22 @@ test('portal records focused restore directory test results without claiming Lin
     assert.equal(server.homologation.total, 7);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal roadmap counts match the published source and stay separate from homologation', () => {
+    const event = statusData.events.find(item => item.id === 'portal-roadmap-coverage-reconciled-2026-10-29-0711');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(statusData.coverage.completed, 338);
+    assert.equal(statusData.coverage.pending, 70);
+    assert.equal(statusData.coverage.total, 412);
+    assert.equal(statusData.coverage.inProgress, 4);
+    assert.equal(statusData.coverage.completed + statusData.coverage.pending + statusData.coverage.inProgress, statusData.coverage.total);
+    assert.match(event.evidence, /origin\/main 8a7796c3cae3efc644721123c6c88d4c05b6fa66/);
+    assert.match(event.evidence, /338 checkboxes marcados e 74 desmarcados/);
+    assert.match(event.evidence, /338 concluídos, 70 pendentes, 4 em execução, total 412/);
+    assert.match(event.evidence, /percentual de checklist concluído arredonda para 82%/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
 });

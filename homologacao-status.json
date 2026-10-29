@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:07:00-03:00",
+  "generatedAt": "2026-10-29T07:14:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
   },
   "coverage": {
-    "completed": 331,
-    "pending": 66,
-    "total": 401,
+    "completed": 338,
+    "pending": 70,
+    "total": 412,
     "definition": "Checklists de funcionalidades do roadmap (cada checkbox conta como um item); tarefas com evento ativo identificado aparecem como em execução.",
     "inProgress": 4
   },
@@ -13221,6 +13221,23 @@
       "updatedAt": "2026-10-29T07:07:00-03:00",
       "evidence": "`BackupRestoreDirectoryTests` foi executado com `dotnet test ... --configuration Release --no-build --no-restore --filter FullyQualifiedName~BackupRestoreDirectoryTests --verbosity quiet`: 47 aprovados, 11 ignorados, 0 falhas/58, em 318 ms. Skips de Linux/macOS/mount continuam pendentes. A revisão estática confirma uma janela condicional entre validar tipo Linux com statx e mutar pelo nome com renameat/renameat2/unlinkat, para ator capaz de escrever no diretório protegido. Nenhum bypass da ACL por usuário não confiável foi demonstrado. Não houve correção de código nem acesso a banco. MariaDB é o único banco relacional operacional.",
       "release": "Apenas revalidação Windows; não concede crédito formal. Linux nativo, syscalls/ACL POSIX, CI hospedada, runtime instalado e produção continuam pendentes. H03 aberto; homologação formal 2/7; sem release. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "portal-roadmap-coverage-reconciled-2026-10-29-0711",
+      "front": "server",
+      "title": "Portal: reconciliar a contagem de funcionalidades do roadmap",
+      "scope": "Comparar os contadores do painel com os checkboxes na versão de docs/roadmap-evolucao-tecnologica-servidor-e-web.md publicada em main e corrigir a porcentagem exibida.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": ["https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md"],
+      "location": "homologacao-status.json; homologacao.js; tests/homologacao.test.mjs",
+      "local": "Contagem reconciliada diretamente contra origin/main 8a7796c3cae3efc644721123c6c88d4c05b6fa66",
+      "startedAt": "2026-10-29T07:08:00-03:00",
+      "updatedAt": "2026-10-29T07:14:00-03:00",
+      "evidence": "A contagem da fonte publicada em GitHub main (origin/main 8a7796c3cae3efc644721123c6c88d4c05b6fa66) encontrou 338 checkboxes marcados e 74 desmarcados. Quatro dos desmarcados têm tarefa ativa e são classificados em execução; portanto o painel mostra 338 concluídos, 70 pendentes, 4 em execução, total 412. O status antigo indicava 331/66/4, total 401. O percentual de checklist concluído arredonda para 82%. Isso não mede aprovação de testes, homologação formal ou prontidão de produção. A homologação formal do servidor segue 2/7 (28,6%).",
+      "release": "Correção de dados e regressão contratual do portal; sem mudança no servidor ou no runtime. Homologação formal permanece 2/7. MariaDB é o único banco relacional operacional."
     }
   ]
 }
