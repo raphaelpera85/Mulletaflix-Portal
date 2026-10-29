@@ -5943,7 +5943,7 @@ test('portal records Trickplay cache coalescing without formal credit or release
     assert.ok(event);
     assert.equal(event.status, 'completed');
     assert.equal(event.progressPercent, 100);
-    assert.match(event.evidence, /TrickplayManagerResolutionCacheTests 2\/2/);
+    assert.match(event.evidence, /TrickplayManagerResolutionCacheTests:? 2\/2/);
     assert.match(event.evidence, /5\.291 aprovados, 85 ignorados, 0 falhas\/5\.376/);
     assert.match(event.evidence, /MariaDB é o único banco relacional operacional/);
     assert.match(event.evidence, /EF InMemory não suporta ExecuteDeleteAsync/);
@@ -5952,6 +5952,26 @@ test('portal records Trickplay cache coalescing without formal credit or release
     assert.equal(server.testAudit.total, 5376);
     assert.equal(server.testAudit.skipped, 85);
     assert.equal(server.testAudit.failed, 0);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal records isolated MariaDB validation of Trickplay deletion without production or formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-trickplay-delete-mariadb-integration-2026-10-29-0052');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /1\/1 aprovado contra MariaDB 11\.4\.4 isolado/);
+    assert.match(event.evidence, /schema temporário foi removido.*3306 não foi usado/);
+    assert.match(event.evidence, /TrickplayManagerResolutionCacheTests:? 2\/2/);
+    assert.match(event.release, /sem release/i);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);

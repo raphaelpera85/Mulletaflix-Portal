@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T00:45:00-03:00",
+  "generatedAt": "2026-10-29T00:52:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12455,6 +12455,23 @@
       "updatedAt": "2026-10-29T00:45:00-03:00",
       "evidence": "TrickplayManagerResolutionCacheTests 2/2: 16 chamadas concorrentes criam um único contexto; gravação invalida resoluções em cache. Jellyfin.Server.Implementations.Tests: 1.656 aprovados, 82 ignorados, 0 falhas/1.738. Solução Release: 15 assemblies, 5.291 aprovados, 85 ignorados, 0 falhas/5.376; filtro FullyQualifiedName!~Integration; exit code 0. MariaDB é o único banco relacional operacional. O provider EF InMemory não suporta ExecuteDeleteAsync, portanto invalidação após exclusão aguarda teste de integração MariaDB descartável. Não medidos benchmark/carga, CI hospedada, Linux, runtime instalado ou produção.",
       "release": "Sem release ou mudança em produção. Homologação formal permanece 2/7 (28,6%); a evidência unitária não recebe crédito formal.",
+      "links": []
+    },
+    {
+      "id": "server-trickplay-delete-mariadb-integration-2026-10-29-0052",
+      "title": "MariaDB confirma exclusão seletiva e invalidação do cache Trickplay",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "MariaDB 11.4.4 isolado em porta loopback não padrão; Windows/.NET 10 Release",
+      "location": "MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Trickplay/TrickplayManagerDeleteMariaDbTests.cs; tests/Shared/MariaDbTestEnvironment.cs",
+      "scope": "Validar ExecuteDeleteAsync no MariaDB, invalidação do cache do item excluído e preservação de outro título.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T00:48:00-03:00",
+      "updatedAt": "2026-10-29T00:52:00-03:00",
+      "evidence": "TrickplayManagerDeleteMariaDbTests: 1/1 aprovado contra MariaDB 11.4.4 isolado e temporário; criou dois itens, aqueceu o cache, excluiu um e confirmou banco/cache vazios para o alvo e preservação do segundo. O schema temporário foi removido; a instância descartável e o datadir foram encerrados/removidos. O MariaDB operacional em 3306 não foi usado e permaneceu ativo. TrickplayManagerResolutionCacheTests: 2/2. Build Release do projeto de testes: 0 erros (438 avisos existentes de analisadores/compiler); dotnet format whitespace e git diff --check passaram. MariaDB é o único banco relacional operacional.",
+      "release": "Sem release ou alteração em produção. Homologação formal permanece 2/7 (28,6%); o teste isolado não recebe crédito formal.",
       "links": []
     }
   ]
