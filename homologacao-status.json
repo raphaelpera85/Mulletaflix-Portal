@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T23:17:08-03:00",
+  "generatedAt": "2026-10-28T23:25:59-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3055,6 +3055,23 @@
     }
   ],
   "events": [
+    {
+      "id": "server-local-regression-and-production-unavailable-2026-10-28-2325",
+      "title": "Regressão .NET e Nebula aprovadas; produção local indisponível para baseline",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": ["T0.1", "T0.3"],
+      "local": "Windows/.NET 10 Release e Nebula Python 3.10 em venv isolada",
+      "location": "MulletaFlix-master/MulletaFlix.sln; MulletaFlix-master/Tools/NebulaPython/tests",
+      "scope": "Revalidar suites locais sem integração e verificar se a instância disponível permite amostra read-only de baseline.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T23:20:00-03:00",
+      "updatedAt": "2026-10-28T23:25:59-03:00",
+      "evidence": "`dotnet test MulletaFlix.sln --configuration Release --no-restore --filter FullyQualifiedName!~Integration --verbosity minimal` terminou exit 0, sem falhas nos testes selecionados. Resultados vistos: API 773 aprovados/3 ignorados; Providers 818 aprovados; Server.Implementations 1.652 aprovados/82 ignorados. O assembly Server Integration não teve casos selecionados pelo filtro. Nebula Python 3.10 em venv: `pytest tests -q`, 665/665. O GET read-only a 127.0.0.1:8096/System/Info/Public recebeu conexão recusada e o serviço MulletaFlixServer não foi encontrado; serviço não iniciado. Logo, nenhum baseline de produção, métrica de processo, startup ou atividade Nebula foi medido. Warnings existentes de analyzers/XML e pytest-asyncio foram observados.",
+      "release": "Sem mudança de runtime/produção ou release. Os resultados locais não fecham T0.1/T0.3 nem gates formais; homologação permanece 2/7 (28,6%). Integrações MariaDB/Mongo opt-in, Linux nativo, CI hospedada e produção não validados.",
+      "links": []
+    },
     {
       "id": "server-mariadb-only-legacy-installer-docs-2026-10-28-2317",
       "title": "MariaDB-only reafirmado; instruções do instalador legado isoladas",
