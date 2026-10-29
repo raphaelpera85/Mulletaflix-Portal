@@ -6832,3 +6832,22 @@ test('portal records the repeat validation of the Nebula failure paths', () => {
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the latest TV query duration recheck without claiming a fix', () => {
+    const event = statusData.events.find(item => item.id === 'server-latest-tv-test-duration-recheck-2026-10-29-0704');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /TRX anterior registrava 12,71 s/);
+    assert.match(event.evidence, /passou 3\/3 em 1 s/);
+    assert.match(event.evidence, /0,055 s, 0,075 s e 1,037 s/);
+    assert.match(event.evidence, /variação de ambiente\/JIT como hipótese, não causa comprovada/);
+    assert.match(event.release, /não concede crédito formal/);
+    assert.match(event.release, /Homologação formal 2\/7; sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
