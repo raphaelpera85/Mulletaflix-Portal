@@ -6181,3 +6181,22 @@ test('portal records the Trickplay manifest invalidation integration as awaiting
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the Server Implementations slice without treating skips as passes', () => {
+    const event = statusData.events.find(item => item.id === 'server-implementations-regression-slice-2026-10-29-0258');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /passou 1\.659 testes, 82 ignorados e 0 falhas\/1\.741 em 1m13s/);
+    assert.match(event.evidence, /Os ignorados não contam como aprovados/);
+    assert.match(event.evidence, /MariaDB, MongoDB, Linux, CI hospedada, runtime instalado ou produção/);
+    assert.match(event.release, /Sem release.*homologação continua 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
