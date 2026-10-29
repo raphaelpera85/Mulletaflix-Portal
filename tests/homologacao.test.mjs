@@ -7214,3 +7214,18 @@ test('portal records the post-fixture full Playwright result without formal cred
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records server-owned default intro lookup without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-native-intro-server-owned-paths-2026-10-29-1147');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /NativeIntroProviderTests: 8 aprovados/);
+    assert.match(event.evidence, /1\.661 aprovados, 82 ignorados/);
+    assert.match(event.release, /2\/7.*candidata, não publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
