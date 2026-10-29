@@ -7085,8 +7085,9 @@ test('portal classifies CI without executed steps as inconclusive and keeps form
     assert.equal(event.status, 'completed');
     assert.match(event.evidence, /16 jobs/);
     assert.match(event.evidence, /n[aã]o tem steps/);
-    assert.match(event.evidence, /inconclusivo para o código/);
-    assert.match(event.release, /Nenhum crédito formal/);
+    assert.match(event.evidence, /inconclusivo para homologação/);
+    assert.match(event.evidence, /bloqueada por cobrança/);
+    assert.match(event.release, /bloqueio de cobrança/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
