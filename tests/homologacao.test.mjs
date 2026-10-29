@@ -7181,3 +7181,36 @@ test('portal records successful isolated Wizard and playlist Playwright smoke wi
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records full Playwright failures without crediting homologation', () => {
+    const event = statusData.events.find(item => item.id === 'server-playwright-full-suite-mixed-result-2026-10-29-1124');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'blocked');
+    assert.match(event.evidence, /39 cenários: 13 passaram, 19 falharam, 7 foram interrompidos/);
+    assert.match(event.evidence, /pasta de vídeo do perfil de usuário, inexistente no stage/);
+    assert.match(event.evidence, /#logPage/);
+    assert.match(event.release, /sem crédito formal/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal records the post-fixture full Playwright result without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-playwright-full-suite-after-fixture-fix-2026-10-29-1138');
+    const server = statusData.tracks.find(track => track.id === 'server');
+    assert.ok(event);
+    assert.equal(event.status, 'blocked');
+    assert.equal(event.progressPercent, 30.8);
+    assert.match(event.evidence, /39 cenários, 12 aprovados, 18 falhas, 9 ignorados\/interrompidos/);
+    assert.match(event.evidence, /\.channelAccessContainer.*#logPage/);
+    assert.match(event.local, /Produção 8096 não acessada/);
+    assert.match(event.release, /2\/7.*v12\.1\.46 continua candidata e não publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
