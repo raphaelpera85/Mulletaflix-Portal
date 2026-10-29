@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T23:12:00-03:00",
+  "generatedAt": "2026-10-28T23:17:08-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3055,6 +3055,23 @@
     }
   ],
   "events": [
+    {
+      "id": "server-mariadb-only-legacy-installer-docs-2026-10-28-2317",
+      "title": "MariaDB-only reafirmado; instruções do instalador legado isoladas",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Auditoria de documentação, script NSIS e workflow de release",
+      "location": "README.md; mulletaflix-server-windows-mulletaflix-installer-branding/README.md; docs/backend-auditoria-roadmap.md",
+      "scope": "Reafirmar MariaDB como único banco operacional e impedir que o guia arquivado induza a compilação do instalador legado.",
+      "status": "completed",
+      "progressPercent": null,
+      "startedAt": "2026-10-28T23:17:00-03:00",
+      "updatedAt": "2026-10-28T23:17:00-03:00",
+      "evidence": "O workflow de release usa MulletaFlix-packaging-master/build-stage-and-installer.ps1 e o builder seleciona seu NSIS oficial. A árvore histórica não é chamada no fluxo; seu NSIS ainda contém encerramento global de processos, portanto o README agora proíbe compilá-lo e aponta para o fluxo suportado. Corrigida a descrição da migration para MariaDB; MySqlConnector, nomes MySql* de testes e mysqld.exe continuam identificadores/compatibilidade técnica da distribuição/driver MariaDB, não um serviço MySQL operacional.",
+      "release": "Somente documentação e portal. Sem alteração de runtime, banco ou produção; sem release. Homologação formal permanece 2/7 (28,6%). NSIS não compilado e instalador legado não testado.",
+      "links": []
+    },
     {
       "id": "server-mariadb-inventory-version-correction-2026-10-28-2216",
       "title": "MariaDB-only confirmado; versão do restore corrigida",
