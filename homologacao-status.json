@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:15:00-03:00",
+  "generatedAt": "2026-10-29T05:17:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12860,9 +12860,9 @@
       "status": "completed",
       "progressPercent": 100,
       "startedAt": "2026-10-29T05:01:00-03:00",
-      "updatedAt": "2026-10-29T05:15:00-03:00",
-      "evidence": "A bateria BackupRestoreMariaDbTests passou 4/5, 1 ignorado, 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:51425. O restore confirmou Preference (tipo/valor), DisplayPreferences (flags e tempos de navegação), ItemDisplayPreferences (exibição/ordenação), UserLicense, TrickplayInfo e MidiaStorageOnlineMediaMetadata. O único caso ignorado requer MongoDB. O processo MariaDB descartável foi encerrado; nenhum banco operacional foi acessado. Reexecução isolada com prontidão SQL confirmada passou 1/1; tentativa inicial falhou ao criar trigger antes das asserções enquanto o MariaDB descartável ainda não aceitava SQL, e permanece registrada como falha transitória, sem crédito.",
-      "release": "Cobertura central corrigida para 13/38 tabelas, com 25 pendentes; sete tabelas auxiliares de domínio e IntroSkipper durável 8/8 cobertas. Homologação formal permanece 2/7; a auditoria ampla continua em 5.291/5.376, sem recálculo. Sem release. MariaDB é o único banco relacional.",
+      "updatedAt": "2026-10-29T05:17:00-03:00",
+      "evidence": "A bateria BackupRestoreMariaDbTests passou 4/5, 1 ignorado, 0 falhas em Windows/.NET 10 Release contra MariaDB 11.4.4 descartável em 127.0.0.1:51432. O restore verifica Preference, DisplayPreferences, ItemDisplayPreferences, UserLicense, TrickplayInfo, MidiaStorageOnlineMediaMetadata, ImageInfo e MediaSegment, entre outras tabelas. O único caso ignorado requer MongoDB. O processo MariaDB descartável foi encerrado; nenhum banco operacional foi acessado. Teste focal passou 1/1 e a reexecução da classe completa passou 4/5. Tentativa anterior falhou antes das asserções ao criar trigger enquanto MariaDB ainda não aceitava SQL; continua registrada sem crédito.",
+      "release": "Cobertura central corrigida para 15/38 tabelas, com 23 pendentes; sete tabelas auxiliares de domínio e IntroSkipper durável 8/8 cobertas. Homologação formal permanece 2/7; a auditoria ampla continua em 5.291/5.376, sem recálculo. Sem release. MariaDB é o único banco relacional.",
       "links": []
     }
   ]
