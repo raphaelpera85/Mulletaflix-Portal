@@ -7059,3 +7059,19 @@ test('portal records disposable MariaDB integration suites without formal homolo
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records MariaDB lifecycle serialization without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-lifecycle-serialization-2026-10-29-1016');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /MariaDbStartupMutexLeaseTests 13\/13/);
+    assert.match(event.evidence, /Jellyfin\.Server\.Tests 103\/103/);
+    assert.match(event.release, /sem release publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
