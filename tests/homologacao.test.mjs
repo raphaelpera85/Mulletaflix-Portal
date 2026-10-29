@@ -6744,3 +6744,22 @@ test('portal records the rebuilt .NET regression and keeps skipped integrations 
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records faster Nebula timing tests without changing production delays', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-test-latency-2026-10-29-0628');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /Testes focais: 2\/2 em 426 ms/);
+    assert.match(event.evidence, /classes Nebula: 86\/86 em 6 s/);
+    assert.match(event.evidence, /projeto Jellyfin\.Server\.Implementations\.Tests completo: 1\.659 aprovados, 83 ignorados, 0 falhas/);
+    assert.match(event.release, /MongoDB.*15 s.*5 s\/10 s/);
+    assert.match(event.release, /83 skips não contam como aprovados/);
+    assert.match(event.release, /Homologação formal 2\/7; sem release/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
