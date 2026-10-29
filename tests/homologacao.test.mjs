@@ -7360,3 +7360,40 @@ test('portal publishes focused server regression without changing the broad audi
     assert.match(event.release, /Git main .*bb640833.*Vercel.*cb7bc604.*não inclui esta execução/);
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records the default intro real-STRM E2E without production or formal homologation credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-intro-default-before-media-real-strm-2026-10-29-1844');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.testOnly, true);
+    assert.match(event.local, /STRM real.*Nebula original ativo/i);
+    assert.match(event.evidence, /1\/1 aprovado.*vinheta.*mídia STRM real.*HTTP 200/);
+    assert.match(event.evidence, /não comprova instalação\/funcionamento em produção/);
+    assert.match(event.release, /12\.1\.45.*2\/7 \(28,6%\)/);
+    assert.equal(server.testAudit.passed, 5377);
+    assert.equal(server.testAudit.total, 5638);
+    assert.equal(server.testAudit.skipped, 261);
+    assert.equal(server.testAudit.failed, 0);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal keeps the 12.1.46 release audit blocked until CI and runtime gates are evidenced', () => {
+    const event = statusData.events.find(item => item.id === 'server-release-readiness-audit-blockers-2026-10-29-1844');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.equal(event.testOnly, true);
+    assert.match(event.evidence, /CI.*failure.*logs.*não foi confirmada/);
+    assert.match(event.release, /não está liberada.*12\.1\.45.*2\/7/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
