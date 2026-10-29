@@ -6296,3 +6296,23 @@ test('portal reports the current server audit as in progress without estimating 
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('portal records server image locale and MariaDB initializer coverage without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-image-language-mariadb-datadir-2026-10-29-0422');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /pt \+ país BR normaliza para pt-BR/);
+    assert.match(event.evidence, /Jellyfin\.Providers\.Tests: 824\/824/);
+    assert.match(event.evidence, /mysql_install_db\.exe/);
+    assert.match(event.evidence, /Jellyfin\.Server\.Tests: 95\/95/);
+    assert.match(event.release, /Sem release.*Homologação formal permanece 2\/7/);
+    assert.equal(server.testAudit.passed, 5291);
+    assert.equal(server.testAudit.total, 5376);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});

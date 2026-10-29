@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T04:12:00-03:00",
+  "generatedAt": "2026-10-29T04:22:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12761,6 +12761,23 @@
       "updatedAt": "2026-10-29T04:12:00-03:00",
       "evidence": "Auditoria iniciada. Estado da branch e matriz atual revisados; execução paralela de três inspeções read-only: MariaDB/backup, metadata/imagens e CI/empacotamento. Nenhuma nova validação ou mudança de produção reivindicada nesta atualização.",
       "release": "Sem release ou produção. Homologação formal permanece 2/7 (28,6%); testes agregados permanecem 5.291/5.376 até nova execução comparável. MariaDB é o único banco relacional operacional.",
+      "links": []
+    },
+    {
+      "id": "server-image-language-mariadb-datadir-2026-10-29-0422",
+      "title": "Servidor: preferência de idioma de imagens e bootstrap MariaDB fail-fast",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release",
+      "location": "MulletaFlix-master/MediaBrowser.Providers e Jellyfin.Server",
+      "scope": "Corrigir seleção de idioma de backdrop com fallback até a configuração global e impedir inicialização MariaDB sobre datadir novo sem mysql_install_db.exe.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T04:12:00-03:00",
+      "updatedAt": "2026-10-29T04:22:00-03:00",
+      "evidence": "Refresh considera idioma do item, pais, pasta da coleção, opções da biblioteca e servidor; pt + país BR normaliza para pt-BR. Regressão do resolvedor e suite Jellyfin.Providers.Tests: 824/824. Bootstrap rejeita datadir novo sem mysql_install_db.exe; quatro testes de requisito e suite Jellyfin.Server.Tests: 95/95. Format focais e git diff --check aprovados. Nenhuma conexão MariaDB ou mídia de produção usada.",
+      "release": "Sem release ou instalação. Homologação formal permanece 2/7 (28,6%); agregado local permanece 5.291/5.376 e não foi recalculado. TMDb real, MariaDB CI/Linux, runtime instalado e produção seguem pendentes. MariaDB é o único banco relacional operacional.",
       "links": []
     }
   ]
