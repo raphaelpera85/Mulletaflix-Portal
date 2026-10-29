@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T03:04:16-03:00",
+  "generatedAt": "2026-10-29T03:06:48-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12619,12 +12619,12 @@
       "local": "Windows/.NET 10 Release; integração MariaDB opt-in",
       "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/ServerPersistenceMariaDbTests.cs",
       "scope": "Adicionar regressão para 101 grupos de pessoas duplicadas, atravessando o lote de 100, e confirmar que a tarefa executa um único GROUP BY.",
-      "status": "in_progress",
-      "progressPercent": 50,
+      "status": "completed",
+      "progressPercent": 100,
       "startedAt": "2026-10-29T02:31:00-03:00",
-      "updatedAt": "2026-10-29T02:40:40-03:00",
-      "evidence": "O projeto IntroSkipper.Integration.Tests compilou em Release e o filtro PeopleValidationTask encontrou o teste. Execução terminou como ignorada porque não havia MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING para uma instância MariaDB descartável; não conta como aprovada. Tentativa de iniciar datadir temporário nesta sessão foi bloqueada antes de criar processo. O teste exige uma leitura catalog por DatabaseTelemetryMetrics, verifica uma linha por grupo e limpa os próprios registros com token independente limitado a 10 segundos. O caso não simula corrida concorrente que impeça DELETE. MariaDB é o único banco relacional operacional.",
-      "release": "Nenhuma release, instalação ou alteração de produção. Homologação formal permanece 2/7 (28,6%); integração MariaDB real segue pendente.",
+      "updatedAt": "2026-10-29T03:06:48-03:00",
+      "evidence": "PeopleValidationTask_QueriesDuplicateGroupsOnceAcrossBatchBoundary passou 1/1 em MariaDB 11.4.13 descartável, Windows/.NET 10 Release, loopback 127.0.0.1:60307. O teste criou 101 grupos duplicados, confirmou que resta uma linha por grupo, que foi medida uma única leitura agrupada do catálogo e que ValidatePeopleAsync foi chamada uma vez. Os registros de teste foram removidos com token de limpeza independente. Processo encerrado e porta fechada; datadir temporário permanece em %TEMP% por bloqueio da política à remoção recursiva. Base operacional não acessada. O teste não cobre corrida concorrente durante DELETE. MariaDB é a única base relacional operacional.",
+      "release": "Sem release, instalação ou mudança de produção. Homologação formal permanece 2/7 (28,6%); esta integração local isolada não recebe crédito formal.",
       "links": []
     },
     {

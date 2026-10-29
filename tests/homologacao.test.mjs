@@ -6121,18 +6121,19 @@ test('portal records segmented server regression without claiming a complete sol
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
-test('portal records the PeopleValidationTask regression as awaiting MariaDB execution', () => {
+test('portal records MariaDB execution of the PeopleValidationTask regression without formal credit', () => {
     const event = statusData.events.find(item => item.id === 'server-people-validation-regression-test-2026-10-29-0240');
     const server = statusData.tracks.find(track => track.id === 'server');
 
     assert.ok(event);
-    assert.equal(event.status, 'in_progress');
-    assert.equal(event.progressPercent, 50);
-    assert.match(event.evidence, /projeto IntroSkipper\.Integration\.Tests compilou em Release/);
-    assert.match(event.evidence, /terminou como ignorada.*não conta como aprovada/);
-    assert.match(event.evidence, /não havia MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING/);
-    assert.match(event.evidence, /não simula corrida concorrente/);
-    assert.match(event.release, /Nenhuma release.*formal permanece 2\/7/);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /passou 1\/1 em MariaDB 11\.4\.13 descartável/);
+    assert.match(event.evidence, /101 grupos duplicados.*uma única leitura agrupada do catálogo/);
+    assert.match(event.evidence, /Processo encerrado e porta fechada/);
+    assert.match(event.evidence, /não cobre corrida concorrente durante DELETE/);
+    assert.match(event.release, /esta integração local isolada não recebe crédito formal/);
+    assert.match(event.release, /formal permanece 2\/7/);
     assert.equal(server.testAudit.passed, 5291);
     assert.equal(server.testAudit.total, 5376);
     assert.equal(server.homologation.completed, 2);
