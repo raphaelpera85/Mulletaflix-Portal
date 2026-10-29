@@ -6364,6 +6364,8 @@ test('portal records MariaDB auxiliary media restore fixtures as unvalidated whe
     assert.match(event.evidence, /MovieMetadata, MovieUserData, SeriesUserData e BookUserData/);
     assert.match(event.evidence, /1 teste foi ignorado/);
     assert.match(event.evidence, /não há conexão MariaDB descartável/);
+    assert.match(event.evidence, /dotnet format whitespace.*passou/);
+    assert.match(event.evidence, /dotnet format completo ainda reporta EF1002/);
     assert.match(event.release, /Sem release ou crédito formal/);
     assert.match(event.release, /permanece 2\/7/i);
     assert.equal(server.testAudit.passed, 5291);
