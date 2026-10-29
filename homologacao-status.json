@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:50:00-03:00",
+  "generatedAt": "2026-10-29T05:52:51-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13051,6 +13051,23 @@
       "updatedAt": "2026-10-29T05:50:00-03:00",
       "evidence": "Relatório coverage JSON temporário: 80.5% aggregate coverage (3.940/4.894 statements). main.py 75.6%; tools/feed_ftp.py 81.0%; tools/strm_downloader.py 80.4%; tools/supabase_sync.py 90.5%; tools/check_deps.py 92.9%; tools/mongo_admission.py 100%. Adicionado pytest.ini com `asyncio_default_fixture_loop_scope = function`. Após a alteração: 674 passed in 13.23s, sem aviso de depreciação do pytest-asyncio; compileall passou. A cobertura vem de doubles/mocks; não prova integrações reais, Linux, carga ou produção. O comando de coverage roda a suíte completa uma segunda vez, portanto levou ~11 s adicional.",
       "release": "Relatório local Python indica 80.5% de cobertura agregada, com main.py em 75.6%; não se configurou limite de cobertura por causa da margem pequena sobre 80%. Escopo default das fixtures asyncio foi fixado, suíte 674/674 e compileall passaram sem warning de depreciação. MariaDB permanece o único banco relacional operacional. Homologação formal segue 2/7; sem release ou mudança de produção."
+    },
+    {
+      "id": "server-nebula-stage-paths-invalid-entry-resilience-2026-10-29-0553",
+      "front": "server",
+      "title": "Nebula: caminhos de stage válidos preservados diante de entradas inválidas",
+      "scope": "Cobrir merge e deduplicação das raízes configuradas por ambiente e JSON, sem descartar o restante por um item malformado.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py",
+      "local": "Windows; Python 3.10 do ambiente virtual do repositório",
+      "startedAt": "2026-10-29T05:51:00-03:00",
+      "updatedAt": "2026-10-29T05:52:51-03:00",
+      "evidence": "A leitura de `stage_paths.json` agora ignora entradas inválidas ou vazias individualmente, preservando raízes válidas e deduplicando as que também vieram de STAGING_DIRS/STAGING_DIR. Teste focal `test_strm_downloader_helpers.py`: 76 passed in 0.42s. Suíte completa Nebula: 676 passed in 7.22s; compileall passou. O teste usa caminhos temporários, sem acessar filesystem de mídia ou produção.",
+      "release": "Teste local cobre raízes configuradas e resiliência a JSON parcialmente inválido. FTP, rede, Linux, CI hospedada, instalação e produção permanecem pendentes. Homologação formal 2/7; sem release ou mudança de produção. MariaDB é o único banco relacional operacional."
     }
   ]
 }
