@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T07:15:00-03:00",
+  "generatedAt": "2026-10-29T07:16:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -13255,6 +13255,23 @@
       "updatedAt": "2026-10-29T07:15:00-03:00",
       "evidence": "Os focais `FullyQualifiedName~MariaDbDataDirectoryInitializationTests|FullyQualifiedName~MariaDbStartupMutexLeaseTests` passaram 9/9; depois `Jellyfin.Server.Tests` completo passou 95/95, zero skips/falhas, duração 2 s. São unitários de inicialização de diretório e lease de mutex; não iniciam daemon nem conectam ao MariaDB. A integração e migrations reais seguem pendentes para instância MariaDB descartável. Nenhum serviço ou banco operacional foi acessado.",
       "release": "Revalidação local unitária; não concede crédito formal nem valida runtime/instalação/produção. Homologação formal do servidor permanece 2/7; sem release. MariaDB é o único banco relacional operacional."
+    },
+    {
+      "id": "server-test-fixture-cleanup-recheck-2026-10-29-0716",
+      "front": "server",
+      "title": "Integração: revalidar limpeza de fixtures MariaDB",
+      "scope": "Executar testes locais de teardown que provam limpeza completa após sucesso e falha, sem conectar a um banco operacional.",
+      "status": "completed",
+      "progressPercent": 100,
+      "agent": "Codex",
+      "featureIds": [],
+      "links": [],
+      "location": "MulletaFlix-master/tests/IntroSkipper.Integration.Tests/MariaDbFixtureCleanupTests.cs; tests/Jellyfin.Server.Integration.Tests/JellyfinApplicationFactoryCleanupTests.cs",
+      "local": "Windows; .NET 10; Release; limpeza simulada; sem endpoint MariaDB configurado",
+      "startedAt": "2026-10-29T07:15:00-03:00",
+      "updatedAt": "2026-10-29T07:16:00-03:00",
+      "evidence": "`MariaDbFixtureCleanupTests` passou 5/5 e `JellyfinApplicationFactoryCleanupTests` passou 4/4. Os casos confirmam tentativa de todas as ações/SQL de cleanup, preservação do erro inicial e rethrow sem aggregate quando há uma falha. A variável `MULLETAFLIX_TEST_MARIADB_CONNECTION_STRING` estava ausente; não houve conexão, criação ou remoção de schemas, nem acesso a banco operacional. A bateria do portal continua separando estes unitários de integração real MariaDB.",
+      "release": "Revalidação local de teardown, sem crédito formal; integração real, runtime/instalação e produção não validados. Homologação formal 2/7; sem release. MariaDB é o único banco relacional operacional."
     }
   ]
 }

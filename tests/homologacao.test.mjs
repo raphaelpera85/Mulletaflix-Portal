@@ -6903,3 +6903,14 @@ test('portal records MariaDB startup unit results without claiming a live databa
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
 });
+
+test('portal records isolated MariaDB fixture cleanup tests without claiming database integration', () => {
+    const event = statusData.events.find(item => item.id === 'server-test-fixture-cleanup-recheck-2026-10-29-0716');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /MariaDbFixtureCleanupTests` passou 5\/5/);
+    assert.match(event.evidence, /JellyfinApplicationFactoryCleanupTests` passou 4\/4/);
+    assert.match(event.evidence, /não houve conexão, criação ou remoção de schemas/);
+    assert.match(event.release, /sem crédito formal/);
+});
