@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T02:16:00-03:00",
+  "generatedAt": "2026-10-29T02:26:10-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -12591,6 +12591,23 @@
       "updatedAt": "2026-10-29T02:08:00-03:00",
       "evidence": "ApplyUpdateStartupFailure.Tests.ps1 e ApplyUpdateFailure.Tests.ps1 passaram em Windows PowerShell 5.1 e PowerShell 7. node --test tools/release/tests/ci-packaging-coverage.test.mjs passou 6/6. O teste de startup registra incondicionalmente qualquer chamada ao comando Stop-Process; a implementação atual não chama esse comando no caminho de falha do serviço. Busca no código não encontrou outro encerramento global por nome nos projetos de servidor/packaging. git diff --check sem erros. Não executados build NSIS, CI hospedada, instalação, Linux ou produção.",
       "release": "Sem release ou instalação. Evidência local não altera o agregado dos testes nem a homologação formal, que permanece 2/7 (28,6%). MariaDB é o único banco relacional operacional.",
+      "links": []
+    },
+    {
+      "id": "server-segmented-regression-2026-10-29-0226",
+      "title": "Regressão segmentada do servidor concluída; gates externos continuam pendentes",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10 Release, Nebula Python 3.10 e Node.js",
+      "location": "MulletaFlix-master/tests e Tools/NebulaPython/tests",
+      "scope": "Executar testes focados por assembly para obter feedback rápido; preservar como pendentes os gates de integração e plataforma ausentes.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-10-29T02:21:30-03:00",
+      "updatedAt": "2026-10-29T02:26:10-03:00",
+      "evidence": "Windows/.NET 10 Release: Jellyfin.Server.Implementations.Tests 1.659 aprovados, 82 ignorados, 0 falhas; Jellyfin.Api.Tests 774 aprovados, 3 ignorados, 0 falhas; Jellyfin.Server.Tests 91/91; Jellyfin.Providers.Tests 823/823; Jellyfin.MediaEncoding.Tests 71/71. Nebula Python 3.10 passou 674/674; contratos do portal 330/330 e testes de release/packaging 26/26. A execução completa da solução foi interrompida sem resultado agregado após silêncio prolongado; uma execução paralela anterior teve conflitos de arquivo MSBuild e foi repetida em sequência. Testes ignorados por Linux, MongoDB/MariaDB opt-in e plataforma não recebem crédito. Não testados CI hospedada, produção, instalação, rede real ou Linux nativo. MariaDB é o único banco relacional operacional.",
+      "release": "Sem release, instalação ou alteração de produção. A auditoria agregada permanece 5.291/5.376 e a homologação formal 2/7 (28,6%); esta execução segmentada não altera esses totais.",
       "links": []
     }
   ]
