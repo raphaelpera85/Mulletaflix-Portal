@@ -175,6 +175,25 @@ test('portal records disposable MariaDB restore and crash replay without claimin
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
 
+test('portal records MariaDB 11.4.13 runtime alignment without claiming release or formal sign-off', () => {
+    const event = statusData.events.find(item => item.id === 'server-mariadb-runtime-patch-alignment-2026-10-28');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.local, /MariaDB 11\.4\.13.*47\/47/);
+    assert.match(event.evidence, /11\.4\.13-MariaDB/);
+    assert.match(event.evidence, /d62986d433eeebfd/);
+    assert.match(event.evidence, /sem pacote completo.*CI hospedada.*produção/i);
+    assert.match(event.release, /8b636d3b.*Nenhuma release criada/);
+    assert.equal(server.testAudit.passed, 5279);
+    assert.equal(server.testAudit.total, 5364);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records Nebula prequeue retry and preserves formal gate and release status', () => {
     const event = statusData.events.find(item => item.id === 'server-nebula-staging-claim-recovery-2026-10-23-1252');
     const server = statusData.tracks.find(track => track.id === 'server');
