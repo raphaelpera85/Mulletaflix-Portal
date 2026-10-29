@@ -5804,3 +5804,21 @@ test('portal records the pending integrated backup exercise without overstating 
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
 });
+
+test('portal records the composed MariaDB MongoDB and files exercise as pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-t44-integrated-recovery-harness-2026-10-28-2247');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.match(event.evidence, /server\.json.*arquivos.*Mongo/);
+    assert.match(event.evidence, /ignorado porque não há instâncias descartáveis/);
+    assert.match(event.evidence, /MariaDB é o único banco relacional operacional/);
+    assert.match(event.release, /Nenhuma release ou mudança de produção/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
