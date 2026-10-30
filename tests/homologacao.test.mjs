@@ -7645,3 +7645,22 @@ test('portal records MariaDB validation of the music album subquery without perf
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('server image refresh prefers the configured language across providers without signing off production', async () => {
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const event = statusData.events.find(item => item.id === 'server-image-language-refresh-across-providers-2026-10-30-0115');
+
+    assert.ok(event);
+    assert.equal(event.status, 'in_progress');
+    assert.equal(event.progressPercent, null);
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+    assert.match(event.evidence, /839 aprovados, 13 ignorados.*0 falhas\/852/);
+    assert.match(event.evidence, /filmes e séries.*posters e backdrops/);
+    assert.match(event.release, /[Nn]ão alterou imagens existentes/);
+    assert.match(event.release, /sem release publicada/);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+
+    const dashboard = createDashboard();
+    await settleDashboard();
+    assert.match(dashboard.getElement('event-list').innerHTML, /Capas automáticas priorizam idioma da mídia em filmes e séries/);
+});

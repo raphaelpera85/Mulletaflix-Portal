@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T22:42:00-03:00",
+  "generatedAt": "2026-10-30T01:16:13-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3055,6 +3055,23 @@
     }
   ],
   "events": [
+    {
+      "id": "server-image-language-refresh-across-providers-2026-10-30-0115",
+      "title": "Capas automáticas priorizam idioma da mídia em filmes e séries",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows/.NET 10; suíte Jellyfin.Providers.Tests",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ItemImageProvider.cs",
+      "scope": "Priorizar o idioma efetivo da biblioteca entre provedores no refresh automático de posters e backdrops, preservando o provedor que baixa cada imagem e fallback quando um candidato falha.",
+      "status": "in_progress",
+      "progressPercent": null,
+      "startedAt": "2026-10-30T01:02:00-03:00",
+      "updatedAt": "2026-10-30T01:16:13-03:00",
+      "evidence": "O refresh automático coleta candidatos dos provedores remotos em paralelo e classifica pelo idioma efetivo antes de baixar. Regressões cobrem filmes e séries, posters e backdrops, preferência pt-BR e fallback en quando a imagem localizada retorna erro. Jellyfin.Providers.Tests: 839 aprovados, 13 ignorados por integrações externas opt-in, 0 falhas/852; testes focais 10/10. Não houve chamada a TMDb/Fanart reais nem alteração de mídia existente.",
+      "release": "Código candidato na 12.1.46. Não alterou imagens existentes e não houve reprocessamento do catálogo. Runtime instalado, provider externo ao vivo, Linux, hardware e produção seguem pendentes; produção conhecida 12.1.45, sem release publicada. Homologação formal permanece 2/7 (28,6%), sem crédito.",
+      "links": []
+    },
     {
       "id": "server-bson-v4-and-legacy-restore-audit-2026-10-29-2102",
       "title": "Snapshots BSON v4 e compatibilidade de restore legado",
