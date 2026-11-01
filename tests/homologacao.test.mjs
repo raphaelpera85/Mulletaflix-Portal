@@ -102,6 +102,86 @@ const portalConfig = JSON.parse(readFileSync(new URL('../vercel.json', import.me
 const sitemapSource = readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 const previousBillingBlockerTitle = statusData.events.find(item => item.id === 'server-github-actions-runner-allocation-blocked-2026-10-19-1912').title;
 
+test('portal records the Next Up total-count option fix without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nextup-total-count-propagation-2026-11-01-0152');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.scope, /EnableTotalRecordCount.*UserView.*NextUp/);
+    assert.match(event.evidence, /falhou antes da mudança e passou após a correção/);
+    assert.match(event.evidence, /74\/74/);
+    assert.match(event.evidence, /paginação progressiva e medição MariaDB seguem pendentes/);
+    assert.match(event.release, /candidata 12\.1\.46; não publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal records deterministic Next Up tie ordering without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nextup-series-tie-order-2026-11-01-0105');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.scope, /antes de aplicar Limit/);
+    assert.match(event.evidence, /3\/3 em Release/);
+    assert.match(event.evidence, /plano MariaDB.*produção não foram validados/);
+    assert.match(event.release, /candidata 12\.1\.46; sem release publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal records the focused Next Up and latest-series query rerun without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nextup-query-audit-rerun-2026-11-01-0149');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /9\/9.*2 testes MariaDB foram ignorados/);
+    assert.match(event.evidence, /não mede latência nem plano SQL MariaDB/);
+    assert.match(event.scope, /sem cortar séries/);
+    assert.match(event.release, /sem mudança de runtime ou crédito formal/i);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal reports localized image coverage for series and animation without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-image-language-series-artwork-coverage-2026-11-01-0101');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.scope, /Primary, Backdrop, Logo e Thumb/);
+    assert.match(event.evidence, /18\/18 em Release/);
+    assert.match(event.evidence, /TMDb\/Fanart reais.*produção não foram validados/);
+    assert.match(event.release, /sem mudança de runtime ou crédito formal/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal records manual image provenance for movies and series without formal credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-manual-image-provenance-series-anime-2026-11-01-0121');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.scope, /Movie e Series.*animações/);
+    assert.match(event.evidence, /RemoteImageControllerTests passou 8\/8/);
+    assert.match(event.release, /candidata 12\.1\.46.*sem crédito formal/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
 test('portal records the player return-to-home fix and sparse Nebula retry without formal credit', () => {
     const playback = statusData.events.find(item => item.id === 'server-player-view-background-audio-2026-10-29-1907');
     const upload = statusData.events.find(item => item.id === 'server-nebula-sparse-upload-resume-2026-10-29-1907');
@@ -1969,7 +2049,7 @@ test('portal publishes current per-download pause and resume evidence without cl
     const downloads = statusData.androidHomologation.areas.find(area => area.id === 'APK-H07');
     const event = statusData.events.find(item => item.id === 'android-per-download-pause-resume-2026-10-13');
 
-    assert.match(statusData.generatedAt, /^2026-10-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
+    assert.match(statusData.generatedAt, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
     assert.equal(android.testAudit.passed, 1741);
     assert.equal(android.testAudit.total, 1741);
     assert.equal(android.instrumentationAudit.passed, 40);
@@ -2005,7 +2085,7 @@ test('portal reports the latest server-switch login regression as in progress, n
     const area = statusData.androidHomologation.areas.find(item => item.id === 'APK-H02');
     const event = statusData.events.find(item => item.id === 'android-profile-server-switch-login-investigation-2026-10-14');
 
-    assert.match(statusData.generatedAt, /^2026-10-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
+    assert.match(statusData.generatedAt, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
     assert.equal(area.status, 'in_progress');
     assert.match(area.evidence, /108 testes unitários.*passaram/);
     assert.match(area.evidence, /falhou ao aguardar o retorno ao catálogo/);
@@ -2025,7 +2105,7 @@ test('portal records update-effect test isolation without changing formal homolo
     const android = statusData.tracks.find(track => track.id === 'android');
     const event = statusData.events.find(item => item.id === 'android-update-effect-test-isolation-2026-10-13');
 
-    assert.match(statusData.generatedAt, /^2026-10-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
+    assert.match(statusData.generatedAt, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
     assert.match(event.evidence, /Activity não intercepta sockets GitHub ponta a ponta/);
     assert.match(event.evidence, /AppUpdateCheckEffectTest-PHONE-API35\.xml/);
     assert.equal(android.testAudit.passed, 1741);
@@ -2127,7 +2207,7 @@ test('portal mirrors the Home cache URL-scope fix without closing formal homolog
     const area = statusData.androidHomologation.areas.find(item => item.id === 'APK-H04');
     const event = statusData.events.find(item => item.id === 'android-home-cache-default-port-normalization-2026-10-13');
 
-    assert.match(statusData.generatedAt, /^2026-10-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
+    assert.match(statusData.generatedAt, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/);
     assert.equal(android.testAudit.passed, 1741);
     assert.equal(android.testAudit.total, 1741);
     assert.match(android.testAudit.label, /1\.741 aprovados/);
@@ -7729,6 +7809,10 @@ test('server hot-query review preserves MariaDB and performance gates as pending
     assert.equal(event.progressPercent, null);
     assert.match(event.evidence, /8 aprovados, 1 integração MariaDB ignorada, 0 falhas\/9/);
     assert.match(event.evidence, /nenhuma medição em catálogo real/);
+    assert.match(event.evidence, /TvSeriesManager\.GetNextUp passa Limit=null/);
+    assert.match(event.evidence, /GetLatestTvShowItems percorre os episódios ordenados no cliente para deduplicar por SeriesId antes do limite/);
+    assert.match(event.evidence, /Nova regressão MariaDB opt-in para séries passou compilação; suíte focal: 6 aprovados, 2 ignorados/);
+    assert.match(event.evidence, /paginação progressiva e desempenho real seguem pendentes/);
     assert.match(event.evidence, /Jellyfin\.Server\.Implementations\.Tests: 1\.668 aprovados, 85 ignorados, 0 falhas\/1\.753.*MariaDB opt-in.*Linux/);
     assert.match(event.release, /sem release publicada/);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
@@ -7823,6 +7907,59 @@ test('portal records forceFullRestore caller audit without inventing destructive
     assert.match(event.evidence, /não foi transformada em exclusão automática/);
     assert.match(event.evidence, /BulkWriteAsync.*não informa contagem/);
     assert.match(event.release, /sem release publicada.*12\.1\.45.*2\/7/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal records fail-closed full restore and keeps destructive contract pending', () => {
+    const event = statusData.events.find(item => item.id === 'server-supabase-full-restore-fail-closed-2026-10-30-0255');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.equal(event.testOnly, false);
+    assert.match(event.scope, /forceFull=true falhar antes de consultar replay idempotente, rede ou persistência/);
+    assert.match(event.evidence, /passou 1\/1.*74 aprovados, 8 ignorados.*0 falhas\/82/);
+    assert.match(event.evidence, /FullRestore_RejectsBeforeReturningIncrementalIdempotencyReplay passou/);
+    assert.match(event.evidence, /Mongo real, Supabase e produção não foram acessados/);
+    assert.match(event.release, /sem release publicada.*12\.1\.45.*2\/7/);
+    assert.match(statusData.serverHomologation.latestAudit, /forceFull=true.*falha antes de consultar replay idempotente/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal records Nebula downloader runtime supervision without production credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nebula-downloader-runtime-monitor-2026-11-01-0134');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.equal(event.progressPercent, 100);
+    assert.match(event.evidence, /22 aprovados, 0 ignorados, 0 falhas/);
+    assert.match(event.evidence, /67\/67/);
+    assert.match(event.evidence, /duas rodadas do monitor, parada pendente e shutdown aguardando recuperação/);
+    assert.match(event.evidence, /processo Python real, instalação e produção não foram exercitados/);
+    assert.match(event.release, /candidata 12\.1\.46; release não publicada/);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
+});
+
+test('portal records progressive Next Up pagination without formal homologation credit', () => {
+    const event = statusData.events.find(item => item.id === 'server-nextup-progressive-pagination-2026-11-01-0213');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /1\.680 aprovados, 90 ignorados, 0 falhas\/1\.770/);
+    assert.match(event.evidence, /empate/);
+    assert.match(event.release, /12\.1\.46.*não publicada/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
