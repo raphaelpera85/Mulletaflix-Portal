@@ -7993,7 +7993,7 @@ test('server audit batch is published without changing the formal homologation s
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.generatedAt, '2026-11-01T08:50:00-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T11:41:10-03:00');
 });
 
 test('server audit follow-up batch preserves local evidence and formal gates', () => {
@@ -8011,7 +8011,17 @@ test('server audit follow-up batch preserves local evidence and formal gates', (
         ['server-nebula-control-plane-startup-failure-propagation-2026-11-01-0810', 'completed'],
         ['server-nebula-large-lane-threshold-2026-11-01-0827', 'completed'],
         ['server-pr1-ci-billing-revalidation-2026-11-01-0844', 'in_progress'],
-        ['server-subtitle-language-shared-path-guard-2026-11-01-0849', 'completed']
+        ['server-subtitle-language-shared-path-guard-2026-11-01-0849', 'completed'],
+        ['server-image-language-server-precedence-2026-11-01-0732', 'completed'],
+        ['server-solution-local-ci-audit-2026-11-01-0652', 'in_progress'],
+        ['server-tmdb-image-region-retained-2026-11-01-1008', 'completed'],
+        ['server-imagesaver-atomic-replacement-2026-11-01-1036', 'completed'],
+        ['server-backup-restore-handles-windows-revalidation-2026-11-01-1045', 'completed'],
+        ['server-midia-storage-filesystem-audit-2026-11-01-1048', 'completed'],
+        ['server-mso-manifest-atomic-write-2026-11-01-1101', 'completed'],
+        ['server-imagesaver-metadata-prefix-boundary-audit-2026-11-01-0906', 'in_progress'],
+        ['server-imagesaver-write-path-trace-2026-11-01-1118', 'in_progress'],
+        ['server-mso-atomic-cleanup-exception-precedence-2026-11-01-1137', 'completed']
     ]);
     const server = statusData.tracks.find(track => track.id === 'server');
 
@@ -8026,7 +8036,7 @@ test('server audit follow-up batch preserves local evidence and formal gates', (
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.generatedAt, '2026-11-01T08:50:00-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T11:41:10-03:00');
     const ci = statusData.events.find(event => event.id === 'server-pr1-ci-billing-revalidation-2026-11-01-0844');
     assert.match(ci.evidence, /16\/16 jobs.*bloqueio de cobrança/);
     assert.match(ci.evidence, /900 testes, ignorou 13 e teve 0 falhas/);
@@ -8036,4 +8046,10 @@ test('server audit follow-up batch preserves local evidence and formal gates', (
     assert.match(subtitle.evidence, /passou 13\/13.*900, ignorou 13.*falhou 0\/913/);
     assert.match(subtitle.evidence, /stream.*descartado/i);
     assert.match(subtitle.release, /release não publicada.*2\/7/);
+    const cleanup = statusData.events.find(event => event.id === 'server-mso-atomic-cleanup-exception-precedence-2026-11-01-1137');
+    assert.equal(cleanup.progressPercent, 100);
+    assert.match(cleanup.evidence, /MidiaStorageOnlineAtomicFileTests 5\/5.*914 aprovados, 14 ignorados, 0 falhas\/928/);
+    assert.match(cleanup.evidence, /UnauthorizedAccessException em TemporaryFileCleanupException/);
+    assert.match(cleanup.release, /Homologação formal permanece 2\/7, sem crédito/);
+    assert.match(statusData.latestAudit, /914 aprovados, 14 ignorados, 0 falhas\/928/);
 });
