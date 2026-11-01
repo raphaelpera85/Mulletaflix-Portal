@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T04:44:01-03:00",
+  "generatedAt": "2026-11-01T05:20:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -14779,18 +14779,33 @@
     },
     {
       "id": "server-item-related-delete-audit-2026-11-01-0444",
-      "title": "Auditoria: exclusões isoladas de coleções relacionadas por item",
+      "title": "Persistência: exclusões em lote das coleções relacionadas",
       "agent": "Codex",
       "front": "server",
       "featureIds": [],
       "local": "Inspeção estática de persistência e chamadores",
       "location": "Jellyfin.Server.Implementations/Item/ItemPersistenceService.cs — SaveBaseItemEntities",
       "scope": "Determinar se as exclusões relacionadas durante a atualização de itens podem ser agrupadas com segurança.",
-      "status": "in_progress",
-      "progressPercent": null,
+      "status": "completed",
+      "progressPercent": 100,
       "startedAt": "2026-11-01T04:44:01-03:00",
-      "updatedAt": "2026-11-01T04:44:01-03:00",
-      "evidence": "Inspeção encontrou ExecuteDelete dentro do loop para providers, imagens, campos bloqueados e tipos de trailer, até quatro comandos por item se todas as coleções mudarem. LibraryManager.CreateItems e UpdateItemsAsync passam listas recebidas diretamente. WhereOneOrMany não fragmenta listas; limites SQL e ordem delete-before-insert exigem cuidado. Sem MariaDB de teste configurada e sem contagem SQL; tamanho real dos lotes e impacto não medidos. Nenhuma alteração runtime; não altera cobertura formal nem release."
+      "updatedAt": "2026-11-01T05:20:00-03:00",
+      "evidence": "A inspeção identificou até quatro DELETEs isolados por item em SaveBaseItemEntities. Medição MariaDB 11.4.4 descartável em 8 itens confirmou baseline de 8 DELETEs de providers; após o agrupamento, 1 comando. O risco de limite SQL exigia chunks; o teste de fronteira com 1.001 itens confirmou duas exclusões em lote e a substituição dos providers antigos. Nenhum banco operacional foi acessado. O impacto em biblioteca real não foi medido."
+    },
+    {
+      "id": "server-related-metadata-delete-batching-2026-11-01-0515",
+      "title": "Persistência: agrupamento seguro de exclusões de metadados",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "local": "MariaDB 11.4.4 descartável; Release/.NET 10; teste unitário e contrato do portal",
+      "location": "Jellyfin.Server.Implementations/Item/ItemPersistenceService.cs::SaveBaseItemEntities",
+      "scope": "Agrupar exclusões de providers, imagens, campos bloqueados e tipos de trailer, preservando comparações, chaves estrangeiras e transação.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-01T04:44:01-03:00",
+      "updatedAt": "2026-11-01T05:20:00-03:00",
+      "evidence": "MariaDB 11.4.4 descartável: providers alterados em oito itens passaram de 8 DELETEs a 1. O teste de fronteira substituiu 1.001 providers antigos com 2 DELETEs em lotes de até 1.000; passou 1/1. ServerPersistenceMariaDbTests: 12/12; IntroSkipper.Integration.Tests: 59 aprovados, 1 ignorado, 0 falhas; ItemPersistenceServiceTests Release: 34/34. Revisão independente sem achados. Processo temporário parado, porta 33129 fechada e arquivo de conexão neutralizado. Banco operacional, biblioteca real e Linux não foram usados; volume de produção não medido. CI hospedada segue bloqueada por cobrança. Sem crédito formal, produção alterada ou release publicada."
     }
   ],
   "latestAudit": "01/11/2026 02:13 BRT: Next Up global agora pagina candidatas em lotes de 50, continuando até preencher a página ou provar que datas seguintes não alteram a ordenação. Suíte Jellyfin.Server.Implementations.Tests passou 1.680/1.770, com 90 ignorados e 0 falhas. MariaDB, catálogo e produção não validados; homologação formal 2/7, candidata 12.1.46 sem release."

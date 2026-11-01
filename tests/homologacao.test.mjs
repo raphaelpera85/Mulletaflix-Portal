@@ -7979,17 +7979,19 @@ test('server audit batch is published without changing the formal homologation s
         'server-nebula-runtime-logging-mongo-cleanup-2026-11-01-0426',
         'server-nebula-tls-fail-closed-2026-11-01-0432',
         'server-item-persistence-placeholder-noop-2026-11-01-0441',
-        'server-item-related-delete-audit-2026-11-01-0444'
+        'server-item-related-delete-audit-2026-11-01-0444',
+        'server-related-metadata-delete-batching-2026-11-01-0515'
     ];
     const events = ids.map(id => statusData.events.find(event => event.id === id));
     const server = statusData.tracks.find(track => track.id === 'server');
 
-    assert.equal(events.filter(Boolean).length, 12);
-    assert.equal(events.at(-2).status, 'in_progress');
-    assert.equal(events.at(-1).status, 'in_progress');
+    assert.equal(events.filter(Boolean).length, 13);
+    assert.equal(events.at(-3).status, 'in_progress');
+    assert.equal(events.at(-2).status, 'completed');
+    assert.equal(events.at(-1).status, 'completed');
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.generatedAt, '2026-11-01T04:44:01-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T05:20:00-03:00');
 });
