@@ -7993,5 +7993,33 @@ test('server audit batch is published without changing the formal homologation s
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.generatedAt, '2026-11-01T05:20:00-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T06:37:00-03:00');
+});
+
+test('server audit follow-up batch preserves local evidence and formal gates', () => {
+    const expected = new Map([
+        ['server-full-regression-2026-11-01-0527', 'completed'],
+        ['server-restore-root-path-replacement-2026-11-01-0532', 'completed'],
+        ['server-provider-filesystem-write-audit-2026-11-01-0539', 'completed'],
+        ['server-midia-storage-file-write-audit-2026-11-01-0542', 'in_progress'],
+        ['server-omdb-cache-path-id-validation-2026-11-01-0545', 'completed'],
+        ['server-audiodb-cache-mbid-validation-2026-11-01-0547', 'completed'],
+        ['server-pr1-ci-investigation-blocked-auth-2026-11-01', 'blocked'],
+        ['server-profile-image-delete-boundary-audit-2026-11-01-0631', 'in_progress'],
+        ['server-focused-regression-revalidation-2026-11-01-0637', 'in_progress']
+    ]);
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    for (const [id, status] of expected) {
+        const event = statusData.events.find(item => item.id === id);
+        assert.ok(event, `missing event ${id}`);
+        assert.equal(event.status, status, `unexpected status for ${id}`);
+        assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt), `future event ${id}`);
+    }
+
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.generatedAt, '2026-11-01T06:37:00-03:00');
 });
