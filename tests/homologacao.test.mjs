@@ -8054,7 +8054,7 @@ test('server audit follow-up batch preserves local evidence and formal gates', (
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
     const ci = statusData.events.find(event => event.id === 'server-pr1-ci-billing-revalidation-2026-11-01-0844');
     assert.match(ci.evidence, /16\/16 jobs.*bloqueio de cobrança/);
     assert.match(ci.evidence, /900 testes, ignorou 13 e teve 0 falhas/);
@@ -8085,7 +8085,7 @@ test('server sync concurrency progress is queued for the next ten-event portal b
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('server full local regression is recorded without formal credit', () => {
@@ -8103,7 +8103,7 @@ test('server full local regression is recorded without formal credit', () => {
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('server profile username path guard is recorded without formal homologation credit', () => {
@@ -8121,7 +8121,7 @@ test('server profile username path guard is recorded without formal homologation
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.match(statusData.latestAudit, /décima evidência do lote/);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('server reserved Windows device path names are rejected across callers without homologation credit', () => {
@@ -8140,7 +8140,7 @@ test('server reserved Windows device path names are rejected across callers with
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.match(statusData.latestAudit, /décima evidência do lote/);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('portal records Nebula parent-scoped deduplication without formal homologation credit', () => {
@@ -8178,7 +8178,7 @@ test('portal records the open ImageSaver rooted-write audit without homologation
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 
@@ -8202,7 +8202,7 @@ test('portal records current server regression and runtime availability without 
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.match(statusData.serverHomologation.latestAudit, /7\/10.*128b39a.*READY/);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('portal records TMDb all-language image queries without homologation or release credit', () => {
@@ -8250,7 +8250,7 @@ test('portal records the full server and Nebula regression without formal credit
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 
@@ -8269,7 +8269,7 @@ test('portal records the open ImageSaver rooted-write gap without formal credit'
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.match(statusData.latestAudit, /Evidência local 5\/10/);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('portal records Next Up exact-count scan cost without formal or release credit', () => {
@@ -8286,7 +8286,7 @@ test('portal records Next Up exact-count scan cost without formal or release cre
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('portal records exact-count Next Up branch coverage without formal credit', () => {
@@ -8302,7 +8302,7 @@ test('portal records exact-count Next Up branch coverage without formal credit',
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('portal records complete .NET solution regression without formal credit', () => {
@@ -8322,7 +8322,7 @@ test('portal records complete .NET solution regression without formal credit', (
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.match(statusData.serverHomologation.latestAudit, /8\/10 evidências locais.*128b39a READY/);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('portal records the rooted image-writer boundary audit without formal credit', () => {
@@ -8336,11 +8336,11 @@ test('portal records the rooted image-writer boundary audit without formal credi
     assert.match(event.evidence, /BackupRestoreDirectory/);
     assert.match(event.evidence, /pathname-based|por pathname/);
     assert.match(event.release, /snapshot local 9\/10.*deployment público 128b39a READY/i);
-    assert.match(statusData.serverHomologation.latestAudit, /10\/10 evidências locais.*128b39a READY/);
+    assert.match(statusData.serverHomologation.latestAudit, /10\/10 evidências locais.*HTTP 200/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
 
 test('portal records the ImageSaver writer test boundary without formal homologation credit', () => {
@@ -8353,9 +8353,9 @@ test('portal records the ImageSaver writer test boundary without formal homologa
     assert.match(event.local, /4 aprovados, 1 ignorado, 0 falhas\/5/);
     assert.match(event.evidence, /modo Unix retorna cedo/);
     assert.match(event.evidence, /pathname-based|por pathname/);
-    assert.match(event.release, /Lote local 10\/10.*formal permanece 2\/7/);
+    assert.match(event.release, /Lote 10\/10.*homologação permanece 2\/7/);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
-    assert.equal(statusData.generatedAt, '2026-11-01T15:53:26-03:00');
+    assert.equal(statusData.generatedAt, '2026-11-01T15:55:46-03:00');
 });
