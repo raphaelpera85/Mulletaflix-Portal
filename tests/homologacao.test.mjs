@@ -7965,3 +7965,31 @@ test('portal records progressive Next Up pagination without formal homologation 
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(event.updatedAt) <= Date.parse(statusData.generatedAt));
 });
+
+test('server audit batch is published without changing the formal homologation score', () => {
+    const ids = [
+        'server-home-latest-series-filters-2026-11-01-0258',
+        'server-jellyfin-image-language-compare-2026-11-01-0305',
+        'server-ci-billing-blocked-local-regression-2026-11-01-0336',
+        'server-backup-restore-mariadb-roundtrip-2026-11-01-0341',
+        'server-pr1-incremental-recovery-test-fix-2026-11-01-0355',
+        'server-release-solution-regression-2026-11-01-0401',
+        'server-dotnet-nebula-regression-2026-11-01-0402',
+        'server-pr1-updater-metadata-collision-2026-11-01-0409',
+        'server-nebula-runtime-logging-mongo-cleanup-2026-11-01-0426',
+        'server-nebula-tls-fail-closed-2026-11-01-0432',
+        'server-item-persistence-placeholder-noop-2026-11-01-0441',
+        'server-item-related-delete-audit-2026-11-01-0444'
+    ];
+    const events = ids.map(id => statusData.events.find(event => event.id === id));
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.equal(events.filter(Boolean).length, 12);
+    assert.equal(events.at(-2).status, 'in_progress');
+    assert.equal(events.at(-1).status, 'in_progress');
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.equal(statusData.generatedAt, '2026-11-01T04:44:01-03:00');
+});
