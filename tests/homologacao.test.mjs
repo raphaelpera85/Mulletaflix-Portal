@@ -3,6 +3,20 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
 
+test('portal registra auditoria de persistência das versões alternativas e mantém gate formal aberto', () => {
+    const event = statusData.events.find(item => item.id === 'server-alternate-media-persistence-batch-audit-2026-11-02-0907');
+    const server = statusData.tracks.find(track => track.id === 'server');
+
+    assert.ok(event);
+    assert.equal(event.status, 'completed');
+    assert.match(event.evidence, /UpdateItemsAsync.*um único parent/is);
+    assert.match(event.evidence, /código não foi alterado nem o custo medido/i);
+    assert.match(event.release, /10\/10.*2\/7.*12\.1\.46 candidata, não publicada/i);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+});
+
 test('portal registra retry limitado de compartilhamento de imagem sem crédito formal', () => {
     const event = statusData.events.find(item => item.id === 'server-blurhash-transient-sharing-retry-2026-11-01-1738');
     const server = statusData.tracks.find(track => track.id === 'server');
@@ -8653,35 +8667,36 @@ test('portal records selective Nebula checkpoint retries without formal homologa
 });
 
 
-test('portal publica cinco lotes de dez eventos do servidor sem alterar gates formais', () => {
+test('portal preserva sete lotes de dez eventos recentes do servidor sem alterar gates formais', () => {
     const cutoff = Date.parse('2026-11-01T19:53:19-03:00');
     const events = statusData.events.filter(event => event.front === 'server' && Date.parse(event.updatedAt) > cutoff);
     const server = statusData.tracks.find(track => track.id === 'server');
 
-    assert.equal(events.length, 50);
-    assert.equal(new Set(events.map(event => event.id)).size, 50);
-    assert.deepEqual(Array.from({ length: 5 }, (_, index) => events.slice(index * 10, (index + 1) * 10).length), [10, 10, 10, 10, 10]);
+    assert.equal(events.length, 70);
+    assert.equal(new Set(events.map(event => event.id)).size, 70);
+    assert.deepEqual(Array.from({ length: 7 }, (_, index) => events.slice(index * 10, (index + 1) * 10).length), [10, 10, 10, 10, 10, 10, 10]);
     assert.deepEqual([server.testAudit.passed, server.testAudit.total, server.testAudit.skipped, server.testAudit.failed], [5584, 5869, 285, 0]);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(statusData.generatedAt) >= Date.parse(statusData.events.at(-1).updatedAt));
-    assert.match(statusData.latestAudit, /50\/50 eventos do servidor em cinco lotes de dez/);
+    assert.match(statusData.latestAudit, /70\/70 em sete lotes/);
 });
 
-test('portal publica o quinto lote de dez eventos sem promover homologação formal', () => {
-    const cutoff = Date.parse('2026-11-02T03:47:36-03:00');
+test('portal publica os lotes sexto e sétimo de dez eventos sem promover homologação formal', () => {
+    const cutoff = Date.parse('2026-11-02T05:49:28-03:00');
     const events = statusData.events.filter(event => event.front === 'server' && Date.parse(event.updatedAt) > cutoff);
     const server = statusData.tracks.find(track => track.id === 'server');
-    const expected = ["server-http-proxy-happy-eyeballs-2026-11-02-0416","server-http-tls-proxy-happy-eyeballs-2026-11-02-0420","server-xml-writers-atomicity-audit-2026-11-02-0427","server-pr-ci-no-steps-diagnostic-2026-11-02-0438","server-health-check-otel-metrics-research-2026-11-02-0445","server-health-check-otel-metrics-implementation-2026-11-02-0456","server-image-language-nebula-readahead-2026-11-02-0515","server-user-admin-delete-concurrency-2026-11-02-0529","server-collection-folder-cache-after-persist-2026-11-02-0540","server-user-admin-cross-process-audit-2026-11-02-0549"];
+    const expected = ["server-auth-refresh-permissions-after-provider-2026-11-02-0608","server-user-admin-lock-prerequisites-2026-11-02-0614","server-image-language-metadata-regression-test-2026-11-02-0618","server-provider-suite-image-language-regression-2026-11-02-0620","server-nebula-readahead-ready-queue-fast-path-2026-11-02-0624","server-user-internal-id-concurrent-create-2026-11-02-0638","server-github-actions-prerun-ci-audit-2026-11-02-0649","server-dotnet-solution-regression-trx-2026-11-02-0701","server-library-options-concurrent-serialization-2026-11-02-0708","server-library-options-atomic-save-2026-11-02-0713","server-bootstrap-config-direct-write-audit-2026-11-02-0717","server-bootstrap-config-safe-writer-2026-11-02-0721","server-plugin-config-protected-writer-2026-11-02-0745","server-prestartup-xml-atomic-migrations-2026-11-02-0754","server-update-state-protected-write-2026-11-02-0806","server-image-language-backdrop-device-id-2026-11-02-0826","server-playlist-file-persistence-audit-2026-11-02-0833","server-full-suite-and-engineering-techniques-2026-11-02-0843","server-http-retry-idempotent-methods-2026-11-02-0854","server-alternate-media-persistence-batch-audit-2026-11-02-0907"];
 
-    assert.equal(events.length, 10);
+    assert.equal(events.length, 20);
     assert.deepEqual(events.map(event => event.id), expected);
+    assert.deepEqual(Array.from({ length: 2 }, (_, index) => events.slice(index * 10, (index + 1) * 10).length), [10, 10]);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
-    assert.match(statusData.latestAudit, /50\/50 eventos do servidor em cinco lotes de dez/);
+    assert.match(statusData.latestAudit, /70\/70 em sete lotes/);
     assert.ok(Date.parse(statusData.generatedAt) >= Date.parse(statusData.events.at(-1).updatedAt));
 });
