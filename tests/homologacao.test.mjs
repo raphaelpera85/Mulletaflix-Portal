@@ -8653,19 +8653,35 @@ test('portal records selective Nebula checkpoint retries without formal homologa
 });
 
 
-test('portal publica quatro lotes de dez eventos do servidor sem alterar gates formais', () => {
+test('portal publica cinco lotes de dez eventos do servidor sem alterar gates formais', () => {
     const cutoff = Date.parse('2026-11-01T19:53:19-03:00');
     const events = statusData.events.filter(event => event.front === 'server' && Date.parse(event.updatedAt) > cutoff);
     const server = statusData.tracks.find(track => track.id === 'server');
 
-    assert.equal(events.length, 40);
-    assert.equal(new Set(events.map(event => event.id)).size, 40);
-    assert.deepEqual(Array.from({ length: 4 }, (_, index) => events.slice(index * 10, (index + 1) * 10).length), [10, 10, 10, 10]);
+    assert.equal(events.length, 50);
+    assert.equal(new Set(events.map(event => event.id)).size, 50);
+    assert.deepEqual(Array.from({ length: 5 }, (_, index) => events.slice(index * 10, (index + 1) * 10).length), [10, 10, 10, 10, 10]);
     assert.deepEqual([server.testAudit.passed, server.testAudit.total, server.testAudit.skipped, server.testAudit.failed], [5584, 5869, 285, 0]);
     assert.equal(server.homologation.completed, 2);
     assert.equal(server.homologation.total, 7);
     assert.equal(server.homologation.percent, 28.6);
     assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
     assert.ok(Date.parse(statusData.generatedAt) >= Date.parse(statusData.events.at(-1).updatedAt));
-    assert.match(statusData.latestAudit, /40\/40 eventos do servidor em quatro lotes de dez/);
+    assert.match(statusData.latestAudit, /50\/50 eventos do servidor em cinco lotes de dez/);
+});
+
+test('portal publica o quinto lote de dez eventos sem promover homologação formal', () => {
+    const cutoff = Date.parse('2026-11-02T03:47:36-03:00');
+    const events = statusData.events.filter(event => event.front === 'server' && Date.parse(event.updatedAt) > cutoff);
+    const server = statusData.tracks.find(track => track.id === 'server');
+    const expected = ["server-http-proxy-happy-eyeballs-2026-11-02-0416","server-http-tls-proxy-happy-eyeballs-2026-11-02-0420","server-xml-writers-atomicity-audit-2026-11-02-0427","server-pr-ci-no-steps-diagnostic-2026-11-02-0438","server-health-check-otel-metrics-research-2026-11-02-0445","server-health-check-otel-metrics-implementation-2026-11-02-0456","server-image-language-nebula-readahead-2026-11-02-0515","server-user-admin-delete-concurrency-2026-11-02-0529","server-collection-folder-cache-after-persist-2026-11-02-0540","server-user-admin-cross-process-audit-2026-11-02-0549"];
+
+    assert.equal(events.length, 10);
+    assert.deepEqual(events.map(event => event.id), expected);
+    assert.equal(server.homologation.completed, 2);
+    assert.equal(server.homologation.total, 7);
+    assert.equal(server.homologation.percent, 28.6);
+    assert.equal(statusData.serverHomologation.formalSignoff, 'pending');
+    assert.match(statusData.latestAudit, /50\/50 eventos do servidor em cinco lotes de dez/);
+    assert.ok(Date.parse(statusData.generatedAt) >= Date.parse(statusData.events.at(-1).updatedAt));
 });
