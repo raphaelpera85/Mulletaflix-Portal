@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T00:50:08-03:00",
+  "generatedAt": "2026-11-02T02:16:00-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -16230,7 +16230,209 @@
       "updatedAt": "2026-11-02T00:50:08-03:00",
       "evidence": "Supabase valida HTTP(S), host, porta, credenciais, query, fragmento e delimitadores vazios antes de inicializar Mongo; apikey/Authorization ficam em headers unredirected e o opener recusa redirects. Control Plane e gerador direto validam a URL antes do Mongo e da criação da saída. Feeder/downloader seguem redirects HTTP(S) com host/porta válidos, preservando loopback/LAN/CDN. Testes de URL inválida, headers sensíveis, redirects reais via servidor HTTP local e compatibilidade passaram: focal 334/334 e suíte completa 789/789. Hosts privados continuam permitidos para compatibilidade de streaming; mitigação SSRF DNS-aware, Linux, pacote/runtime instalado, CI hospedada e produção não foram validados.",
       "release": "Evento local 10/10 do lote; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Próximo gate: política de destino SSRF compatível com mídias LAN e validação Linux/runtime/CI."
+    },
+    {
+      "id": "server-nebula-telegram-time-no-redirect-2026-11-02-0050",
+      "title": "Nebula impede redirect no probe de horário do Telegram",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://docs.python.org/3.10/library/urllib.request.html"
+      ],
+      "local": "Windows/Python 3.10.11: teste focal 1/1; suíte Nebula 790/790.",
+      "location": "MulletaFlix-master/Tools/NebulaPython/main.py; tests/test_main_helpers.py; MulletaFlix-master/docs/backend-auditoria-roadmap.md; MulletaFlix-master/docs/releases/12.1.46.md",
+      "scope": "Impedir que o probe de horário executado na importação do Nebula siga redirects para esquemas ou destinos inesperados; preservar fallback para o relógio local.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T00:50:08-03:00",
+      "updatedAt": "2026-11-02T00:50:08-03:00",
+      "evidence": "O opener do probe Telegram recusa redirects; um servidor HTTP local responde 302 para FTP loopback e o teste confirma que o redirect não é seguido. O bootstrap continua tolerante a falha e usa o relógio local. Teste focal 1/1 e suíte completa Nebula 790/790 em Windows/Python 3.10.11.",
+      "release": "Novo lote local 1/10; homologação formal permanece 2/7, sem crédito. 12.1.46 candidata, não publicada. Linux, runtime empacotado, CI hospedada e produção não foram verificados."
+    },
+    {
+      "id": "server-image-resized-cache-atomic-publish-2026-11-02-0102",
+      "title": "Cache de imagens redimensionadas publicado atomicamente",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://github.com/jellyfin/jellyfin/issues/17135",
+        "https://learn.microsoft.com/en-us/dotnet/api/system.io.file.move"
+      ],
+      "local": "Windows/.NET 10 Release: ImageProcessorCacheTests 2/2; filtro ImageProcessor 4/4; dotnet format style --verify-no-changes passou.",
+      "location": "MulletaFlix-master/src/Jellyfin.Drawing/ImageProcessor.cs; MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/Drawing/ImageProcessorCacheTests.cs; docs/backend-auditoria-roadmap.md; docs/releases/12.1.46.md",
+      "scope": "Evitar que chamadas concorrentes leiam imagem de cache enquanto o encoder ainda grava o arquivo.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T01:02:00-03:00",
+      "updatedAt": "2026-11-02T01:02:00-03:00",
+      "evidence": "O encoder escreve em arquivo temporário único no mesmo diretório; o caminho final só aparece após File.Move e conclusão da codificação. Lock por chave evita duplicar o mesmo encode, mantendo o limite global existente. Entradas vazias são regeneradas e a versão de cache passou de 3 para 4 para invalidar arquivos potencialmente parciais antigos. Teste concorrente comprova que leitores não veem o temporário e compartilham a imagem completa; teste de IOException confirma que não sobra cache truncado e o caller recebe o original. Em Windows/.NET 10 Release, ImageProcessorCacheTests passou 2/2 e filtro ImageProcessor 4/4; formatação focal passou.",
+      "release": "Evento local 2/10; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Linux, CI hospedada, runtime instalado e produção não foram verificados."
+    },
+    {
+      "id": "server-nebula-sequential-download-length-validation-2026-11-02-0111",
+      "title": "Nebula rejeita download sequencial truncado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://docs.python.org/3.10/library/urllib.request.html",
+        "https://docs.python.org/3.10/library/http.client.html"
+      ],
+      "local": "Windows/Python 3.10.11: downloader focal 122/122; suíte Nebula completa 791/791; portal local 150/150.",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; tests/test_strm_downloader.py; docs/nebula-strm-download.md; docs/releases/12.1.46.md",
+      "scope": "Validar tamanho esperado no fallback sequencial antes de promover arquivo temporário para o destino final.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T01:05:00-03:00",
+      "updatedAt": "2026-11-02T01:11:00-03:00",
+      "evidence": "A regressão reproduz sonda e resposta anunciando 100 bytes com corpo sequencial de 7 bytes. Antes da correção, o teste falhou porque nenhum erro era lançado. Agora tamanhos divergentes falham; o temporário é conferido antes da promoção, o destino válido anterior permanece e o temporário parcial é limpo. Downloader focal 122/122 e suíte completa Nebula 791/791 passaram em Windows/Python 3.10.11.",
+      "release": "Evento local 3/10; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Linux, transferência real, runtime instalado, CI hospedada e produção não foram verificados."
+    },
+    {
+      "id": "server-provider-refresh-queue-ownership-2026-11-02-0123",
+      "title": "ProviderManager processa itens enfileirados durante o lote",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://learn.microsoft.com/en-us/dotnet/standard/collections/thread-safe/"
+      ],
+      "local": "Windows/.NET 10 Release: teste focal 1/1; Jellyfin.Providers.Tests 931 aprovados, 14 ignorados, 0 falhas/945.",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ProviderManager.cs; tests/Jellyfin.Providers.Tests/Manager/ProviderManagerRefreshTests.cs; docs/backend-auditoria-roadmap.md; docs/releases/12.1.46.md",
+      "scope": "Evitar que itens adicionados enquanto o lote de refresh está em execução permaneçam presos na fila.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T01:23:49-03:00",
+      "updatedAt": "2026-11-02T01:23:49-03:00",
+      "evidence": "O caso foi reproduzido antes da correção: o primeiro refresh bloqueou, um segundo item foi enfileirado e não começou antes do timeout. Após a correção, o worker mantém ownership e reavalia a fila sob lock; o segundo refresh iniciou. Teste focal 1/1 e suíte completa 931/945, sem falhas.",
+      "release": "Evento local 4/10; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Stress prolongado, Linux, CI hospedada, runtime instalado e produção não foram verificados."
+    },
+    {
+      "id": "server-provider-refresh-item-serialization-2026-11-02-0132",
+      "title": "Refresh de metadados e imagens serializado por título",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://learn.microsoft.com/en-us/dotnet/api/system.threading.semaphoreslim.waitasync",
+        "https://github.com/MarkCiliaVincenti/AsyncKeyedLock"
+      ],
+      "local": "Windows/.NET 10 Release: Jellyfin.Providers.Tests 932 aprovados, 14 ignorados, 0 falhas/946; dotnet format style --verify-no-changes e git diff --check passaram.",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ProviderManager.cs; tests/Jellyfin.Providers.Tests/Manager/ProviderManagerRefreshTests.cs; docs/backend-auditoria-roadmap.md; docs/releases/12.1.46.md",
+      "scope": "Impedir atualizações concorrentes do mesmo item de disputarem metadados e índices de imagens; manter concorrência entre itens distintos.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T01:30:00-03:00",
+      "updatedAt": "2026-11-02T01:32:02-03:00",
+      "evidence": "O teste RefreshSingleItem_DoesNotRefreshSameItemConcurrently reproduziu o defeito antes da correção: o segundo refresh entrou no serviço enquanto o primeiro ainda estava bloqueado. ProviderManager agora aguarda AsyncKeyedLocker<Guid> pela chave do item, com cancelamento, enquanto itens diferentes continuam em paralelo. A busca dos callers encontrou BaseItem, Series e controller convergindo para RefreshSingleItem. A suíte Providers Release passou 932/946; 14 casos foram ignorados, incluindo integrações reais externas. Não foi feito refresh completo de biblioteca.",
+      "release": "Novo lote local 5/10; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Linux, CI hospedada, runtime instalado e produção não foram verificados."
+    },
+    {
+      "id": "server-full-regression-image-writer-audit-2026-11-02-0140",
+      "title": "Regressão completa do servidor e Nebula consolidada; writer de imagem auditado",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://learn.microsoft.com/en-us/dotnet/api/system.io.file.openhandle",
+        "https://www.man7.org/linux/man-pages/man2/open.2.html"
+      ],
+      "local": "Windows/.NET 10 Release: 17 TRX, 5.584 aprovados, 285 ignorados, 0 falhas/5.869; Nebula Python 3.10.11: 791/791.",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ImageSaver.cs; MediaBrowser.Controller/IO/RootedFileSystem.cs; MulletaFlix.sln; Tools/NebulaPython/tests",
+      "scope": "Consolidar regressão atual do servidor/Nebula e avaliar a fronteira de segurança da gravação de imagens multiplataforma.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T01:32:02-03:00",
+      "updatedAt": "2026-11-02T01:40:23-03:00",
+      "evidence": "A repetição sem rebuild gerou 17 relatórios TRX: 5.584 aprovados, 285 ignorados e 0 falhas; o filtro excluiu LiveIntegrationTests. Nebula passou 791/791 no venv e diretório corretos. O primeiro comando Nebula foi invocado do diretório pai e falhou na coleta por imports; a execução repetida na raiz Tools/NebulaPython passou. A inspeção do ImageSaver confirmou escrita por pathname; File.OpenHandle também recebe pathname, enquanto a documentação POSIX recomenda operações relativas a descritores de diretório para evitar corrida em componentes do caminho. A proteção completa precisa cobrir criação de diretórios, gravação temporária, promoção atômica e permissões, com testes nativos Linux e Windows; nenhuma correção parcial foi marcada como segura. Build mostrou avisos de analisadores existentes em várias áreas; build/teste terminou com sucesso.",
+      "release": "Evento local 6/10; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Linux, CI hospedada, runtime instalado e produção não foram verificados."
+    },
+    {
+      "id": "server-image-writer-platform-contracts-2026-11-02-0144",
+      "title": "Primitivas rooted de gravação de imagem pesquisadas para Linux, Windows e SMB",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_rename_info",
+        "https://learn.microsoft.com/en-us/windows/win32/fileio/file-security-and-access-rights",
+        "https://www.man7.org/linux/man-pages/man2/open.2.html",
+        "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/52aa0b70-8094-4971-862d-79793f41e6a8"
+      ],
+      "local": "Pesquisa documental oficial; nenhum teste/código de produto executado ou alterado nesta rodada.",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ImageSaver.cs; MediaBrowser.Controller/IO/RootedFileSystem.cs; ImageSaver callers",
+      "scope": "Comparar contratos de operação rooted, promoção atômica e permissões entre Windows local, Linux local e SMB.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T01:40:23-03:00",
+      "updatedAt": "2026-11-02T01:44:00-03:00",
+      "evidence": "Linux documenta operações openat relativas a dirfd. Windows FILE_RENAME_INFO aceita RootDirectory para nomes relativos locais; especificação SMB exige RootDirectory zero. ACLs de objetos criados herdam do pai, então promoção com temporário pode divergir de ACL explícita anterior. ImageSaver tem callers de metadados, ImageController e AvatarService e raízes distintas. Escrita rooted multiplataforma não foi implementada; falta desenho de suporte a SMB e preservação de ACL/modo/atributos. Sem crédito de homologação.",
+      "release": "Evento local 7/10, não publicado externamente. Formal 2/7 (28,6%). Nenhuma release criada; 12.1.46 segue candidata."
+    },
+    {
+      "id": "server-tmdb-image-language-selection-audit-2026-11-02-0157",
+      "title": "Auditoria da seleção automática do idioma das imagens TMDb",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://developer.themoviedb.org/docs/image-languages",
+        "https://developer.themoviedb.org/reference/movie-images",
+        "https://developer.themoviedb.org/reference/tv-episode-images"
+      ],
+      "local": "Auditoria estática do refresh e dos provedores; nenhum teste de produto executado nesta sessão.",
+      "location": "MulletaFlix-master/MediaBrowser.Providers/Manager/ItemImageProvider.cs; MediaBrowser.Providers/Plugins/Tmdb; tests/Jellyfin.Providers.Tests",
+      "scope": "Confirmar a prioridade de idioma na seleção automática de capas e imagens em filmes, séries, temporadas e episódios.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T01:44:00-03:00",
+      "updatedAt": "2026-11-02T01:57:00-03:00",
+      "evidence": "O refresh busca todos os idiomas e ordena por locale preferido, idioma base, inglês, sem idioma e demais locais. Provedores TMDb compartilham o caminho de prioridade. Testes existentes cobrem filmes/séries, fallback e locale regional. Documentação TMDb informa que language filtra a resposta, include_image_language adiciona idiomas e variantes regionais não são uniformes nas imagens. Não foi encontrado defeito novo de seleção; imagens persistidas exigem refresh para substituição.",
+      "release": "Evento local 8/10, ainda não publicado externamente. Homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Provedores reais, catálogo, Linux, CI hospedada e produção não foram verificados."
+    },
+    {
+      "id": "server-rooted-delete-linux-rename-race-audit-2026-11-02-0202",
+      "title": "Auditoria da exclusão rooted Linux: rename concorrente impede afirmar confinamento à raiz",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://man7.org/linux/man-pages/man2/openat2.2.html",
+        "https://man7.org/linux/man-pages/man2/open.2.html",
+        "https://man7.org/linux/man-pages/man2/unlink.2.html"
+      ],
+      "local": "Inspeção estática e pesquisa em man-pages Linux; nenhum teste de produto/Linux executado e nenhum código alterado.",
+      "location": "MulletaFlix-master/MediaBrowser.Controller/IO/RootedFileSystem.cs; tests/Jellyfin.Controller.Tests/IO/RootedFileSystemTests.cs; MulletaFlix-master/MediaBrowser.Providers/Manager/ImageSaver.cs",
+      "scope": "Verificar se dirfd/openat2/unlinkat bastam para remover com segurança imagens antigas no Linux sob raiz configurada.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T01:57:00-03:00",
+      "updatedAt": "2026-11-02T02:02:00-03:00",
+      "evidence": "openat2 com RESOLVE_BENEATH restringe resolução de caminhos sob dirfd, e unlinkat opera relativamente ao diretório aberto. Contudo, a documentação de open(2) afirma que o descritor continua referindo a mesma pasta mesmo após rename; logo um diretório descendente pode ser movido para fora da raiz antes da exclusão. Não foi encontrada garantia no contrato dessas primitivas que bloqueie rename concorrente como os handles Windows sem FILE_SHARE_DELETE. O helper permanece fail-closed fora do Windows. Suporte Linux depende de threat model verificável ou mecanismo que impeça a corrida, implementação nativa e teste concorrente em Linux; WSL disponível sem distribuição e Docker/Podman ausentes neste host.",
+      "release": "Evento local 9/10; ainda não publicado externamente. Homologação formal 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Linux, CI hospedada, runtime instalado e produção não foram verificados."
+    },
+    {
+      "id": "server-nebula-http-range-resume-etag-2026-11-02-0213",
+      "title": "Retomada de download Nebula vinculada ao ETag da mídia",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.5",
+        "https://www.rfc-editor.org/rfc/rfc9110.html#section-14"
+      ],
+      "local": "Windows/Python 3.10.11: testes focais 126/126; suíte Nebula 799/799; compileall passou. HTTP simulado; sem transferência real.",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/strm_downloader.py; tools/feed_ftp.py; tests/test_strm_downloader.py; tests/test_feed_ftp_strm.py",
+      "scope": "Garantir que partes retomadas ou paralelas pertençam à mesma representação da origem, mesmo quando o tamanho não muda.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T02:02:00-03:00",
+      "updatedAt": "2026-11-02T02:16:00-03:00",
+      "evidence": "Os dois fluxos persistem total, ETag forte e part count, enviam If-Range e invalidam partes antigas ao detectar mudança; sem ETag forte usam GET sequencial e recusam HTTP 206 nesse fallback. Regressões cobrem troca de ETag com tamanho constante, metadata inválida, fallback sem validador e retomada com mesmo ETag. O fallback sequencial pode reduzir throughput; medir os provedores reais é pendente.",
+      "release": "Evento local 10/10 do lote; ainda não publicado externamente. Homologação formal 2/7 (28,6%), sem crédito. Release 12.1.46 continua candidata e não foi criada. Linux, mídia/CDN real, CI hospedada, runtime instalado e produção não foram verificados."
     }
   ],
-  "latestAudit": "02/11/2026 04:04 BRT: lote servidor 2/4 publicado localmente; 20/40 eventos registrados, sem crédito formal adicional. CI/PR, Linux e produção continuam pendentes; release 12.1.46 candidata, não publicada."
+  "latestAudit": "02/11/2026 04:04 BRT: lote servidor 3/4 publicado localmente; 30/40 eventos registrados, sem crédito formal adicional. CI/PR, Linux e produção continuam pendentes; release 12.1.46 candidata, não publicada."
 }
