@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T22:20:00-03:00",
+  "generatedAt": "2026-11-02T00:50:08-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -16032,7 +16032,205 @@
       "updatedAt": "2026-11-01T22:20:00-03:00",
       "evidence": "Trigger MariaDB falha em BEFORE INSERT após DELETE e cada teste confirma rollback do conjunto anterior para anexos, streams, capítulos e keyframes; também valida substituição e limpeza vazia. ServerPersistenceMariaDbTests passou 19/19 sem skips em MariaDB 11.4.4 descartável. Cobre atomicidade dos quatro replaces, não retry, deadlock nem commit ambíguo. O processo de produção na porta 3306 não foi acessado.",
       "release": "Evento local 10/10 do lote; homologação formal permanece 2/7 (28,6%); 12.1.46 candidata, sem release publicada. Retry transacional, Linux, CI hospedada, runtime instalado e produção pendentes."
+    },
+    {
+      "id": "server-mariadb-people-role-replacement-rollback-2026-11-01-2228",
+      "title": "Rollback MariaDB na troca de papel de elenco",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://learn.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency",
+        "https://mariadb.com/docs/server/reference/sql-statements/transactions/rollback"
+      ],
+      "local": "Windows/.NET 10 Release: ServerPersistenceMariaDbTests 20/20 com MariaDB 11.4.4 descartável em 127.0.0.1:33141; processo temporário encerrado, produção :3306 intocada.",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Item/PeopleRepository.cs; MulletaFlix-master/tests/IntroSkipper.Integration.Tests/ServerPersistenceMariaDbTests.cs; docs/backend-auditoria-roadmap.md; docs/releases/12.1.46.md",
+      "scope": "Comprovar rollback do replace do papel de elenco quando o INSERT falha após remover o vínculo anterior.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-01T22:21:00-03:00",
+      "updatedAt": "2026-11-01T22:28:00-03:00",
+      "evidence": "Trigger MariaDB BEFORE INSERT rejeita a nova linha após a remoção do papel anterior; a verificação confirma que o papel original permanece após rollback. ServerPersistenceMariaDbTests passou 20/20 sem skips. Isso valida atomicidade desse replace, não retry, deadlock nem commit ambíguo.",
+      "release": "Evento 1/10 do novo lote; homologação formal permanece 2/7 (28,6%); 12.1.46 candidata, sem release publicada. Linux, CI hospedada, runtime instalado e produção pendentes."
+    },
+    {
+      "id": "server-mariadb-images-save-rollback-2026-11-01-2240",
+      "title": "Rollback MariaDB na substituição de imagens",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://learn.microsoft.com/en-us/ef/core/saving/transactions",
+        "https://mariadb.com/docs/server/reference/sql-statements/transactions/rollback"
+      ],
+      "local": "Windows/.NET 10 Release: ServerPersistenceMariaDbTests 21/21 com MariaDB 11.4.4 descartável em 127.0.0.1:33141; instância temporária encerrada, produção :3306 intocada.",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Item/ItemPersistenceService.cs; MulletaFlix-master/tests/IntroSkipper.Integration.Tests/ServerPersistenceMariaDbTests.cs; docs/backend-auditoria-roadmap.md; docs/releases/12.1.46.md",
+      "scope": "Provar que SaveImagesAsync restaura as imagens antigas se o INSERT falha depois de ExecuteDelete.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-01T22:36:00-03:00",
+      "updatedAt": "2026-11-01T22:40:00-03:00",
+      "evidence": "Trigger MariaDB BEFORE INSERT injeta falha depois de ExecuteDelete. O teste confirma que ID, caminho e idioma da imagem anterior permanecem após rollback. ServerPersistenceMariaDbTests passou 21/21 sem skips. Cobre atomicidade, não retry, deadlock ou commit ambíguo.",
+      "release": "Evento 2/10 do lote local; homologação formal permanece 2/7 (28,6%); 12.1.46 candidata, sem release publicada. Linux, CI hospedada, runtime instalado e produção pendentes."
+    },
+    {
+      "id": "server-userdata-key-mutation-rollback-2026-11-01-2252",
+      "title": "UserData mantém a chave do caller quando a transação falha",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [],
+      "local": "Windows/.NET 10 Release: teste MariaDB focal 1/1; ServerPersistenceMariaDbTests 22/22; UserDataManagerTests 1/1.",
+      "location": "MulletaFlix-master/Emby.Server.Implementations/Library/UserDataManager.cs; tests/IntroSkipper.Integration.Tests/ServerPersistenceMariaDbTests.cs.",
+      "scope": "Evitar mutar UserItemData.Key recebido pelo caller ao persistir chaves de provedores dentro de uma transação.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-01T22:52:19-03:00",
+      "updatedAt": "2026-11-01T22:52:19-03:00",
+      "evidence": "O teste usa a referência do batch cache, atualiza duas chaves de provedor e descarta a inserção da terceira; confirma rollback das duas alterações, ausência de evento e preservação da chave de entrada. A classe inteira passou 22/22 em MariaDB 11.4.4 descartável; o teste unitário UserDataManagerTests passou 1/1. O servidor temporário foi encerrado; a porta de produção 3306 não foi acessada. Linux, CI hospedada, runtime instalado e produção não foram validados.",
+      "release": "Evento local 3/10 do lote; homologação formal permanece 2/7 (28,6%), sem crédito; 12.1.46 candidata, sem release publicada. Linux, CI hospedada, runtime instalado e produção pendentes."
+    },
+    {
+      "id": "server-image-transaction-lockwait-retry-2026-11-01-2314",
+      "title": "Retry transacional de imagens validado com lock wait MariaDB",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [],
+      "local": "Windows/.NET 10 Release: ServerPersistenceMariaDbTests 23/23; teste focal repetido 1/1 após limitar o descarte ao pool de teste.",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Item/ItemPersistenceService.cs; tests/IntroSkipper.Integration.Tests/ServerPersistenceMariaDbTests.cs; docs/testing-mariadb.md.",
+      "scope": "Confirmar o retry da unidade SaveImagesAsync após lock wait MariaDB 1205 sem alterar a política de runtime.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-01T23:14:02-03:00",
+      "updatedAt": "2026-11-01T23:14:02-03:00",
+      "evidence": "MariaDB 11.4.4 descartável em 127.0.0.1:33143: uma transação de teste manteve a imagem antiga bloqueada; SaveImagesAsync recebeu 1205, emitiu o sinal de retry, abriu tentativa nova, e após liberação persistiu a imagem nova. A classe ServerPersistenceMariaDbTests passou 23/23; o focal foi repetido 1/1 após o helper limpar somente o pool de conexão isolado. A instância foi encerrada. O executor bloqueou a remoção recursiva do datadir temporário; a produção :3306 permaneceu ativa e intocada. Sem prova de deadlock 1213, commit ambíguo, Linux, CI hospedada, runtime instalado ou produção.",
+      "release": "Evento local 4/10; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, sem release publicada; Linux, CI hospedada, runtime instalado e produção pendentes."
+    },
+    {
+      "id": "server-media-stream-transaction-lockwait-retry-2026-11-01-2332",
+      "title": "Retry transacional de MediaStream validado com lock wait MariaDB",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://mariadb.com/docs/server/reference/error-codes/mariadb-error-codes-1200-to-1299",
+        "https://learn.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency"
+      ],
+      "local": "Windows/.NET 10 Release: teste focal MariaDB 2/2; ServerPersistenceMariaDbTests 24/24 contra MariaDB 11.4.4 descartável em 127.0.0.1:49288.",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Item/MediaStreamRepository.cs; MulletaFlix-master/tests/IntroSkipper.Integration.Tests/ServerPersistenceMariaDbTests.cs; docs/backend-auditoria-roadmap.md; docs/testing-mariadb.md; MulletaFlix-master/docs/releases/12.1.46.md",
+      "scope": "Repetir toda a substituição de streams, com contexto e transação novos, apenas em erro MariaDB 1205/1213, preservando rollback para erros permanentes.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-01T23:26:00-03:00",
+      "updatedAt": "2026-11-01T23:32:00-03:00",
+      "evidence": "O lock wait MariaDB 1205 provocou retry após descarte da transação/contexto e a nova lista foi persistida; o trigger de erro permanente manteve a lista anterior sem retry. Os dois testes focais passaram 2/2 e ServerPersistenceMariaDbTests passou 24/24 em Windows/.NET 10 Release contra instância temporária 11.4.4 em loopback, isolada, iniciada com skip-grant-tables e encerrada após o teste. A porta de produção 3306 não foi acessada. Deadlock 1213 real, autenticação/ACL do banco, Linux, CI hospedada, runtime instalado e produção não foram validados.",
+      "release": "Evento local 5/10 do lote; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada; teste real 1213, autenticação/ACL, Linux, CI hospedada, runtime instalado e produção pendentes."
+    },
+    {
+      "id": "server-nextup-bounded-exact-count-2026-11-01-2344",
+      "title": "NextUp limita episódios retidos com contagem exata",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying",
+        "https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.priorityqueue-2?view=net-10.0"
+      ],
+      "local": "Windows/.NET 10 Release: TVSeriesManagerNextUpPaginationTests 5/5; NextUpQueryOptimizationTests 4/4; MariaDB opt-in 1 ignorado; endpoint integration 2 ignorados; dotnet format focal passou.",
+      "location": "MulletaFlix-master/Emby.Server.Implementations/TV/TVSeriesManager.cs; MulletaFlix-master/tests/Jellyfin.Server.Implementations.Tests/TV/TVSeriesManagerNextUpPaginationTests.cs; MulletaFlix-master/docs/backend-auditoria-roadmap.md; MulletaFlix-master/docs/releases/12.1.46.md",
+      "scope": "Resolver NextUp em blocos de 50 para contagem exata com limite, reter apenas a página necessária e preservar ordem estável.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-01T23:44:05-03:00",
+      "updatedAt": "2026-11-01T23:50:36-03:00",
+      "evidence": "A regressão reproduziu a resolução de 51 séries em um único lote. A alteração foi verificada com lotes [50, 1], total exato 51 e página StartIndex=1/Limit=2 estável no empate entre lotes. Testes unitários passaram; PriorityQueue da BCL mantém o prefixo solicitado com atualizações O(log K), além do lote corrente; a página final mantém o desempate estável. GetNextUpSeriesKeys ainda materializa todas as chaves; não houve benchmark de latência ou memória com biblioteca real, execução em MariaDB, Linux, CI, runtime instalado ou produção. As consultas adicionais ampliam a janela para alteração concorrente do histórico.",
+      "release": "Evento local 6/10 do lote; homologação formal permanece 2/7, sem crédito; 12.1.46 candidata, sem release publicada. Benchmark com MariaDB e catálogo representativo, Linux, CI hospedada, runtime instalado e produção pendentes."
+    },
+    {
+      "id": "server-nextup-keyset-snapshot-safety-2026-11-01-2357",
+      "title": "NextUp: adiada paginação por cursor sem snapshot",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://mariadb.com/docs/server/reference/sql-statements/transactions/transactions-repeatable-read",
+        "https://learn.microsoft.com/en-us/ef/core/saving/transactions",
+        "https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying"
+      ],
+      "local": "Auditoria de código e documentação oficial; nenhuma alteração de runtime/teste. MariaDB opt-in não executado: não há conexão descartável configurada; a porta 3306 pertence ao serviço do servidor.",
+      "location": "MulletaFlix-master/Jellyfin.Server.Implementations/Item/NextUpService.cs; MulletaFlix-master/Emby.Server.Implementations/TV/TVSeriesManager.cs; tests/Jellyfin.Server.Implementations.Tests/Item/NextUpServiceMariaDbTests.cs; docs/backend-auditoria-roadmap.md; docs/releases/12.1.46.md",
+      "scope": "Avaliar paginação keyset das chaves de série no NextUp com contagem exata, preservando o total e a ordem sob concorrência.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-01T23:57:02-03:00",
+      "updatedAt": "2026-11-01T23:57:02-03:00",
+      "evidence": "NextUpService ordena por LastPlayedDate, mas o cursor usa essa mesma data mutável. Alteração entre páginas pode mover uma série para antes/depois do cursor ou atravessar o cutoff, causando omissão, repetição ou desvio no total. O teste MariaDB existente prova cursor estável apenas sem alteração concorrente. Uma leitura coerente exige compartilhar a mesma transação REPEATABLE READ; hoje a busca de chaves e a resolução de episódios criam contextos separados. Por segurança, a implementação mantém a lista de chaves materializada até haver desenho e teste de snapshot que cubram todo o fluxo.",
+      "release": "Evento local 7/10; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, sem release publicada. Próximo gate: contrato de snapshot e teste MariaDB de movimento do LastPlayedDate/cutoff."
+    },
+    {
+      "id": "server-nebula-remove-unused-image-dependencies-2026-11-02-0011",
+      "title": "Nebula remove dependências de imagem sem uso e vulneráveis",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://github.com/python-pillow/Pillow/security/advisories/GHSA-5x8w-8jj5-q52h",
+        "https://pillow.readthedocs.io/en/stable/releasenotes/13.0.0.html",
+        "https://pypi.org/project/pillow/13.0.0/"
+      ],
+      "local": "Windows/Python 3.10.11: test_check_deps.py 31/31, Nebula completa 728/728; pip install --dry-run --require-hashes passou. pip-audit após atualizar lock: nenhum aviso conhecido.",
+      "location": "MulletaFlix-master/Tools/NebulaPython/requirements.in; requirements.lock; tools/check_deps.py; tests/test_check_deps.py; docs/releases/12.1.46.md",
+      "scope": "Remover pystray e Pillow não utilizados do runtime Nebula, eliminar 39 advisories Pillow reportados e preservar suporte Python 3.10.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T00:11:03-03:00",
+      "updatedAt": "2026-11-02T00:11:03-03:00",
+      "evidence": "A varredura do código rastreado não encontrou usos de pystray ou PIL fora do guard de dependências. O lock instalava Pillow 12.3.0 transitivamente via pystray; pip-audit encontrou 39 advisories, com correção upstream em Pillow 13.0.0. As notas oficiais do Pillow 13 removem Python 3.10, que permanece na matriz Nebula Windows/Linux; por isso foram removidos os dois pacotes sem uso, em vez de aumentar o runtime. Um teste impede retorno dessas dependências ao manifesto e ao lock. A reauditoria do lock resultante não achou vulnerabilidades conhecidas.",
+      "release": "Evento local 8/10; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Linux, pacote instalado, runtime instalado, CI hospedada e produção não foram validados."
+    },
+    {
+      "id": "server-nebula-cleanup-url-scheme-hardening-2026-11-02-0025",
+      "title": "Nebula restringe permissões de cleanup e esquemas de URL",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://docs.python.org/3.10/library/os.html#os.chmod",
+        "https://docs.python.org/3.10/library/urllib.request.html",
+        "https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b310-urllib-urlopen"
+      ],
+      "local": "Windows/Python 3.10.11: suíte Nebula 746/746; foco cleanup/feeder/downloader 208/208. Bandit: execução anterior 0 High, 12 Medium; não repetido nesta rodada (ferramenta ausente).",
+      "location": "MulletaFlix-master/Tools/NebulaPython/main.py; tools/feed_ftp.py; tools/strm_downloader.py; tests/test_main_cleanup.py; tests/test_feed_ftp_strm.py; tests/test_strm_downloader.py; tests/test_strm_downloader_helpers.py; docs/releases/12.1.46.md",
+      "scope": "Remover permissões globais excessivas no cleanup e bloquear esquemas não HTTP(S) antes de probes e downloads STRM.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T00:25:20-03:00",
+      "updatedAt": "2026-11-02T00:31:12-03:00",
+      "evidence": "Os dois caminhos chmod(0o777) foram removidos; a recuperação ajusta apenas permissão do proprietário em POSIX, incluindo leitura/escrita/execução em diretórios para enumeração, sem seguir symlinks, e limpa somente leitura no Windows. Falha final de remoção não é registrada como sucesso. Feeder e downloader recusam file://, esquemas fora de HTTP(S), host ausente e porta malformada/fora do intervalo antes de qualquer chamada de rede. Testes regressivos passam em Windows/Python 3.10.11: suíte 746/746, foco 208/208. Bandit da execução anterior não registrava High e mantinha 11 alertas B310 em urlopen e um B104 para o bind configurável; não foi repetido nesta rodada porque a ferramenta não está no ambiente ativo. Endereços privados e redirects não são bloqueados; a exposição SSRF permanece uma pendência explícita.",
+      "release": "Evento local 9/10; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Linux, runtime instalado, CI hospedada e produção não foram validados."
+    },
+    {
+      "id": "server-nebula-supabase-http-redirect-boundaries-2026-11-02-0040",
+      "title": "Nebula valida destinos Supabase e restringe redirects STRM",
+      "agent": "Codex",
+      "front": "server",
+      "featureIds": [],
+      "links": [
+        "https://docs.python.org/3.10/library/urllib.request.html",
+        "https://github.com/python/cpython/blob/main/Lib/urllib/request.py",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html"
+      ],
+      "local": "Windows/Python 3.10.11: testes focais 334/334; suíte Nebula 789/789; portal 147/147.",
+      "location": "MulletaFlix-master/Tools/NebulaPython/tools/supabase_sync.py; tools/feed_ftp.py; tools/strm_downloader.py; control_plane.py; generate_strm.py; testes correspondentes; MulletaFlix-master/docs/backend-auditoria-roadmap.md; MulletaFlix-master/docs/releases/12.1.46.md",
+      "scope": "Validar URLs Supabase e base STRM antes dos efeitos colaterais; impedir redirects Supabase e limitar redirects de mídia a HTTP(S) válido.",
+      "status": "completed",
+      "progressPercent": 100,
+      "startedAt": "2026-11-02T00:40:48-03:00",
+      "updatedAt": "2026-11-02T00:50:08-03:00",
+      "evidence": "Supabase valida HTTP(S), host, porta, credenciais, query, fragmento e delimitadores vazios antes de inicializar Mongo; apikey/Authorization ficam em headers unredirected e o opener recusa redirects. Control Plane e gerador direto validam a URL antes do Mongo e da criação da saída. Feeder/downloader seguem redirects HTTP(S) com host/porta válidos, preservando loopback/LAN/CDN. Testes de URL inválida, headers sensíveis, redirects reais via servidor HTTP local e compatibilidade passaram: focal 334/334 e suíte completa 789/789. Hosts privados continuam permitidos para compatibilidade de streaming; mitigação SSRF DNS-aware, Linux, pacote/runtime instalado, CI hospedada e produção não foram validados.",
+      "release": "Evento local 10/10 do lote; homologação formal permanece 2/7 (28,6%), sem crédito. 12.1.46 candidata, não publicada. Próximo gate: política de destino SSRF compatível com mídias LAN e validação Linux/runtime/CI."
     }
   ],
-  "latestAudit": "02/11/2026 04:04 BRT: lote servidor 1/4 publicado localmente; 10/40 eventos registrados, sem crédito formal adicional. CI/PR, Linux e produção continuam pendentes; release 12.1.46 candidata, não publicada."
+  "latestAudit": "02/11/2026 04:04 BRT: lote servidor 2/4 publicado localmente; 20/40 eventos registrados, sem crédito formal adicional. CI/PR, Linux e produção continuam pendentes; release 12.1.46 candidata, não publicada."
 }
