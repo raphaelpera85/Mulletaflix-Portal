@@ -5,18 +5,11 @@
     { "source": "/downloads", "destination": "/downloads.html" },
     { "source": "/docs", "destination": "/docs.html" },
     { "source": "/homologacao", "destination": "/homologacao.html" },
-    { "source": "/homologacao-servidor", "destination": "/homologacao-servidor.html" },
     { "source": "/updates", "destination": "/updates.html" },
     { "source": "/community", "destination": "/community.html" },
     { "source": "/privacy", "destination": "/privacy.html" }
   ],
   "headers": [
-    {
-      "source": "/homologacao-status.json",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-store, max-age=0, must-revalidate" }
-      ]
-    },
     {
       "source": "/sitemap.xml",
       "headers": [
