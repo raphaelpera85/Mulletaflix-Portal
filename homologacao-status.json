@@ -3285,6 +3285,23 @@
   ],
   "events": [
     {
+      "id": "introskipper-strm-resolution-concurrency-2-2026-11-11",
+      "title": "Correção do IntroSkipper para arquivos STRM e stream concorrente",
+      "agent": "Hermes",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows local; MulletaFlix-master; mídia e servidor HTTP sintéticos descartáveis",
+      "location": "MulletaFlix.Plugin.IntroSkipper/FFmpeg",
+      "scope": "Resolver o destino contido em arquivos .strm antes do ffprobe/ffmpeg e validar Chromaprint com no máximo dois streams simultâneos",
+      "status": "partial",
+      "progressPercent": 100,
+      "startedAt": "2026-11-11T09:50:00-03:00",
+      "updatedAt": "2026-11-11T10:14:42-03:00",
+      "evidence": "TDD focal StrmInputResolverTests passou 4/4 após RED. IntroSkipper.Integration.Tests passou 43 aprovados, 57 ignorados, 0 falhas em 100 casos. Build Release do plugin passou com 0 avisos e 0 erros. Repro HTTP sintético executou exatamente dois streams simultâneos; ambos terminaram com exit 0 e 560 bytes de saída Chromaprint. O servidor sintético foi encerrado e a porta 18967 confirmou-se fechada.",
+      "release": "A correção ainda está somente na working tree/source; runtime instalado, mídia real, persistência real e limite global do scheduler não foram homologados. Nenhuma base ou instalação produtiva foi alterada.",
+      "links": []
+    },
+    {
       "id": "environment-blockers-reprobe-2026-11-11-0945",
       "title": "Reprobe atual dos bloqueios de ambiente",
       "agent": "Hermes",
