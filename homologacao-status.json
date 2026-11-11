@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-11T09:45:43-03:00",
+  "generatedAt": "2026-11-11T11:19:46-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3284,6 +3284,23 @@
     }
   ],
   "events": [
+    {
+      "id": "dotnet-clean-build-xunit1051-2026-11-11",
+      "title": "Lote xUnit1051 e investigação do build limpo .NET",
+      "agent": "Hermes",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows local; MulletaFlix-master; .NET 10 Release",
+      "location": "tests/IntroSkipper.Integration.Tests/ItemRepositoryTransientRetryTests.cs e MediaBrowser.Model",
+      "scope": "Propagar cancelamento cooperativo no lote focal e reproduzir a falha do build limpo sem mascarar o erro",
+      "status": "partial",
+      "progressPercent": 100,
+      "startedAt": "2026-11-11T10:16:00-03:00",
+      "updatedAt": "2026-11-11T11:19:46-03:00",
+      "evidence": "ItemRepositoryTransientRetryTests passou com TestContext.Current.CancellationToken e git diff --check passou. O build incremental completo passou com 0 erros e 631 avisos. O build limpo da solução reproduziu 2 erros CS0234 em MediaBrowser.Model/Net/MimeTypes.cs porque o MimeTypes.Nullable.cs gerado pelo pacote MimeTypes não entrou no grafo da solução; o projeto MediaBrowser.Model isolado passou após restore. A regressão .NET serial posterior passou com 6.087 aprovados, 314 ignorados, 0 falhas e 6.401 casos em 17 projetos; a contagem foi reconciliada pelas 17 linhas de resumo reais.",
+      "release": "Nenhum runtime, banco, instalação ou ambiente externo foi alterado. O build limpo da solução permanece bloqueado por uma interação MSBuild/NuGet não resolvida; homologação global continua parcial.",
+      "links": []
+    },
     {
       "id": "introskipper-strm-resolution-concurrency-2-2026-11-11",
       "title": "Correção do IntroSkipper para arquivos STRM e stream concorrente",
@@ -17049,6 +17066,23 @@
       "evidence": "RED inicial reproduziu NullReferenceException quando a fixture usava UserRootFolder sem dependência estática configurada. GREEN após fixture Folder sintética, BaseItem.LibraryManager restaurado em finally e CollapseBoxSetItems=false. Focal 1/1 e regressão ItemsControllerTests 22/22.",
       "release": "Cobertura unitária GREEN; HTTP autenticado, MariaDB descartável, materialização persistente, runtime instalado, playback e produção permanecem sem aceite.",
       "links": ["docs/server-test-gap-map-2026-11-09.md"]
+    },
+    {
+      "id": "dotnet-full-regression-after-introskipper-2026-11-11",
+      "title": "Servidor: regressão Release completa após correção do IntroSkipper",
+      "agent": "Hermes",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows checkout; .NET 10 Release; execução serial -m:1",
+      "location": "MulletaFlix-master/MulletaFlix.sln",
+      "scope": "Reexecutar a suíte completa da solução após resolver entradas .strm antes do ffprobe/ffmpeg e preservar concorrência sintética de dois streams.",
+      "status": "partial",
+      "progressPercent": null,
+      "startedAt": "2026-11-11T10:10:00-03:00",
+      "updatedAt": "2026-11-11T10:15:00-03:00",
+      "evidence": "dotnet test Release --no-build --no-restore -m:1 terminou com exit 0 em 17 projetos: 6.087 aprovados, 314 ignorados, 0 falhas / 6.401 casos. IntroSkipper.Integration.Tests ficou em 43/57/0; nenhum caso ignorado recebeu crédito de aprovação.",
+      "release": "Regressão local/source GREEN; build validado com 0 erros e 643 avisos. Runtime instalado, mídia real, persistência real, CI hospedada, Linux/POSIX, Android instrumentado, integrações externas e produção permanecem sem aceite.",
+      "links": ["docs/roadmap-evolucao-tecnologica-servidor-e-web.md"]
     }
   ]
 }
