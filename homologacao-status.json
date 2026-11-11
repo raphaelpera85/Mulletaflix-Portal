@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-11T08:42:50-03:00",
+  "generatedAt": "2026-11-11T09:07:41-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3284,6 +3284,23 @@
     }
   ],
   "events": [
+    {
+      "id": "nebula-python-ruff-f401-i001-comprehensive-cleanup-2026-11-11",
+      "title": "Lote Ruff F401/I001 em comprehensive_cleanup.py",
+      "agent": "Hermes",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows local; checkout mulletaflix/nebula e uv",
+      "location": "nebula/comprehensive_cleanup.py",
+      "scope": "Remover import sem uso e normalizar imports sem executar limpeza com efeitos MongoDB",
+      "status": "partial",
+      "progressPercent": 100,
+      "startedAt": "2026-11-11T08:55:00-03:00",
+      "updatedAt": "2026-11-11T09:07:41-03:00",
+      "evidence": "RED focal encontrou json sem uso e I001. O import foi removido e os imports foram ordenados; Ruff focal e py_compile passaram. A regressão NebulaPython passou 212 testes, ignorou 1 e falhou em 0 em 79,76 s. Ruff global caiu para 2.019 findings em 59 regras; F401=47; I001=103.",
+      "release": "O script comprehensive_cleanup.py não foi executado porque possui efeitos MongoDB no carregamento. CI hospedada, Linux/POSIX, build completo, runtime instalado e integrações reais continuam pendentes.",
+      "links": []
+    },
     {
       "id": "nebula-python-ruff-f401-i001-quarantine-garbage-copies-2026-11-11",
       "title": "Lote Ruff F401/I001 em quarantine_garbage_copies.py",
