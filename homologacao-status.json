@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-11T09:41:35-03:00",
+  "generatedAt": "2026-11-11T09:45:43-03:00",
   "source": {
     "roadmap": "https://github.com/raphaelpera85/mulletaflix-completo/blob/main/docs/roadmap-evolucao-tecnologica-servidor-e-web.md",
     "repository": "https://github.com/raphaelpera85/mulletaflix-completo"
@@ -3284,6 +3284,23 @@
     }
   ],
   "events": [
+    {
+      "id": "environment-blockers-reprobe-2026-11-11-0945",
+      "title": "Reprobe atual dos bloqueios de ambiente",
+      "agent": "Hermes",
+      "front": "server",
+      "featureIds": [],
+      "local": "Windows local; máquina de homologação",
+      "location": "portas, runtime instalado, ferramentas externas e hardware",
+      "scope": "Revalidar os bloqueios antes de manter a homologação global como parcial",
+      "status": "partial",
+      "progressPercent": 100,
+      "startedAt": "2026-11-11T09:44:00-03:00",
+      "updatedAt": "2026-11-11T09:45:43-03:00",
+      "evidence": "Portas 3306/MariaDB e 27017/MongoDB estão ouvindo; não foram tocadas. 8096 não está ouvindo e /health não respondeu. MulletaFlix.exe instalado e rclone.exe existem; mongod.exe 8.3 existe e mongod/rclone estão em execução. ADB existe mas não listou dispositivos; WSL não listou distribuições; Docker e Podman não estão disponíveis; nenhuma variável OTEL_* está definida.",
+      "release": "O runtime instalado não foi iniciado, alterado ou promovido. As bases nas portas 3306 e 27017 permanecem protegidas; qualquer integração deve usar instâncias descartáveis em portas não padrão.",
+      "links": []
+    },
     {
       "id": "cross-surface-regression-server-web-nebula-2026-11-11",
       "title": "Regressão cruzada atual: .NET, Web e NebulaPython",
